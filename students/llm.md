@@ -1,0 +1,229 @@
+---
+title: Python LLM
+---
+
+# The Python package `llm`
+
+`llm` is both a command-line tool and a Python library for working with large
+language models. It is a good tool when you want prompts, chats, shell
+pipelines, or Python scripts that you can rerun and adapt.
+
+Compared to GitHub Copilot CLI or OpenCode, `llm` is less of a full coding
+agent and more of a flexible interface for model access.
+
+## What it is good for
+
+- quick prompts from the terminal
+- interactive chat with a chosen model
+- repeatable shell workflows
+- structured output such as JSON
+- using language models from Python code
+
+## Before you install it
+
+You need two separate things:
+
+1. the `llm` package itself
+2. access to a model
+
+That second part is important. Installing `llm` does not automatically give you
+model access. In this course, the recommended path is to use the
+`llm-github-copilot` plugin so `llm` can use your GitHub Copilot access.
+
+## Installation
+
+The official docs list several installation methods:
+
+### pip
+
+```sh
+pip install llm
+```
+
+### pipx
+
+```sh
+pipx install llm
+```
+
+### uv
+
+```sh
+uv tool install llm
+```
+
+### Homebrew
+
+```sh
+brew install llm
+```
+
+Use the method that fits how you normally install Python tools.
+
+## First setup
+
+A good student setup is:
+
+1. install `llm`
+2. install the GitHub Copilot plugin
+3. log in with GitHub device authentication
+4. pick a model
+5. run prompts or start a chat
+
+Install the plugin:
+
+```sh
+llm install llm-github-copilot
+```
+
+Then log in:
+
+```sh
+llm github_copilot auth login
+```
+
+After that, list the available models:
+
+```sh
+llm models
+```
+
+Then try a prompt with one of the `github_copilot/...` models:
+
+```sh
+llm -m github_copilot/model-name "Give me three short study tips for learning a new CLI tool"
+```
+
+The plugin uses GitHub device login and can reuse GitHub Copilot access instead
+of requiring a separate API key for a different provider.
+
+## A simple first workflow
+
+Some good starter patterns are:
+
+### A one-shot prompt
+
+```sh
+llm -m github_copilot/model-name "Summarize the difference between Copilot CLI and OpenCode in three bullet points"
+```
+
+### Use a file as input
+
+```sh
+cat README.md | llm -m github_copilot/model-name -s "Explain this project to a new student"
+```
+
+### Start an interactive chat
+
+```sh
+llm chat -m github_copilot/model-name
+```
+
+### See which models are available
+
+```sh
+llm models
+```
+
+Look for model names that start with `github_copilot/`.
+
+## Why students often like it
+
+`llm` is especially useful when you want work that is easy to rerun or turn
+into a script. With `llm-github-copilot`, students can often do that using the
+same GitHub account they already set up for student access. It is often the
+best choice when you want to:
+
+- put LLM use inside shell pipelines
+- keep a prompt as part of a reproducible workflow
+- ask for structured output
+- call a model from Python code
+
+## A small Python example
+
+After installing `llm` and configuring access to a model, a minimal Python
+script can look like this:
+
+```python
+import llm
+
+model = llm.get_model("github_copilot/model-name")
+response = model.prompt(
+    "Explain when a student should use OpenCode instead of GitHub Copilot CLI."
+)
+print(response.text())
+```
+
+That same package also supports attachments, tools, JSON schemas, and async
+usage.
+
+## Course-specific note about model names
+
+In course material you may see examples such as:
+
+```sh
+llm chat -m kth-gpt-5.2
+```
+
+A model name like `kth-gpt-5.2` is not part of the default `llm` installation.
+It is an example of a locally configured model or alias.
+
+If you are following the setup on this page, you will probably start with a
+model name under `github_copilot/...` instead.
+
+So there are two separate questions:
+
+1. how to install and learn `llm`
+2. which provider, plugin, or local model configuration you will actually use
+
+The first part is general. In this course, the recommended second step is the
+`llm-github-copilot` plugin.
+
+## Privacy and logging
+
+By default, `llm` logs prompts and responses to a local SQLite database. That
+is useful for experimentation, but it also means you should think about what
+data you send to it.
+
+Useful commands are:
+
+```sh
+llm logs status
+```
+
+```sh
+llm logs off
+```
+
+```sh
+llm logs on
+```
+
+## Good habits
+
+- prefer `llm-github-copilot` if you already have GitHub Copilot access
+- use `llm models` so you know which model you are actually calling
+- keep prompts and scripts in files when the workflow matters
+- remember that model access and package installation are separate steps
+- turn logging off if you are working with sensitive material
+
+## Short version
+
+1. Install `llm`.
+2. Install `llm-github-copilot`.
+3. Log in with `llm github_copilot auth login`.
+4. Use a `github_copilot/...` model for prompts or chat.
+5. Use the Python API when you want scripts or applications.
+
+## Next step
+
+- [Which tool should I use?](which-tool.html)
+
+## Official links
+
+- [LLM documentation](https://llm.datasette.io/en/stable/)
+- [LLM setup](https://llm.datasette.io/en/stable/setup.html)
+- [LLM usage](https://llm.datasette.io/en/stable/usage.html)
+- [LLM Python API](https://llm.datasette.io/en/stable/python-api.html)
+- [LLM plugins](https://llm.datasette.io/en/stable/plugins/index.html)
+- [llm-github-copilot](https://github.com/jmdaly/llm-github-copilot)
