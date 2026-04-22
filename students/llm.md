@@ -138,6 +138,9 @@ llm -m gemma3 "Give me three short study tips for learning a new CLI tool"
 The exact model name depends on what is available from your provider or local
 server. `llm models` is the quickest way to check.
 
+If you want the deeper local workflow, read
+[Local models and Ollama](local-models.html).
+
 ## A simple first workflow
 
 These examples use the GitHub-backed route above. If you are using another
@@ -271,6 +274,7 @@ llm logs on
 ## Next step
 
 - [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
+- [Learn when local models and Ollama make sense](local-models.html)
 - [Which tool should I use?](which-tool.html)
 
 ## Official links

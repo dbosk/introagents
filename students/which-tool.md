@@ -13,6 +13,9 @@ Then move to OpenCode when you want more provider choice and control, and use
 If you are unsure how you actually get access to a model, read
 [Model access](model-access.html) first.
 
+If you specifically want a local or offline route, read
+[Local models and Ollama](local-models.html) next.
+
 ## Short answer
 
 - use GitHub Copilot CLI (`copilot`) if you want the simplest student setup
@@ -54,6 +57,9 @@ If you are unsure how you actually get access to a model, read
 - "I want an open source terminal agent that can use GitHub Copilot or other
    providers."
   Use OpenCode.
+- "I want local or offline workflows with open-weight models."
+  Read [Local models and Ollama](local-models.html), then use OpenCode or
+  `llm`.
 
 ## The important difference
 
@@ -77,6 +83,7 @@ The biggest difference is not just model quality. It is workflow.
 
 - [Register with GitHub as a student](github-student.html)
 - [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
+- [Learn when local models and Ollama make sense](local-models.html)
 - [Get started with Claude Code](claude-code.html)
 - [Get started with GitHub Copilot CLI](copilot-cli.html)
 - [Get started with OpenCode](opencode.html)

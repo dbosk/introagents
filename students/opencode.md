@@ -120,6 +120,9 @@ If you want a local route:
 5. Confirm the local server address if OpenCode asks for it.
 6. Run `/models` and select a model.
 
+If you want the deeper local workflow, read
+[Local models and Ollama](local-models.html).
+
 For tool-calling local models, you may need a larger context setting.
 
 Whichever route you use, finish with `/models` so you know which models are
@@ -201,6 +204,7 @@ starting point.
 ## Next step
 
 - [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
+- [Learn when local models and Ollama make sense](local-models.html)
 - [Get started with Claude Code](claude-code.html)
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)

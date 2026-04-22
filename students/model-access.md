@@ -123,6 +123,9 @@ want:
 Ollama can be used with OpenCode and with `llm` through the `llm-ollama`
 plugin.
 
+If you want the deeper local track, read
+[Local models and Ollama](local-models.html).
+
 The tradeoff is that local models depend on your own hardware. This is not the
 default route for most students, but it is a good option if you have enough RAM
 or GPU and want to learn local workflows. In OpenCode, tool-calling with Ollama
@@ -146,6 +149,7 @@ current provider docs and current subscription details.
 ## Next step
 
 - [Register with GitHub as a student](github-student.html)
+- [Learn when local models and Ollama make sense](local-models.html)
 - [Get started with Claude Code](claude-code.html)
 - [Get started with OpenCode](opencode.html)
 - [Get started with the Python package `llm`](llm.html)
