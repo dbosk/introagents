@@ -33,7 +33,8 @@ You should already have:
 3. access to a model provider
 
 One common starting route is GitHub Copilot through your GitHub student
-benefits. OpenCode can also use OpenCode Zen, direct APIs, and local models.
+benefits. OpenCode can also use OpenCode Zen, direct APIs, and local models
+such as Ollama.
 
 ## Installation
 
@@ -75,6 +76,10 @@ opencode /path/to/project
 
 ## Connect it to a model
 
+OpenCode is not tied to one provider. A few common student paths are:
+
+### GitHub Copilot
+
 If you want to use your GitHub Copilot student access, the common path is:
 
 1. Start `opencode`.
@@ -83,9 +88,43 @@ If you want to use your GitHub Copilot student access, the common path is:
 4. Complete the device login flow in your browser.
 5. Run `/models` and select a model.
 
-OpenCode can also connect to OpenCode Zen and many other providers. GitHub
-Copilot is just one common place for students to start. See
-[Model access](model-access.html) for the overview.
+### OpenCode Zen
+
+If you want OpenCode's own curated model list:
+
+1. Start `opencode`.
+2. Run `/connect`.
+3. Choose `OpenCode Zen`.
+4. Sign in, add billing details, and copy your API key.
+5. Paste the key into OpenCode.
+6. Run `/models` and select a model.
+
+### Direct APIs
+
+If you want a direct provider route such as OpenAI or Anthropic API access:
+
+1. Start `opencode`.
+2. Run `/connect`.
+3. Choose the provider.
+4. Authenticate or paste the API key.
+5. Run `/models` and select a model.
+
+### Local models such as Ollama
+
+If you want a local route:
+
+1. Make sure your local model server is running.
+2. Start `opencode`.
+3. Run `/connect`.
+4. Choose the local provider, such as `Ollama`.
+5. Confirm the local server address if OpenCode asks for it.
+6. Run `/models` and select a model.
+
+For tool-calling local models, you may need a larger context setting.
+
+Whichever route you use, finish with `/models` so you know which models are
+actually available in your current session. See [Model access](model-access.html)
+for the broader overview.
 
 ## A simple first workflow
 
@@ -155,7 +194,7 @@ starting point.
 
 1. Install `opencode`.
 2. Start it inside a repository.
-3. Use `/connect` to attach GitHub Copilot or another provider.
+3. Use `/connect` to attach GitHub Copilot, OpenCode Zen, or another provider.
 4. Start with explanation and planning prompts.
 5. Approve file edits and shell commands carefully.
 
@@ -174,4 +213,5 @@ starting point.
 - [OpenCode TUI](https://opencode.ai/docs/tui)
 - [OpenCode CLI](https://opencode.ai/docs/cli)
 - [OpenCode providers](https://opencode.ai/docs/providers)
+- [OpenCode Zen](https://opencode.ai/docs/zen)
 - [OpenCode permissions](https://opencode.ai/docs/permissions)

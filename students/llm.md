@@ -61,7 +61,7 @@ brew install llm
 
 Use the method that fits how you normally install Python tools.
 
-## First setup
+## One common first setup: GitHub Copilot
 
 A common student setup is:
 
@@ -101,7 +101,47 @@ of requiring a separate API key for a different provider.
 If you are using another access route, the exact plugin and authentication flow
 will differ. See [Model access](model-access.html) for the overview.
 
+## Other common access routes
+
+### OpenAI API
+
+OpenAI models work directly in `llm` once you set a key:
+
+```sh
+llm keys set openai
+llm models
+llm -m gpt-4o-mini "Give me three short study tips for learning a new CLI tool"
+```
+
+### Anthropic API
+
+Claude models usually mean installing the Anthropic plugin first:
+
+```sh
+llm install llm-anthropic
+llm keys set anthropic
+llm models
+llm -m claude-haiku-4.5 "Give me three short study tips for learning a new CLI tool"
+```
+
+### Local models with Ollama
+
+If you want a local route, install the Ollama plugin and use a model that is
+available on your Ollama server:
+
+```sh
+llm install llm-ollama
+llm ollama models
+llm -m gemma3 "Give me three short study tips for learning a new CLI tool"
+```
+
+The exact model name depends on what is available from your provider or local
+server. `llm models` is the quickest way to check.
+
 ## A simple first workflow
+
+These examples use the GitHub-backed route above. If you are using another
+provider, replace `github_copilot/model-name` with one returned by `llm models`.
 
 Some good starter patterns are:
 
@@ -151,12 +191,16 @@ script can look like this:
 ```python
 import llm
 
-model = llm.get_model("github_copilot/model-name")
+model = llm.get_model("your-model-name")
 response = model.prompt(
     "Explain when a student should use OpenCode instead of GitHub Copilot CLI."
 )
 print(response.text())
 ```
+
+Use one of the model names returned by `llm models`, such as a
+`github_copilot/...` model, `claude-haiku-4.5`, `gpt-4o-mini`, or a local
+Ollama model.
 
 That same package also supports attachments, tools, JSON schemas, and async
 usage.
@@ -172,8 +216,11 @@ llm chat -m kth-gpt-5.2
 A model name like `kth-gpt-5.2` is not part of the default `llm` installation.
 It is an example of a locally configured model or alias.
 
-If you are following the setup on this page, you will probably start with a
-model name under `github_copilot/...` instead.
+If you are following the GitHub-backed setup on this page, you will probably
+start with a model name under `github_copilot/...`.
+
+If you use a direct API or local route instead, you may see names such as
+`claude-haiku-4.5`, `gpt-4o-mini`, or a local Ollama model name.
 
 So there are two separate questions:
 
@@ -206,6 +253,8 @@ llm logs on
 ## Good habits
 
 - prefer `llm-github-copilot` if you already have GitHub Copilot access
+- otherwise pick one clear route such as OpenAI, Anthropic, or Ollama before
+  you start scripting
 - use `llm models` so you know which model you are actually calling
 - keep prompts and scripts in files when the workflow matters
 - remember that model access and package installation are separate steps
@@ -214,9 +263,9 @@ llm logs on
 ## Short version
 
 1. Install `llm`.
-2. Install `llm-github-copilot`.
-3. Log in with `llm github_copilot auth login`.
-4. Use a `github_copilot/...` model for prompts or chat.
+2. Choose one access route: GitHub Copilot, direct API, or local plugin.
+3. Authenticate or set keys for that route.
+4. Run `llm models` and use one of the listed model names.
 5. Use the Python API when you want scripts or applications.
 
 ## Next step
@@ -233,3 +282,5 @@ llm logs on
 - [LLM plugins](https://llm.datasette.io/en/stable/plugins/index.html)
 - [LLM plugin directory](https://llm.datasette.io/en/stable/plugins/directory.html)
 - [llm-github-copilot](https://github.com/jmdaly/llm-github-copilot)
+- [llm-anthropic](https://github.com/simonw/llm-anthropic)
+- [llm-ollama](https://github.com/taketwo/llm-ollama)
