@@ -10,6 +10,9 @@ If you want a paid general-purpose coding agent, start with Claude Code.
 Then move to OpenCode when you want more provider choice and control, and use
 `llm` when you want scripting or Python integration.
 
+If you are unsure how you actually get access to a model, read
+[Model access](model-access.html) first.
+
 ## Short answer
 
 - use GitHub Copilot CLI (`copilot`) if you want the simplest student setup
@@ -63,8 +66,9 @@ The biggest difference is not just model quality. It is workflow.
 - `llm` is the best choice when you want repeatable prompts and programming
   access.
 
-## Two important things that are not tools
+## Three important things that are not tools
 
+- [Model access](model-access.html) explains how you actually reach a model.
 - [Skills](skills.html) let you reuse playbooks or procedures with an agent.
 - [`AGENTS.md`](agents-md.html) gives agents project instructions in a standard
   place.
@@ -72,6 +76,7 @@ The biggest difference is not just model quality. It is workflow.
 ## Pages in this section
 
 - [Register with GitHub as a student](github-student.html)
+- [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
 - [Get started with Claude Code](claude-code.html)
 - [Get started with GitHub Copilot CLI](copilot-cli.html)
 - [Get started with OpenCode](opencode.html)

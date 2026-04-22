@@ -8,7 +8,7 @@ An introduction to using LLMs as tools.
 
 ### [Students](students/)
 
-Practical guides for GitHub student benefits, Claude Code, skills, `AGENTS.md`, Copilot, OpenCode, and the Python package `llm`.
+Practical guides for GitHub student benefits, model access, Claude Code, skills, `AGENTS.md`, Copilot, OpenCode, and the Python package `llm`.
 
 ### [TCS](tcs/)
 

@@ -27,8 +27,9 @@ You need two separate things:
 2. access to a model
 
 That second part is important. Installing `llm` does not automatically give you
-model access. In this course, the recommended path is to use the
-`llm-github-copilot` plugin so `llm` can use your GitHub Copilot access.
+model access. One common course path is to use the `llm-github-copilot` plugin
+so `llm` can use your GitHub Copilot access. But `llm` can also use direct API
+plugins and local-model plugins. See [Model access](model-access.html).
 
 ## Installation
 
@@ -62,7 +63,7 @@ Use the method that fits how you normally install Python tools.
 
 ## First setup
 
-A good student setup is:
+A common student setup is:
 
 1. install `llm`
 2. install the GitHub Copilot plugin
@@ -96,6 +97,9 @@ llm -m github_copilot/model-name "Give me three short study tips for learning a 
 
 The plugin uses GitHub device login and can reuse GitHub Copilot access instead
 of requiring a separate API key for a different provider.
+
+If you are using another access route, the exact plugin and authentication flow
+will differ. See [Model access](model-access.html) for the overview.
 
 ## A simple first workflow
 
@@ -176,8 +180,8 @@ So there are two separate questions:
 1. how to install and learn `llm`
 2. which provider, plugin, or local model configuration you will actually use
 
-The first part is general. In this course, the recommended second step is the
-`llm-github-copilot` plugin.
+The first part is general. A common second step in this course is the
+`llm-github-copilot` plugin, but it is not the only route.
 
 ## Privacy and logging
 
@@ -217,6 +221,7 @@ llm logs on
 
 ## Next step
 
+- [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
 - [Which tool should I use?](which-tool.html)
 
 ## Official links
@@ -226,4 +231,5 @@ llm logs on
 - [LLM usage](https://llm.datasette.io/en/stable/usage.html)
 - [LLM Python API](https://llm.datasette.io/en/stable/python-api.html)
 - [LLM plugins](https://llm.datasette.io/en/stable/plugins/index.html)
+- [LLM plugin directory](https://llm.datasette.io/en/stable/plugins/directory.html)
 - [llm-github-copilot](https://github.com/jmdaly/llm-github-copilot)

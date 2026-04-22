@@ -11,7 +11,8 @@ For students, this is often the easiest next step after GitHub Education
 approval: you already have access to GitHub's AI tooling, and now you can use it
 from the command line instead of only through a web page or editor.
 
-If GitHub student access is unavailable or you want a paid alternative, see
+If GitHub student access is unavailable or you want a different route to model
+access, see [Model access](model-access.html) and
 [Claude Code](claude-code.html).
 
 ## What it is good for
@@ -148,6 +149,7 @@ students:
 
 ## Next step
 
+- [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
 - [Get started with Claude Code](claude-code.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
 - [Get started with OpenCode](opencode.html)

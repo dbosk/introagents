@@ -11,6 +11,9 @@ subscription is the clearest place to start. It is a good fit when GitHub
 student access is unavailable, when you want to start immediately, or when you
 want a polished default workflow for repository work.
 
+If you are comparing Claude Code with GitHub Copilot, direct APIs, OpenCode
+Zen, or local models, see [Model access](model-access.html).
+
 ## What it is good for
 
 - exploring an unfamiliar repository
@@ -130,6 +133,7 @@ See also:
 
 ## Next step
 
+- [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
 - [Get started with OpenCode](opencode.html)

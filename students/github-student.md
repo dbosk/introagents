@@ -4,14 +4,17 @@ title: GitHub Student Registration
 
 # Register with GitHub as a student
 
-If you want to get started with agentic LLM tools in this course, the first step
-is to set up a personal GitHub account and apply for GitHub Education as a
-student.
+If you want to get started with agentic LLM tools in this course, setting up a
+personal GitHub account and applying for GitHub Education is still worth
+trying.
 
-This is useful because GitHub's student program gives eligible students access
-to GitHub student benefits, including the student Copilot plan. That gives you
-access to GitHub's AI tooling without having to begin with a paid individual
-subscription.
+This is useful because GitHub's student program can give eligible students
+access to GitHub student benefits, including the student Copilot plan. That can
+give you access to GitHub's AI tooling without having to begin with a paid
+individual subscription.
+
+At the same time, do not block your entire setup on this path. Approval can take
+time, and plan or model availability can change.
 
 ## What you need
 
@@ -79,6 +82,14 @@ GitHub's troubleshooting page is here:
 
 - [Why wasn't my GitHub Education application approved?](https://docs.github.com/en/education/explore-the-benefits-of-teaching-and-learning-with-github-education/github-global-campus-for-students/why-wasnt-my-application-to-global-campus-for-students-approved)
 
+## If approval is delayed
+
+GitHub is still worth trying, but it should not be your only plan.
+
+If approval is delayed or the available plan changes, see
+[Model access](model-access.html) for other routes, including
+[Claude Code](claude-code.html).
+
 ## Short version
 
 If you only want the essentials:
@@ -92,8 +103,10 @@ If you only want the essentials:
 
 ## Next step
 
-After your student benefits are active, continue here:
+After that, continue here:
 
+- [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
+- [Get started with Claude Code](claude-code.html)
 - [Get started with GitHub Copilot CLI](copilot-cli.html)
 
 ## Official links

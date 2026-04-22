@@ -13,6 +13,9 @@ One especially useful point for students is that OpenCode can connect to GitHub
 Copilot. That means you can often use your GitHub student benefits inside
 `opencode` instead of paying for a separate provider immediately.
 
+OpenCode can also use OpenCode Zen, direct API-backed providers, and local
+models. For the overall picture, see [Model access](model-access.html).
+
 ## What it is good for
 
 - exploring an unfamiliar repository
@@ -29,8 +32,8 @@ You should already have:
 2. a Git repository or project directory
 3. access to a model provider
 
-For many students, the easiest provider is GitHub Copilot through your GitHub
-student benefits. OpenCode can also use other providers and local models.
+One common starting route is GitHub Copilot through your GitHub student
+benefits. OpenCode can also use OpenCode Zen, direct APIs, and local models.
 
 ## Installation
 
@@ -81,7 +84,8 @@ If you want to use your GitHub Copilot student access, the common path is:
 5. Run `/models` and select a model.
 
 OpenCode can also connect to OpenCode Zen and many other providers. GitHub
-Copilot is just the easiest place for many students to start.
+Copilot is just one common place for students to start. See
+[Model access](model-access.html) for the overview.
 
 ## A simple first workflow
 
@@ -157,6 +161,7 @@ starting point.
 
 ## Next step
 
+- [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
 - [Get started with Claude Code](claude-code.html)
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)

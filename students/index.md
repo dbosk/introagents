@@ -22,6 +22,7 @@ Two common ways to begin are:
 ## Start here
 
 - [Register with GitHub as a student](github-student.html)
+- [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
 - [Get started with Claude Code](claude-code.html)
 - [Get started with GitHub Copilot CLI](copilot-cli.html)
 - [Get started with OpenCode](opencode.html)
@@ -38,13 +39,18 @@ be the easiest low-cost path to Copilot tools.
 Claude Code with `Claude Pro` is the clearest paid alternative when you want to
 start immediately with one polished coding agent.
 
+If you are unsure how tools, subscriptions, APIs, and local models fit
+together, start with [Model access](model-access.html).
+
 Skills and `AGENTS.md` become useful soon after that, because they let you keep
 reusable instructions in files instead of rewriting them in every chat.
 
-## Tool guides
+## Guides in this section
 
 These pages cover:
 
+- model access routes including GitHub, Claude subscriptions, direct APIs,
+  OpenCode Zen, and Ollama
 - Claude Code for a polished paid coding agent
 - GitHub Copilot CLI (`copilot`) for the simplest path from GitHub student
   benefits
