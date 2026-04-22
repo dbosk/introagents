@@ -11,6 +11,9 @@ For students, this is often the easiest next step after GitHub Education
 approval: you already have access to GitHub's AI tooling, and now you can use it
 from the command line instead of only through a web page or editor.
 
+If GitHub student access is unavailable or you want a paid alternative, see
+[Claude Code](claude-code.html).
+
 ## What it is good for
 
 GitHub Copilot CLI can help you:
@@ -132,7 +135,8 @@ students:
 - plan mode for discussing an implementation before code is written
 - `@path/to/file` to include a file in the prompt
 - `/compact` and `/context` for context management
-- custom instructions from repository files such as `AGENTS.md`
+- custom instructions from repository files such as
+  [`AGENTS.md`](agents-md.html)
 
 ## Short version
 
@@ -144,6 +148,8 @@ students:
 
 ## Next step
 
+- [Get started with Claude Code](claude-code.html)
+- [Learn what `AGENTS.md` is for](agents-md.html)
 - [Get started with OpenCode](opencode.html)
 - [Which tool should I use?](which-tool.html)
 

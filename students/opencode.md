@@ -5,9 +5,9 @@ title: OpenCode
 # OpenCode
 
 `opencode` is an open source AI coding agent that works in the terminal. For
-students in this course, it is a natural step after GitHub Copilot CLI: it is
-more configurable, can use several providers, and is stronger for longer
-agentic coding sessions.
+students in this course, it is a good next step after GitHub Copilot CLI or
+Claude Code when you want a more configurable, open source workflow. It can use
+several providers and is strong for longer agentic coding sessions.
 
 One especially useful point for students is that OpenCode can connect to GitHub
 Copilot. That means you can often use your GitHub student benefits inside
@@ -114,7 +114,7 @@ A few OpenCode features matter quickly:
 - `!command` to run a shell command and include its output
 - `/connect` to add or manage a provider
 - `/models` to inspect available models
-- `/init` to create or update `AGENTS.md`
+- `/init` to create or update [`AGENTS.md`](agents-md.html)
 - `/compact` to shrink conversation context during a long session
 
 If you want a one-shot non-interactive command, OpenCode also supports:
@@ -143,7 +143,9 @@ Use OpenCode when you want:
 - more explicit control over permissions and configuration
 
 If you mainly want the quickest path from GitHub student benefits to a working
-terminal agent, GitHub Copilot CLI is still the simpler first step.
+terminal agent, GitHub Copilot CLI is still the simpler first step. If you want
+one polished paid tool first, [Claude Code](claude-code.html) is another good
+starting point.
 
 ## Short version
 
@@ -155,6 +157,9 @@ terminal agent, GitHub Copilot CLI is still the simpler first step.
 
 ## Next step
 
+- [Get started with Claude Code](claude-code.html)
+- [Learn what skills are](skills.html)
+- [Learn what `AGENTS.md` is for](agents-md.html)
 - [Which tool should I use?](which-tool.html)
 - [Get started with the Python package `llm`](llm.html)
 
