@@ -11,8 +11,9 @@ Skills matter because they let you stop repeating the same long instructions in
 every session. Instead of pasting the same review checklist or writing guide
 over and over, you can turn it into a skill.
 
-This page uses Claude Code examples because its skill system is well documented,
-but the general idea transfers to other agentic tools too.
+This page uses Claude Code as the main concrete example because its skill system
+is well documented. OpenCode also supports skills, but the exact discovery
+locations, frontmatter, and invocation flow differ.
 
 ## When a skill is a good idea
 
@@ -25,15 +26,15 @@ Create a skill when you keep repeating the same procedure, for example:
 
 ## Use the right layer
 
-A useful rule is:
+A useful rule in Claude Code is:
 
 - put always-on project facts in `CLAUDE.md`
 - put reusable multi-step procedures in skills
 - put cross-agent project instructions in `AGENTS.md`
 
-If something should be loaded in every session, it probably belongs in
-`CLAUDE.md`. If it is a reusable playbook you only need sometimes, it probably
-belongs in a skill.
+If something should be loaded in every Claude Code session, it probably belongs
+in `CLAUDE.md`. If it is a reusable playbook you only need sometimes, it
+probably belongs in a skill.
 
 ## Where skills live
 
@@ -44,6 +45,11 @@ In Claude Code, the main locations are:
 
 Personal skills follow you across projects. Project skills travel with the
 repository and help your teammates too.
+
+OpenCode also supports skills, but it documents more locations, including
+`.opencode/skills/<skill-name>/SKILL.md`,
+`~/.config/opencode/skills/<skill-name>/SKILL.md`, and compatible
+`.claude/skills/...` or `.agents/skills/...` directories.
 
 ## A minimal example
 
@@ -67,15 +73,19 @@ When explaining code:
 4. Mention one likely mistake or misconception.
 ```
 
-The `name` becomes the slash command, so you can invoke this skill with
-`/explain-code`.
+In Claude Code, the `name` becomes the slash command, so you can invoke this
+skill with `/explain-code`.
 
 ## How skills are used
 
-A skill can be used in two ways:
+In Claude Code, a skill can be used in two ways:
 
 - automatically, when the description matches what you are asking for
 - directly, by calling `/skill-name`
+
+In OpenCode, agents discover available skills through the skill system and load
+them when relevant, but the documented mechanics are not the same slash-command
+flow as Claude Code.
 
 That means a good description matters. It tells the tool when the skill should
 be loaded.

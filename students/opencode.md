@@ -135,7 +135,9 @@ A safe beginner workflow is:
 
 1. Start `opencode` in a repository you understand.
 2. Ask it to explain the project before asking it to edit anything.
-3. Switch to plan mode when you want help designing a change.
+3. Switch to the built-in `Plan` agent when you want help designing a change.
+   It plays a role similar to plan mode in other tools, but OpenCode implements
+   it as a separate agent rather than a toggle.
 4. Only approve write or shell actions after reading them.
 
 Good first prompts are:

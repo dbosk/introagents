@@ -55,7 +55,7 @@ practical instructions they need.
 
 ## How precedence works
 
-Two rules are especially useful:
+For `AGENTS.md` itself, two rules are especially useful:
 
 - the closest `AGENTS.md` in the directory tree wins
 - explicit user instructions in chat override the file
@@ -68,9 +68,12 @@ files for subprojects.
 `AGENTS.md` is cross-agent. `CLAUDE.md` is Claude Code's own always-loaded
 instructions file.
 
-Claude Code reads `CLAUDE.md`, not `AGENTS.md`, directly. If a repository
-already uses `AGENTS.md`, the usual Claude Code pattern is to create a
-`CLAUDE.md` that imports it:
+Claude Code reads `CLAUDE.md`, not `AGENTS.md`, directly. That means the
+nearest-wins rule above is the `AGENTS.md` convention, not a general rule for
+every Claude-specific file.
+
+If a repository already uses `AGENTS.md`, the usual Claude Code pattern is to
+create a `CLAUDE.md` that imports it:
 
 ```markdown
 @AGENTS.md
@@ -82,6 +85,11 @@ already uses `AGENTS.md`, the usual Claude Code pattern is to create a
 
 That way you keep one shared set of project instructions for many tools, while
 still allowing Claude-specific additions.
+
+Some teams go one step further and keep `AGENTS.md` and `CLAUDE.md` literally
+the same by making one a symlink to the other. That can work well when your
+operating system, editor, and Git setup all handle symlinks cleanly, but the
+import pattern above is the more portable default.
 
 ## When students should create one
 
