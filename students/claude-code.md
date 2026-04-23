@@ -57,6 +57,9 @@ brew install --cask claude-code
 irm https://claude.ai/install.ps1 | iex
 ```
 
+For native Windows setup, Anthropic currently requires Git for Windows to be
+installed first.
+
 ## First start
 
 Start Claude Code inside a repository or project directory:

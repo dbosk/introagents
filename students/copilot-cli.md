@@ -7,9 +7,9 @@ title: GitHub Copilot CLI
 GitHub Copilot CLI lets you use GitHub's agentic AI tools directly from the
 terminal. The command is `copilot`.
 
-For students, this is often the easiest next step after GitHub Education
-approval: you already have access to GitHub's AI tooling, and now you can use it
-from the command line instead of only through a web page or editor.
+For students, this is often the easiest next step when GitHub Education and
+current Copilot availability line up: you can use GitHub's AI tooling from the
+command line instead of only through a web page or editor.
 
 If GitHub student access is unavailable or you want a different route to model
 access, see [Model access](model-access.html) and
@@ -34,7 +34,8 @@ repository.
 You should already have:
 
 1. a personal GitHub account
-2. GitHub Education approval or another active Copilot subscription
+2. active Copilot access, whether that comes through GitHub Education or
+   another Copilot subscription
 3. a terminal you are comfortable using
 
 The official installation page is here:
@@ -56,6 +57,8 @@ brew install copilot-cli
 ```sh
 npm install -g @github/copilot
 ```
+
+This installation path currently requires Node.js 22 or newer.
 
 ### Install script on macOS or Linux
 
@@ -158,7 +161,8 @@ After you have seen the three main coding-agent guides, the page on
 
 ## Short version
 
-1. Make sure your GitHub student benefits are active.
+1. Make sure you have active Copilot access, either through GitHub Education or
+   another Copilot subscription.
 2. Install GitHub Copilot CLI.
 3. Run `copilot` inside a repository you trust.
 4. Start with exploratory prompts.

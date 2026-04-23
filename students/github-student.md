@@ -9,9 +9,9 @@ personal GitHub account and applying for GitHub Education is still worth
 trying.
 
 This is useful because GitHub's student program can give eligible students
-access to GitHub student benefits, including the student Copilot plan. That can
-give you access to GitHub's AI tooling without having to begin with a paid
-individual subscription.
+access to GitHub student benefits, which may include Copilot access depending
+on current availability. When that path is open, it can give you access to
+GitHub's AI tooling without having to begin with a paid individual subscription.
 
 At the same time, do not block your entire setup on this path. Approval can take
 time, and plan or model availability can change.
@@ -54,15 +54,17 @@ In short, the process is:
 Useful forms of proof include a school ID, transcript, class schedule, or an
 enrollment verification letter.
 
-## Step 3: confirm your student benefits
+## Step 3: confirm your student benefits and current Copilot availability
 
 After approval, check these pages:
 
 - [GitHub Education for students](https://github.com/education/students)
 - [Plans for GitHub Copilot](https://docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot)
 
-For our purposes, the important outcome is that you can then start using GitHub
-Copilot tools and continue to later workflows based on:
+For our purposes, the important outcome is that GitHub Education approval gives
+you one possible route into later workflows. Check the current Copilot
+availability on those pages before assuming that approval immediately enables
+the tools below:
 
 - GitHub Copilot CLI (`copilot`)
 - `opencode`
@@ -98,8 +100,8 @@ If you only want the essentials:
 2. Verify your email address.
 3. Apply for GitHub Education.
 4. Upload clear proof that you are currently a student.
-5. After approval, use the student Copilot benefits and move on to the CLI and
-   workflow tools.
+5. After approval, check what Copilot access is currently available, and use
+   [Model access](model-access.html) if you need another route.
 
 ## Next step
 
