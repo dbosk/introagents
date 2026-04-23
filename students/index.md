@@ -26,9 +26,10 @@ window, isolating side work, and separating instructions from memory. The page
 have seen the tools themselves, and also explains why this course puts so much
 weight on local CLI agents rather than only browser chat. Many students have
 already tried tools such as ChatGPT in the browser. That is a fine starting
-point for brainstorming and general questions, but repository work becomes much
-more efficient when an agent can inspect the actual files, search the project,
-run commands, and use tools directly.
+point, but work becomes much more efficient when an agent can inspect the
+actual files, search the project, run commands, and use tools directly. That
+matters not only for editing code, but also for repository-grounded questions,
+planning, and implementation ideas.
 
 ## Start here
 

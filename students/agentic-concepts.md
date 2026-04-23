@@ -116,15 +116,20 @@ tools, not automatic properties of every LLM interface.
 ## Why the browser comparison matters
 
 By this point, you have seen several alternatives to ordinary browser chat.
-That comparison matters because many students already know tools such as
-ChatGPT from the browser, and those tools are often useful for brainstorming,
-explanations, or generic questions.
+Many students already know tools such as ChatGPT from the browser.
 
-Project work is different. In a browser chat, you usually have to describe the
-repository yourself, paste code manually, and keep deciding which details to
-include. A local agentic CLI workflow is more efficient because the tool can
-inspect the actual files, search the project, run commands, fetch
-documentation, and use tools in the environment directly.
+Keep the task fixed when you compare the workflows. Suppose you want help with
+brainstorming, answering a question, understanding a repository, planning a
+change, or deciding how to implement something in the project. In a browser
+chat, you usually have to describe the relevant files and situation yourself,
+paste code manually, and keep deciding which details to include. In a local
+agentic CLI workflow, the tool can inspect the actual files, search the
+project, run commands, and use tools in the environment directly.
+
+That means the agent is often more useful even for brainstorming or questions
+when those depend on the project itself, such as what the repository already
+contains, how one part connects to another, or which implementation approach
+fits the code that is already there.
 
 That changes the whole workflow. The agent is not only predicting text from a
 description of your project. It can ground its work in the project itself and
