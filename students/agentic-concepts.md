@@ -113,6 +113,30 @@ Across the same dimensions:
 Generalization: `llm` shows that these concepts are design choices of agentic
 tools, not automatic properties of every LLM interface.
 
+## Why the browser comparison matters
+
+By this point, you have seen several alternatives to ordinary browser chat.
+That comparison matters because many students already know tools such as
+ChatGPT from the browser, and those tools are often useful for brainstorming,
+explanations, or generic questions.
+
+Project work is different. In a browser chat, you usually have to describe the
+repository yourself, paste code manually, and keep deciding which details to
+include. A local agentic CLI workflow is more efficient because the tool can
+inspect the actual files, search the project, run commands, fetch
+documentation, and use tools in the environment directly.
+
+That changes the whole workflow. The agent is not only predicting text from a
+description of your project. It can ground its work in the project itself and
+in the outputs of tools. That is why planning, context management, subagents,
+and instruction layers matter so much in these tools: they are acting inside a
+real working environment, not only inside a chat box.
+
+This is also why the course keeps returning to local terminal workflows. The
+goal is not to say that browser chat is useless. The goal is to help you see
+why agentic CLI work is faster, better grounded, and easier to verify when the
+task depends on the actual repository, files, commands, and tools.
+
 ## Putting it together
 
 When choosing and using a tool, a useful mental checklist is:

@@ -23,7 +23,12 @@ As you read the three main coding-agent guides, notice that they keep returning
 to the same problems: planning before editing, managing a limited context
 window, isolating side work, and separating instructions from memory. The page
 [Agentic concepts](agentic-concepts.html) reconnects those examples after you
-have seen the tools themselves.
+have seen the tools themselves, and also explains why this course puts so much
+weight on local CLI agents rather than only browser chat. Many students have
+already tried tools such as ChatGPT in the browser. That is a fine starting
+point for brainstorming and general questions, but repository work becomes much
+more efficient when an agent can inspect the actual files, search the project,
+run commands, and use tools directly.
 
 ## Start here
 

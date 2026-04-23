@@ -65,6 +65,10 @@ If you specifically want a local or offline route, read
 
 The biggest difference is not just model quality. It is workflow.
 
+Browser chat often depends on copy-paste and your own description of the
+project. Terminal agents can inspect files and use tools directly, which is why
+they are usually much more effective for repository work.
+
 - GitHub Copilot CLI is the easiest entry point.
 - Claude Code is the strongest polished paid general coding tool.
 - OpenCode is the strongest choice for interactive agentic coding in a
