@@ -195,6 +195,24 @@ terminal agent, GitHub Copilot CLI is still the simpler first step. If you want
 one polished paid tool first, [Claude Code](claude-code.html) is another good
 starting point.
 
+## Notice the pattern
+
+If you compare OpenCode with the other coding-agent tools in this guide, the
+same recurring ideas are visible here too:
+
+- `Planning before editing:` OpenCode separates planning into a built-in `Plan`
+  agent instead of a plan-mode toggle.
+- `Limited context:` `/compact` and the emphasis on explicitly managing longer
+  sessions both reflect a limited context window.
+- `Work isolation:` specialized agents and subagents help keep planning or
+  exploration work out of the main thread.
+- `Instructions and memory:` instruction files such as
+  [`AGENTS.md`](agents-md.html) and reusable skills are explicit, while the
+  current session carries the working context.
+
+After you have seen the three main coding-agent guides, the page on
+[Agentic concepts](agentic-concepts.html) reconnects these recurring ideas.
+
 ## Short version
 
 1. Install `opencode`.
@@ -208,6 +226,7 @@ starting point.
 - [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
 - [Learn when local models and Ollama make sense](local-models.html)
 - [Get started with Claude Code](claude-code.html)
+- [Understand the shared agentic concepts](agentic-concepts.html)
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
 - [Which tool should I use?](which-tool.html)

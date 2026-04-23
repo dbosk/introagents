@@ -122,6 +122,23 @@ See also:
 - [Skills](skills.html)
 - [AGENTS.md](agents-md.html)
 
+## Notice the pattern
+
+If you compare Claude Code with the other coding-agent tools in this guide, the
+same recurring ideas show up again:
+
+- `Planning before editing:` Claude Code works well when you ask for a plan
+  first and keep non-trivial changes read-only until the plan is sound.
+- `Limited context:` one task per session, `/compact`, and fresh sessions all
+  help manage a limited context window.
+- `Work isolation:` subagents with their own context windows let side work stay
+  out of the main thread.
+- `Instructions and memory:` `CLAUDE.md`, skills, and `AGENTS.md` are
+  instruction layers, while Claude's project memory is separate.
+
+After you have seen the three main coding-agent guides, the page on
+[Agentic concepts](agentic-concepts.html) reconnects these recurring ideas.
+
 ## Short version
 
 1. Get a Claude plan that includes Claude Code access.
@@ -137,6 +154,7 @@ See also:
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
 - [Get started with OpenCode](opencode.html)
+- [Understand the shared agentic concepts](agentic-concepts.html)
 - [Which tool should I use?](which-tool.html)
 
 ## Official links

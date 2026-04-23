@@ -263,6 +263,24 @@ llm logs on
 - remember that model access and package installation are separate steps
 - turn logging off if you are working with sensitive material
 
+## How it differs from the coding agents
+
+`llm` helps most when you want direct control over prompts, scripts, logs, and
+structured output. That makes it a useful contrast case:
+
+- `Planning before editing:` there is no built-in plan mode or separate
+  planning agent. You structure the prompt or script yourself.
+- `Limited context:` chats and logs exist, but you decide what context to send
+  and when to start a fresh run.
+- `Work isolation:` there is no central subagent workflow. If you want
+  separation, you usually create separate prompts, chats, or scripts.
+- `Instructions and memory:` saved prompts, plugins, and logs are useful, but
+  they are not the same thing as a coding agent that loads project instructions
+  and manages its own memory layer.
+
+If you want the shared concepts across the coding-agent tools, read
+[Agentic concepts](agentic-concepts.html).
+
 ## Short version
 
 1. Install `llm`.
@@ -275,6 +293,7 @@ llm logs on
 
 - [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
 - [Learn when local models and Ollama make sense](local-models.html)
+- [Understand the shared agentic concepts](agentic-concepts.html)
 - [Which tool should I use?](which-tool.html)
 
 ## Official links

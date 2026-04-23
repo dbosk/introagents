@@ -139,6 +139,23 @@ students:
 - custom instructions from repository files such as
   [`AGENTS.md`](agents-md.html)
 
+## Notice the pattern
+
+If you compare Copilot CLI with the other coding-agent tools in this guide, a
+few recurring ideas start to appear:
+
+- `Planning before editing:` Copilot exposes this directly as plan mode.
+- `Limited context:` `/context`, `/compact`, and automatic compaction all exist
+  because the session has a limited context window.
+- `Work isolation:` Copilot CLI puts less visible emphasis on subagents in the
+  beginner workflow than Claude Code or OpenCode. That contrast matters too.
+- `Instructions and memory:` repository instructions such as
+  [`AGENTS.md`](agents-md.html) guide behavior, while Copilot Memory is a
+  separate layer for reusable context.
+
+After you have seen the three main coding-agent guides, the page on
+[Agentic concepts](agentic-concepts.html) reconnects these recurring ideas.
+
 ## Short version
 
 1. Make sure your GitHub student benefits are active.
@@ -153,6 +170,7 @@ students:
 - [Get started with Claude Code](claude-code.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
 - [Get started with OpenCode](opencode.html)
+- [Understand the shared agentic concepts](agentic-concepts.html)
 - [Which tool should I use?](which-tool.html)
 
 ## Official links

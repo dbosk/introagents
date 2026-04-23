@@ -19,6 +19,12 @@ Several common ways to begin are:
 4. Use the Python package `llm` when you want shell pipelines, scripts, or
    Python integration.
 
+As you read the three main coding-agent guides, notice that they keep returning
+to the same problems: planning before editing, managing a limited context
+window, isolating side work, and separating instructions from memory. The page
+[Agentic concepts](agentic-concepts.html) reconnects those examples after you
+have seen the tools themselves.
+
 ## Start here
 
 - [Register with GitHub as a student](github-student.html)
@@ -27,6 +33,7 @@ Several common ways to begin are:
 - [Get started with Claude Code](claude-code.html)
 - [Get started with GitHub Copilot CLI](copilot-cli.html)
 - [Get started with OpenCode](opencode.html)
+- [Understand the shared agentic concepts](agentic-concepts.html)
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
 - [Get started with the Python package `llm`](llm.html)
@@ -61,6 +68,8 @@ These pages cover:
 - GitHub Copilot CLI (`copilot`) for the simplest path from GitHub student
   benefits
 - `opencode` for a more capable open source coding agent
+- agentic concepts such as planning, context windows, subagents, and memory
+  across the main coding-agent tools
 - skills for reusable agent playbooks
 - `AGENTS.md` for cross-agent project instructions
 - the Python package `llm` for shell pipelines, scripts, and Python programs

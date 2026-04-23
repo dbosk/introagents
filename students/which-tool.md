@@ -72,6 +72,11 @@ The biggest difference is not just model quality. It is workflow.
 - `llm` is the best choice when you want repeatable prompts and programming
   access.
 
+If you want to understand why the coding-agent tools feel similar in some ways
+and different in others, read [Agentic concepts](agentic-concepts.html). That
+page reconnects planning, context windows, subagents, and memory across the
+main coding-agent tools, then uses `llm` as a contrast case.
+
 ## Three important things that are not tools
 
 - [Model access](model-access.html) explains how you actually reach a model.
@@ -87,6 +92,7 @@ The biggest difference is not just model quality. It is workflow.
 - [Get started with Claude Code](claude-code.html)
 - [Get started with GitHub Copilot CLI](copilot-cli.html)
 - [Get started with OpenCode](opencode.html)
+- [Understand the shared agentic concepts](agentic-concepts.html)
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
 - [Get started with the Python package `llm`](llm.html)
