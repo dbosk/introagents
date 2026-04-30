@@ -44,6 +44,7 @@ planning, and implementation ideas.
 - [Learn what `AGENTS.md` is for](agents-md.html)
 - [Get started with the Python package `llm`](llm.html)
 - [Which tool should I use?](which-tool.html)
+- [Which model should I use?](which-model.html)
 
 ## Common starting points
 
@@ -80,6 +81,7 @@ These pages cover:
 - `AGENTS.md` for cross-agent project instructions
 - the Python package `llm` for shell pipelines, scripts, and Python programs
 - a comparison page for choosing the right tool for the task
+- a comparison page for choosing the right model for the task
 
 ## Official links
 

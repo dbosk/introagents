@@ -205,6 +205,9 @@ Use one of the model names returned by `llm models`, such as a
 `github_copilot/...` model, `claude-haiku-4.5`, `gpt-4o-mini`, or a local
 Ollama model.
 
+For guidance on which model fits which kind of task, see
+[Which model should I use?](which-model.html).
+
 That same package also supports attachments, tools, JSON schemas, and async
 usage.
 
@@ -293,6 +296,7 @@ If you want the shared concepts across the coding-agent tools, read
 
 - [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
 - [Learn when local models and Ollama make sense](local-models.html)
+- [Which model should I use?](which-model.html)
 - [Understand the shared agentic concepts](agentic-concepts.html)
 - [Which tool should I use?](which-tool.html)
 

@@ -84,6 +84,8 @@ main coding-agent tools, then uses `llm` as a contrast case.
 ## Three important things that are not tools
 
 - [Model access](model-access.html) explains how you actually reach a model.
+- [Which model should I use?](which-model.html) explains which model fits
+  which kind of task once you have a tool and a way to reach models.
 - [Skills](skills.html) let you reuse playbooks or procedures with an agent.
 - [`AGENTS.md`](agents-md.html) gives agents project instructions in a standard
   place.
@@ -100,3 +102,4 @@ main coding-agent tools, then uses `llm` as a contrast case.
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
 - [Get started with the Python package `llm`](llm.html)
+- [Which model should I use?](which-model.html)

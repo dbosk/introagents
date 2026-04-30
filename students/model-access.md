@@ -133,11 +133,74 @@ may need a larger `num_ctx` setting.
 
 ## A simple decision rule
 
-1. If GitHub student benefits work, start there.
-2. If you want one paid coding tool, start with Claude Code.
-3. If you want scripts or provider choice, learn direct API access.
-4. If you want OpenCode with less provider hunting, consider Zen.
+1. If GitHub student benefits work, start there. Note that the GitHub Copilot
+   billing model has been tightening recently, so do not assume the limits
+   you see today will last.
+2. If you want one paid coding tool, start with Claude Code. Expect strong
+   output but some session-limit anxiety.
+3. If you want predictable per-request cost, consider OpenCode Zen or Go.
+4. If you want scripts or provider choice, learn direct API access.
 5. If you want local or offline use and have enough hardware, consider Ollama.
+
+Once you know how to reach a model, the next question is which model to
+actually use for a given task. See
+[Which model should I use?](which-model.html).
+
+## Subscription experience and fairness
+
+The table above compares access *routes* abstractly. In practice, students
+also want to know which subscriptions feel fair, predictable, and worth the
+money. The table below collects current pricing, usage limits, and
+practitioner experience reported in the course discussion channel. Prices,
+limits, and policies change often, so verify the source links before
+committing.
+
+| Subscription | Price | Usage / limits | Notes | Sources | Experience and fairness |
+| --- | ---: | --- | --- | --- | --- |
+| OpenAI Codex via ChatGPT Plus | $20/mo | Codex included; lighter use; suitable for select projects throughout the week | Codex is bundled into ChatGPT, not sold as a separate consumer subscription | [Codex CLI docs](https://platform.openai.com/docs/codex/cli), [ChatGPT Pro help](https://help.openai.com/en/articles/9793128-what-is-chatgpt-pro) | Feels good right now. Ric reports that Codex via ChatGPT Plus finally made the subscription worthwhile and that it feels like working without running out of gas. Currently positive, with explicit expectation that this could tighten later. |
+| OpenAI Codex via ChatGPT Pro | $100/mo or $200/mo | Higher Codex usage than Plus; OpenAI currently describes roughly 5x or 20x higher limits than Plus depending on tier | Still bundled into ChatGPT Pro tiers rather than standalone Codex plans | [ChatGPT Pro help](https://help.openai.com/en/articles/9793128-what-is-chatgpt-pro) | No direct first-hand experience reported in the course discussion. Likely fair if you truly need the headroom, but the strongest praise was for Plus-value, not the higher tiers specifically. |
+| Claude Pro | $20/mo monthly or $17/mo annual | More usage; includes Claude Code and Claude Cowork | Claude Code Pro is not a separate SKU on the pricing page | [Claude Pro pricing](https://claude.com/pricing/pro) | Mixed but still strong. Earlier off-peak promos were popular, and Daniel and Ric both get good work out of Claude, but there is recurring session-limit anxiety and active planning around resets. Productive, but not very predictable. |
+| Claude Max 5x | $100/mo | 5x more usage than Pro | Includes Claude Code | [Claude Max pricing](https://claude.com/pricing/max) | Likely better if you value continuity more than price, but the course discussion did not include concrete hands-on Max feedback. The appeal is mainly buying relief from limits. |
+| Claude Max 20x | $200/mo | 20x more usage than Pro | Includes Claude Code | [Claude Max pricing](https://claude.com/pricing/max) | Same caveat as Max 5x. Probably attractive only for very heavy use. Claude is admired for output quality, but the pricing and limit model still seems to create more mental overhead than the alternatives. |
+| GitHub Copilot Pro+ | $39/mo | 1,500 premium requests/mo; unlimited agent mode and chats with GPT-5 mini; unlimited inline suggestions | Extra premium requests at $0.04/request; usage-based billing changes are coming June 1 | [Copilot plans](https://github.com/features/copilot/plans), [Copilot billing docs](https://docs.github.com/en/copilot/concepts/billing/copilot-requests) | Sentiment turned negative after the billing change announcement. Daniel and Ric both reacted as if the old deal had been unusually generous and was now getting worse. Predictability seems worse after the multiplier and usage-based billing news. |
+| OpenCode Go | $5 first month, then $10/mo | Hard limits: $12 per 5 hours, $30/week, $60/month | Beta | [OpenCode Go docs](https://opencode.ai/docs/go/) | Positive on workflow. Daniel explicitly praised OpenCode for dynamic context pruning and uses it strategically when Claude is near its limit. The usage model is understandable and the product helps extend productive time rather than creating more anxiety. |
+| OpenCode Zen | pay-as-you-go | No fixed monthly cap; per-request billing, free models available, spend limits configurable | More prepaid or PAYG than a normal monthly subscription | [OpenCode Zen docs](https://opencode.ai/docs/zen/) | Probably the most predictable in accounting terms because it is explicit PAYG, but that also means less of the cozy all-you-can-eat feeling. Respectable and transparent, though not discussed emotionally in the same way as Claude or Codex. |
+| Google AI Plus | from $7.99/mo | More access; current help pages list up to 30 Pro prompts/day, 90 Thinking/day, 12 Deep Research/day, 50 images/day, 2 videos/day; 128K context | Region-specific pricing | [Gemini subscriptions](https://gemini.google/us/subscriptions/?hl=en), [Gemini usage limits](https://support.google.com/gemini/answer/16275805?hl=en) | Mentioned as a plan to include, but no first-hand experience was shared in the course discussion. Fairness unknown. |
+| Google AI Pro | $19.99/mo | Higher access; up to 100 Pro/day, 300 Thinking/day, 20 Deep Research/day, 100 images/day, 3 videos/day; 1M context | Region-specific pricing | [Gemini subscriptions](https://gemini.google/us/subscriptions/?hl=en), [Gemini usage limits](https://support.google.com/gemini/answer/16275805?hl=en) | Same caveat: included for completeness, but no real usage impressions in the course discussion. Fairness unknown. |
+| Google AI Ultra | $249.99/mo | Highest access; up to 500 Pro/day, 1500 Thinking/day, 120 Deep Research/day, 1000 images/day, 5 videos/day, plus Deep Think; 1M context | Region-specific pricing and availability | [Gemini subscriptions](https://gemini.google/us/subscriptions/?hl=en), [Gemini usage limits](https://support.google.com/gemini/answer/16275805?hl=en) | No first-hand evidence in the course discussion. Hard to rate fairly. |
+
+A few naming caveats:
+
+- Claude Code Pro and Claude Code Max are really Claude Pro and Claude Max
+  plans that include Claude Code.
+- OpenAI Codex is currently bundled into ChatGPT plans rather than sold as
+  its own consumer subscription.
+- OpenCode Zen is pay-as-you-go rather than a normal monthly plan.
+
+### Short ranked summary
+
+From the course discussion:
+
+- **Best value right now:** OpenAI Codex via ChatGPT Plus. Ric's feedback is
+  the strongest positive signal: it finally made the subscription feel
+  worthwhile, and it currently feels generous.
+- **Best output quality:** Claude. Still treated as the strongest worker
+  overall, but with more session-limit anxiety and more operational friction.
+- **Best predictability and transparency:** OpenCode Zen, then OpenCode Go.
+  Zen is explicit PAYG, and Go has visible hard caps. They may feel less
+  luxurious than "unlimited-ish" plans, but they are easier to reason about.
+- **Best workflow complement:** OpenCode as a harness. Independent of
+  provider, Daniel explicitly likes OpenCode for dynamic context pruning and
+  for extending productive time when Claude is near its limit.
+- **Best for heavy users if you just want headroom:** probably Claude Max or
+  ChatGPT Pro tiers, but the course discussion does not contain enough
+  first-hand evidence to rank those confidently beyond "you pay to reduce
+  interruptions".
+- **Biggest fairness downgrade recently:** GitHub Copilot Pro+. The billing
+  and multiplier changes shifted the mood from "great deal" to "that was too
+  good to last".
+- **Most undersampled in the discussion:** Gemini. Included for
+  completeness, but not enough first-hand usage to rate fairly.
 
 ## Keep expectations flexible
 
@@ -154,6 +217,7 @@ current provider docs and current subscription details.
 - [Get started with OpenCode](opencode.html)
 - [Get started with the Python package `llm`](llm.html)
 - [Which tool should I use?](which-tool.html)
+- [Which model should I use?](which-model.html)
 
 ## Official links
 

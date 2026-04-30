@@ -127,7 +127,8 @@ For tool-calling local models, you may need a larger context setting.
 
 Whichever route you use, finish with `/models` so you know which models are
 actually available in your current session. See [Model access](model-access.html)
-for the broader overview.
+for the broader overview, and [Which model should I use?](which-model.html)
+for guidance on which model fits which kind of task.
 
 ## A simple first workflow
 
@@ -230,6 +231,7 @@ After you have seen the three main coding-agent guides, the page on
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
 - [Which tool should I use?](which-tool.html)
+- [Which model should I use?](which-model.html)
 - [Get started with the Python package `llm`](llm.html)
 
 ## Official links
