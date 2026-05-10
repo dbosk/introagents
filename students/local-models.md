@@ -12,6 +12,19 @@ This is not the simplest default path for most students. It becomes attractive
 when local or offline use, privacy, open-weight experimentation, or avoiding
 per-prompt API billing matters more than using the strongest hosted model.
 
+## Intended learning outcomes covered on this page
+
+After working through this page, students should be better able to:
+
+- choose an appropriate access route based on availability, cost, and desired
+  workflow
+- explain when local models via Ollama are a good fit and when hosted tools are
+  the better choice
+- critically verify model output against files, tools, and project context
+  before relying on it
+- choose an appropriate model family for a task by weighing quality, speed,
+  cost, and local-versus-hosted constraints
+
 ## When this route makes sense
 
 - you want local or offline use

@@ -11,6 +11,20 @@ pipelines, or Python scripts that you can rerun and adapt.
 Compared to GitHub Copilot CLI or OpenCode, `llm` is less of a full coding
 agent and more of a flexible interface for model access.
 
+## Intended learning outcomes covered on this page
+
+After working through this page, students should be better able to:
+
+- distinguish between an LLM tool, an underlying model, and a model-access
+  route
+- choose an appropriate tool for a task by distinguishing between
+  coding-agent workflows and scripting or pipeline workflows
+- explain when local models via Ollama are a good fit and when hosted tools are
+  the better choice
+- use `llm` for a repeatable shell or Python-based workflow
+- critically verify model output against files, tools, and project context
+  before relying on it
+
 ## What it is good for
 
 - quick prompts from the terminal

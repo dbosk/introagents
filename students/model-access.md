@@ -15,6 +15,17 @@ For example:
 If a tool installs correctly but still cannot answer prompts, missing model
 access is often the reason.
 
+## Intended learning outcomes covered on this page
+
+After working through this page, students should be better able to:
+
+- distinguish between an LLM tool, an underlying model, and a model-access
+  route
+- choose an appropriate access route based on availability, cost, and desired
+  workflow
+- explain when local models via Ollama are a good fit and when hosted tools are
+  the better choice
+
 ## Short version
 
 - use GitHub Copilot when student benefits are available and you want the

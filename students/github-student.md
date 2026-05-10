@@ -16,6 +16,15 @@ GitHub's AI tooling without having to begin with a paid individual subscription.
 At the same time, do not block your entire setup on this path. Approval can take
 time, and plan or model availability can change.
 
+## Intended learning outcomes covered on this page
+
+After working through this page, students should be better able to:
+
+- distinguish between an LLM tool, an underlying model, and a model-access
+  route
+- choose an appropriate access route based on availability, cost, and desired
+  workflow
+
 ## What you need
 
 Before applying, you should have:

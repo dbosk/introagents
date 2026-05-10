@@ -15,6 +15,21 @@ If GitHub student access is unavailable or you want a different route to model
 access, see [Model access](model-access.html) and
 [Claude Code](claude-code.html).
 
+## Intended learning outcomes covered on this page
+
+After working through this page, students should be better able to:
+
+- choose an appropriate tool for a task by distinguishing between
+  coding-agent workflows and scripting or pipeline workflows
+- explain why repository-grounded terminal agents support different kinds of
+  work than ordinary browser chat
+- use a coding agent in a way that separates planning from editing
+- recognize context-window limits and use strategies such as fresh sessions or
+  compaction when context quality degrades
+- distinguish between persistent instructions and reusable memory or context
+- critically verify model output against files, tools, and project context
+  before relying on it
+
 ## What it is good for
 
 GitHub Copilot CLI can help you:

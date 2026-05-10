@@ -11,6 +11,14 @@ Think of it as a README for agents: a predictable place for setup commands,
 test commands, code style notes, security warnings, and other project-specific
 instructions that would be awkward to repeat in every chat.
 
+## Intended learning outcomes covered on this page
+
+After working through this page, students should be better able to:
+
+- distinguish between persistent instructions and reusable memory or context
+- use `AGENTS.md` and skills appropriately as reusable instruction layers in a
+  project workflow
+
 ## What belongs in it
 
 Common things to include are:

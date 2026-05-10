@@ -16,6 +16,21 @@ If you are unsure how you actually get access to a model, read
 If you specifically want a local or offline route, read
 [Local models and Ollama](local-models.html) next.
 
+## Intended learning outcomes covered on this page
+
+After working through this page, students should be better able to:
+
+- distinguish between an LLM tool, an underlying model, and a model-access
+  route
+- choose an appropriate access route based on availability, cost, and desired
+  workflow
+- choose an appropriate tool for a task by distinguishing between
+  coding-agent workflows and scripting or pipeline workflows
+- explain why repository-grounded terminal agents support different kinds of
+  work than ordinary browser chat
+- explain when local models via Ollama are a good fit and when hosted tools are
+  the better choice
+
 ## Short answer
 
 - use GitHub Copilot CLI (`copilot`) if you want the simplest student setup

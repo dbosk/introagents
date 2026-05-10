@@ -12,6 +12,25 @@ This page reconnects those examples. The point is not that every tool is
 identical. The point is that the differences make the shared ideas easier to
 see.
 
+## Intended learning outcomes covered on this page
+
+After working through this page, students should be better able to:
+
+- choose an appropriate tool for a task by distinguishing between
+  coding-agent workflows and scripting or pipeline workflows
+- explain why repository-grounded terminal agents support different kinds of
+  work than ordinary browser chat
+- use a coding agent in a way that separates planning from editing
+- recognize context-window limits and use strategies such as fresh sessions or
+  compaction when context quality degrades
+- explain how subagents or separate runs can isolate side work and keep a main
+  task focused
+- distinguish between persistent instructions and reusable memory or context
+- use `AGENTS.md` and skills appropriately as reusable instruction layers in a
+  project workflow
+- critically verify model output against files, tools, and project context
+  before relying on it
+
 ## Planning before editing
 
 When an agent starts editing too early, it often makes the wrong change faster.

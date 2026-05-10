@@ -13,6 +13,17 @@ If you are unsure how you actually reach a model, start with
 [Model access](model-access.html) first. If you specifically want a local or
 offline route, see [Local models and Ollama](local-models.html).
 
+## Intended learning outcomes covered on this page
+
+After working through this page, students should be better able to:
+
+- distinguish between an LLM tool, an underlying model, and a model-access
+  route
+- explain when local models via Ollama are a good fit and when hosted tools are
+  the better choice
+- choose an appropriate model family for a task by weighing quality, speed,
+  cost, and local-versus-hosted constraints
+
 ## Short answer
 
 - use Claude Opus when the task is hard, ambiguous, or needs deep reasoning

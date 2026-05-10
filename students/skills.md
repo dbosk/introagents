@@ -15,6 +15,14 @@ This page uses Claude Code as the main concrete example because its skill system
 is well documented. OpenCode also supports skills, but the exact discovery
 locations, frontmatter, and invocation flow differ.
 
+## Intended learning outcomes covered on this page
+
+After working through this page, students should be better able to:
+
+- distinguish between persistent instructions and reusable memory or context
+- use `AGENTS.md` and skills appropriately as reusable instruction layers in a
+  project workflow
+
 ## When a skill is a good idea
 
 Create a skill when you keep repeating the same procedure, for example:

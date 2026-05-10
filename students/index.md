@@ -31,6 +31,34 @@ actual files, search the project, run commands, and use tools directly. That
 matters not only for editing code, but also for repository-grounded questions,
 planning, and implementation ideas.
 
+## Intended learning outcomes
+
+Across this section, students should be able to:
+
+1. Distinguish between an LLM tool, an underlying model, and a model-access
+   route.
+2. Choose an appropriate access route (for example GitHub, Claude, direct API,
+   Zen, or Ollama) based on availability, cost, and desired workflow.
+3. Choose an appropriate tool for a task by distinguishing between
+   coding-agent workflows and scripting or pipeline workflows.
+4. Explain why repository-grounded terminal agents support different kinds of
+   work than ordinary browser chat.
+5. Use a coding agent in a way that separates planning from editing.
+6. Recognize context-window limits and use strategies such as fresh sessions
+   or compaction when context quality degrades.
+7. Explain how subagents or separate runs can isolate side work and keep a
+   main task focused.
+8. Distinguish between persistent instructions and reusable memory or context.
+9. Use `AGENTS.md` and skills appropriately as reusable instruction layers in
+   a project workflow.
+10. Explain when local models via Ollama are a good fit and when hosted tools
+    are the better choice.
+11. Use `llm` for a repeatable shell or Python-based workflow.
+12. Critically verify model output against files, tools, and project context
+    before relying on it.
+13. Choose an appropriate model family for a task by weighing quality, speed,
+    cost, and local-versus-hosted constraints.
+
 ## Start here
 
 - [Register with GitHub as a student](github-student.html)

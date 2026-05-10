@@ -16,6 +16,28 @@ Copilot. That means you can often use your GitHub student benefits inside
 OpenCode can also use OpenCode Zen, direct API-backed providers, and local
 models. For the overall picture, see [Model access](model-access.html).
 
+## Intended learning outcomes covered on this page
+
+After working through this page, students should be better able to:
+
+- choose an appropriate access route based on availability, cost, and desired
+  workflow
+- choose an appropriate tool for a task by distinguishing between
+  coding-agent workflows and scripting or pipeline workflows
+- explain why repository-grounded terminal agents support different kinds of
+  work than ordinary browser chat
+- use a coding agent in a way that separates planning from editing
+- recognize context-window limits and use strategies such as fresh sessions or
+  compaction when context quality degrades
+- explain how subagents or separate runs can isolate side work and keep a main
+  task focused
+- use `AGENTS.md` and skills appropriately as reusable instruction layers in a
+  project workflow
+- explain when local models via Ollama are a good fit and when hosted tools are
+  the better choice
+- critically verify model output against files, tools, and project context
+  before relying on it
+
 ## What it is good for
 
 - exploring an unfamiliar repository
