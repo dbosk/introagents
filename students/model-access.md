@@ -157,6 +157,27 @@ Once you know how to reach a model, the next question is which model to
 actually use for a given task. See
 [Which model should I use?](which-model.html).
 
+## Self-check
+
+Try these before reading the suggested answers:
+
+1. You have GitHub student benefits, want the simplest course path, and do not
+   care much about provider choice yet. Which access route is the best first
+   step?
+2. You want to write Python scripts that call a model repeatedly with your own
+   billing and keys. Which access route fits best?
+3. You want local or offline use on your own machine and enough hardware is
+   available. Which access route fits best?
+4. You installed `llm`, but it still cannot answer prompts. Which critical
+   distinction should you check first?
+
+Suggested answers:
+
+1. GitHub Copilot access.
+2. Direct API access.
+3. Ollama.
+4. The distinction between installing a tool and actually having model access.
+
 ## Subscription experience and fairness
 
 The table above compares access *routes* abstractly. In practice, students

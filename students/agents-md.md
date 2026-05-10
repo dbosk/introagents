@@ -94,6 +94,26 @@ create a `CLAUDE.md` that imports it:
 That way you keep one shared set of project instructions for many tools, while
 still allowing Claude-specific additions.
 
+## Contrast with skills and memory
+
+Keep one repository and one task fixed:
+
+> Explain code in a beginner-friendly way, and run `pytest -q` before finishing
+> if code changed.
+
+If that guidance should apply across the whole repository and across tools, it
+belongs in `AGENTS.md`.
+
+If the guidance is instead `Use plan mode for non-trivial changes`, that is not
+cross-agent. It belongs in a tool-specific file such as `CLAUDE.md`.
+
+If the guidance is a reusable explanation procedure such as `start with an
+analogy, then show the control flow, then mention one misconception`, that is a
+skill.
+
+If the guidance is temporary, such as `Sofia only needs a rough answer before
+today's meeting`, that is session context, not an `AGENTS.md` rule.
+
 Some teams go one step further and keep `AGENTS.md` and `CLAUDE.md` literally
 the same by making one a symlink to the other. That can work well when your
 operating system, editor, and Git setup all handle symlinks cleanly, but the

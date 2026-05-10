@@ -44,6 +44,28 @@ If something should be loaded in every Claude Code session, it probably belongs
 in `CLAUDE.md`. If it is a reusable playbook you only need sometimes, it
 probably belongs in a skill.
 
+## Contrast with `AGENTS.md` and memory
+
+Keep one repository and one task fixed:
+
+> Explain code in a beginner-friendly way, and run `pytest -q` before finishing
+> if code changed.
+
+If the repository should always prefer beginner-friendly explanations and always
+run `pytest -q` after code changes, that belongs in `AGENTS.md`.
+
+If you want a reusable procedure for one kind of task, such as `explain code to
+beginners with an analogy, a flow walkthrough, and one likely misconception`,
+that belongs in a skill.
+
+If the instruction is tool-specific, such as `use plan mode in Claude Code`, it
+belongs in a tool-specific always-loaded file rather than in a skill or
+`AGENTS.md`.
+
+If the information is temporary, such as `the current student already
+understands loops but not decorators`, that is session context or memory, not a
+skill.
+
 ## Where skills live
 
 In Claude Code, the main locations are:

@@ -110,6 +110,128 @@ Generalization: instructions tell the tool what rules and procedures to follow.
 Agentic memory carries forward context that might be useful later. Treating
 those as the same thing causes confusion.
 
+## One task, four instruction layers
+
+To make the difference clearer, keep one repository and one task fixed.
+
+Imagine the same repository throughout:
+
+- `README.md`
+- `src/demo_app/cli.py`
+- `tests/test_cli.py`
+
+And imagine the same standing goal throughout:
+
+> When explaining code in this repository to beginners, use simple language and
+> run `pytest -q` before finishing if code changed.
+
+Now vary only where that guidance lives.
+
+### Layer 1: `AGENTS.md`
+
+Use `AGENTS.md` for shared repository instructions that should travel with the
+project:
+
+```markdown
+## Teaching repo conventions
+
+- Explain code in beginner-friendly language.
+- If you change code, run `pytest -q` before finishing.
+- Mention any remaining limitations clearly.
+```
+
+This is the right layer when the guidance is about the repository itself and
+should apply across tools.
+
+### Layer 2: a tool-specific always-loaded file
+
+Use `CLAUDE.md` when the instruction is Claude-specific rather than generally
+repository-specific:
+
+```markdown
+@AGENTS.md
+
+## Claude Code
+
+- Use plan mode for non-trivial changes.
+- Prefer subagents for side investigations.
+```
+
+The key contrast is that `Use plan mode` belongs in a Claude-specific layer,
+not in the cross-agent repository file.
+
+### Layer 3: a skill
+
+Use a skill when the guidance is a reusable procedure that should load only when
+relevant, not in every session:
+
+```markdown
+---
+name: explain-beginner-code
+description: Explain code to beginners with a short analogy, step-by-step flow,
+  and one likely misconception. Use when the user asks for a pedagogical code
+  explanation.
+---
+
+When explaining code:
+
+1. Start with a short analogy.
+2. Walk through the control flow.
+3. Mention one likely misconception.
+```
+
+This does not belong in `AGENTS.md` because it is not an always-on repository
+rule. It is a reusable playbook for one kind of task.
+
+### Layer 4: session context or memory
+
+Use session context or memory for information that is temporary or evolving.
+
+For example:
+
+> The student already understands loops, but not decorators.
+
+That may matter right now, but it should usually not be frozen into
+`AGENTS.md`. It is about the current interaction, not the permanent repository
+workflow.
+
+## What varies and what stays fixed
+
+Across the four cases above:
+
+- the repository stays fixed
+- the standing task stays fixed
+- what varies is the layer where the guidance lives
+
+That is the important contrast. If the repository and task changed at the same
+time, it would be harder to see why one instruction belongs in `AGENTS.md`
+while another belongs in a skill or only in session context.
+
+## A common anti-example
+
+Suppose you discover during one session that:
+
+> Today we only need a rough answer for Sofia before the meeting.
+
+That is usually not an `AGENTS.md` instruction. It is temporary session context.
+Putting it in a permanent project file would mix up stable repository rules with
+short-lived circumstances.
+
+Generalization: stable project conventions belong in persistent instruction
+files; reusable procedures belong in skills; temporary or evolving facts belong
+in session context or memory.
+
+## Verification is part of the workflow
+
+Planning, context management, and instruction layers matter because they help
+the tool work more effectively. Verification matters because effective work is
+not the same thing as correct work.
+
+If an agent claims it found the entry point, changed the right files, or fixed
+the behavior, that claim should be checked against the repository, the diff, or
+the relevant tests. For a reusable student workflow, read
+[Verification](verification.html).
+
 ## `llm` as a contrast case
 
 The page on [`llm`](llm.html) is useful here precisely because it is different.
@@ -172,8 +294,31 @@ When choosing and using a tool, a useful mental checklist is:
    main thread?
 5. Am I using instructions for stable rules and memory for reusable context,
    instead of mixing them up?
+6. What evidence would verify the current claim before I trust it?
 
 If you answer those questions clearly, the differences between
 [GitHub Copilot CLI](copilot-cli.html), [Claude Code](claude-code.html),
 [OpenCode](opencode.html), and [`llm`](llm.html) become much easier to reason
 about.
+
+## Self-check
+
+Try these short prompts before looking back at the page:
+
+1. An agent starts editing files before it has shown a plan for a non-trivial
+   change. Which critical aspect is being missed?
+2. A session has become long, noisy, and less reliable, so you start a fresh
+   session or use compaction. Which critical aspect is this about?
+3. You send side research to another agent so the main thread stays focused.
+   Which critical aspect is this about?
+4. You discover that `Use plan mode for non-trivial changes` belongs in a
+   tool-specific file, while `Run pytest before finishing` belongs in a
+   cross-agent repository file. Which distinction are you making?
+
+Suggested answers:
+
+1. Planning before editing.
+2. Context-window limits and context rot.
+3. Work isolation through subagents or separate runs.
+4. The distinction between tool-specific instructions and shared project
+   instructions.

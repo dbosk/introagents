@@ -280,6 +280,11 @@ llm logs on
 - remember that model access and package installation are separate steps
 - turn logging off if you are working with sensitive material
 
+When a model explains a repository, summarizes a file, or claims that a command
+output means something important, verify that claim against the actual files or
+commands. For a reusable student workflow, read
+[Verification](verification.html).
+
 ## How it differs from the coding agents
 
 `llm` helps most when you want direct control over prompts, scripts, logs, and
@@ -312,6 +317,7 @@ If you want the shared concepts across the coding-agent tools, read
 - [Learn when local models and Ollama make sense](local-models.html)
 - [Which model should I use?](which-model.html)
 - [Understand the shared agentic concepts](agentic-concepts.html)
+- [Learn a reusable verification workflow](verification.html)
 - [Which tool should I use?](which-tool.html)
 
 ## Official links

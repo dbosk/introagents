@@ -68,6 +68,7 @@ Across this section, students should be able to:
 - [Get started with GitHub Copilot CLI](copilot-cli.html)
 - [Get started with OpenCode](opencode.html)
 - [Understand the shared agentic concepts](agentic-concepts.html)
+- [Learn a reusable verification workflow](verification.html)
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
 - [Get started with the Python package `llm`](llm.html)
@@ -105,6 +106,8 @@ These pages cover:
 - `opencode` for a more capable open source coding agent
 - agentic concepts such as planning, context windows, subagents, and memory
   across the main coding-agent tools
+- a reusable verification workflow for checking agent claims against files,
+  commands, diffs, and tests
 - skills for reusable agent playbooks
 - `AGENTS.md` for cross-agent project instructions
 - the Python package `llm` for shell pipelines, scripts, and Python programs

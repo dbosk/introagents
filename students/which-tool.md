@@ -96,6 +96,26 @@ and different in others, read [Agentic concepts](agentic-concepts.html). That
 page reconnects planning, context windows, subagents, and memory across the
 main coding-agent tools, then uses `llm` as a contrast case.
 
+## Self-check
+
+Try to answer these before looking at the suggested answers:
+
+1. You want the quickest path from GitHub student benefits to a working
+   terminal agent. Which tool is the best first choice?
+2. You want one paid general-purpose coding tool for repository work and do not
+   want to wait on GitHub approval. Which tool fits best?
+3. You want to inspect a repository, plan a multi-file change, and edit files
+   interactively. Which tool fits best?
+4. You want a repeatable shell pipeline or Python script rather than an
+   interactive coding agent. Which tool fits best?
+
+Suggested answers:
+
+1. GitHub Copilot CLI.
+2. Claude Code.
+3. OpenCode.
+4. `llm`.
+
 ## Three important things that are not tools
 
 - [Model access](model-access.html) explains how you actually reach a model.
@@ -116,5 +136,6 @@ main coding-agent tools, then uses `llm` as a contrast case.
 - [Understand the shared agentic concepts](agentic-concepts.html)
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
+- [Learn a reusable verification workflow](verification.html)
 - [Get started with the Python package `llm`](llm.html)
 - [Which model should I use?](which-model.html)

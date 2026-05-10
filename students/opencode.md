@@ -204,6 +204,9 @@ OpenCode is more powerful than a simple chat interface, so good habits matter:
 - use version control so you can inspect what changed
 - treat the tool as capable but fallible
 
+For a more explicit student workflow for checking repository claims, diffs,
+commands, and tests, read [Verification](verification.html).
+
 ## When to use it instead of GitHub Copilot CLI
 
 Use OpenCode when you want:
@@ -250,6 +253,7 @@ After you have seen the three main coding-agent guides, the page on
 - [Learn when local models and Ollama make sense](local-models.html)
 - [Get started with Claude Code](claude-code.html)
 - [Understand the shared agentic concepts](agentic-concepts.html)
+- [Learn a reusable verification workflow](verification.html)
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
 - [Which tool should I use?](which-tool.html)

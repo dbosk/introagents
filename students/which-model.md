@@ -112,6 +112,26 @@ This is not the only pattern, but it illustrates that model choice is rarely
 "pick one and stick with it". Most serious workflows mix models depending on
 the task.
 
+## Self-check
+
+Try these short scenarios before looking at the suggested answers:
+
+1. You need the strongest reasoning for an ambiguous debugging or architecture
+   problem. Which model family should you try first?
+2. You want a good everyday default for serious coding work without always
+   paying for the strongest model. Which model family fits best?
+3. You need a cheap helper for narrow, repetitive edits or subagent work. Which
+   model family fits best?
+4. Privacy or local control matters more than frontier quality. Which model
+   family fits best?
+
+Suggested answers:
+
+1. Claude Opus.
+2. Claude Sonnet or GPT-5.4.
+3. GPT-5 mini.
+4. A larger open model through Ollama, such as Qwen.
+
 ## Short version
 
 1. Match the model to the task, not to the hype.

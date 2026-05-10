@@ -126,6 +126,9 @@ Good habits:
 - if a session gets long or messy, use `/compact` or exit and start a fresh one
 - treat the output as capable but fallible
 
+For a more explicit student workflow for checking repository claims, diffs,
+commands, and tests, read [Verification](verification.html).
+
 ## `CLAUDE.md`, skills, and `AGENTS.md`
 
 Three related ideas matter quickly:
@@ -175,6 +178,7 @@ After you have seen the three main coding-agent guides, the page on
 - [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
 - [Learn what skills are](skills.html)
 - [Learn what `AGENTS.md` is for](agents-md.html)
+- [Learn a reusable verification workflow](verification.html)
 - [Get started with OpenCode](opencode.html)
 - [Understand the shared agentic concepts](agentic-concepts.html)
 - [Which tool should I use?](which-tool.html)
