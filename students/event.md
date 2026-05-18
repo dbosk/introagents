@@ -10,6 +10,8 @@ title: Student Life Agentic 2026-05-20
 - **Time:** 09:15
 - **Location:** D1, D37, E32 or https://kth-se.zoom.us/j/68711734309
 - **Format:** Hybrid lecture/workshop
+- **Duration:** Until we're satisfied, you can leave when you've gotten what 
+  you need.
 
 ## What this event is about
 
