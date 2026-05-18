@@ -11,6 +11,8 @@ early.
 This is not the simplest default path for most students. It becomes attractive
 when local or offline use, privacy, open-weight experimentation, or avoiding
 per-prompt API billing matters more than using the strongest hosted model.
+For the broader picture of why privacy and data exposure matter at all, see
+[Problematic cases of using AI](problematic-cases.html).
 
 ## Intended learning outcomes covered on this page
 
@@ -150,6 +152,7 @@ that your laptop will handle every model comfortably.
 - [Get started with OpenCode](opencode.html)
 - [Get started with the Python package `llm`](llm.html)
 - [Which tool should I use?](which-tool.html)
+- [Problematic cases of using AI](problematic-cases.html)
 
 ## Official links
 

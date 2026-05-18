@@ -139,3 +139,4 @@ Suggested answers:
 - [Learn a reusable verification workflow](verification.html)
 - [Get started with the Python package `llm`](llm.html)
 - [Which model should I use?](which-model.html)
+- [Problematic cases of using AI](problematic-cases.html)
