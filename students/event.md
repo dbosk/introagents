@@ -45,3 +45,22 @@ If you want to get started with the tools we cover in this course, see the
 benefits, model access, Claude Code, Copilot CLI, OpenCode, skills,
 `AGENTS.md`, and the Python `llm` package.
 
+# Agenda: Student Life Agentic
+
+## Set up and introduction
+
+We'll start by giving an overview of the setup.
+Accounts and software needed.
+
+## The needed skills
+
+We'll write skills for:
+
+1. working according to the [EECS honour code (hederskodexen)](https://www.kth.se/en/eecs/utbildning/hederskodex/inledning-1.17237),
+2. getting info out of Canvas,
+3. studying effectively for the coming exam period.
+
+## Trying our new skills
+
+We'll try the skills as we develop them. We'll also refine them as we go. 
+Development is always an iterative process towards perfection.
