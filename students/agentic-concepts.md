@@ -211,7 +211,7 @@ while another belongs in a skill or only in session context.
 
 Suppose you discover during one session that:
 
-> Today we only need a rough answer for Sofia before the meeting.
+> Today we only need a rough answer for [Sofia](https://www.kth.se/profile/sofbob) before the meeting.
 
 That is usually not an `AGENTS.md` instruction. It is temporary session context.
 Putting it in a permanent project file would mix up stable repository rules with

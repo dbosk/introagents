@@ -86,6 +86,31 @@ that quotes a subset, lightly rephrased. Keep this pattern when adding new
 pages or revising existing ones — do not invent new outcomes that
 contradict the master list.
 
+**Academic-level inline citations.** This is student-facing material and
+should be exemplary in how it cites. Whenever the prose names a person
+(real author, researcher, practitioner) and attributes a claim, result, or
+idea to them, that inline mention must carry a hyperlink to the source —
+not only the Further reading list at the bottom of the page. Conventions:
+
+- **Anchor span.** One hyperlink wrapping both the person's name and the
+  concept/claim/idea attributed to them, e.g.
+  `[Simon Willison's *lethal trifecta*](url)`. Keep the span tight — name
+  plus the attribution unit. Do not wrap whole sentences or paragraphs.
+- **Which mentions to link.** The mention where the actual claim/result/
+  idea is being attributed. Subsequent mentions of the same person in the
+  same section for context or comparison stay plain text.
+- **Link target.** The original source by the person. If only an
+  indirect source exists on the page (e.g., the person is paraphrased
+  through someone else's article), link to that surrogate source —
+  the one already in Further reading.
+- **Keep Further reading lists.** Inline links and Further reading lists
+  coexist; the inline link makes the attribution scannable in prose, the
+  Further reading list remains the bibliographic apparatus. Do not remove
+  one when adding the other.
+
+This convention applies to all student-facing `.md` pages and to LaTeX
+prose in `tcs/`.
+
 ## LaTeX / Beamer conventions in `tcs/`
 
 - The `didactic` package (`didactic.sty`, loaded via the submodule symlink)
