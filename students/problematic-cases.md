@@ -126,6 +126,31 @@ route. See [Local models and Ollama](local-models.html) for the practical
 setup. Local does not automatically mean correct, but it does mean the data
 does not leave your machine.
 
+### Prompt injection and the lethal trifecta
+
+A second privacy- and reliability-adjacent risk is *prompt injection*:
+content the agent reads — a webpage, an issue comment, a file in the
+repository — can contain instructions aimed at the agent rather than at
+you. The model has no reliable way to tell instructions from data.
+
+Simon Willison's *lethal trifecta* names the conditions under which prompt
+injection becomes especially dangerous: an agent that simultaneously has
+(a) access to your private data, (b) exposure to untrusted input, and (c)
+the ability to communicate externally (post comments, push commits, send
+HTTP requests). Each leg alone is usually manageable; together they let an
+attacker exfiltrate private data through the agent.
+
+Practical defaults:
+
+- be cautious about pointing agents at untrusted web content or unfamiliar
+  issue threads when the same session has access to sensitive files
+- prefer narrower tool permissions for sessions that touch untrusted
+  inputs
+- treat any external action (commits, pushes, posted comments, HTTP
+  requests) as something to confirm rather than auto-approve
+
+For the wider discussion, see [Reflections](reflections.html).
+
 ### Logging
 
 `llm` logs prompts and responses to a local SQLite database by default. That
@@ -151,6 +176,13 @@ Common failure modes you should expect:
 The model is not lying. It is producing plausible text. Plausibility is not
 the same as truth.
 
+Some practitioners go further and treat *every* generation as a
+hallucination — the model is always producing plausible text, and the
+useful question is which of those generations happen to be true. Framing it
+that way is a reminder that verification is not an exceptional step you
+take when something looks wrong; it is the default. See
+[Reflections](reflections.html) for the wider discussion around this idea.
+
 ### Plausible but insecure code
 
 A more dangerous case is code that runs but is wrong in a way you cannot see
@@ -171,6 +203,15 @@ The quiet failure mode is the one where nothing visible breaks. The student
 runs the agent, the answer sounds good, the student stops checking. Over
 time, the habit of verifying erodes, and small errors accumulate into a
 codebase or an essay that nobody actually understands.
+
+This pattern has several names in the wider discussion. Joshua Bloom calls
+the passive-acceptance side of it *stuporous acquiescence*. Margaret-Anne
+Storey describes the longer-term loss of skill at team level as *cognitive
+debt*; Addy Osmani uses *comprehension debt* for the related case where
+the codebase grows faster than anyone's understanding of it. A useful
+umbrella term is *decoupled comprehension*: the code and your grasp of it
+have drifted apart. The [Reflections](reflections.html) page collects the
+wider conversation.
 
 The mitigation is the same workflow taught earlier in this guide: treat each
 agent claim as a draft until evidence supports it. See
