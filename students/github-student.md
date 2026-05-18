@@ -8,7 +8,7 @@ If you want to get started with agentic LLM tools in this course, setting up a
 personal GitHub account and applying for GitHub Education is still worth
 trying.
 
-This is useful because GitHub's student program can give eligible students
+This is useful because GitHub's student programme can give eligible students
 access to GitHub student benefits, which may include Copilot access depending
 on current availability. When that path is open, it can give you access to
 GitHub's AI tooling without having to begin with a paid individual subscription.
@@ -32,10 +32,10 @@ Before applying, you should have:
 - a personal GitHub account
 - a verified email address on that account
 - proof that you are a student, such as a school email address or official
-  enrollment documentation
+  enrolment documentation
 
 GitHub states that you must be at least 13 years old and enrolled in a
-degree- or diploma-granting program.
+degree- or diploma-granting programme.
 
 ## Step 1: create a personal GitHub account
 
@@ -61,7 +61,7 @@ In short, the process is:
 5. Submit the application and wait for approval.
 
 Useful forms of proof include a school ID, transcript, class schedule, or an
-enrollment verification letter.
+enrolment verification letter.
 
 ## Step 3: confirm your student benefits and current Copilot availability
 
@@ -84,7 +84,7 @@ the tools below:
 Applications are often delayed or rejected for administrative reasons rather
 than technical ones. Common causes include:
 
-- unclear or blurry proof of enrollment
+- unclear or blurry proof of enrolment
 - dates missing from uploaded documents
 - using a school email domain that GitHub cannot verify automatically
 - applying with a second GitHub personal account instead of your main one

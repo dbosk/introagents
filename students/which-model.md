@@ -35,7 +35,7 @@ After working through this page, students should be better able to:
 
 ## Comparison
 
-The table below is a rough practical map, optimized for actual work rather
+The table below is a rough practical map, optimised for actual work rather
 than benchmark bragging.
 
 | Model family | Best use | Relative quality | Main tradeoff |
@@ -43,8 +43,8 @@ than benchmark bragging.
 | Claude Opus | hardest debugging, architecture, forensics, ambiguous root-cause work, long chains of reasoning | usually the strongest overall reasoning and writing in this set | slower, more expensive, more session-limit anxiety |
 | Claude Sonnet | everyday serious coding, implementation, reviews, normal debugging | close to Opus on many tasks, but less reliable on the nastiest multi-step cases | cheaper and faster, but gives up some depth |
 | GPT-5.4 | strong general coding agent, implementation, edits across a repo, good default when you want throughput plus solid quality | roughly in the top working tier; usually not as prose-heavy as Opus, but very capable | quality can depend more on harness and provider policy |
-| GPT-5 mini | cheap and faster helper for boilerplate, small transforms, grep-and-fix style tasks, subagents | clearly below the big frontier models, but often good enough for scoped tasks | weaker judgment, easier to drift on larger changes |
-| Qwen larger open models | local or self-hosted coding help, decent code generation, useful when privacy, control, or cost matter | surprisingly strong for open weights, but usually below top proprietary models on hard reasoning | more setup, more variance by size and quantization, weaker long-horizon reliability |
+| GPT-5 mini | cheap and faster helper for boilerplate, small transforms, grep-and-fix style tasks, subagents | clearly below the big frontier models, but often good enough for scoped tasks | weaker judgement, easier to drift on larger changes |
+| Qwen larger open models | local or self-hosted coding help, decent code generation, useful when privacy, control, or cost matter | surprisingly strong for open weights, but usually below top proprietary models on hard reasoning | more setup, more variance by size and quantisation, weaker long-horizon reliability |
 | Kimi or Kimi K2 style models | long-context reading, broad synthesis, sometimes very good value | can be excellent for some analysis and synthesis workloads | availability and deployment path is less universal; coding reliability still depends on task and harness |
 | Small Ollama local models (7B-ish class) | quick snippet help, toy examples, autocomplete-style assistance, introductory-course use | good for lightweight help, not frontier-class | weak on difficult repo work, planning, and deep debugging |
 | Mid or large Ollama open models (14B, 32B, 70B-ish class) | better local coding assistant, document reading, medium-difficulty implementation | much better than tiny local models; still usually below top proprietary models on the hardest work | hardware hungry, slower, and still less reliable than Opus or top GPTs on tough tasks |
