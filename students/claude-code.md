@@ -23,7 +23,7 @@ After working through this page, students should be better able to:
 - explain why repository-grounded terminal agents support different kinds of
   work than ordinary browser chat
 - use a coding agent in a way that separates planning from editing
-- recognize context-window limits and use strategies such as fresh sessions or
+- recognise context-window limits and use strategies such as fresh sessions or
   compaction when context quality degrades
 - explain how subagents or separate runs can isolate side work and keep a main
   task focused

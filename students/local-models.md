@@ -53,7 +53,7 @@ Local does not automatically mean better. The tradeoffs are simply different:
 
 - smaller models are easier to run than larger coding models
 - speed and quality depend heavily on your machine
-- local models can be useful for drafting, summarizing, classification, and
+- local models can be useful for drafting, summarising, classification, and
   simple code help
 - for harder repository work or ambiguous debugging, hosted tools are often
   still easier and stronger

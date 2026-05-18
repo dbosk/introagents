@@ -281,7 +281,7 @@ llm logs on
 - remember that model access and package installation are separate steps
 - turn logging off if you are working with sensitive material
 
-When a model explains a repository, summarizes a file, or claims that a command
+When a model explains a repository, summarises a file, or claims that a command
 output means something important, verify that claim against the actual files or
 commands. For a reusable student workflow, read
 [Verification](verification.html).

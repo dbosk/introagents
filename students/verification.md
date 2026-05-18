@@ -82,13 +82,13 @@ Here the evidence should show three things:
 If the agent changed the wrong file, missed one reference, or broke a test, the
 claim is not yet verified.
 
-## Example 3: a behavior claim
+## Example 3: a behaviour claim
 
 Suppose an agent says:
 
 > I fixed the CLI so it prints the greeting correctly.
 
-That is a behavioral claim. The best evidence is to run the behavior or a test
+That is a behavioural claim. The best evidence is to run the behaviour or a test
 that checks it.
 
 ```sh
@@ -99,7 +99,7 @@ pytest tests/test_cli.py -q
 If the program output or test result matches the claim, good. If not, then the
 model has described a fix that is not actually present.
 
-Testing is often the first support here. If a behavior can be tested, start
+Testing is often the first support here. If a behaviour can be tested, start
 there before trusting the explanation around it.
 
 ## Example 4: an explanation or synthesis claim
@@ -136,7 +136,7 @@ After the examples, the general pattern becomes easier to see:
 | --- | --- | --- |
 | something about repository structure | search plus file inspection | matching files, paths, and contents in the repo |
 | it changed code correctly | `git diff` plus targeted search | the intended edit is present and unintended edits are absent |
-| it fixed behavior | run the command or test | observed output or test results match the claim |
+| it fixed behaviour | run the command or test | observed output or test results match the claim |
 | its explanation is accurate | ask for file-backed evidence | cited files, commands, and outputs support the explanation |
 
 ## Show your work

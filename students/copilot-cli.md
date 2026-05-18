@@ -24,7 +24,7 @@ After working through this page, students should be better able to:
 - explain why repository-grounded terminal agents support different kinds of
   work than ordinary browser chat
 - use a coding agent in a way that separates planning from editing
-- recognize context-window limits and use strategies such as fresh sessions or
+- recognise context-window limits and use strategies such as fresh sessions or
   compaction when context quality degrades
 - distinguish between persistent instructions and reusable memory or context
 - critically verify model output against files, tools, and project context
@@ -168,7 +168,7 @@ few recurring ideas start to appear:
 - `Work isolation:` Copilot CLI puts less visible emphasis on subagents in the
   beginner workflow than Claude Code or OpenCode. That contrast matters too.
 - `Instructions and memory:` repository instructions such as
-  [`AGENTS.md`](agents-md.html) guide behavior, while Copilot Memory is a
+  [`AGENTS.md`](agents-md.html) guide behaviour, while Copilot Memory is a
   separate layer for reusable context.
 
 After you have seen the three main coding-agent guides, the page on

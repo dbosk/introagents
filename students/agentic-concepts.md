@@ -21,7 +21,7 @@ After working through this page, students should be better able to:
 - explain why repository-grounded terminal agents support different kinds of
   work than ordinary browser chat
 - use a coding agent in a way that separates planning from editing
-- recognize context-window limits and use strategies such as fresh sessions or
+- recognise context-window limits and use strategies such as fresh sessions or
   compaction when context quality degrades
 - explain how subagents or separate runs can isolate side work and keep a main
   task focused
@@ -44,7 +44,7 @@ In the tools you have already seen:
   planning before edits.
 - [OpenCode](opencode.html) separates this into a built-in `Plan` agent.
 
-Generalization: in agentic coding, planning is not just extra caution. It is
+Generalisation: in agentic coding, planning is not just extra caution. It is
 part of how the tool stays reliable.
 
 ## Context windows and context rot
@@ -66,12 +66,12 @@ In the tools you have already seen:
 - OpenCode also offers `/compact` and gives you more explicit control in longer
   interactive sessions.
 
-Generalization: context is a working-memory bottleneck. Good agentic use is
+Generalisation: context is a working-memory bottleneck. Good agentic use is
 partly about protecting it.
 
 ## Subagents and work isolation
 
-Complex work creates side quests: explore this directory, summarize that API,
+Complex work creates side quests: explore this directory, summarise that API,
 compare two approaches, or check whether a fix already exists. If all of that
 happens in one conversation, the main thread gets crowded.
 
@@ -79,13 +79,13 @@ In the tools you have already seen:
 
 - Claude Code can use subagents with their own context windows, so side work
   can return as a summary instead of filling the main thread.
-- OpenCode exposes specialized agents and subagents, including a separate
+- OpenCode exposes specialised agents and subagents, including a separate
   planning agent.
 - GitHub Copilot CLI is less explicit about this pattern in the beginner
   workflow. That contrast matters too: not every tool surfaces work isolation
   equally directly.
 
-Generalization: subagents are not magic extra intelligence. They are a
+Generalisation: subagents are not magic extra intelligence. They are a
 context-management strategy. They isolate side work so the main thread stays
 focused.
 
@@ -106,7 +106,7 @@ In the tools you have already seen:
   explicit, while the current session carries the working context. That is a
   useful reminder that instructions and live context are not the same thing.
 
-Generalization: instructions tell the tool what rules and procedures to follow.
+Generalisation: instructions tell the tool what rules and procedures to follow.
 Agentic memory carries forward context that might be useful later. Treating
 those as the same thing causes confusion.
 
@@ -217,7 +217,7 @@ That is usually not an `AGENTS.md` instruction. It is temporary session context.
 Putting it in a permanent project file would mix up stable repository rules with
 short-lived circumstances.
 
-Generalization: stable project conventions belong in persistent instruction
+Generalisation: stable project conventions belong in persistent instruction
 files; reusable procedures belong in skills; temporary or evolving facts belong
 in session context or memory.
 
@@ -228,7 +228,7 @@ the tool work more effectively. Verification matters because effective work is
 not the same thing as correct work.
 
 If an agent claims it found the entry point, changed the right files, or fixed
-the behavior, that claim should be checked against the repository, the diff, or
+the behaviour, that claim should be checked against the repository, the diff, or
 the relevant tests. For a reusable student workflow, read
 [Verification](verification.html).
 
@@ -249,9 +249,9 @@ Across the same dimensions:
   separation, you usually create separate prompts, chats, or scripts.
 - Instructions and memory: saved prompts, plugins, logs, and scripts are
   useful, but they are not the same thing as a coding agent with built-in
-  project instructions and memory behavior.
+  project instructions and memory behaviour.
 
-Generalization: `llm` shows that these concepts are design choices of agentic
+Generalisation: `llm` shows that these concepts are design choices of agentic
 tools, not automatic properties of every LLM interface.
 
 ## Why the browser comparison matters

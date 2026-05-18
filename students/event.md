@@ -15,9 +15,9 @@ title: Student Life Agentic 2026-05-20
 
 ## What this event is about
 
-Most students have by how tried something like ChatGPT. However, the vast 
+Most students have by now tried something like ChatGPT. However, the vast 
 majority have only interacted with LLMs through a web interface. That interface 
-extremely limits the potential of LLMs. In this workshop, we will show you how 
+severely limits the potential of LLMs. In this workshop, we will show you how 
 to use LLMs in a more powerful way.
 
 We will cover agentic use of LLMs. Particularly, we'll illustrate the agentic 
@@ -31,10 +31,10 @@ taken a course on introductory programming should be able to follow along.
 
 ## What to bring or prepare
 
-You don't have to do anything before attending, you can just enjoy the show.
-However, if you want to try and follow along with what we do (to save time 
+You don't have to do anything before attending; you can just enjoy the show.
+However, if you want to try to follow along with what we do (to save time 
 later), you should bring a laptop and start to set up your environment, 
-particularly register for the necessary accounts.
+particularly registering for the necessary accounts.
 See [Model access](model-access.html) for an overview of the services you
 can register for. We'll use GitHub Copilot and Claude Pro as examples.
 

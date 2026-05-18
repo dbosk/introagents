@@ -27,7 +27,7 @@ After working through this page, students should be better able to:
 - explain why repository-grounded terminal agents support different kinds of
   work than ordinary browser chat
 - use a coding agent in a way that separates planning from editing
-- recognize context-window limits and use strategies such as fresh sessions or
+- recognise context-window limits and use strategies such as fresh sessions or
   compaction when context quality degrades
 - explain how subagents or separate runs can isolate side work and keep a main
   task focused
@@ -230,7 +230,7 @@ same recurring ideas are visible here too:
   agent instead of a plan-mode toggle.
 - `Limited context:` `/compact` and the emphasis on explicitly managing longer
   sessions both reflect a limited context window.
-- `Work isolation:` specialized agents and subagents help keep planning or
+- `Work isolation:` specialised agents and subagents help keep planning or
   exploration work out of the main thread.
 - `Instructions and memory:` instruction files such as
   [`AGENTS.md`](agents-md.html) and reusable skills are explicit, while the
