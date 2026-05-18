@@ -147,3 +147,4 @@ Suggested answers:
 - [Learn when local models and Ollama make sense](local-models.html)
 - [Which tool should I use?](which-tool.html)
 - [Understand the shared agentic concepts](agentic-concepts.html)
+- [Problematic cases of using AI](problematic-cases.html)

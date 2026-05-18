@@ -254,7 +254,8 @@ The first part is general. A common second step in this course is the
 
 By default, `llm` logs prompts and responses to a local SQLite database. That
 is useful for experimentation, but it also means you should think about what
-data you send to it.
+data you send to it. For the broader picture of data exposure and the legal
+side, see [Problematic cases of using AI](problematic-cases.html).
 
 Useful commands are:
 
@@ -319,6 +320,7 @@ If you want the shared concepts across the coding-agent tools, read
 - [Understand the shared agentic concepts](agentic-concepts.html)
 - [Learn a reusable verification workflow](verification.html)
 - [Which tool should I use?](which-tool.html)
+- [Problematic cases of using AI](problematic-cases.html)
 
 ## Official links
 
