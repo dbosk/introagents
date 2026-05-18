@@ -38,11 +38,13 @@ A useful reframing comes from practitioners at Thoughtworks: every
 generation is, in a strict sense, a hallucination. The model is always
 producing plausible text by predicting the next likely token, and the
 interesting question is not *whether* it is hallucinating but *which*
-generations happen to be true. Rebecca Parsons has been making that case for
-some years; the in-house Thoughtworks article puts it as "AI hallucination
+generations happen to be true.
+[Rebecca Parsons has been making that case for some years](https://www.thoughtworks.com/en-us/insights/blog/generative-ai/we-need-to-treat-AI-hallucinations-as-a-feature-not-a-bug);
+the in-house Thoughtworks article puts it as "AI hallucination
 isn't a system failure; it's the natural result of a new kind of computing
-that works on probability, not on strict logic." Martin Fowler discusses the
-same reframing in his own essay on LLMs and software development.
+that works on probability, not on strict logic."
+[Martin Fowler discusses the same reframing in his own essay](https://martinfowler.com/articles/202508-ai-thoughts.html)
+on LLMs and software development.
 
 If you accept the reframing, verification stops being a special step you
 take when something looks wrong; it is the default mode of using the tool.
@@ -68,26 +70,26 @@ is structured.
 ## Cognitive debt, comprehension debt, decoupled comprehension
 
 The longer-term cost of agentic coding may not be in the code at all; it may
-be in what happens to the people who use the tools. Margaret-Anne Storey
-proposes the term *cognitive debt* for the erosion of shared mental models
-that builds up when AI generates code faster than a team can understand it.
-Technical debt lives in the code; cognitive debt lives in people, and it is
-harder to measure because none of the usual velocity metrics capture it.
+be in what happens to the people who use the tools.
+[Margaret-Anne Storey proposes the term *cognitive debt*](https://margaretstorey.com/blog/2026/02/09/cognitive-debt/)
+for the erosion of shared mental models that builds up when AI generates
+code faster than a team can understand it. Technical debt lives in the
+code; cognitive debt lives in people, and it is harder to measure because
+none of the usual velocity metrics capture it.
 
-Addy Osmani names a closely related effect *comprehension debt*: the gap
-between how much code exists in your system and how much of it any human
-being genuinely understands. He points to a randomised study by Judy Shen
-and Alex Tamkin, *How AI Impacts Skill Formation*, which finds that AI
-assistance to learn a new programming library impairs developers' later
-conceptual understanding, code reading, and debugging — without delivering
-significant efficiency gains on average. The cost is paid in skill, not in
-clock time.
+[Addy Osmani names a closely related effect *comprehension debt*](https://addyosmani.com/blog/comprehension-debt/):
+the gap between how much code exists in your system and how much of it any
+human being genuinely understands. He points to
+[a randomised study by Judy Shen and Alex Tamkin, *How AI Impacts Skill Formation*](https://arxiv.org/abs/2601.20245),
+which finds that AI assistance to learn a new programming library impairs
+developers' later conceptual understanding, code reading, and debugging —
+without delivering significant efficiency gains on average. The cost is
+paid in skill, not in clock time.
 
-Joshua Bloom, writing about scientific work rather than software per se,
-captures the personal side of the same drift. After a week of working with
-agents, he wrote, "I started to get this nagging sense I was being slowly
-led into a state of stuporous acquiescence, that the whole package was
-working even if I couldn't understand all of it." A useful umbrella term for
+[Joshua Bloom, writing about scientific work rather than software per se, captures the personal side of the same drift](https://medium.com/@profjsb/mis-adventures-of-genai-in-the-scientific-workflow-d2ff1d804850).
+After a week of working with agents, he wrote, "I started to get this
+nagging sense I was being slowly led into a state of stuporous acquiescence,
+that the whole package was working even if I couldn't understand all of it." A useful umbrella term for
 all three observations is *decoupled comprehension* — the code and your
 grasp of it have drifted apart. The mitigation, as
 [Problematic cases](problematic-cases.html#over-reliance) puts it, is the
@@ -122,10 +124,10 @@ verification workflow: recoupling claim to evidence, deliberately.
 
 ## Context, attention, and the long session
 
-Teresa Torres writes about *context rot*: as a session gets longer and
-noisier, the value of each individual detail in the agent's context
-diminishes, and eventually the agent's behaviour degrades in ways that look
-like sloppiness or forgetfulness. The pattern is the same one
+[Teresa Torres writes about *context rot*](https://www.producttalk.org/context-rot/):
+as a session gets longer and noisier, the value of each individual detail
+in the agent's context diminishes, and eventually the agent's behaviour
+degrades in ways that look like sloppiness or forgetfulness. The pattern is the same one
 [Agentic concepts](agentic-concepts.html#context-windows-and-context-rot)
 describes in operational terms; Torres's article frames it from the user's
 side — when to suspect context rot, why "start a fresh session" is cheaper
@@ -145,18 +147,19 @@ the course of a day.
 
 ## The lethal trifecta and the new security shape
 
-Simon Willison's *lethal trifecta* names the conditions under which prompt
-injection becomes especially dangerous: an agent that simultaneously has
-access to your private data, exposure to untrusted content, and the ability
-to communicate externally. Each leg on its own is usually manageable;
+[Simon Willison's *lethal trifecta*](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/)
+names the conditions under which prompt injection becomes especially
+dangerous: an agent that simultaneously has access to your private data,
+exposure to untrusted content, and the ability to communicate externally. Each leg on its own is usually manageable;
 together they let an attacker hidden inside something the agent reads
 exfiltrate private data through the agent itself. The operational version of
 this — and the practical defaults that follow from it — lives on the
 [Problematic cases](problematic-cases.html#prompt-injection-and-the-lethal-trifecta)
 page. Read Willison's original post for the underlying argument and for why
 it matters more in agentic settings than in single-turn chat. His longer
-*Agentic engineering patterns* guide is a useful companion piece on how
-practitioners are working with these constraints in practice.
+[*Agentic engineering patterns* guide](https://simonwillison.net/guides/agentic-engineering-patterns/)
+is a useful companion piece on how practitioners are working with these
+constraints in practice.
 
 ### Further reading
 
@@ -177,14 +180,15 @@ practitioners are working with these constraints in practice.
 ## Building without purpose, building for joy, building wastelands
 
 Two related observations sit in tension here. On the one hand, agentic tools
-genuinely lower the barrier to *starting* a project. Thomas Ptacek's piece
-*The Emacsification of Software* describes a culture in which AI-pilled
-developers are finally finishing the long list of personal tools they always
-wanted but never had time to write — building small, idiosyncratic software
-the same way long-time Emacs users build personal text-editor extensions.
-Lalit Maganti's account of building *syntaqlite* is a concrete worked
-example of this: eight years of wanting to build a particular tool, three
-months of actually building it with AI help. Practitioners sometimes call
+genuinely lower the barrier to *starting* a project.
+[Thomas Ptacek's piece *The Emacsification of Software*](https://sockpuppet.org/blog/2026/05/12/emacsification/)
+describes a culture in which AI-pilled developers are finally finishing the
+long list of personal tools they always wanted but never had time to write
+— building small, idiosyncratic software the same way long-time Emacs users
+build personal text-editor extensions.
+[Lalit Maganti's account of building *syntaqlite*](https://lalitm.com/post/building-syntaqlite-ai/)
+is a concrete worked example of this: eight years of wanting to build a
+particular tool, three months of actually building it with AI help. Practitioners sometimes call
 this pattern *SLIP* — *solves lingering but important problems* — because
 it is one of the clearest reasons agentic tools win sceptics over.
 
@@ -215,9 +219,9 @@ formal terms, but they are recognisable in conversation.
 
 ## Education, literacy, and the duty of care
 
-Mary Kalantzis and Bill Cope argue that generative AI is, more than
-anything, a *technology of writing*, and that the consequences for literacy
-and education may be on the scale of the invention of moveable type. Their
+[Mary Kalantzis and Bill Cope argue that generative AI is, more than anything, a *technology of writing*](https://ila.onlinelibrary.wiley.com/doi/full/10.1002/rrq.591),
+and that the consequences for literacy and education may be on the scale of
+the invention of moveable type. Their
 article is the most ambitious of the readings on this page and is worth
 reading slowly; they end with a proposal for what they call *cyber-social
 literacy learning*. One small observation worth holding on to is their
@@ -253,23 +257,22 @@ This is not a contradiction; it is a difference of scale. It is worth
 holding both findings at once when you reason about your own use of these
 tools.
 
-The clearest single statement of the paradox is in the title of a recent
-preprint by Hao, Xu, Li and Evans: *Artificial Intelligence Tools Expand
-Scientists' Impact but Contract Science's Focus*. Their study reports that
-scientists using AI publish around three times more papers and receive
-nearly five times more citations — and that the collective volume of
-scientific topics shrinks measurably. The Cornell Chronicle's lay summary,
-reporting on a 2025 *Science* paper by Kusumegi and colleagues, makes the
-same individual-level finding: AI-using scientists produced roughly a third
-more papers on arXiv, with non-native English speakers gaining the largest
-boost, and AI-powered search tools surfaced newer and more diverse sources
-than traditional keyword search. A more pessimistic reading comes from
-Algaba and colleagues, who analysed nearly 275,000 LLM-generated references
+The clearest single statement of the paradox is in the title of
+[a recent preprint by Hao, Xu, Li and Evans: *Artificial Intelligence Tools Expand Scientists' Impact but Contract Science's Focus*](https://arxiv.org/abs/2412.07727).
+Their study reports that scientists using AI publish around three times
+more papers and receive nearly five times more citations — and that the
+collective volume of scientific topics shrinks measurably.
+[The Cornell Chronicle's lay summary, reporting on a 2025 *Science* paper by Kusumegi and colleagues](https://news.cornell.edu/stories/2025/12/ai-gives-scientists-boost-cost-too-many-mediocre-papers),
+makes the same individual-level finding: AI-using scientists produced
+roughly a third more papers on arXiv, with non-native English speakers
+gaining the largest boost, and AI-powered search tools surfaced newer and
+more diverse sources than traditional keyword search. A more pessimistic
+reading comes from
+[Algaba and colleagues, who analysed nearly 275,000 LLM-generated references](https://arxiv.org/abs/2504.02767)
 and found that LLMs systematically reinforce the Matthew effect in
-citations — they overwhelmingly suggest already-popular papers. Traberg,
-Roozenbeek, and van der Linden go further still, arguing in *Communications
-Psychology* that the rush to study and use AI is producing a *scientific
-monoculture* of methods, questions, and viewpoints. Whichever reading
+citations — they overwhelmingly suggest already-popular papers.
+[Traberg, Roozenbeek, and van der Linden go further still, arguing in *Communications Psychology* that the rush to study and use AI is producing a *scientific monoculture*](https://www.nature.com/articles/s44271-026-00428-5)
+of methods, questions, and viewpoints. Whichever reading
 persuades you, the takeaway is the same: notice what your own LLM-aided
 literature search is and is not surfacing.
 

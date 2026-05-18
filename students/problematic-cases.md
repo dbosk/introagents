@@ -133,8 +133,9 @@ content the agent reads — a webpage, an issue comment, a file in the
 repository — can contain instructions aimed at the agent rather than at
 you. The model has no reliable way to tell instructions from data.
 
-Simon Willison's *lethal trifecta* names the conditions under which prompt
-injection becomes especially dangerous: an agent that simultaneously has
+[Simon Willison's *lethal trifecta*](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/)
+names the conditions under which prompt injection becomes especially
+dangerous: an agent that simultaneously has
 (a) access to your private data, (b) exposure to untrusted input, and (c)
 the ability to communicate externally (post comments, push commits, send
 HTTP requests). Each leg alone is usually manageable; together they let an
@@ -204,11 +205,12 @@ runs the agent, the answer sounds good, the student stops checking. Over
 time, the habit of verifying erodes, and small errors accumulate into a
 codebase or an essay that nobody actually understands.
 
-This pattern has several names in the wider discussion. Joshua Bloom calls
-the passive-acceptance side of it *stuporous acquiescence*. Margaret-Anne
-Storey describes the longer-term loss of skill at team level as *cognitive
-debt*; Addy Osmani uses *comprehension debt* for the related case where
-the codebase grows faster than anyone's understanding of it. A useful
+This pattern has several names in the wider discussion.
+[Joshua Bloom calls the passive-acceptance side of it *stuporous acquiescence*](https://medium.com/@profjsb/mis-adventures-of-genai-in-the-scientific-workflow-d2ff1d804850).
+[Margaret-Anne Storey describes the longer-term loss of skill at team level as *cognitive debt*](https://margaretstorey.com/blog/2026/02/09/cognitive-debt/);
+[Addy Osmani uses *comprehension debt*](https://addyosmani.com/blog/comprehension-debt/)
+for the related case where the codebase grows faster than anyone's
+understanding of it. A useful
 umbrella term is *decoupled comprehension*: the code and your grasp of it
 have drifted apart. The [Reflections](reflections.html) page collects the
 wider conversation.
