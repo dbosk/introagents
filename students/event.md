@@ -2,7 +2,8 @@
 title: Student Life Agentic 2026-05-20
 ---
 
-<img src="../ric-and-daniel.png" alt="Ric and Daniel" width="720">
+<img src="https://daniel.bosk.se/introagents/ric-and-daniel.png"
+ alt="Ric and Daniel" width="720">
 
 # Extracurricular workshop: Student Life Agentic
 
