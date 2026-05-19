@@ -1,6 +1,7 @@
 # introagents
 
-<img src="ric-and-daniel.png" alt="Ric and Daniel" width="720">
+<img src="daniel-ric-alexander.png"
+ alt="Alexander, Daniel and Ric" width="720">
 
 An introduction to using LLMs as tools.
 
