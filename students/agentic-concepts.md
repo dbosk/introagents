@@ -53,9 +53,19 @@ Every interactive agent works inside a limited context window. Only part of the
 total conversation, files, instructions, and tool output can stay in active
 view at once.
 
+At each turn, the tool feeds the whole conversation so far — your messages,
+the agent's previous replies, file contents it has read, and tool outputs —
+back into the model. The model has no separate memory of earlier turns; it
+re-reads the transcript every time it answers.
+
 When a session gets too long or too noisy, useful signal becomes harder to
 maintain. In this course we call that `context rot`. That is course language,
 not a universal vendor term.
+
+Compaction is the direct response. The tool replaces older turns with a
+shorter summary, freeing room and sharpening focus before the conversation
+continues. The vendor commands below are different surfaces for the same
+idea.
 
 In the tools you have already seen:
 
