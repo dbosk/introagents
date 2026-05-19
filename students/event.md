@@ -48,12 +48,15 @@ benefits, model access, Claude Code, Copilot CLI, OpenCode, skills,
 
 # Agenda: Student Life Agentic
 
-## Set up and introduction
+This is a brief outline of the agenda for the event. We will cover these 
+topics, but we will also be flexible and adjust the agenda as we go.
+
+## 1. Set up and introduction
 
 We'll start by giving an overview of the setup.
 Accounts and software needed.
 
-## The needed skills
+## 2. The needed skills
 
 We'll write skills for:
 
@@ -61,7 +64,13 @@ We'll write skills for:
 2. getting info out of Canvas,
 3. studying effectively for the coming exam period.
 
-## Trying our new skills
+## 3. Trying our new skills
 
 We'll try the skills as we develop them. We'll also refine them as we go. 
 Development is always an iterative process towards perfection.
+
+## 4. The future
+
+We'll also look at other examples and finish with a reflection on how this will 
+impact your future career and how you might be expected to use or not use AI in 
+the future.
