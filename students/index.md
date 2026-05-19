@@ -8,6 +8,10 @@ This section collects practical information for students who want to get started
 with agentic use of LLMs in a way that fits this course and the surrounding
 tooling.
 
+If you want to see what these tools actually do before deciding whether the
+setup is worth it, [see what an agentic session looks like](worked-example.html)
+first. The rest of the guide takes the pieces of that session apart.
+
 Several common ways to begin are:
 
 1. If GitHub student benefits are available to you, start there and use GitHub
@@ -70,6 +74,7 @@ Across this section, students should be able to:
 
 ## Start here
 
+- [See what an agentic session looks like](worked-example.html)
 - [Register with GitHub as a student](github-student.html)
 - [Understand model access: GitHub, Claude, APIs, Zen, and Ollama](model-access.html)
 - [Learn when local models and Ollama make sense](local-models.html)
@@ -107,6 +112,8 @@ reusable instructions in files instead of rewriting them in every chat.
 
 These pages cover:
 
+- one complete worked example of an agentic session, end-to-end, that
+  the rest of the guide takes apart
 - model access routes including GitHub, Claude subscriptions, direct APIs,
   OpenCode Zen, and Ollama
 - local models and Ollama for local or offline workflows with open-weight
