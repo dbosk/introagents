@@ -1,0 +1,132 @@
+\mode<all>
+\begin{pycode}
+from mentipy.latex import mc, open_text, word_cloud
+from mentipy.store import Store
+
+
+mentipy_common = {
+    "store": Store("mentipy.json"),
+    "qr_dir": "mentipy-obj",
+    "qr_format": "png",
+    "environment": "exercise",
+    "show_url": False,
+    "layout": "slide",
+}
+\end{pycode}
+
+\mode*
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\begin{abstract}
+  \input{abstract.tex}
+\end{abstract}
+
+\begin{frame}
+  \only<presentation>{\tableofcontents[hideallsubsections]}
+  \only<article>{\tableofcontents}
+\end{frame}
+
+
+\section{Overview}
+
+\begin{frame}{What today is for}
+  \begin{block}{Student Life Agentic}
+    A short hybrid lecture and workshop on using LLMs more effectively for
+    study work, especially during the coming exam period.
+  \end{block}
+
+  \begin{itemize}
+    \item We will focus on agentic ways of working, not only web chat.
+    \item We will show tools, build skills, and try them immediately.
+    \item Bring a laptop if you want to follow along hands-on.
+  \end{itemize}
+\end{frame}
+
+
+\section{Getting a Read on the Room}
+
+\begin{frame}[fragile]{Which programmes are here?}
+  \begin{pycode}
+print(word_cloud(
+    "Which programme are you taking? Use the programme code or a short programme name.",
+    split_words=False,
+    max_chars=60,
+    render="scaled",
+    **mentipy_common,
+))
+  \end{pycode}
+\end{frame}
+
+\begin{frame}[fragile]{Which AI interfaces have you used?}
+  \begin{pycode}
+print(mc(
+    "Tick every AI interface you have already used. If none apply, choose only 'Not yet'.",
+    [
+        "Web chat tools",
+        "Terminal or CLI tools",
+        "Agentic use in VS Code or another IDE",
+        "Not yet",
+    ],
+    multi=True,
+    **mentipy_common,
+))
+  \end{pycode}
+\end{frame}
+
+\begin{frame}[fragile]{What level of AI use are you at?}
+  \begin{pycode}
+print(mc(
+    "Pick the level that best describes your current AI use. If you use several, pick the most advanced one.",
+    [
+        "L1: Ask --- web chat for answers, drafts, or explanations",
+        "L2: Edit --- AI help directly in your editor or IDE",
+        "L3: Agentic --- steering autonomous loops that plan and execute",
+        "Not yet",
+    ],
+    **mentipy_common,
+))
+  \end{pycode}
+\end{frame}
+
+\begin{frame}[fragile]{How have you used AI in your studies?}
+  \begin{pycode}
+print(open_text(
+    "If you have used AI in your studies, how have you used it so far? If not, leave this blank.",
+    max_chars=240,
+    **mentipy_common,
+))
+  \end{pycode}
+\end{frame}
+
+\begin{frame}[fragile]{Why have you not used AI in your studies?}
+  \begin{pycode}
+print(open_text(
+    "If you have not used AI in your studies, why not? If you already use it, leave this blank.",
+    max_chars=240,
+    **mentipy_common,
+))
+  \end{pycode}
+\end{frame}
+
+
+\section{Plan}
+
+\begin{frame}{Agenda}
+  \begin{enumerate}
+    \item Set up and introduction.
+    \item The skills we need.
+    \item Trying the skills as we build them.
+    \item Looking ahead to future study and career use.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{How we will work today}
+  \begin{itemize}
+    \item We will keep the session practical and adjust as we go.
+    \item We will use GitHub Copilot and Claude Pro as concrete examples.
+    \item You can leave once you have got what you need from the workshop.
+  \end{itemize}
+\end{frame}
