@@ -17,8 +17,7 @@
 %\usepackage{newclude}
 \usepackage{import}
 
-\usepackage[strict]{csquotes}
-\usepackage[single]{acro}
+\usepackage{acro}
 
 \usepackage{subcaption}
 
@@ -30,7 +29,10 @@
 \usepackage{minted}
 \setminted{autogobble,linenos}
 
+\usepackage[strict]{csquotes}
+
 \usepackage{pythontex}
+\setpythontexlistingenv{pythontexlisting}
 \setpythontexoutputdir{.}
 \setpythontexworkingdir{..}
 
@@ -42,7 +44,15 @@
 \usepackage[unq]{unique}
 \DeclareMathOperator{\powerset}{\mathcal{P}}
 
-\usepackage[binary-units]{siunitx}
+\usepackage{siunitx}
 
 \usepackage{didactic}
+\ProvideTranslation{british}{Exercise}{Exercise}
+\ProvideTranslation{british}{Exercises}{Exercises}
+\ProvideTranslation{british}{exercise}{exercise}
+\ProvideTranslation{british}{exercises}{exercises}
 \usepackage{cleveref}
+
+\title{Student Life Agentic}
+\author{Daniel Bosk \and Ric Glassey}
+\institute{KTH EECS TCS}
