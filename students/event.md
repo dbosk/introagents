@@ -200,26 +200,287 @@ not polished documentation.
   — a model-selection snippet (1 KB). Kept for completeness; nothing
   to learn from here on its own.
 
+## What you see in a session — annotated
+
+The transcripts above are the source of truth. This section walks
+through them in paraphrase so you can recognise the patterns when you
+open the raw `.md` files. Each turn below is followed by a *Notice:*
+line that names the pattern and links to the page that unpacks it —
+the same shape as
+[What an agentic session looks like](worked-example.html). The aim is
+not to memorise these prompts but to learn to *see* what is happening
+on screen, so you can intervene when the agent strays.
+
+### Building the honour-code skills
+
+This happens in
+[`42a13f21-…`](https://github.com/dbosk/introagents/blob/main/students/event-202605/transcripts/42a13f21-fbb5-4e71-af4d-5bf3c21ddfa2.md),
+around `08:22–08:26`.
+
+#### Turn 1 — the opening prompt
+
+> We are going to develop some skills to help us adhere to the KTH
+> Honor system. Here's the honor system: `<URL to the KTH page>`.
+
+```text
+[The agent fetches the URL itself with WebFetch, asking the page for
+"all principles, rules, expectations for students, expectations for
+teachers, and any specifics about what constitutes cheating,
+plagiarism, collaboration rules, AI/tool use, citation, and exam
+conduct." A summary of the seven rules comes back.]
+```
+
+*Notice:* the user's prompt did three things — named the goal, handed
+over the raw material as a URL, and stopped. The agent decided on its
+own to fetch the page and to phrase a thorough extraction sub-prompt.
+Tool uses themselves carry prompts; what you write inside them shapes
+what comes back. Unpacked in
+[Agentic concepts → Planning before editing](agentic-concepts.html#planning-before-editing).
+
+#### Turn 2 — a plan before any file is written
+
+> *(no new user input)*
+
+```text
+Before writing any skill, here is the suite I'm building. Each
+skill maps to specific rules:
+
+| Skill              | Rules addressed |
+|--------------------|-----------------|
+| honor-disclose     | 2, 7            |
+| honor-aid-check    | 4, 6, 7         |
+| honor-defense-prep | 3               |
+| honor-audit        | 1, 2, 4, 5      |
+| honor-policy-draft | (teacher-side)  |
+
+Building them now.
+```
+
+*Notice:* the agent planned the whole suite before writing a single
+file. The table *is* the plan, made visible so you could object before
+five files existed. Unpacked in
+[Agentic concepts → Planning before editing](agentic-concepts.html#planning-before-editing).
+
+#### Turn 3 — five Writes in a row
+
+> *(no new user input)*
+
+```text
+[Six Write tool uses in succession: skills/README.md and one
+SKILL.md for each of honor-disclose, honor-aid-check,
+honor-defense-prep, honor-audit, honor-policy-draft.]
+```
+
+*Notice:* every `Write` you see in the raw transcript is a file being
+created on disk. The agent did not paste the skills into the chat —
+each skill is a directory with a `SKILL.md` you can install and
+re-use. Unpacked in
+[Skills → How skills are used](skills.html#how-skills-are-used).
+
+### The honour-mode redirection
+
+Same transcript, around `08:26`. This is the pedagogical punch line
+of the build, and a textbook case of *injecting a prompt when the
+agent is about to stray*.
+
+#### The redirect
+
+> *(the user's prompt arrived between turns; the captured form is the
+> agent's reading-back of it)* — use this skill so that you don't help
+> too much while studying.
+
+```text
+Got it — the skills are written, and you want me to actually use
+honor-aid-check (and friends) as a guardrail when you're studying.
+Saving that as feedback so it sticks across sessions.
+
+[Writes a feedback memory at .../memory/feedback_honor_mode.md
+describing exactly when to enter "honour-mode" and what to refuse.]
+```
+
+*Notice:* one sentence changed the role of the skills. They went from
+"files Claude could load if asked" to "things Claude applies to
+itself, automatically, whenever the user is studying." This is the
+redirect to watch for: if you let the agent finish the build and walk
+away, you get artefacts; if you ask "now apply this to yourself," you
+get a habit. The guardrail itself is now an instruction layer the
+tool loads on its own — unpacked in
+[Agentic concepts → Instructions and memory](agentic-concepts.html#instructions-and-memory)
+and [`AGENTS.md`](agents-md.html).
+
+### The Canvas skill build and the install hiccup
+
+Same transcript, around `08:52–09:08`.
+
+#### Turn 1 — a bundled prompt
+
+> We want another skill. There is this CLI command `canvaslms`. It's
+> on PyPI. Check if it's installed already, otherwise help me install
+> it. Then I want a skill for accessing course information in Canvas.
+> Then you can use that tool to look around and fetch the info.
+
+```text
+[A chain of Bash tool uses: `which canvaslms` (not found),
+`python3 -m pip show canvaslms` (not found), `pipx list` (pipx not
+found either), `brew install pipx`, then `pipx install canvaslms`.]
+```
+
+*Notice:* this prompt bundled four things — check, install, write a
+skill, then use it. Bundling is fine when the steps are genuinely
+sequential and the agent can verify between them. It is *not* fine
+when a step needs you (your access tokens, your choices); we will
+see that two turns down.
+
+#### Turn 2 — a mid-stream clarification
+
+> *(the user clarified that the skill should answer natural-language
+> questions like "deadline for lab 2 in DD1301")*
+
+```text
+Good clarification — the skill needs to support natural-language
+queries like that. I'll design it around that. Continuing install.
+```
+
+*Notice:* the clarification arrived **before** the agent had committed
+to a design. That is the cheapest moment to redirect. When you read
+the raw transcript, watch for short user messages that add intent the
+opening prompt did not carry — they are easy to miss and they steer
+the next ten tool uses.
+
+#### Turn 3 — the visible recovery
+
+```text
+[pipx install canvaslms succeeds. Running canvaslms --help fails
+with: ModuleNotFoundError: No module named 'cryptography'.]
+[Next Bash tool use: `pipx inject canvaslms cryptography` — then
+re-runs canvaslms --help, which now works.]
+```
+
+*Notice:* the error was visible in the conversation; the recovery was
+one targeted command followed by a re-run to confirm. This is what
+"the agent verifies its own work" looks like in practice — and why
+*not hiding* tool errors is a feature, not noise. Unpacked in
+[Verification](verification.html).
+
+#### Turn 4 — the prompt only you can run
+
+```text
+Login is not yet configured. One step for you (needs your Canvas
+access token):
+
+    ! canvaslms login
+
+You'll be prompted for server (canvas.kth.se) and an access token
+you create in Canvas → Account → Settings → "+ New Access Token".
+```
+
+*Notice:* not every step in an agentic session can be done by the
+agent. Anything that needs your secrets, your two-factor device, or
+your judgement is handed back to you. The `!` prefix runs the command
+in the same session so the output lands in the conversation and the
+agent can continue from it.
+
+### A real query against real data
+
+Same transcript, around `09:07–09:08`. The student question becomes a
+shell command becomes a *corrected* shell command — without you
+having to learn the CLI.
+
+#### Turn 1 — the question
+
+> What are the assignments I have to do in DD1301 from HT25?
+
+```text
+[Bash tool use: `canvaslms assignments list -c datintro25` returns
+many lines, most labelled "Learning material" rather than actual
+deliverables.]
+```
+
+#### Turn 2 — the iteration
+
+```text
+[Without being asked, the agent runs a follow-up Bash command:
+`canvaslms assignments list -c datintro25 | awk -F'\t' '{print $2}' | sort -u`
+to discover that the assignment groups are just LAB1 and "Learning
+material". A third Bash command then filters to LAB1 only.]
+
+Here are the actual assignments (everything else is "Learning
+material"):
+
+1. Guide to accessing the terminal
+2. The terminal
+3. Git
+4. Writing a report in LaTeX
+
+No due dates are set in Canvas — deadlines are likely on the course
+page rather than per-assignment in Canvas. Want me to pull the
+syllabus or a specific assignment's full description?
+```
+
+*Notice:* the first command returned noise. The agent iterated on its
+own commands rather than asking you to interpret the raw output. Watch
+for this pattern: when you see two or three `Bash` tool uses in a row
+with no user prompt between them, the agent is filtering its own
+output for you. Cross-checking that filtered answer against the source
+artefact is unpacked in [Verification](verification.html).
+
+### What you just read for
+
+Four prompting patterns, all of them recurring:
+
+| Pattern in the event | Where it is unpacked |
+| --- | --- |
+| Prompt with raw material, then stop | [Agentic concepts → Planning before editing](agentic-concepts.html#planning-before-editing) |
+| Redirect with intent ("now apply this to yourself") | [Agentic concepts → Instructions and memory](agentic-concepts.html#instructions-and-memory) and [`AGENTS.md`](agents-md.html) |
+| Recover visibly from tool errors | [Verification](verification.html) |
+| Iterate on your own output instead of asking the user | [Verification](verification.html) |
+
+The raw transcripts linked above contain dozens more turns than these
+four moments. As you read them, the goal is not to copy the prompts
+verbatim — it is to recognise the *shape* a useful prompt takes, and
+to spot the moment when a one-sentence correction would save the next
+ten tool uses.
+
 ## Try it yourself
 
-Concrete exercises that mirror what attendees did live. This is the part
-that makes "follow the event on your own" actually equivalent to
-attending — please do at least the first two.
+The payoff of [building the honour-code skills](#building-the-honour-code-skills)
+shows up a few paragraphs above, in the `09:07–09:08` moment of
+[a real query against real data](#a-real-query-against-real-data): you
+stop working like a web-UI user. Instead of pasting assignment briefs,
+policy text, or your own submission into a chat box, you let the agent
+fetch from Canvas and read your local files directly. That no-paste
+behaviour is what makes the setup worth the install effort, so in the
+exercises below watch the tool uses before you read the answer.
 
-1. **Install the `canvas` skill.** Run `canvaslms login` against
-   `canvas.kth.se` with your own access token (Canvas → *Account →
-   Settings → "+ New Access Token"*). Then ask Claude Code something
-   like *"what assignments do I have due in <your course> in the next
-   two weeks?"* and let the skill answer.
-2. **Use `/honor-aid-check` before your next study session.** Paste in
-   the assignment's permitted-aids policy and the help you are about
-   to ask for. Notice what the skill refuses or narrows, and how the
-   "unclear in policy → not permitted" default behaves.
-3. **Try `/honor-defense-prep` on something you already submitted.**
-   Watch for the gap between *"I wrote this"* and *"I can defend this
-   cold."* Anything that turns out to be `borrowed` is a flag, not a
-   judgement — fix the understanding before the next submission.
+1. **Install the `canvas` skill, log in, and run one pure Canvas query.**
+   Run `canvaslms login` against `canvas.kth.se` with your own access
+   token (Canvas → *Account → Settings → "+ New Access Token"*). Then ask
+   Claude Code something like *"what assignments do I have due in <your
+   course> in the next two weeks?"* Notice that the answer should come
+   from Canvas directly; you should not need to paste an assignment
+   description first.
+2. **Use `/honor-aid-check` with `canvas` before your next study session.**
+   Ask in natural language, for example *"check what aids are permitted
+   for lab 2 in DD1301 — I want to ask Claude to help me with the
+   recursion part."* The agent should fetch the policy from the
+   assignment with `canvaslms assignments view -c <course> -a <pattern>`,
+   or fall back to `canvaslms syllabus -c <course>` if the assignment page
+   has no explicit policy, before `honor-aid-check` turns it into the
+   grid. Watch for a `Bash` tool use against `canvaslms` before the grid
+   appears.
+3. **Use `/honor-defense-prep` on something you already submitted.** Tell
+   Claude Code to fetch the assignment brief from Canvas and read your
+   local submission directly, for example `./report.tex` or the lab repo
+   you are sitting in. The agent should fetch the grading criteria with
+   `canvaslms assignments view -c <course> -a <pattern>` and then use
+   `Read` on your own files before asking any defence questions. Watch
+   for one `Bash` tool use against `canvaslms`, followed by `Read` tool
+   uses on your files, before the interrogation starts. Anything that
+   turns out to be `borrowed` is a flag, not a judgement — fix the
+   understanding before the next submission.
 4. **(If you are a teacher reading along.)** Run `/honor-policy-draft`
-   on your next assignment. Then read each cell of the produced grid
-   as a student would, looking for a loophole. Narrow any cell where
-   you find one.
+   on your next assignment. Then read each cell of the produced grid as a
+   student would, looking for a loophole. Narrow any cell where you find
+   one. This is the teacher-side mirror of exercise 2: if you publish the
+   policy in the grid form that `honor-aid-check` consumes, the student's
+   Canvas-fetched check works without ambiguity.
