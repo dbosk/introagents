@@ -443,24 +443,44 @@ ten tool uses.
 
 ## Try it yourself
 
-Concrete exercises that mirror what attendees did live. This is the part
-that makes "follow the event on your own" actually equivalent to
-attending — please do at least the first two.
+The payoff of [building the honour-code skills](#building-the-honour-code-skills)
+shows up a few paragraphs above, in the `09:07–09:08` moment of
+[a real query against real data](#a-real-query-against-real-data): you
+stop working like a web-UI user. Instead of pasting assignment briefs,
+policy text, or your own submission into a chat box, you let the agent
+fetch from Canvas and read your local files directly. That no-paste
+behaviour is what makes the setup worth the install effort, so in the
+exercises below watch the tool uses before you read the answer.
 
-1. **Install the `canvas` skill.** Run `canvaslms login` against
-   `canvas.kth.se` with your own access token (Canvas → *Account →
-   Settings → "+ New Access Token"*). Then ask Claude Code something
-   like *"what assignments do I have due in <your course> in the next
-   two weeks?"* and let the skill answer.
-2. **Use `/honor-aid-check` before your next study session.** Paste in
-   the assignment's permitted-aids policy and the help you are about
-   to ask for. Notice what the skill refuses or narrows, and how the
-   "unclear in policy → not permitted" default behaves.
-3. **Try `/honor-defense-prep` on something you already submitted.**
-   Watch for the gap between *"I wrote this"* and *"I can defend this
-   cold."* Anything that turns out to be `borrowed` is a flag, not a
-   judgement — fix the understanding before the next submission.
+1. **Install the `canvas` skill, log in, and run one pure Canvas query.**
+   Run `canvaslms login` against `canvas.kth.se` with your own access
+   token (Canvas → *Account → Settings → "+ New Access Token"*). Then ask
+   Claude Code something like *"what assignments do I have due in <your
+   course> in the next two weeks?"* Notice that the answer should come
+   from Canvas directly; you should not need to paste an assignment
+   description first.
+2. **Use `/honor-aid-check` with `canvas` before your next study session.**
+   Ask in natural language, for example *"check what aids are permitted
+   for lab 2 in DD1301 — I want to ask Claude to help me with the
+   recursion part."* The agent should fetch the policy from the
+   assignment with `canvaslms assignments view -c <course> -a <pattern>`,
+   or fall back to `canvaslms syllabus -c <course>` if the assignment page
+   has no explicit policy, before `honor-aid-check` turns it into the
+   grid. Watch for a `Bash` tool use against `canvaslms` before the grid
+   appears.
+3. **Use `/honor-defense-prep` on something you already submitted.** Tell
+   Claude Code to fetch the assignment brief from Canvas and read your
+   local submission directly, for example `./report.tex` or the lab repo
+   you are sitting in. The agent should fetch the grading criteria with
+   `canvaslms assignments view -c <course> -a <pattern>` and then use
+   `Read` on your own files before asking any defence questions. Watch
+   for one `Bash` tool use against `canvaslms`, followed by `Read` tool
+   uses on your files, before the interrogation starts. Anything that
+   turns out to be `borrowed` is a flag, not a judgement — fix the
+   understanding before the next submission.
 4. **(If you are a teacher reading along.)** Run `/honor-policy-draft`
-   on your next assignment. Then read each cell of the produced grid
-   as a student would, looking for a loophole. Narrow any cell where
-   you find one.
+   on your next assignment. Then read each cell of the produced grid as a
+   student would, looking for a loophole. Narrow any cell where you find
+   one. This is the teacher-side mirror of exercise 2: if you publish the
+   policy in the grid form that `honor-aid-check` consumes, the student's
+   Canvas-fetched check works without ambiguity.
