@@ -33,6 +33,7 @@ After working through this page, students should be better able to:
 - use Claude Code with `Claude Pro` or `Claude Max` when you want one clear
   paid coding-tool path
 - use direct APIs when you want provider choice, scripting, or automation
+- use Mistral when you want an EU-based hosted alternative with a student plan
 - use OpenCode Zen when you want a curated set of models inside OpenCode
 - use Ollama when you want local or offline models and have enough hardware
 
@@ -83,6 +84,7 @@ Common examples are:
 
 - OpenAI API
 - Anthropic API for Claude models
+- Mistral API
 
 With direct APIs, you normally:
 
@@ -99,6 +101,13 @@ In OpenCode, this usually means using `/connect` and then `/models`.
 Important: subscriptions and APIs are different. Paying for a chat app or a
 coding subscription does not automatically mean you have a separate
 general-purpose API key.
+
+If you want an EU-based hosted alternative, Mistral is worth knowing. For
+student-facing planning, the main tiers to remember are `Free`, `Education`,
+and `Pro`. `Education` is the student-discounted plan, whilst `Pro` is the
+paid personal tier with more headroom. For stronger coding through the API,
+the practical Mistral pair to remember is `Mistral Small 4` for cheaper work
+and `Mistral Medium 3.5` for stronger work.
 
 ## OpenCode Zen
 
@@ -194,6 +203,9 @@ committing.
 | Claude Pro | $20/mo monthly or $17/mo annual | More usage; includes Claude Code and Claude Cowork | Claude Code Pro is not a separate SKU on the pricing page | [Claude Pro pricing](https://claude.com/pricing/pro) | Mixed but still strong. Earlier off-peak promos were popular, and [Daniel](https://www.kth.se/profile/dbosk) and Ric both get good work out of Claude, but there is recurring session-limit anxiety and active planning around resets. Productive, but not very predictable. |
 | Claude Max 5x | $100/mo | 5x more usage than Pro | Includes Claude Code | [Claude Max pricing](https://claude.com/pricing/max) | Likely better if you value continuity more than price, but the course discussion did not include concrete hands-on Max feedback. The appeal is mainly buying relief from limits. |
 | Claude Max 20x | $200/mo | 20x more usage than Pro | Includes Claude Code | [Claude Max pricing](https://claude.com/pricing/max) | Same caveat as Max 5x. Probably attractive only for very heavy use. Claude is admired for output quality, but the pricing and limit model still seems to create more mental overhead than the alternatives. |
+| Mistral Free | $0 | Limited Vibe access: limited messages, web searches, and coding sessions; API pricing is separate PAYG | Good for trying Mistral quickly without upfront cost | [Mistral pricing](https://mistral.ai/pricing), [Vibe overview](https://mistral.ai/products/le-chat) | Initially looked generous enough to try, but Daniel reported exhausting the free allowance quickly and not liking the quality enough to justify depending on it. |
+| Mistral Education | $5.99 | Verified-student plan; max 12 months; only for students who have not used Vibe or Le Chat before | Most student-relevant Mistral paid tier if you are eligible | [Mistral pricing](https://mistral.ai/pricing) | Sensible if you specifically want to try Mistral as an EU-based option, but not discussed as a clear Claude replacement for hard coding work. |
+| Mistral Pro | $14.99/mo | Up to 6x Free messages, up to 5x web searches, up to 40x image generation; positioned as all-day coding; beyond plan limits, usage continues at API rate | Best understood as the paid personal Mistral tier | [Mistral pricing](https://mistral.ai/pricing) | More explicit than some fuzzy plans, but the in-thread feeling was still that the quality/headroom tradeoff looked clearly worse than Anthropic for Daniel's use case. |
 | GitHub Copilot Pro+ | $39/mo | 1,500 premium requests/mo; unlimited agent mode and chats with GPT-5 mini; unlimited inline suggestions | Extra premium requests at $0.04/request; usage-based billing changes are coming June 1 | [Copilot plans](https://github.com/features/copilot/plans), [Copilot billing docs](https://docs.github.com/en/copilot/concepts/billing/copilot-requests) | Sentiment turned negative after the billing change announcement. Daniel and Ric both reacted as if the old deal had been unusually generous and was now getting worse. Predictability seems worse after the multiplier and usage-based billing news. |
 | OpenCode Go | $5 first month, then $10/mo | Hard limits: $12 per 5 hours, $30/week, $60/month | Beta | [OpenCode Go docs](https://opencode.ai/docs/go/) | Positive on workflow. Daniel explicitly praised OpenCode for dynamic context pruning and uses it strategically when Claude is near its limit. The usage model is understandable and the product helps extend productive time rather than creating more anxiety. |
 | OpenCode Zen | pay-as-you-go | No fixed monthly cap; per-request billing, free models available, spend limits configurable | More prepaid or PAYG than a normal monthly subscription | [OpenCode Zen docs](https://opencode.ai/docs/zen/) | Probably the most predictable in accounting terms because it is explicit PAYG, but that also means less of the cosy all-you-can-eat feeling. Respectable and transparent, though not discussed emotionally in the same way as Claude or Codex. |
@@ -205,6 +217,11 @@ A few naming caveats:
 
 - Claude Code Pro and Claude Code Max are really Claude Pro and Claude Max
   plans that include Claude Code.
+- Mistral's chat assistant is now called Vibe (formerly Le Chat), but the API
+  model layer is still separate.
+- For student work, the main Mistral API pair to remember is `Mistral Small 4`
+  for cheaper work and `Mistral Medium 3.5` for stronger coding work.
+- `Devstral 2` is deprecated, so do not learn it as a current default.
 - OpenAI Codex is currently bundled into ChatGPT plans rather than sold as
   its own consumer subscription.
 - OpenCode Zen is pay-as-you-go rather than a normal monthly plan.
@@ -221,6 +238,9 @@ From the course discussion:
 - **Best predictability and transparency:** OpenCode Zen, then OpenCode Go.
   Zen is explicit PAYG, and Go has visible hard caps. They may feel less
   luxurious than "unlimited-ish" plans, but they are easier to reason about.
+- **Best EU-based hosted alternative:** Mistral. Useful to know about if you
+  want an EU-based provider plus a student discount, but the course discussion
+  still treated it as a weaker coding option than Claude.
 - **Best workflow complement:** OpenCode as a harness. Independent of
   provider, Daniel explicitly likes OpenCode for dynamic context pruning and
   for extending productive time when Claude is near its limit.

@@ -28,6 +28,10 @@ After working through this page, students should be better able to:
 
 - use Claude Opus when the task is hard, ambiguous, or needs deep reasoning
 - use Claude Sonnet or GPT-5.4 for everyday serious coding work
+- use Mistral Medium 3.5 when you want a current Mistral API model for stronger
+  coding work
+- use Mistral Small 4 when you want cheaper hosted API work and can accept a
+  lower ceiling
 - use GPT-5 mini for cheap helpers, subagents, and narrow mechanical tasks
 - use a larger Qwen model via Ollama if you want a local or self-hosted route
 - use a small Ollama model for quick utility help when frontier models are
@@ -43,6 +47,8 @@ than benchmark bragging.
 | Claude Opus | hardest debugging, architecture, forensics, ambiguous root-cause work, long chains of reasoning | usually the strongest overall reasoning and writing in this set | slower, more expensive, more session-limit anxiety |
 | Claude Sonnet | everyday serious coding, implementation, reviews, normal debugging | close to Opus on many tasks, but less reliable on the nastiest multi-step cases | cheaper and faster, but gives up some depth |
 | GPT-5.4 | strong general coding agent, implementation, edits across a repo, good default when you want throughput plus solid quality | roughly in the top working tier; usually not as prose-heavy as Opus, but very capable | quality can depend more on harness and provider policy |
+| Mistral Medium 3.5 | direct API coding work when you want a current Mistral flagship or an EU-based hosted alternative | strong enough for real work, but usually a step below Opus, Sonnet, or GPT-5.4 on the hardest tasks | weaker ceiling than the top frontier tools; best when provider choice or geography matters |
+| Mistral Small 4 | cheaper hosted API work, scripts, budget-conscious helpers, lighter coding tasks | useful budget model, but clearly below the stronger frontier coding models | lower cost and lower quality go together; use it when price matters more than maximum reliability |
 | GPT-5 mini | cheap and faster helper for boilerplate, small transforms, grep-and-fix style tasks, subagents | clearly below the big frontier models, but often good enough for scoped tasks | weaker judgement, easier to drift on larger changes |
 | Qwen larger open models | local or self-hosted coding help, decent code generation, useful when privacy, control, or cost matter | surprisingly strong for open weights, but usually below top proprietary models on hard reasoning | more setup, more variance by size and quantisation, weaker long-horizon reliability |
 | Kimi or Kimi K2 style models | long-context reading, broad synthesis, sometimes very good value | can be excellent for some analysis and synthesis workloads | availability and deployment path is less universal; coding reliability still depends on task and harness |
@@ -55,6 +61,8 @@ A short practical ranking by task:
 
 - hardest reasoning, debugging, or architecture: Claude Opus
 - best balance for normal serious work: Claude Sonnet or GPT-5.4
+- best Mistral choice for stronger hosted coding: Mistral Medium 3.5
+- best cheaper hosted API option in the Mistral family: Mistral Small 4
 - best cheap helper, subagent, or mechanical worker: GPT-5 mini
 - best if you want local or open-weight control: larger Qwen-class models via
   Ollama
@@ -65,10 +73,12 @@ A simple decision rule:
 
 1. If the task is scary or ambiguous, start with Opus.
 2. If the task is real but not pathological, use Sonnet or GPT-5.4.
-3. If the task is narrow and repetitive, use GPT-5 mini.
-4. If the task must stay local or self-hosted, use Qwen or another larger
+3. If you want a current Mistral route, use Medium 3.5 for stronger work or
+   Small 4 for cheaper work.
+4. If the task is narrow and repetitive, use GPT-5 mini.
+5. If the task must stay local or self-hosted, use Qwen or another larger
    open model via Ollama.
-5. If the task is for students, toy help, or no-budget inference, use smaller
+6. If the task is for students, toy help, or no-budget inference, use smaller
    Ollama models.
 
 ## Expected quality ladder
@@ -77,7 +87,7 @@ Very roughly, from strongest to weakest on hard work:
 
 1. Claude Opus
 2. Claude Sonnet ~= GPT-5.4
-3. strong open-weight models / Kimi-tier (depending on task)
+3. Mistral Medium 3.5 / strong open-weight models / Kimi-tier (depending on task)
 4. mini models
 5. small local Ollama models
 
@@ -104,8 +114,10 @@ A practical pattern several practitioners in this course use is:
 
 1. plan a hard change with Opus inside Claude Code
 2. switch to GPT-5.4 inside OpenCode to actually implement the plan
-3. delegate small mechanical edits or searches to GPT-5 mini as subagents
-4. fall back to a local model for offline work or when subscription limits
+3. use Mistral Small 4 or Medium 3.5 for direct API experiments when you want
+   a hosted alternative outside the OpenAI or Anthropic stack
+4. delegate small mechanical edits or searches to GPT-5 mini as subagents
+5. fall back to a local model for offline work or when subscription limits
    are hit
 
 This is not the only pattern, but it illustrates that model choice is rarely
@@ -120,23 +132,27 @@ Try these short scenarios before looking at the suggested answers:
    problem. Which model family should you try first?
 2. You want a good everyday default for serious coding work without always
    paying for the strongest model. Which model family fits best?
-3. You need a cheap helper for narrow, repetitive edits or subagent work. Which
+3. You want a budget hosted API model and can accept a lower ceiling than the
+   top frontier tools. Which model family fits best?
+4. You need a cheap helper for narrow, repetitive edits or subagent work. Which
    model family fits best?
-4. Privacy or local control matters more than frontier quality. Which model
+5. Privacy or local control matters more than frontier quality. Which model
    family fits best?
 
 Suggested answers:
 
 1. Claude Opus.
 2. Claude Sonnet or GPT-5.4.
-3. GPT-5 mini.
-4. A larger open model through Ollama, such as Qwen.
+3. Mistral Small 4.
+4. GPT-5 mini.
+5. A larger open model through Ollama, such as Qwen.
 
 ## Short version
 
 1. Match the model to the task, not to the hype.
-2. Use Opus for hard work, Sonnet or GPT-5.4 for everyday work, mini models
-   for cheap helpers, and Ollama models for local use.
+2. Use Opus for hard work, Sonnet or GPT-5.4 for everyday work, Mistral
+   Medium 3.5 or Small 4 for hosted API alternatives, mini models for cheap
+   helpers, and Ollama models for local use.
 3. Remember that the harness around the model matters at least as much as
    the model itself.
 4. Mix models across a workflow when it makes sense.
