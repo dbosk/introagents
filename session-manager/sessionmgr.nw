@@ -467,11 +467,50 @@ around would only add a process between [[sshd]] and Claude.
 #!/bin/sh
 . /etc/event.env
 cd "$HOME"
+<<open the first session with the reveal prompt>>
 exec claude $CLAUDE_FLAGS
 @
 
 [[$CLAUDE_FLAGS]] is deliberately unquoted: it is a list of flags,
 not a single argument, and the word splitting is the point.
+
+\subsection{Recognising the team's first session}
+
+The telephone dynamic (\cref{sec:seeds}) needs the specification
+revealed in the team's \emph{first} session and never again.  Claude
+cannot make that call: every session starts with no memory, so all
+it could do is guess from the state of the directory---and a first
+player who spends their turn talking leaves no trace, which would
+make the second session look like a first one and trigger a second
+reveal precisely when the telephone rule starts to matter.
+
+So the launcher decides, using a marker file in the team directory.
+The marker shares the persistence argument from \cref{sec:overview}:
+it lives in the team's home, so it survives session restarts and
+container restarts alike.  On the first connect the launcher creates
+the marker and opens Claude with an explicit instruction to present
+the specification; on every later connect Claude starts plain, and
+the standing policy in [[CLAUDE.md]] applies.
+
+The marker is created \emph{before} Claude runs, which makes the
+reveal at-most-once: if two teammates connect simultaneously at the
+start, only the first reveals, and a session that crashes
+mid-presentation does not re-reveal on reconnect.  For a telephone
+game that is the right failure direction---an accidental second
+reveal cannot be taken back, whereas a facilitator can always
+re-arm the reveal by deleting [[.spec-shown]] from the team's
+directory (via [[docker exec]], since the file belongs to the team
+account).
+
+<<open the first session with the reveal prompt>>=
+if [ ! -e .spec-shown ]
+then
+  touch .spec-shown
+  exec claude $CLAUDE_FLAGS "This is the team's first session: \
+present the full specification from SPEC.md, then help the player \
+get started."
+fi
+@
 
 \section{SSH configuration}\label{sec:sshd}
 
@@ -637,6 +676,13 @@ their way to the file.  The point is pedagogical---the honest path
 (ask precise questions, write good notes) must be the path of least
 resistance.
 
+Deciding \emph{when} the first session happens is not Claude's
+job---a fresh session cannot remember whether a reveal already
+took place---so the launcher detects it mechanically and opens the
+first session with the reveal instruction (\cref{sec:launcher}).
+The policy here only tells Claude what to do on either side of that
+line.
+
 <<[[CLAUDE.md]]>>=
 # Team workspace
 
@@ -654,10 +700,10 @@ The full task specification is in SPEC.md.  The relay is a game of
 telephone: each player should know only what their teammates left
 behind, plus whatever they think to ask.  Therefore:
 
-- If no game files exist yet and the notes section below is still
-  empty, this is the team's first session: present the full
-  specification and help the player get started.
-- In every later session, do NOT show, summarise or paraphrase the
+- The team's first session is opened by the system itself with an
+  explicit instruction to present the specification.  That is the
+  only occasion to show it in full.
+- In every other session, do NOT show, summarise or paraphrase the
   whole specification, even when asked directly.  Answer specific
   questions about it truthfully (for example "how long is a
   round?" or "what does the reviewer do?").
