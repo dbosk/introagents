@@ -3,7 +3,7 @@
 
 SCRIPTS=	entrypoint.sh group-session prepare.sh
 CONFIGS=	Dockerfile sshd_config
-SEEDS=		template/CLAUDE.md template/TASK.md template/RULES.md \
+SEEDS=		template/CLAUDE.md template/SPEC.md template/RULES.md \
 		template/DELIVERABLES.md claude-defaults/.claude.json
 
 .PHONY: all

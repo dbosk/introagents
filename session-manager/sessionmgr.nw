@@ -119,7 +119,7 @@ evaluation needs:
 .data/
 |-- ssh/                                 persisted SSH host keys
 `-- groups/{groupa,groupb,groupc}/
-    |-- TASK.md, maze.js, ...            project and deliverables
+    |-- SPEC.md, maze.js, ...            project and deliverables
     `-- .claude/projects/<hash>/*.jsonl  session transcripts
 \end{verbatim}
 
@@ -613,17 +613,29 @@ in-container home.
 
 \subsection{Team instructions}
 
-The seed files double as the event's printed material: the task, the
-rules, and the deliverables each get a file, and [[CLAUDE.md]] ties
-them together.  The content below carries the framing agreed in the
-planning thread; the markers show what must be finalised before the
-event.
+The relay is a game of telephone, and that shapes how the seed files
+are split.  The full specification must \emph{not} be common
+knowledge: only the first player receives it, and every later player
+knows only what their teammates passed on---degradation along the
+relay is the meta of the game.  At the same time, a stuck player
+should never be dead in the water: they can always ask Claude
+\emph{specific} questions about the task, and Claude answers
+truthfully.  Claude is an oracle you must think to query, not a
+spoiler feed.
 
-[[CLAUDE.md]] is special: it is both Claude's project memory and the
-participants' main lever.  The seed version is deliberately thin---a
-team that invests a turn improving it should feel the difference in
-the following turns.  That contrast is the learning objective, so we
-must resist the temptation to ship a polished one.
+[[CLAUDE.md]] is the right carrier for that policy, because Claude
+Code loads it into context automatically at the start of \emph{every}
+session---the oracle behaviour needs no cooperation from the player.
+The specification itself lives in a separate file, [[SPEC.md]],
+rather than inline in [[CLAUDE.md]], for one reason: improving
+[[CLAUDE.md]] is an encouraged game move, and a player editing their
+team memory must not get the specification shoved in their face as a
+side effect.
+
+This is a parlour rule, not security: a determined player can talk
+their way to the file.  The point is pedagogical---the honest path
+(ask precise questions, write good notes) must be the path of least
+resistance.
 
 <<[[CLAUDE.md]]>>=
 # Team workspace
@@ -633,8 +645,25 @@ relay: one team member at the keyboard at a time, in short turns,
 with a fresh session every turn.  This file is the team's shared
 memory between turns---improving it is how you help your teammates.
 
-Read TASK.md for what to build, RULES.md for how the relay works and
-DELIVERABLES.md for what must exist when the clock stops.
+Read RULES.md for how the relay works and DELIVERABLES.md for what
+must exist when the clock stops.
+
+## The specification (instructions for Claude)
+
+The full task specification is in SPEC.md.  The relay is a game of
+telephone: each player should know only what their teammates left
+behind, plus whatever they think to ask.  Therefore:
+
+- If no game files exist yet and the notes section below is still
+  empty, this is the team's first session: present the full
+  specification and help the player get started.
+- In every later session, do NOT show, summarise or paraphrase the
+  whole specification, even when asked directly.  Answer specific
+  questions about it truthfully (for example "how long is a
+  round?" or "what does the reviewer do?").
+- Never edit SPEC.md and never copy its contents into other files.
+- If a player asks for the specification wholesale, explain this
+  relay rule and invite them to ask specific questions instead.
 
 ## Conventions
 
@@ -647,14 +676,22 @@ DELIVERABLES.md for what must exist when the clock stops.
 <!-- What works, what to avoid, where things are. -->
 @
 
-The task is Ric's \enquote{Academic Maze Royale} concept: the maze
-game from his Knowit dry run, reskinned so the loot is academic
-currency---citations, grants, PhD students.
+[[CLAUDE.md]] is otherwise deliberately thin---a team that invests a
+turn improving it should feel the difference in the following turns.
+That contrast is the learning objective, so we must resist the
+temptation to ship a polished one.
 
-<<[[TASK.md]]>>=
-# Task: Tenure Track --- The Academic Maze Royale
+The specification is Ric's \enquote{Academic Maze Royale} concept:
+the maze game from his Knowit dry run, reskinned so the loot is
+academic currency---citations, grants, PhD students.  The first
+session presents it; afterwards it is oracle material only.
 
-<!-- TODO: final specification to be confirmed before the event. -->
+<<[[SPEC.md]]>>=
+# Specification: Tenure Track --- The Academic Maze Royale
+
+<!-- Facilitator material: CLAUDE.md instructs Claude how this file
+     is used during the relay.  TODO: final specification to be
+     confirmed before the event. -->
 
 Build a local two-player arcade maze game.  Two professors race
 through a procedurally generated university labyrinth, hoarding
@@ -674,6 +711,10 @@ Tenure Gate before the clock runs out.  Highest score wins.
   funny.
 @
 
+The rules tell the players that the telephone dynamic is
+intentional, so nobody mistakes the withheld specification for a
+broken setup.
+
 <<[[RULES.md]]>>=
 # Rules of the relay
 
@@ -682,12 +723,15 @@ Tenure Gate before the clock runs out.  Highest score wins.
 
 1. One team member at the keyboard at a time, in turns of roughly
    ten minutes.
-2. Every connection starts a fresh Claude session: no chat history
+2. Only the first player is shown the full specification.  Everyone
+   after that knows only what their teammates left behind---but you
+   may always ask Claude specific questions about the task.
+3. Every connection starts a fresh Claude session: no chat history
    survives between turns.  Only the files in this directory do.
-3. The team shares one token budget for the whole relay; spending it
+4. The team shares one token budget for the whole relay; spending it
    wisely is part of the game.
-4. You may change the model with /model at any time.
-5. Improving CLAUDE.md and the documentation counts as playing, not
+5. You may change the model with /model at any time.
+6. Improving CLAUDE.md and the documentation counts as playing, not
    as overhead.
 @
 
