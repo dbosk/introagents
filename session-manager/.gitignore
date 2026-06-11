@@ -1,0 +1,22 @@
+# Everything tangles or weaves from sessionmgr.nw; only the .nw, the
+# Makefile, preamble.tex and README.md are source.
+Dockerfile
+entrypoint.sh
+group-session
+sshd_config
+prepare.sh
+template/
+claude-defaults/
+sessionmgr.tex
+sessionmgr.pdf
+ltxobj/
+latexmkrc
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+
+# Event data: team homes, transcripts, host keys.
+.data/

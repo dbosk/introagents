@@ -1,0 +1,22 @@
+% Preamble for the session-manager literate program.  Trimmed from
+% the literate-programming skill's reference preamble: packages whose
+% machinery this document does not use (biblatex, minted, pythontex,
+% acro, didactic, ...) are dropped so the build has no dependencies
+% beyond noweb and a TeX distribution.
+
+\usepackage[swedish,british]{babel}
+\usepackage{booktabs}
+
+\usepackage{noweb}
+\noweboptions{shift,breakcode,longxref,longchunks}
+
+\usepackage[inline]{enumitem}
+\setlist[enumerate]{label=(\arabic*)}
+
+\usepackage[strict]{csquotes}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,fit}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage[capitalize]{cleveref}
