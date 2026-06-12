@@ -26,7 +26,7 @@ ${SCRIPTS} ${CONFIGS} ${SEEDS}: sessionmgr.nw
 
 sessionmgr.pdf: sessionmgr.nw preamble.tex
 
-.PHONY: prepare build run
+.PHONY: prepare build run hackspace
 prepare: ${SEEDS} prepare.sh
 	./prepare.sh .data ${TEAMS}
 
@@ -38,6 +38,22 @@ run:
 	  -e CLAUDE_CODE_OAUTH_TOKEN -e ANTHROPIC_API_KEY \
 	  -e ANTHROPIC_MODEL -e TEAMS="${TEAMS}" \
 	  -v "${CURDIR}/.data:/data" introllm-session
+
+# The post-game hacker space: a second, independent container so the
+# game's .data/ stays pristine for evaluation.  Its own name, port,
+# volume, account list and (larger) model, each overridable like TEAMS.
+# Reuses the game's image, so `make build` must have run first; reads
+# the credential from the environment exactly as `run` does.
+HACK_TEAMS ?=	hack1 hack2 hack3 hack4
+HACK_PORT ?=	2223
+HACK_MODEL ?=	claude-sonnet-4-6
+
+hackspace: ${SEEDS} prepare.sh
+	./prepare.sh .hackdata ${HACK_TEAMS}
+	docker run --rm -d --name hackspace -p ${HACK_PORT}:22 \
+	  -e CLAUDE_CODE_OAUTH_TOKEN -e ANTHROPIC_API_KEY \
+	  -e ANTHROPIC_MODEL="${HACK_MODEL}" -e TEAMS="${HACK_TEAMS}" \
+	  -v "${CURDIR}/.hackdata:/data" introllm-session
 
 .PHONY: clean clean-tangled
 clean: clean-tangled

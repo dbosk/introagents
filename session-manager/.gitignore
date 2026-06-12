@@ -18,5 +18,7 @@ latexmkrc
 *.fls
 *.fdb_latexmk
 
-# Event data: team homes, transcripts, host keys.
+# Event data: team homes, transcripts, host keys.  .hackdata/ is the
+# hacker space's separate volume (see `make hackspace`).
 .data/
+.hackdata/

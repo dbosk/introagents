@@ -49,20 +49,28 @@ design.
 The facilitator's workflow is three [[make]] targets on their own
 laptop, run any day before the event:
 \begin{verbatim}
+claude setup-token   # once: prints the sk-ant-... token
 export TEAMS="profs lecturers phds"  # the three teams
 make prepare    # seed .data/: homes + Claude config
 make build      # build the Docker image
 CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-... make run  # start
 \end{verbatim}
-followed by writing the laptop's IP address on the board.  The
-credential is a token obtained once with [[claude setup-token]] on the
-facilitator's own machine; the teams---their number and names---are
-whatever the space-separated [[TEAMS]] variable lists, honoured by both
-[[make prepare]] and [[make run]] (so the [[export]] above, or
-[[TEAMS="..."]] on each command, is all it takes to add or rename
-teams; omit it for the default three).  \Cref{sec:buildrun} documents
-each target, the credential, and [[TEAMS]]; \cref{sec:prepare} covers
-what [[make prepare]] seeds.  Participants then simply run
+followed by writing the laptop's IP address on the board.  The first
+line is a one-off: [[claude setup-token]] prints a long-lived token on
+the facilitator's own machine, which is then pasted into the
+[[CLAUDE_CODE_OAUTH_TOKEN=]] of the run line.  The teams---their number
+and names---are whatever the space-separated [[TEAMS]] variable lists,
+honoured by both [[make prepare]] and [[make run]] (so the [[export]]
+above, or [[TEAMS="..."]] on each command, is all it takes to add or
+rename teams; omit it for the default three).  The post-game hacker
+space is a second, independent container, brought up later with one
+more command:
+\begin{verbatim}
+CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-... make hackspace
+\end{verbatim}
+\Cref{sec:buildrun} documents each target, the credential, [[TEAMS]]
+and the hacker space; \cref{sec:prepare} covers what [[make prepare]]
+seeds.  Participants then simply run
 \begin{center}
   [[ssh -p 2222 groupa@<ip-address>]]
 \end{center}
@@ -859,17 +867,24 @@ this scale.
 The event runs in three stages---lobby (survey and discussion),
 blind build (the relay game), and a hacker space where people who
 have finished drip in and play freely, possibly on a larger model.
-The same image serves the hacker space as a \emph{second container}:
-its own port, its own account list, its own model and its own data
-volume.
+The same image serves the hacker space as a \emph{second container},
+with its own name, port, account list, model and data volume.  A
+single [[make hackspace]] brings it up: it seeds [[.hackdata/]] and
+starts a container named [[hackspace]] on port 2223, defaulting to
+four [[hack]] accounts on the larger [[claude-sonnet-4-6]] model.
+Like [[make run]] it reads the credential from the environment, so
+pass the token the same way:
 
 \begin{verbatim}
-./prepare.sh .hackdata hack1 hack2 hack3 hack4
-docker run --rm -d --name hackspace -p 2223:22 \
-  -e TEAMS="hack1 hack2 hack3 hack4" \
-  -e ANTHROPIC_MODEL=claude-sonnet-4-6 \
-  -e CLAUDE_CODE_OAUTH_TOKEN \
-  -v "$PWD/.hackdata:/data" introllm-session
+CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-... make hackspace
+\end{verbatim}
+
+Each default is its own variable---[[HACK_TEAMS]], [[HACK_PORT]],
+[[HACK_MODEL]]---so the room can be reshaped without editing the
+[[Makefile]]:
+
+\begin{verbatim}
+make hackspace HACK_TEAMS="alice bob carol" HACK_PORT=2224
 \end{verbatim}
 
 The separate volume is the important part: the game's
@@ -878,7 +893,7 @@ hacker space gets up to.  The two containers do not interact at
 all---they only share the image---so the hacker space can be
 started, restarted or reconfigured mid-event without touching the
 game.  Since people arrive in drips and drabs, the account list is
-whatever suits the room: a handful of shared sandboxes as above, or
+whatever suits the room: a handful of shared sandboxes, or
 one account per participant.
 
 \subsection{Credentials}
