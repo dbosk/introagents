@@ -76,9 +76,9 @@ multiplexer to reattach to and no session to resume by accident.
     \node[box, right=of laptop] (sshd) {\texttt{sshd}};
     \node[box, right=of sshd] (account)
       {team account\\\texttt{groupa}, \dots};
-    \node[box, right=of account] (launcher)
+    \node[box, right=16mm of account] (launcher)
       {\texttt{group-}\\\texttt{session}};
-    \node[box, right=of launcher] (claude) {\texttt{claude}};
+    \node[box, right=10mm of launcher] (claude) {\texttt{claude}};
     \node[box, below=of claude, xshift=-12mm] (home)
       {\texttt{/data/groups/<team>/}\\
        project files + \texttt{.claude/}};
