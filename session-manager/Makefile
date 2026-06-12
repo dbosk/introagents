@@ -6,6 +6,12 @@ CONFIGS=	Dockerfile sshd_config
 SEEDS=		template/CLAUDE.md template/SPEC.md template/RULES.md \
 		template/DELIVERABLES.md claude-defaults/.claude.json
 
+# The team accounts to create: number and names.  ?= so that an
+# exported TEAMS in the environment wins, letting "export TEAMS=..."
+# once feed both `make prepare` and `make run`.  Must match the
+# Dockerfile's ENV TEAMS default (see sessionmgr.nw, sec:dockerfile).
+TEAMS ?=	groupa groupb groupc
+
 .PHONY: all
 all: ${SCRIPTS} ${CONFIGS} ${SEEDS} sessionmgr.pdf
 
@@ -22,7 +28,7 @@ sessionmgr.pdf: sessionmgr.nw preamble.tex
 
 .PHONY: prepare build run
 prepare: ${SEEDS} prepare.sh
-	./prepare.sh .data
+	./prepare.sh .data ${TEAMS}
 
 build: ${SCRIPTS} ${CONFIGS}
 	docker build -t introllm-session .
@@ -30,7 +36,7 @@ build: ${SCRIPTS} ${CONFIGS}
 run:
 	docker run --rm -d --name introllm-session -p 2222:22 \
 	  -e CLAUDE_CODE_OAUTH_TOKEN -e ANTHROPIC_API_KEY \
-	  -e ANTHROPIC_MODEL \
+	  -e ANTHROPIC_MODEL -e TEAMS="${TEAMS}" \
 	  -v "${CURDIR}/.data:/data" introllm-session
 
 .PHONY: clean clean-tangled

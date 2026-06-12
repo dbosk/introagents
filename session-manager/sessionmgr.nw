@@ -46,10 +46,23 @@ design.
   files and Claude's session transcripts must survive the container.
 \end{description}
 
-The facilitator's workflow is: prepare the data directory (any day
-before the event), build the image, run the container with a
-credential, and write the laptop's IP address on the board.
-Participants then simply run
+The facilitator's workflow is three [[make]] targets on their own
+laptop, run any day before the event:
+\begin{verbatim}
+export TEAMS="profs lecturers phds"  # the three teams
+make prepare    # seed .data/: homes + Claude config
+make build      # build the Docker image
+CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-... make run  # start
+\end{verbatim}
+followed by writing the laptop's IP address on the board.  The
+credential is a token obtained once with [[claude setup-token]] on the
+facilitator's own machine; the teams---their number and names---are
+whatever the space-separated [[TEAMS]] variable lists, honoured by both
+[[make prepare]] and [[make run]] (so the [[export]] above, or
+[[TEAMS="..."]] on each command, is all it takes to add or rename
+teams; omit it for the default three).  \Cref{sec:buildrun} documents
+each target, the credential, and [[TEAMS]]; \cref{sec:prepare} covers
+what [[make prepare]] seeds.  Participants then simply run
 \begin{center}
   [[ssh -p 2222 groupa@<ip-address>]]
 \end{center}
@@ -806,9 +819,27 @@ tangle itself) wraps the workflow:
   (\cref{sec:prepare});
 \item[ [[make build]] ]  builds the Docker image;
 \item[ [[make run]] ]  starts the container, publishing port 2222 and
-  mounting [[.data/]]; the credential is taken from the calling
-  environment.
+  mounting [[.data/]]; the credential and [[TEAMS]] are taken from the
+  calling environment.
 \end{description}
+
+The team accounts default to [[groupa groupb groupc]], but their number
+and names are just the space-separated [[TEAMS]] variable, which both
+[[make prepare]] and [[make run]] honour:
+\begin{verbatim}
+export TEAMS="profs lecturers phds"
+make prepare
+make run
+\end{verbatim}
+(equivalently [[make prepare TEAMS="..."]] on each line).  The same
+list deliberately drives both targets because they touch different
+halves of the same accounts: [[make prepare]] creates the home
+directories on the host volume, while [[make run]] passes [[TEAMS]]
+into the container, whose entry point creates the matching Unix
+accounts against those homes (\cref{sec:prepare,sec:dockerfile}).  A
+mismatch would leave a team with a home but no account, or an account
+pointing at an unseeded home---so keeping it one variable is what keeps
+the two halves in step.
 
 Port 2222 rather than 22 because the facilitator's laptop most
 likely runs its own SSH daemon on 22; participants connect with
