@@ -140,13 +140,14 @@ evaluation needs:
 .data/
 |-- ssh/                                 persisted SSH host keys
 `-- groups/{groupa,groupb,groupc}/
-    |-- SPEC.md, maze.js, ...            project and deliverables
+    |-- CLAUDE.md, RULES.md, ...         seeds + project files
     `-- .claude/projects/<hash>/*.jsonl  session transcripts
 \end{verbatim}
 
-Because the home directories persist on the host, all seeding---task
-files, rules, and Claude's configuration---can happen \emph{outside}
-the container, any time before the event (\cref{sec:prepare}).  The
+Because the home directories persist on the host, all seeding---the
+relay rules, a starter [[CLAUDE.md]] and Claude's configuration---can
+happen \emph{outside} the container, any time before the event
+(\cref{sec:prepare}).  The
 container itself stays stateless: its entry point only recreates the
 team accounts, fixes ownership, and starts the SSH daemon
 (\cref{sec:entrypoint}).  We can rebuild or restart it freely without
@@ -229,19 +230,20 @@ RUN sed -i '/pam_motd/d' /etc/pam.d/sshd
 
 Three knobs are environment variables with sensible defaults, all
 overridable at [[docker run]] time.  [[TEAMS]] names the accounts to
-create.  [[ANTHROPIC_MODEL]] starts everyone on a small, fast
-model---the thread's decision was to start cheap but let teams change
-model themselves with [[/model]], and discovering that trade-off is
-part of the game.  [[CLAUDE_FLAGS]] defaults to skipping permission
-prompts: the container is an isolated, disposable sandbox, and
-permission prompts would eat the participants' ten-minute turns.
-Facilitators who want the prompts back can override this with, say,
-[[--permission-mode acceptEdits]].
+create.  [[ANTHROPIC_MODEL]] starts everyone on [[claude-sonnet-4-6]],
+capable enough for the game while leaving Opus as a conscious upgrade;
+teams can switch with [[/model]], and weighing that against the shared
+token budget is part of the game.  [[CLAUDE_FLAGS]] defaults to
+[[--permission-mode auto]], which lets Claude handle permissions
+automatically so prompts do not eat the participants' ten-minute
+turns.  We deliberately avoid [[--dangerously-skip-permissions]]: the
+sessions run with real credentials in a shared container, so an
+unattended, no-questions bypass is not a trade we want.
 
 <<event environment defaults>>=
 ENV TEAMS="groupa groupb groupc"
-ENV ANTHROPIC_MODEL="claude-haiku-4-5"
-ENV CLAUDE_FLAGS="--dangerously-skip-permissions"
+ENV ANTHROPIC_MODEL="claude-sonnet-4-6"
+ENV CLAUDE_FLAGS="--permission-mode auto"
 @
 
 Finally the runtime files: the entry point and the launcher go into
@@ -488,50 +490,16 @@ around would only add a process between [[sshd]] and Claude.
 #!/bin/sh
 . /etc/event.env
 cd "$HOME"
-<<open the first session with the reveal prompt>>
 exec claude $CLAUDE_FLAGS
 @
 
 [[$CLAUDE_FLAGS]] is deliberately unquoted: it is a list of flags,
 not a single argument, and the word splitting is the point.
 
-\subsection{Recognising the team's first session}
-
-The telephone dynamic (\cref{sec:seeds}) needs the specification
-revealed in the team's \emph{first} session and never again.  Claude
-cannot make that call: every session starts with no memory, so all
-it could do is guess from the state of the directory---and a first
-player who spends their turn talking leaves no trace, which would
-make the second session look like a first one and trigger a second
-reveal precisely when the telephone rule starts to matter.
-
-So the launcher decides, using a marker file in the team directory.
-The marker shares the persistence argument from \cref{sec:overview}:
-it lives in the team's home, so it survives session restarts and
-container restarts alike.  On the first connect the launcher creates
-the marker and opens Claude with an explicit instruction to present
-the specification; on every later connect Claude starts plain, and
-the standing policy in [[CLAUDE.md]] applies.
-
-The marker is created \emph{before} Claude runs, which makes the
-reveal at-most-once: if two teammates connect simultaneously at the
-start, only the first reveals, and a session that crashes
-mid-presentation does not re-reveal on reconnect.  For a telephone
-game that is the right failure direction---an accidental second
-reveal cannot be taken back, whereas a facilitator can always
-re-arm the reveal by deleting [[.spec-shown]] from the team's
-directory (via [[docker exec]], since the file belongs to the team
-account).
-
-<<open the first session with the reveal prompt>>=
-if [ ! -e .spec-shown ]
-then
-  touch .spec-shown
-  exec claude $CLAUDE_FLAGS "This is the team's first session: \
-present the full specification from SPEC.md, then help the player \
-get started."
-fi
-@
+There is deliberately no first-session special case: with the
+specification withheld to paper (\cref{sec:seeds}), there is nothing
+for the launcher to reveal, so every connection runs the same three
+lines.
 
 \section{SSH configuration}\label{sec:sshd}
 
@@ -645,13 +613,10 @@ fi
 \subsection{Claude configuration}
 
 Without configuration, the first [[claude]] run greets the user with
-a gauntlet of one-time questions: a theme picker, a workspace-trust
-dialogue, and---because we launch with
-[[--dangerously-skip-permissions]] (\cref{sec:dockerfile})---an
-acceptance dialogue for bypass-permissions mode.  Burning the first
-minutes of the first team member's turn on questions only the
-facilitator can meaningfully answer would be a poor start, so we
-pre-answer everything.  (The API-key approval is the one answer that
+a few one-time questions: a theme picker and a workspace-trust
+dialogue.  Burning the first minutes of the first team member's turn
+on questions only the facilitator can meaningfully answer would be a
+poor start, so we pre-answer them.  (The API-key approval is the one answer that
 cannot live here, since the key is only known at run time; the entry
 point handles it, \cref{sec:entrypoint}.)  [[HOMEDIR]] is the
 placeholder that [[prepare.sh]] substitutes with the team's
@@ -660,7 +625,6 @@ in-container home.
 <<[[.claude.json]]>>=
 {
   "hasCompletedOnboarding": true,
-  "bypassPermissionsModeAccepted": true,
   "theme": "dark",
   "projects": {
     "HOMEDIR": {
@@ -673,108 +637,38 @@ in-container home.
 
 \subsection{Team instructions}
 
-The relay is a game of telephone, and that shapes how the seed files
-are split.  The full specification must \emph{not} be common
-knowledge: only the first player receives it, and every later player
-knows only what their teammates passed on---degradation along the
-relay is the meta of the game.  At the same time, a stuck player
-should never be dead in the water: they can always ask Claude
-\emph{specific} questions about the task, and Claude answers
-truthfully.  Claude is an oracle you must think to query, not a
-spoiler feed.
+The relay is a game of telephone, and the seed content is shaped by
+what we deliberately \emph{withhold}.  The specification never enters
+the container: the first player is handed it on paper, and everyone
+after knows only what their teammates left behind.  With no
+[[SPEC.md]] on the machine---and no copy of it smuggled into
+[[CLAUDE.md]]---a fresh session genuinely cannot recover the spec, so
+the degradation along the relay is real rather than honour-system.
+Giving the teams little is the point; working the rest out is the
+game.
 
-[[CLAUDE.md]] is the right carrier for that policy, because Claude
-Code loads it into context automatically at the start of \emph{every}
-session---the oracle behaviour needs no cooperation from the player.
-The specification itself lives in a separate file, [[SPEC.md]],
-rather than inline in [[CLAUDE.md]], for one reason: improving
-[[CLAUDE.md]] is an encouraged game move, and a player editing their
-team memory must not get the specification shoved in their face as a
-side effect.
-
-This is a parlour rule, not security: a determined player can talk
-their way to the file.  The point is pedagogical---the honest path
-(ask precise questions, write good notes) must be the path of least
-resistance.
-
-Deciding \emph{when} the first session happens is not Claude's
-job---a fresh session cannot remember whether a reveal already
-took place---so the launcher detects it mechanically and opens the
-first session with the reveal instruction (\cref{sec:launcher}).
-The policy here only tells Claude what to do on either side of that
-line.
+What we seed is therefore deliberately thin.  [[CLAUDE.md]], which
+Claude Code loads into every session automatically, does just enough
+to be a good host: it says a relay game is afoot and points at
+[[RULES.md]], so a player can ask Claude how the game works and get a
+straight answer without having to know the file is there.  It stops
+short of the task itself---no spec, no hints.
 
 <<[[CLAUDE.md]]>>=
 # Team workspace
 
-You are helping a team of academics build a small web game during a
-relay: one team member at the keyboard at a time, in short turns,
-with a fresh session every turn.  This file is the team's shared
-memory between turns---improving it is how you help your teammates.
+You are helping a team play a relay game: building a small project
+together, one teammate at the keyboard at a time, with a fresh
+session every turn.
 
-Read RULES.md for how the relay works and DELIVERABLES.md for what
-must exist when the clock stops.
-
-## The specification (instructions for Claude)
-
-The full task specification is in SPEC.md.  The relay is a game of
-telephone: each player should know only what their teammates left
-behind, plus whatever they think to ask.  Therefore:
-
-- The team's first session is opened by the system itself with an
-  explicit instruction to present the specification.  That is the
-  only occasion to show it in full.
-- In every other session, do NOT show, summarise or paraphrase the
-  whole specification, even when asked directly.  Answer specific
-  questions about it truthfully (for example "how long is a
-  round?" or "what does the reviewer do?").
-- Never edit SPEC.md and never copy its contents into other files.
-- If a player asks for the specification wholesale, explain this
-  relay rule and invite them to ask specific questions instead.
-
-## Conventions
-
-- Plain HTML5 canvas and vanilla JavaScript; no build step, no
-  external dependencies.
-- The game must run by opening index.html straight from disk.
-
-## Notes to the next teammate
-
-<!-- What works, what to avoid, where things are. -->
+How the relay works — turns, what carries over between sessions, what
+counts as fair play — is written in RULES.md.  Read it when a player
+asks how the game works or what is allowed.
 @
 
-[[CLAUDE.md]] is otherwise deliberately thin---a team that invests a
-turn improving it should feel the difference in the following turns.
-That contrast is the learning objective, so we must resist the
-temptation to ship a polished one.
-
-The specification is Ric's \enquote{Academic Maze Royale} concept:
-the maze game from his Knowit dry run, reskinned so the loot is
-academic currency---citations, grants, PhD students.  The first
-session presents it; afterwards it is oracle material only.  It
-mirrors the slide Ric prints and hands the first player, so the screen
-and the paper never disagree.  We keep it as terse as that slide on
-purpose: the relay degrades detail on its own, and pinning down exact
-scores, timings or a finish condition here would only fight the game
-and the teams' own design choices.
-
-<<[[SPEC.md]]>>=
-# Tenure Track — The Academic Maze Royale
-
-Build a web-based, two-player maze game.  Players compete against the
-clock to gather academic loot:
-
-- Citations
-- Research grants
-- PhD students (who trail slowly behind the player)
-
-Players are hunted by Reviewer #2 and get a speed boost from random
-coffee cups.
-@
-
-The rules tell the players that the telephone dynamic is
-intentional, so nobody mistakes the withheld specification for a
-broken setup.
+[[RULES.md]] carries the rules themselves and says outright that the
+telephone dynamic is intentional, so nobody mistakes a withheld
+specification for a broken setup.
 
 <<[[RULES.md]]>>=
 # Rules of the relay
@@ -785,30 +679,40 @@ broken setup.
 1. One team member at the keyboard at a time, in turns of roughly
    ten minutes.
 2. Only the first player is shown the full specification.  Everyone
-   after that knows only what their teammates left behind---but you
-   may always ask Claude specific questions about the task.
+   after that knows only what their teammates left behind.
 3. Every connection starts a fresh Claude session: no chat history
    survives between turns.  Only the files in this directory do.
 4. The team shares one token budget for the whole relay; spending it
    wisely is part of the game.
-5. You may change the model with /model at any time.
-6. Improving CLAUDE.md and the documentation counts as playing, not
-   as overhead.
+5. Anything not violating these rules is fair play.
 @
 
-<<[[DELIVERABLES.md]]>>=
-# Deliverables
+The specification stays out of all of this.  It is Ric's
+\enquote{Academic Maze Royale} concept: the maze game from his Knowit
+dry run, reskinned so the loot is academic currency---citations,
+grants, PhD students.  We record its text here, since it lives neither
+in the seed content nor in the container; this is the sheet Ric prints
+and hands the first player:
 
-When the clock stops, this directory should contain:
+\begin{verbatim}
+# Tenure Track — The Academic Maze Royale
 
-- a playable game: index.html and maze.js, runnable straight from
-  disk;
-- a README.md telling a player how to start and play the game;
-- an updated CLAUDE.md that would genuinely help the next teammate.
+Build a web-based, two-player maze game.  Players
+compete against the clock to gather academic loot:
 
-Evaluation considers usability (judge), the popular vote, the cost
-dashboard, and the quality of the documentation and CLAUDE.md.
-@
+- Citations
+- Research grants
+- PhD students (who trail slowly behind the player)
+
+Players are hunted by Reviewer #2 and get a speed
+boost from random coffee cups.
+\end{verbatim}
+
+We keep it as terse as that slide on purpose: the relay degrades
+detail on its own, and pinning down exact scores, timings or a finish
+condition would only fight the game and the teams' own design
+choices.
+
 
 \section{Building and running}\label{sec:buildrun}
 
@@ -865,7 +769,7 @@ The same image serves the hacker space as a \emph{second container},
 with its own name, port, account list, model and data volume.  A
 single [[make hackspace]] brings it up: it seeds [[.hackdata/]] and
 starts a container named [[hackspace]] on port 2223, defaulting to
-four [[hack]] accounts on the larger [[claude-sonnet-4-6]] model.
+four [[hack]] accounts on the larger [[claude-opus-4-8]] model.
 Like [[make run]] it reads the credential from the environment, so
 pass the token the same way:
 

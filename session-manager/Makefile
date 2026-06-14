@@ -3,8 +3,8 @@
 
 SCRIPTS=	entrypoint.sh group-session prepare.sh
 CONFIGS=	Dockerfile sshd_config
-SEEDS=		template/CLAUDE.md template/SPEC.md template/RULES.md \
-		template/DELIVERABLES.md claude-defaults/.claude.json
+SEEDS=		template/CLAUDE.md template/RULES.md \
+		claude-defaults/.claude.json
 
 # The team accounts to create: number and names.  ?= so that an
 # exported TEAMS in the environment wins, letting "export TEAMS=..."
@@ -46,7 +46,7 @@ run:
 # the credential from the environment exactly as `run` does.
 HACK_TEAMS ?=	hack1 hack2 hack3 hack4
 HACK_PORT ?=	2223
-HACK_MODEL ?=	claude-sonnet-4-6
+HACK_MODEL ?=	claude-opus-4-8
 
 hackspace: ${SEEDS} prepare.sh
 	./prepare.sh .hackdata ${HACK_TEAMS}
