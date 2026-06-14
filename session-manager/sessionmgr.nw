@@ -751,31 +751,25 @@ temptation to ship a polished one.
 The specification is Ric's \enquote{Academic Maze Royale} concept:
 the maze game from his Knowit dry run, reskinned so the loot is
 academic currency---citations, grants, PhD students.  The first
-session presents it; afterwards it is oracle material only.
+session presents it; afterwards it is oracle material only.  It
+mirrors the slide Ric prints and hands the first player, so the screen
+and the paper never disagree.  We keep it as terse as that slide on
+purpose: the relay degrades detail on its own, and pinning down exact
+scores, timings or a finish condition here would only fight the game
+and the teams' own design choices.
 
 <<[[SPEC.md]]>>=
-# Specification: Tenure Track --- The Academic Maze Royale
+# Tenure Track — The Academic Maze Royale
 
-<!-- Facilitator material: CLAUDE.md instructs Claude how this file
-     is used during the relay.  TODO: final specification to be
-     confirmed before the event. -->
+Build a web-based, two-player maze game.  Players compete against the
+clock to gather academic loot:
 
-Build a local two-player arcade maze game.  Two professors race
-through a procedurally generated university labyrinth, hoarding
-academic loot and dodging a roaming reviewer, sprinting for the
-Tenure Gate before the clock runs out.  Highest score wins.
+- Citations
+- Research grants
+- PhD students (who trail slowly behind the player)
 
-- Players: P1 (WASD) and P2 (arrow keys); R restarts the round.
-- Rounds last 90 seconds; a round ends early if both players reach
-  the Tenure Gate.
-- Collectibles: citations (+10), grants (+50), PhD students (+100,
-  conga line), coffee (speed boost), the Tenure Gate (+250, finish).
-- Hazard: Reviewer #2 roams the maze, chases the nearest unfinished
-  player and steals points on contact.
-- A new maze every round.
-- Tech: vanilla HTML5 canvas + JavaScript, index.html + maze.js, no
-  dependencies.  Sound and visual effects encouraged---it should be
-  funny.
+Players are hunted by Reviewer #2 and get a speed boost from random
+coffee cups.
 @
 
 The rules tell the players that the telephone dynamic is
