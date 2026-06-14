@@ -168,6 +168,7 @@ FROM node:22-bookworm-slim
 
 <<install system packages>>
 <<install Claude Code>>
+<<install the statusline tools>>
 <<allow empty passwords in PAM>>
 <<silence the login banner>>
 <<event environment defaults>>
@@ -200,6 +201,27 @@ image we rehearse with is reproducibly the image we run at the event;
 <<install Claude Code>>=
 ARG CLAUDE_VERSION=latest
 RUN npm install -g @anthropic-ai/claude-code@${CLAUDE_VERSION}
+@
+
+Each session shows a status line (\cref{sec:seeds}): the model and git
+state, the rolling token usage, and a usage breakdown from
+[[ccusage]].  The renderer is [[ccstatusline]] and the usage figures
+come from [[ccusage]]; the status line is redrawn constantly, so how it
+is supplied matters.  We bake both tools into the image rather than
+fetch them at render time.  A pre-installed binary on [[PATH]] renders
+instantly from the first connection and needs no network during the
+event---the same reasoning that makes us pin [[CLAUDE_VERSION]] and
+persist the SSH host keys (\cref{sec:entrypoint}): an academic's
+ten-minute turn should not be spent watching a download, and the venue
+network is not something we want a working status line to depend on.
+The versions are pinned through build arguments for the same
+reproducibility reason as Claude Code itself.
+
+<<install the statusline tools>>=
+ARG CCSTATUSLINE_VERSION=latest
+ARG CCUSAGE_VERSION=latest
+RUN npm install -g ccstatusline@${CCSTATUSLINE_VERSION} \
+      ccusage@${CCUSAGE_VERSION}
 @
 
 The team accounts have \emph{empty} passwords
@@ -585,6 +607,18 @@ spell the check out.)  Ownership is
 deliberately \emph{not} handled here---it would require root, and the
 container's entry point [[chown]]s the homes at every start anyway.
 
+The loop globs the template twice because some seeds are dotfile
+directories.  A plain [[template/*]] never matches names beginning
+with a dot, yet the status-line configuration (\cref{sec:seeds}) lives
+in [[.claude/]] and [[.config/]]; the second pattern, [[.[!.]*]],
+picks those up while excluding [[.]] and [[..]].  When a pattern
+matches nothing the shell leaves it unexpanded, so the existence guard
+skips the literal non-match rather than trying to copy it.  [[cp -r]]
+already recurses, so a whole [[.claude/]] tree copies in one step; the
+existence check is per top-level entry, which keeps the coarse
+idempotency---a home that already has a [[.claude/]] is left alone
+wholesale.
+
 The Claude configuration is the one file that cannot be a plain
 copy: Claude Code tracks per-project trust by the project's absolute
 path as seen \emph{inside} the container,
@@ -594,8 +628,9 @@ instantiate it from a template by substituting the placeholder.
 <<seed the team home directory>>=
 home="$datadir/groups/$team"
 mkdir -p "$home"
-for file in "$scriptdir/template/"*
+for file in "$scriptdir/template/"* "$scriptdir/template/".[!.]*
 do
+  [ -e "$file" ] || continue
   if [ ! -e "$home/$(basename "$file")" ]
   then
     cp -r "$file" "$home/"
@@ -631,6 +666,140 @@ in-container home.
       "hasTrustDialogAccepted": true,
       "hasCompletedProjectOnboarding": true
     }
+  }
+}
+@
+
+\subsection{Status line}
+
+The status line is configured in two files because the work is split
+between two tools.  Claude Code only needs to know \emph{which command}
+to run for its status line; the layout---what to show and in what
+colour---is [[ccstatusline]]'s own concern, kept in [[ccstatusline]]'s
+own configuration file.  Separating them this way means the layout can
+be reshaped without touching Claude's settings, and Claude's settings
+name nothing but the entry point.
+
+Both files seed straight into the team home, which is also the
+in-container [[HOME]] (\cref{sec:overview}), so they land where each
+tool looks: [[~/.claude/settings.json]] for Claude and
+[[~/.config/ccstatusline/settings.json]] for the renderer.  Neither
+needs the path substitution that [[.claude.json]] does---nothing in
+them depends on the team's directory---so they are plain seed files the
+facilitator can edit before the event.
+
+Claude's settings name the renderer directly.  Because both tools are
+baked into the image and on [[PATH]] (\cref{sec:dockerfile}), the
+command is just [[ccstatusline]]---no [[bunx]] wrapper to resolve a
+package at render time, which is what keeps the line instant and
+offline.
+
+<<[[.claude/settings.json]]>>=
+{
+  "statusLine": {
+    "type": "command",
+    "command": "ccstatusline",
+    "padding": 0
+  }
+}
+@
+
+The renderer's own configuration lays out three lines.  The first is
+the working context---model, remaining context length, and the git
+branch and dirty-file count---so a player can see at a glance what they
+are working with.  The second is the shared budget the relay runs on:
+the rolling session usage, when it resets, and the weekly total.  The
+third defers to [[ccusage]] for a fuller usage breakdown; like
+[[ccstatusline]] it is on [[PATH]], so the custom command is plainly
+[[ccusage statusline]].
+
+<<[[ccstatusline/settings.json]]>>=
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "1",
+        "type": "model",
+        "color": "cyan"
+      },
+      {
+        "id": "2",
+        "type": "separator"
+      },
+      {
+        "id": "3",
+        "type": "context-length",
+        "color": "brightBlack"
+      },
+      {
+        "id": "4",
+        "type": "separator"
+      },
+      {
+        "id": "5",
+        "type": "git-branch",
+        "color": "magenta"
+      },
+      {
+        "id": "6",
+        "type": "separator"
+      },
+      {
+        "id": "7",
+        "type": "git-changes",
+        "color": "yellow"
+      }
+    ],
+    [
+      {
+        "id": "01b88659-4447-49d4-9f42-589863af40a2",
+        "type": "session-usage"
+      },
+      {
+        "id": "3e8e9624-1fb0-417d-9513-4d66234dadfc",
+        "type": "separator"
+      },
+      {
+        "id": "a50e1638-c85f-4591-96cb-df3a3791ad9e",
+        "type": "reset-timer"
+      },
+      {
+        "id": "45febe85-67a1-424d-a5c6-d7ac88cd8302",
+        "type": "separator"
+      },
+      {
+        "id": "4ba2c607-2112-4b23-865d-ddff39288cbf",
+        "type": "weekly-usage"
+      }
+    ],
+    [
+      {
+        "id": "8aa2e3f0-3bff-4b80-96fa-7e89879f1bf7",
+        "type": "custom-command",
+        "commandPath": "ccusage statusline"
+      }
+    ]
+  ],
+  "flexMode": "full-minus-40",
+  "compactThreshold": 60,
+  "colorLevel": 2,
+  "inheritSeparatorColors": false,
+  "globalBold": false,
+  "gitCacheTtlSeconds": 5,
+  "minimalistMode": false,
+  "powerline": {
+    "enabled": false,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [],
+    "endCaps": [],
+    "autoAlign": false,
+    "continueThemeAcrossLines": false
   }
 }
 @

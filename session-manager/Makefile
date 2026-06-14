@@ -6,6 +6,13 @@ CONFIGS=	Dockerfile sshd_config
 SEEDS=		template/CLAUDE.md template/RULES.md \
 		claude-defaults/.claude.json
 
+# Status-line seeds.  Kept out of SEEDS because the generic rule below
+# keys the notangle root chunk on the basename ($(notdir $@)), and both
+# of these tangle to a file named settings.json -- so they need their
+# own rules with distinct, path-qualified root-chunk names.
+CFGSEEDS=	template/.claude/settings.json \
+		template/.config/ccstatusline/settings.json
+
 # The team accounts to create: number and names.  ?= so that an
 # exported TEAMS in the environment wins, letting "export TEAMS=..."
 # once feed both `make prepare` and `make run`.  Must match the
@@ -13,7 +20,7 @@ SEEDS=		template/CLAUDE.md template/RULES.md \
 TEAMS ?=	groupa groupb groupc
 
 .PHONY: all
-all: ${SCRIPTS} ${CONFIGS} ${SEEDS} sessionmgr.pdf
+all: ${SCRIPTS} ${CONFIGS} ${SEEDS} ${CFGSEEDS} sessionmgr.pdf
 
 # One explicit rule for all tangle targets: noweb.mk's suffix rules
 # assume one .nw per output and don't cover extensionless or
@@ -24,10 +31,20 @@ ${SCRIPTS} ${CONFIGS} ${SEEDS}: sessionmgr.nw
 	notangle -R"[[$(notdir $@)]]" $< | cpif $@
 	case "$@" in *.sh|group-session) chmod +x "$@";; *) :;; esac
 
+# The two status-line seeds: distinct root-chunk names disambiguate the
+# two settings.json outputs that the basename-keyed rule above cannot.
+template/.claude/settings.json: sessionmgr.nw
+	mkdir -p $(dir $@)
+	notangle -R"[[.claude/settings.json]]" $< | cpif $@
+
+template/.config/ccstatusline/settings.json: sessionmgr.nw
+	mkdir -p $(dir $@)
+	notangle -R"[[ccstatusline/settings.json]]" $< | cpif $@
+
 sessionmgr.pdf: sessionmgr.nw preamble.tex
 
 .PHONY: prepare build run hackspace
-prepare: ${SEEDS} prepare.sh
+prepare: ${SEEDS} ${CFGSEEDS} prepare.sh
 	./prepare.sh .data ${TEAMS}
 
 build: ${SCRIPTS} ${CONFIGS}
