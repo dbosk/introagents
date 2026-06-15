@@ -43,14 +43,30 @@ template/.config/ccstatusline/settings.json: sessionmgr.nw
 
 sessionmgr.pdf: sessionmgr.nw preamble.tex noweb_lexer.py
 
-.PHONY: prepare build run hackspace
+.PHONY: prepare build run hackspace require-credential
 prepare: ${SEEDS} ${CFGSEEDS} prepare.sh
 	./prepare.sh .data ${TEAMS}
 
 build: ${SCRIPTS} ${CONFIGS}
 	docker build -t introllm-session .
 
-run:
+# Fail fast, on the terminal, if no credential is in the environment.
+# `run`/`hackspace` detach with -d, so the entry point's own check would
+# otherwise surface only in `docker logs`, leaving `make run` looking like
+# it succeeded while the container exits.  We read the same variables docker
+# passes through, so this predicts exactly what reaches the container --
+# and spells out that a subscription token is not auto-detected from
+# ~/.claude but must be passed explicitly.
+require-credential:
+	@if [ -z "$$CLAUDE_CODE_OAUTH_TOKEN" ] && [ -z "$$ANTHROPIC_API_KEY" ]; then \
+	  echo "error: no credential in the environment.  Pass one of:" >&2; \
+	  echo "  CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-... make run   (claude setup-token)" >&2; \
+	  echo "  ANTHROPIC_API_KEY=sk-ant-...           make run   (API credits)" >&2; \
+	  echo "note: a subscription token is NOT read from ~/.claude; pass it explicitly." >&2; \
+	  exit 1; \
+	fi
+
+run: require-credential
 	docker run --rm -d --name introllm-session -p 2222:22 \
 	  -e CLAUDE_CODE_OAUTH_TOKEN -e ANTHROPIC_API_KEY \
 	  -e ANTHROPIC_MODEL -e TEAMS="${TEAMS}" \
@@ -65,7 +81,7 @@ HACK_TEAMS ?=	hack1 hack2 hack3 hack4
 HACK_PORT ?=	2223
 HACK_MODEL ?=	claude-opus-4-8
 
-hackspace: ${SEEDS} prepare.sh
+hackspace: require-credential ${SEEDS} prepare.sh
 	./prepare.sh .hackdata ${HACK_TEAMS}
 	docker run --rm -d --name hackspace -p ${HACK_PORT}:22 \
 	  -e CLAUDE_CODE_OAUTH_TOKEN -e ANTHROPIC_API_KEY \
