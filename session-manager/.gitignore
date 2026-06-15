@@ -9,6 +9,7 @@ template/
 claude-defaults/
 sessionmgr.tex
 sessionmgr.pdf
+noweb_lexer.py
 ltxobj/
 latexmkrc
 *.aux

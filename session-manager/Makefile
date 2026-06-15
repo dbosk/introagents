@@ -41,7 +41,7 @@ template/.config/ccstatusline/settings.json: sessionmgr.nw
 	mkdir -p $(dir $@)
 	notangle -R"[[ccstatusline/settings.json]]" $< | cpif $@
 
-sessionmgr.pdf: sessionmgr.nw preamble.tex
+sessionmgr.pdf: sessionmgr.nw preamble.tex noweb_lexer.py
 
 .PHONY: prepare build run hackspace
 prepare: ${SEEDS} ${CFGSEEDS} prepare.sh
@@ -77,7 +77,7 @@ clean: clean-tangled
 clean-tangled:
 	${RM} ${SCRIPTS} ${CONFIGS}
 	${RM} -r template claude-defaults
-	${RM} sessionmgr.tex sessionmgr.pdf
+	${RM} sessionmgr.tex sessionmgr.pdf noweb_lexer.py
 	${RM} sessionmgr.aux sessionmgr.log sessionmgr.out sessionmgr.toc
 	${RM} sessionmgr.fls sessionmgr.fdb_latexmk
 
@@ -85,8 +85,15 @@ clean-tangled:
 # \documentclass and \input{preamble.tex}), so weave without
 # noweave's own wrapper: -n emits no header, -delay defers the
 # remaining markup past the first documentation chunk.  Our preamble
-# sets \noweboptions, so no -option here.
-NOWEAVEFLAGS.pdf=	-x -n -delay -t2
+# sets \noweboptions, so no -option here.  The remaining flags mirror
+# noweb.mk's NOWEAVEFLAGS.tex (the rich path the makefiles' own docs
+# use, which NOWEAVE.pdf otherwise omits): -autolang/-autodefs index
+# the shell definitions, and the tominted filter pipes code chunks
+# through minted via noweb_lexer.py for syntax highlighting.  Note
+# -index supersedes -x (noweave rejects the two together), so unlike
+# the bare .pdf path we drop -x.
+NOWEAVEFLAGS.pdf=	-n -delay -t2 -autolang -autodefs sh \
+			-index -filter 'tominted -lexer ${NOWEB_LEXER}'
 
 INCLUDE_MAKEFILES=../makefiles
 include ${INCLUDE_MAKEFILES}/noweb.mk
