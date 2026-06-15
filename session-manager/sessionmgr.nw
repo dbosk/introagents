@@ -678,7 +678,8 @@ to run for its status line; the layout---what to show and in what
 colour---is [[ccstatusline]]'s own concern, kept in [[ccstatusline]]'s
 own configuration file.  Separating them this way means the layout can
 be reshaped without touching Claude's settings, and Claude's settings
-name nothing but the entry point.
+stay small---the status-line entry point and the default model, nothing
+more.
 
 Both files seed straight into the team home, which is also the
 in-container [[HOME]] (\cref{sec:overview}), so they land where each
@@ -694,8 +695,22 @@ command is just [[ccstatusline]]---no [[bunx]] wrapper to resolve a
 package at render time, which is what keeps the line instant and
 offline.
 
+They also pin the model.  The [[ANTHROPIC_MODEL]] environment variable
+(\cref{sec:dockerfile}) is meant to choose it, but an environment
+variable is only as good as its propagation: should it fail to reach
+Claude---unset on the host, dropped on the way through [[docker run]],
+or lost before the launcher sources it---Claude falls back to the
+account's own default, which need not be the small model the game is
+budgeted for.  Naming the model in the seed makes
+[[claude-sonnet-4-6]] the baseline that holds regardless.  The
+environment variable still wins when it \emph{does} arrive, so the
+hacker space's larger model (\cref{sec:overview}, [[HACK_MODEL]]) keeps
+overriding the seed at run time; the seed only decides what happens
+when nothing overrides it.
+
 <<[[.claude/settings.json]]>>=
 {
+  "model": "claude-sonnet-4-6",
   "statusLine": {
     "type": "command",
     "command": "ccstatusline",
