@@ -50,7 +50,12 @@ The facilitator's workflow is three [[make]] targets on their own
 laptop, run any day before the event:
 \begin{verbatim}
 claude setup-token   # once: prints the sk-ant-... token
-export TEAMS="profs lecturers phds"  # the three teams
+TEAMS="the-np-hard-partiers"
+TEAMS="${TEAMS} big-o-no-you-didnt"
+TEAMS="${TEAMS} the-halting-problems"
+TEAMS="${TEAMS} lambda-lambda-lambda"
+TEAMS="${TEAMS} p=np-after-two-beers"
+export TEAMS
 make prepare    # seed .data/: homes + Claude config
 make build      # build the Docker image
 CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-... make run  # start
@@ -155,13 +160,15 @@ losing anything.
 
 The remaining pieces are the image itself (\cref{sec:dockerfile}),
 the launcher (\cref{sec:launcher}), the SSH configuration
-(\cref{sec:sshd}), the seed content (\cref{sec:seeds}), and the
-facilitator's build-and-run instructions (\cref{sec:buildrun}).
+(\cref{sec:sshd}), the seed content (\cref{sec:seeds}), the
+facilitator's build-and-run instructions (\cref{sec:buildrun}), and
+finally harvesting the results once the event is over
+(\cref{sec:harvest}).
 
 \section{The image}\label{sec:dockerfile}
 
 The image is deliberately boring: Node, an SSH server, Claude Code,
-and our two runtime scripts.
+and our three runtime scripts.
 
 <<[[Dockerfile]]>>=
 FROM node:22-bookworm-slim
@@ -268,13 +275,15 @@ ENV ANTHROPIC_MODEL="claude-sonnet-4-6"
 ENV CLAUDE_FLAGS="--permission-mode auto"
 @
 
-Finally the runtime files: the entry point and the launcher go into
-the path, the SSH configuration replaces Debian's default outright
-(so we reason about one file, not a diff against the distribution's),
-and [[/data]] exists as the mount point.
+Finally the runtime files: the entry point, the launcher and the
+harvest script (\cref{sec:harvest}) go into the path, the SSH
+configuration replaces Debian's default outright (so we reason about
+one file, not a diff against the distribution's), and [[/data]] exists
+as the mount point.
 
 <<install the runtime files>>=
-COPY --chmod=755 entrypoint.sh group-session /usr/local/bin/
+COPY --chmod=755 entrypoint.sh group-session team-report \
+  /usr/local/bin/
 COPY sshd_config /etc/ssh/sshd_config
 RUN mkdir -p /data/groups
 @
@@ -1019,6 +1028,430 @@ Everything worth keeping ends up under [[.data/]] on the host:
 \end{description}
 
 The container itself holds no state: stop it, rebuild it, restart
-it---as long as [[.data/]] survives, so does the event.
+it---as long as [[.data/]] survives, so does the event.  Turning that
+directory into something a colleague can read and grade is the subject
+of \cref{sec:harvest}.
+
+\section{Harvesting the results}\label{sec:harvest}
+
+When the event is over, [[.data/groups/]] holds everything worth
+keeping---but in a form awkward to share.  Two obstacles stand in the
+way of simply tarring it up on the host.  First, ownership: the entry
+point handed each home to its team's in-container UID (2001, 2002,
+\dots, \cref{sec:entrypoint}), which maps to no user on the
+facilitator's laptop, and the transcripts are mode~600.  The host user
+can traverse the directories but cannot read the files---and neither
+can [[ccusage]] run as that user.  Second, the facilitator wants more
+than the raw bytes: a readable summary of what each team built and how
+to run it, and a tally of what each team's relay cost in tokens.
+
+Only the \emph{first} obstacle truly needs the container.  Reading
+mode-600 files owned by a foreign UID is a job for root, and the
+throwaway container---root, with [[ccusage]] baked in
+(\cref{sec:dockerfile})---is exactly the privileged reader we already
+have.  Everything else is ordinary work: formatting numbers, asking an
+LLM for a summary, rolling a tarball.  So we split the harvest in two.
+
+\begin{description}
+\item[Phase one, in the container]  As root, read the protected files:
+  capture each team's usage and stage a pruned, \emph{host-owned} copy
+  of the data.  Nothing that needs privilege is left for later.
+\item[Phase two, on the host]  With the staged copy now readable, write
+  the READMEs with the facilitator's \emph{own} [[claude]] and pack the
+  archives with the host's own [[tar]] and [[zip]].
+\end{description}
+
+Running [[claude]] on the host rather than in the container is the
+deliberate move.  The facilitator is already logged in---the same login
+that paid for the event---so the harvest needs no credential plumbed
+into a [[docker run]], and a host [[claude -p]] writes its transcript
+under the facilitator's [[~/.claude]], never a team's, so it cannot
+perturb the very usage we are reporting.  That usage is captured in
+phase one, before phase two runs at all, which makes the separation
+airtight: the figures are fixed on disk before the first summary is
+written.
+
+We cannot simply append the READMEs to a finished [[data.tar.gz]]---a
+gzip stream is not appendable---so phase two writes them into the
+staging tree first and packs once.  The one tree yields both
+[[tar.gz]] and [[zip]], so the two archives are structurally identical.
+
+The work is one script, [[team-report]], with three modes; the
+[[Makefile]] wires them together:
+
+\begin{description}
+\item[ [[make ccusage]] ]  phase-one reading only: prints a per-team
+  usage table.  No staging, no [[claude]];
+\item[ [[make data.tar.gz]] / [[make data.zip]] ]  runs [[stage]] in
+  the container, then [[pack]] on the host, producing both archives.
+\end{description}
+
+<<[[team-report]]>>=
+#!/bin/sh
+set -eu
+
+<<harvest configuration>>
+<<the usage formatter>>
+<<collecting each team's usage>>
+<<the usage report>>
+<<staging the team data>>
+<<packing the archive>>
+
+<<dispatch on the requested mode>>
+@
+
+\subsection{Configuration}
+
+A handful of constants.  [[groups]] is where the mounted volume exposes
+the team homes, used by the two phase-one modes; the host phase takes
+its staging directory as an argument instead, since on the host there
+is no fixed mount point.  The formatter (below) is written to a fresh
+temporary file the script can call in any mode.  The prune list names
+the caches that are pure noise for an evaluator---npm's download cache,
+Claude's own backups and shell snapshots, and the downloaded plugin
+marketplace (tens of megabytes of example images, dwarfing the
+transcripts)---so the archive carries the project and its transcripts,
+not megabytes of recreatable cache.
+
+<<harvest configuration>>=
+groups=/data/groups
+tmp="$(mktemp -d)"
+fmt="$tmp/usagefmt.py"
+prune=".npm .cache .local .claude/cache .claude/backups
+       .claude/shell-snapshots .claude/plugins"
+@
+
+\subsection{Computing the usage}
+
+The usage numbers come from [[ccusage]], which reads the [[.jsonl]]
+transcripts under a config directory named by [[CLAUDE_CONFIG_DIR]].
+Pointing it at a team's [[.claude]] in turn is what makes the figures
+\emph{per team} rather than for the machine as a whole; running inside
+the container as root is what makes the mode-600 transcripts readable
+at all.  [[collect_usage]] takes the directory to deposit the per-team
+JSON in, because its two callers want it in different places: the
+report mode in a throwaway temporary, the [[stage]] mode alongside the
+data it is about to hand to the host.
+
+<<collecting each team's usage>>=
+collect_usage() {
+  dest="$1"
+  mkdir -p "$dest"
+  for team in $TEAMS
+  do
+    CLAUDE_CONFIG_DIR="$groups/$team/.claude" \
+      ccusage session --json > "$dest/$team.json" 2>/dev/null \
+      || printf '{"session":[],"totals":{}}\n' > "$dest/$team.json"
+  done
+}
+@
+
+A team that never ran a session has no transcripts, and [[ccusage]]
+then exits non-zero; the fallback writes an empty-but-valid document so
+the parser downstream need not special-case it.
+
+The parsing lives in a small Python program rather than in the shell,
+because the same three views of the data---a terminal table, a
+per-team Markdown section, and a cross-team summary table---are far
+easier to express in Python, and writing it once keeps the token and
+cost arithmetic in a single place.  [[ccusage]] reports each session
+under a [[session]] list (keyed by a [[period]] UUID, with its
+[[modelsUsed]] and a [[metadata.lastActivity]] timestamp) and the
+team aggregate under [[totals]]; the helpers below read exactly those
+fields.
+
+<<the usage formatter>>=
+cat > "$fmt" <<'PYEOF'
+<<usage-formatter Python>>
+PYEOF
+@
+
+<<usage-formatter Python>>=
+import json
+import sys
+
+
+def load(path):
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {"session": [], "totals": {}}
+
+
+def totals(doc):
+    t = doc.get("totals") or {}
+    return int(t.get("totalTokens") or 0), float(t.get("totalCost") or 0)
+
+
+def fmt_int(n):
+    return f"{n:,}"
+
+
+def fmt_usd(c):
+    return f"${c:,.2f}"
+
+
+def session_rows(doc):
+    for s in doc.get("session") or []:
+        yield {
+            "id": (s.get("period") or "")[:8],
+            "when": ((s.get("metadata") or {}).get("lastActivity")
+                     or "")[:10],
+            "models": ", ".join(s.get("modelsUsed") or []),
+            "tokens": int(s.get("totalTokens") or 0),
+            "cost": float(s.get("totalCost") or 0),
+        }
+@
+
+I split the heredoc here only to keep the narrative readable; noweb
+concatenates the two [[usage-formatter Python]] chunks back into one
+program.  The first holds the shared helpers, the next three each add a
+command.  We dispatch on the first argument so the shell can ask for
+whichever view it needs.
+
+The terminal view, for [[make ccusage]], prints one block per team and
+a grand total---enough for the facilitator to compare teams at a
+glance.
+
+<<usage-formatter Python>>=
+def cmd_text(work, teams):
+    grand_tokens = grand_cost = 0
+    for team in teams:
+        doc = load(f"{work}/{team}.json")
+        tokens, cost = totals(doc)
+        grand_tokens += tokens
+        grand_cost += cost
+        print(f"== {team} ==")
+        rows = list(session_rows(doc))
+        if not rows:
+            print("  (no sessions)")
+        for r in rows:
+            print(f"  {r['id']}  {r['when']}  "
+                  f"{fmt_int(r['tokens']):>14} tok  "
+                  f"{fmt_usd(r['cost']):>10}  {r['models']}")
+        print(f"  total: {fmt_int(tokens)} tok, {fmt_usd(cost)}")
+        print()
+    print(f"grand total: {fmt_int(grand_tokens)} tok, "
+          f"{fmt_usd(grand_cost)}")
+@
+
+The per-team Markdown section is appended to each team's README.  We
+build it from the captured numbers rather than asking [[claude]] to
+transcribe them, so the figures in the archive are exact and not at the
+mercy of a paraphrase.
+
+<<usage-formatter Python>>=
+def cmd_team_usage(path):
+    doc = load(path)
+    tokens, cost = totals(doc)
+    print()
+    print("## Token usage")
+    print()
+    print(f"- **Total tokens:** {fmt_int(tokens)}")
+    print(f"- **Estimated cost:** {fmt_usd(cost)}")
+    rows = list(session_rows(doc))
+    if rows:
+        print()
+        print("| Session | Last activity | Models | Tokens | Cost |")
+        print("|---|---|---|--:|--:|")
+        for r in rows:
+            print(f"| {r['id']} | {r['when']} | {r['models']} | "
+                  f"{fmt_int(r['tokens'])} | {fmt_usd(r['cost'])} |")
+@
+
+The top-level summary table links to each team's own README and
+borrows that README's first prose line as a one-line description of
+what they built.  Reusing the line the model already wrote avoids a
+second, separate [[claude]] call just for a sentence.
+
+<<usage-formatter Python>>=
+def first_prose_line(stage, team):
+    try:
+        with open(f"{stage}/{team}/README.md") as f:
+            for line in f:
+                line = line.strip()
+                if line and line[0] not in "#|":
+                    return line
+    except FileNotFoundError:
+        pass
+    return "—"
+
+
+def cmd_summary(work, stage, teams):
+    print("# TCS Summer Event — team contributions")
+    print()
+    print("Each team relay-built a small project in shared Claude "
+          "sessions.  This archive carries every team's work and the "
+          "transcripts that produced it; follow a team's link for what "
+          "they built, how to run it, and their token usage.")
+    print()
+    print("| Team | What they built | Tokens | Cost |")
+    print("|---|---|--:|--:|")
+    grand_tokens = grand_cost = 0
+    for team in teams:
+        tokens, cost = totals(load(f"{work}/{team}.json"))
+        grand_tokens += tokens
+        grand_cost += cost
+        desc = first_prose_line(stage, team)
+        print(f"| [{team}]({team}/README.md) | {desc} | "
+              f"{fmt_int(tokens)} | {fmt_usd(cost)} |")
+    print(f"| **Grand total** | | **{fmt_int(grand_tokens)}** | "
+          f"**{fmt_usd(grand_cost)}** |")
+@
+
+<<usage-formatter Python>>=
+command = sys.argv[1]
+if command == "text":
+    cmd_text(sys.argv[2], sys.argv[3:])
+elif command == "team-usage":
+    cmd_team_usage(sys.argv[2])
+elif command == "summary":
+    cmd_summary(sys.argv[2], sys.argv[3], sys.argv[4:])
+@
+
+\subsection{The usage report}
+
+In [[ccusage]] mode the script does nothing but collect and print: no
+staging, no [[claude]].  That is the whole point of having a mode---the
+facilitator can check the budget at any time, even mid-event from a
+second terminal, without touching the archive.  It collects into a
+throwaway temporary, since these numbers are wanted on the terminal,
+not on disk.
+
+<<the usage report>>=
+print_report() {
+  collect_usage "$tmp"
+  python3 "$fmt" text "$tmp" $TEAMS
+}
+@
+
+\subsection{Phase one: staging, in the container}
+
+[[stage]] is the only privileged step.  It captures the usage beside
+the data (so phase two need not---and cannot---recompute it), copies
+each team's home wholesale and deletes the prune list, then hands the
+whole tree to the host with a single [[chown -R]].  Deleting the prune
+list rather than naming what to keep errs on the side of keeping a
+team's actual work.  Usage lands in [[$out/usage]] and the data in
+[[$out/data]], kept apart so the usage sidecar never ends up inside the
+archive.  [[HOST_UID]] and [[HOST_GID]] are passed in because the
+container cannot otherwise know who ran [[make]].
+
+<<staging the team data>>=
+stage_data() {
+  out="$1"
+  collect_usage "$out/usage"
+  mkdir -p "$out/data"
+  for team in $TEAMS
+  do
+    cp -a "$groups/$team" "$out/data/$team"
+    for cache in $prune
+    do
+      rm -rf "$out/data/$team/$cache"
+    done
+  done
+  chown -R "$HOST_UID:$HOST_GID" "$out"
+}
+@
+
+\subsection{Phase two: packing, on the host}
+
+[[pack]] runs on the host, on the now-readable staging tree, and uses
+the facilitator's own tools throughout.  It writes each team's README,
+assembles the top-level one, and rolls both archives into the directory
+[[make]] was invoked from.  Because everything it touches is already
+host-owned, it needs no privilege and no [[chown]].
+
+<<packing the archive>>=
+pack_archive() {
+  out="$1"
+  start="$(pwd)"
+  data="$out/data"
+  usage="$out/usage"
+  <<write each team's README>>
+  python3 "$fmt" summary "$usage" "$data" $TEAMS > "$data/README.md"
+  ( cd "$data" && tar -czf "$start/data.tar.gz" . )
+  ( cd "$data" && zip -qr "$start/data.zip" . )
+}
+@
+
+Each team's README is the one place [[claude]] is used.  We feed it the
+team's own files inline---so it needs no tools and cannot wander---and
+ask for a description and concrete run instructions, in British English
+to match the rest of the event's prose.  The usage section is appended
+from the JSON captured in phase one, not regenerated, so the figures in
+the archive are exactly those phase one settled.
+
+<<write each team's README>>=
+for team in $TEAMS
+do
+  files="$(<<the team's contribution files>>)"
+  {
+    printf '# %s\n\n' "$team"
+    if [ -n "$files" ]
+    then
+      <<summarise the team's work with Claude>>
+    else
+      printf '_No project files were produced._\n'
+    fi
+    python3 "$fmt" team-usage "$usage/$team.json"
+  } > "$data/$team/README.md"
+done
+@
+
+The contribution files are the team-authored ones at the top of the
+home: we skip the seeds [[CLAUDE.md]] and [[RULES.md]] (identical for
+every team, so no evidence of what \emph{this} team did) and every
+dotfile (configuration and the [[.claude]] tree, not project work).
+
+<<the team's contribution files>>=
+find "$data/$team" -maxdepth 1 -type f \
+  ! -name CLAUDE.md ! -name RULES.md ! -name '.*' | sort
+@
+
+The prompt inlines each file under a header naming it, then asks for a
+first line of plain description (which the summary table later reuses,
+\cref{sec:harvest}) followed by run instructions.  If [[claude]] fails
+for any reason, a placeholder keeps the README well-formed rather than
+aborting the whole archive.
+
+<<summarise the team's work with Claude>>=
+{
+  printf '%s\n' \
+    "You are documenting a team's contribution for an" \
+    "evaluation archive.  Write in British English." \
+    "Begin with one plain sentence, on its own line and with" \
+    "no heading, saying what the team built.  Then add a" \
+    "section headed \"### How to run it\" with exact," \
+    "step-by-step instructions to run or open the project." \
+    "Describe only what the files below show; invent nothing." \
+    "The files:"
+  for file in $files
+  do
+    printf '\n--- %s ---\n' "$(basename "$file")"
+    cat "$file"
+  done
+} | claude -p || printf '_Summary unavailable._\n'
+@
+
+\subsection{Dispatch}
+
+The three modes map to the two phases: [[ccusage]] and [[stage]] are
+the in-container readers, [[pack]] is the host finisher.  Each takes
+its own output location, so nothing is assumed about where the script
+runs.
+
+<<dispatch on the requested mode>>=
+case "${1:-ccusage}" in
+  ccusage) print_report ;;
+  stage)   stage_data "$2" ;;
+  pack)    pack_archive "$2" ;;
+  *)
+    echo "usage: team-report {ccusage|stage <dir>|pack <dir>}" >&2
+    exit 1
+    ;;
+esac
+@
 
 \end{document}

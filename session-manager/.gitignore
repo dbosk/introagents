@@ -5,6 +5,7 @@ entrypoint.sh
 group-session
 sshd_config
 prepare.sh
+team-report
 template/
 claude-defaults/
 sessionmgr.tex
@@ -23,3 +24,9 @@ latexmkrc
 # hacker space's separate volume (see `make hackspace`).
 .data/
 .hackdata/
+
+# Post-event harvest (see `make data.tar.gz`): the transient staging
+# tree and the packed archives.
+.harvest/
+data.tar.gz
+data.zip

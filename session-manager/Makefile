@@ -1,7 +1,7 @@
 # Everything in this directory tangles from sessionmgr.nw; this
 # Makefile is committed only because it cannot tangle itself.
 
-SCRIPTS=	entrypoint.sh group-session prepare.sh
+SCRIPTS=	entrypoint.sh group-session prepare.sh team-report
 CONFIGS=	Dockerfile sshd_config
 SEEDS=		template/CLAUDE.md template/RULES.md \
 		claude-defaults/.claude.json
@@ -29,7 +29,7 @@ all: ${SCRIPTS} ${CONFIGS} ${SEEDS} ${CFGSEEDS} sessionmgr.pdf
 ${SCRIPTS} ${CONFIGS} ${SEEDS}: sessionmgr.nw
 	mkdir -p $(dir $@)
 	notangle -R"[[$(notdir $@)]]" $< | cpif $@
-	case "$@" in *.sh|group-session) chmod +x "$@";; *) :;; esac
+	case "$@" in *.sh|group-session|team-report) chmod +x "$@";; *) :;; esac
 
 # The two status-line seeds: distinct root-chunk names disambiguate the
 # two settings.json outputs that the basename-keyed rule above cannot.
@@ -88,8 +88,43 @@ hackspace: require-credential ${SEEDS} prepare.sh
 	  -e ANTHROPIC_MODEL="${HACK_MODEL}" -e TEAMS="${HACK_TEAMS}" \
 	  -v "${CURDIR}/.hackdata:/data" introllm-session
 
+# Post-event harvest (see sessionmgr.nw, sec:harvest).
+
+.PHONY: ccusage archive
+# Per-team token usage and cost.  Reads only the persisted transcripts,
+# so it needs no credential and never calls Claude; the image is reused
+# as root purely because that is the one way to read the teams' mode-600
+# transcripts.
+ccusage: build
+	docker run --rm -v "${CURDIR}/.data:/data:ro" -e TEAMS="${TEAMS}" \
+	  --entrypoint /usr/local/bin/team-report introllm-session ccusage
+
+# Pack the teams' work into data.tar.gz and data.zip, each carrying a
+# generated README, in two phases.  Phase one stages a host-owned,
+# pruned copy as root in the container (the only step that can read the
+# mode-600 transcripts); HOST_UID/HOST_GID let it chown the staging tree
+# back to whoever ran make.  Phase two runs the SAME tangled script on
+# the host, where the facilitator's own logged-in claude writes the
+# READMEs and tar/zip pack the archives -- so no credential is plumbed
+# into the container and .data ownership is left untouched.
+HARVEST ?=	.harvest
+archive: build team-report
+	${RM} -r "${HARVEST}"
+	docker run --rm -v "${CURDIR}/.data:/data:ro" -v "${CURDIR}:/out" \
+	  -e TEAMS="${TEAMS}" -e HOST_UID="$$(id -u)" -e HOST_GID="$$(id -g)" \
+	  --entrypoint /usr/local/bin/team-report introllm-session \
+	  stage "/out/${HARVEST}"
+	TEAMS="${TEAMS}" ./team-report pack "${HARVEST}"
+	${RM} -r "${HARVEST}"
+
+# Convenience names: one `archive` run produces both, so depending on it
+# (rather than carrying a recipe each) keeps `make data.tar.gz data.zip`
+# to a single archive run.
+data.tar.gz data.zip: archive
+
 .PHONY: clean clean-tangled
 clean: clean-tangled
+	${RM} data.tar.gz data.zip
 clean-tangled:
 	${RM} ${SCRIPTS} ${CONFIGS}
 	${RM} -r template claude-defaults
