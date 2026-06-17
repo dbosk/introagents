@@ -1456,7 +1456,13 @@ find "$data/$team" -maxdepth 1 -type f \
 
 The prompt inlines each file under a header naming it, then asks for a
 first line of plain description (which the summary table later reuses,
-\cref{sec:harvest}) followed by run instructions.  The one change from
+\cref{sec:harvest}) followed by run instructions.  We also ask it to
+render any file the reader should open as a Markdown link to that file
+by its bare name: the README is written beside the team's own files,
+so a relative link such as [[[game.html](game.html)]] resolves to the
+sibling once \cref{sec:render-html} turns it into an anchor---the
+evaluator launches the game from the README with one click rather than
+hunting for the file in the tree.  The one change from
 a plain [[claude -p]] is the destination: we instruct it to put the
 documentation in a file named [[body.md]] with the Write tool, and we
 run it inside a fresh, empty scratch directory whose only purpose is to
@@ -1480,6 +1486,11 @@ scratch="$(mktemp -d)"
     "line and with no heading, saying what the team built; then" \
     "a section headed \"### How to run it\" with exact," \
     "step-by-step instructions to run or open the project." \
+    "Whenever you name a file the reader should open or run," \
+    "write it as a Markdown link to that file by its bare" \
+    "name, for example [game.html](game.html), so they can" \
+    "launch it with one click; the documentation sits in the" \
+    "same directory as these files." \
     "Describe only what the files below show; invent nothing." \
     "The files:"
   for file in $files
@@ -1499,6 +1510,7 @@ rm -rf "$scratch"
 @
 
 \subsection{Rendering the READMEs to HTML}
+\label{sec:render-html}
 
 We render with [[pandoc]] in \emph{standalone} mode ([[-s]]): a bare
 HTML fragment has no [[<head>]] and many browsers then mis-guess the
