@@ -1,0 +1,32 @@
+# Everything tangles or weaves from sessionmgr.nw; only the .nw, the
+# Makefile, preamble.tex and README.md are source.
+Dockerfile
+entrypoint.sh
+group-session
+sshd_config
+prepare.sh
+team-report
+template/
+claude-defaults/
+sessionmgr.tex
+sessionmgr.pdf
+noweb_lexer.py
+ltxobj/
+latexmkrc
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+
+# Event data: team homes, transcripts, host keys.  .hackdata/ is the
+# hacker space's separate volume (see `make hackspace`).
+.data/
+.hackdata/
+
+# Post-event harvest (see `make data.tar.gz`): the transient staging
+# tree and the packed archives.
+.harvest/
+data.tar.gz
+data.zip

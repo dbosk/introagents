@@ -1,0 +1,1572 @@
+\documentclass[a4paper,11pt]{article}
+\input{preamble.tex}
+
+\title{%
+  The session manager:\\
+  an SSH-into-Claude host
+}
+\author{Daniel Bosk and Dan-Claude\thanks{%
+  Dan-Claude is the first author's AI agent provided with a diverse skill set.
+  In this work Dan-Claude was first powered by Claude Fable 5 to implement the 
+  ideas of the first author.
+  After the US government forced Anthropic to retract Fable 5, Claude Opus 4.8 
+  was used to power Dan-Claude for adding more features.
+}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  \noindent
+  For the TCS Summer Event we run a gamified agentic-AI workshop where
+  teams of academics build a small game with Claude Code.  We want
+  maximum parallel participation: participants use their own laptops
+  and SSH into the facilitator's laptop, which runs the Docker
+  container described here.  Every connection spawns a fresh
+  [[claude]] session, but everyone on the same team always lands in
+  the same working directory, so a team continues one shared project
+  across connections and teammates.  Project files and Claude's
+  session transcripts persist on the host for post-event evaluation.
+\end{abstract}
+\clearpage
+
+\null\vfill
+\begin{quote}
+\input{LICENSE}
+\end{quote}
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\section{Introduction}\label{sec:intro}
+
+The event splits the participants into three teams
+(professors/tenure-track, lecturers, PhD students) who relay-build a
+web game: one member at the keyboard at a time, roughly ten-minute
+turns, a shared token budget.  Three properties drive the whole
+design.
+
+\begin{description}
+\item[Fresh sessions]  Each turn starts a new [[claude]] session with
+  no chat history.  The \emph{files} the team leaves behind---most
+  importantly their [[CLAUDE.md]]---are the only memory that carries
+  over.  That is the pedagogical point: the way to help your
+  teammates is harness engineering, not longer chats.
+\item[Shared team directory]  Everyone on a team works on the same
+  project, so all of a team's sessions must run in one directory.
+\item[Persistence for evaluation]  After the event we evaluate both
+  the artefacts and \emph{how} they were produced, so the project
+  files and Claude's session transcripts must survive the container.
+\end{description}
+
+The facilitator's workflow is three [[make]] targets on their own
+laptop, run any day before the event:
+\begin{verbatim}
+claude setup-token   # once: prints the sk-ant-... token
+TEAMS="the-np-hard-partiers"
+TEAMS="${TEAMS} big-o-no-you-didnt"
+TEAMS="${TEAMS} the-halting-problems"
+TEAMS="${TEAMS} lambda-lambda-lambda"
+TEAMS="${TEAMS} p=np-after-two-beers"
+export TEAMS
+make prepare    # seed .data/: homes + Claude config
+make build      # build the Docker image
+CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-... make run  # start
+\end{verbatim}
+followed by writing the laptop's IP address on the board.  The first
+line is a one-off: [[claude setup-token]] prints a long-lived token on
+the facilitator's own machine, which is then pasted into the
+[[CLAUDE_CODE_OAUTH_TOKEN=]] of the run line.  The teams---their number
+and names---are whatever the space-separated [[TEAMS]] variable lists,
+honoured by both [[make prepare]] and [[make run]] (so the [[export]]
+above, or [[TEAMS="..."]] on each command, is all it takes to add or
+rename teams; omit it for the default three).  The post-game hacker
+space is a second, independent container, brought up later with one
+more command:
+\begin{verbatim}
+CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-... make hackspace
+\end{verbatim}
+\Cref{sec:buildrun} documents each target, the credential, [[TEAMS]]
+and the hacker space; \cref{sec:prepare} covers what [[make prepare]]
+seeds.  Participants then simply run
+\begin{center}
+  [[ssh -p 2222 groupa@<ip-address>]]
+\end{center}
+and find themselves in their team's Claude session.
+
+\section{Overview}\label{sec:overview}
+
+\Cref{fig:overview} shows the moving pieces.  The container runs only
+an SSH daemon.  Each team has a Unix account whose \emph{login shell}
+is our launcher script: logging in \emph{is} starting Claude, and
+when Claude exits the connection closes.  This is what makes
+\enquote{fresh session per connect} free---there is no terminal
+multiplexer to reattach to and no session to resume by accident.
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[
+      node distance=6mm and 5mm,
+      box/.style={draw, rounded corners, align=center, font=\small,
+                  minimum height=8mm, inner sep=2mm},
+      lbl/.style={font=\scriptsize},
+    ]
+    \node[box] (laptop) {participants'\\own laptops};
+    \node[box, right=of laptop] (sshd) {\texttt{sshd}};
+    \node[box, right=of sshd] (account)
+      {team account\\\texttt{groupa}, \dots};
+    \node[box, right=16mm of account] (launcher)
+      {\texttt{group-}\\\texttt{session}};
+    \node[box, right=10mm of launcher] (claude) {\texttt{claude}};
+    \node[box, below=of claude, xshift=-12mm] (home)
+      {\texttt{/data/groups/<team>/}\\
+       project files + \texttt{.claude/}};
+    \node[box, below=of home] (host)
+      {host volume (\texttt{-v <hostdir>:/data})};
+    \draw[->] (laptop) -- node[above, lbl] {ssh} (sshd);
+    \draw[->] (sshd) -- (account);
+    \draw[->] (account) -- node[above, lbl] {login shell}
+      (launcher);
+    \draw[->] (launcher) -- node[above, lbl] {exec} (claude);
+    \draw[<->] (claude) -- (home);
+    \draw[<->] (home) -- (host);
+    \node[draw, dashed, fit=(sshd) (account) (launcher) (claude) (home),
+          inner sep=3mm,
+          label={[font=\small]above:Docker container}] {};
+  \end{tikzpicture}
+  \caption{%
+    Data flow from a participant's laptop to a Claude session.  The
+    team account's login shell is the launcher, so connecting is
+    starting Claude.  The team's home directory lives on the mounted
+    volume, so both the project and Claude's transcripts persist on
+    the host.%
+  }
+  \label{fig:overview}
+\end{figure}
+
+The persistence design hinges on one observation: Claude Code stores
+each session's transcript as a [[.jsonl]] file under
+[[~/.claude/projects/]], keyed by the working directory.  If we make
+each team
+account's \emph{home directory} also be its \emph{working directory},
+then the transcripts land inside the very directory we already
+persist for the project files.  One volume mount
+([[-v <hostdir>:/data]]) captures everything the post-event
+evaluation needs:
+
+\begin{verbatim}
+.data/
+|-- ssh/                                 persisted SSH host keys
+`-- groups/{groupa,groupb,groupc}/
+    |-- CLAUDE.md, RULES.md, ...         seeds + project files
+    `-- .claude/projects/<hash>/*.jsonl  session transcripts
+\end{verbatim}
+
+Because the home directories persist on the host, all seeding---the
+relay rules, a starter [[CLAUDE.md]] and Claude's configuration---can
+happen \emph{outside} the container, any time before the event
+(\cref{sec:prepare}).  The
+container itself stays stateless: its entry point only recreates the
+team accounts, fixes ownership, and starts the SSH daemon
+(\cref{sec:entrypoint}).  We can rebuild or restart it freely without
+losing anything.
+
+The remaining pieces are the image itself (\cref{sec:dockerfile}),
+the launcher (\cref{sec:launcher}), the SSH configuration
+(\cref{sec:sshd}), the seed content (\cref{sec:seeds}), the
+facilitator's build-and-run instructions (\cref{sec:buildrun}), and
+finally harvesting the results once the event is over
+(\cref{sec:harvest}).
+
+\section{The image}\label{sec:dockerfile}
+
+The image is deliberately boring: Node, an SSH server, Claude Code,
+and our three runtime scripts.
+
+<<[[Dockerfile]]>>=
+FROM node:22-bookworm-slim
+
+<<install system packages>>
+<<install Claude Code>>
+<<install the statusline tools>>
+<<allow empty passwords in PAM>>
+<<silence the login banner>>
+<<event environment defaults>>
+<<install the runtime files>>
+
+EXPOSE 22
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+@
+
+We start from a Node image rather than a plain Debian one because
+Claude Code is an npm package, and the event task is an HTML5/vanilla
+JavaScript game, so Node doubles as the participants' runtime should
+they want one.  The [[slim]] variant keeps the image small; we add
+back exactly the tools an agent (or a curious participant) plausibly
+needs: git, a fetcher, Python, a fast grep, a pager and an editor.
+[[procps]] gives the facilitator [[ps]] for a quick look at who is
+running what.
+
+<<install system packages>>=
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      openssh-server git ca-certificates curl python3 \
+      ripgrep less nano procps \
+    && rm -rf /var/lib/apt/lists/*
+@
+
+We pin the Claude Code version through a build argument so that the
+image we rehearse with is reproducibly the image we run at the event;
+[[latest]] is only the default for casual builds.
+
+<<install Claude Code>>=
+ARG CLAUDE_VERSION=latest
+RUN npm install -g @anthropic-ai/claude-code@${CLAUDE_VERSION}
+@
+
+Each session shows a status line (\cref{sec:seeds}): the model and git
+state, the rolling token usage, and a usage breakdown from
+[[ccusage]].  The renderer is [[ccstatusline]] and the usage figures
+come from [[ccusage]]; the status line is redrawn constantly, so how it
+is supplied matters.  We bake both tools into the image rather than
+fetch them at render time.  A pre-installed binary on [[PATH]] renders
+instantly from the first connection and needs no network during the
+event---the same reasoning that makes us pin [[CLAUDE_VERSION]] and
+persist the SSH host keys (\cref{sec:entrypoint}): an academic's
+ten-minute turn should not be spent watching a download, and the venue
+network is not something we want a working status line to depend on.
+The versions are pinned through build arguments for the same
+reproducibility reason as Claude Code itself.
+
+<<install the statusline tools>>=
+ARG CCSTATUSLINE_VERSION=latest
+ARG CCUSAGE_VERSION=latest
+RUN npm install -g ccstatusline@${CCSTATUSLINE_VERSION} \
+      ccusage@${CCUSAGE_VERSION}
+@
+
+The team accounts have \emph{empty} passwords
+(\cref{sec:sshd})---participants should type one command and be in.
+On Debian, [[sshd]]'s [[PermitEmptyPasswords]] is necessary but not
+sufficient: with [[UsePAM yes]] the actual password check is done by
+[[pam_unix]], which rejects empty passwords unless its [[nullok]]
+option is set.  We edit [[common-auth]] idempotently---only lines
+that mention [[pam_unix.so]] and do not already say [[nullok]] are
+touched---so rebuilding on a base image that changes its PAM defaults
+cannot double-append the option.
+
+<<allow empty passwords in PAM>>=
+RUN sed -ri '/pam_unix\.so/ {/nullok/! s/$/ nullok/}' \
+      /etc/pam.d/common-auth
+@
+
+Logging in should land the participant in Claude and nothing else.
+Setting [[PrintMotd no]] in the SSH configuration (\cref{sec:sshd})
+is not enough on Debian: [[pam_motd]] prints the distribution's
+\enquote{The programs included with\dots} banner on every login
+regardless of what [[sshd]] thinks, so we drop it from the PAM stack
+altogether.
+
+<<silence the login banner>>=
+RUN sed -i '/pam_motd/d' /etc/pam.d/sshd
+@
+
+Three knobs are environment variables with sensible defaults, all
+overridable at [[docker run]] time.  [[TEAMS]] names the accounts to
+create.  [[ANTHROPIC_MODEL]] starts everyone on [[claude-sonnet-4-6]],
+capable enough for the game while leaving Opus as a conscious upgrade;
+teams can switch with [[/model]], and weighing that against the shared
+token budget is part of the game.  [[CLAUDE_FLAGS]] defaults to
+[[--permission-mode auto]], which lets Claude handle permissions
+automatically so prompts do not eat the participants' ten-minute
+turns.  We deliberately avoid [[--dangerously-skip-permissions]]: the
+sessions run with real credentials in a shared container, so an
+unattended, no-questions bypass is not a trade we want.
+
+<<event environment defaults>>=
+ENV TEAMS="groupa groupb groupc"
+ENV ANTHROPIC_MODEL="claude-sonnet-4-6"
+ENV CLAUDE_FLAGS="--permission-mode auto"
+@
+
+Finally the runtime files: the entry point, the launcher and the
+harvest script (\cref{sec:harvest}) go into the path, the SSH
+configuration replaces Debian's default outright (so we reason about
+one file, not a diff against the distribution's), and [[/data]] exists
+as the mount point.
+
+<<install the runtime files>>=
+COPY --chmod=755 entrypoint.sh group-session team-report \
+  /usr/local/bin/
+COPY sshd_config /etc/ssh/sshd_config
+RUN mkdir -p /data/groups
+@
+
+\section{Runtime: the entry point}\label{sec:entrypoint}
+
+The entry point is the only thing that runs as root.  It validates
+the credential, makes the runtime environment reachable from SSH
+sessions, arranges stable host keys, recreates the team accounts
+against the mounted volume, pre-approves the API key in each team's
+Claude configuration, and finally becomes the SSH daemon.
+
+<<[[entrypoint.sh]]>>=
+#!/bin/sh
+set -eu
+
+<<require a credential>>
+<<write the event environment file>>
+<<persist the SSH host keys>>
+<<create the team accounts>>
+<<approve the API key for each team>>
+<<start the SSH daemon>>
+@
+
+\subsection{Requiring a credential}
+
+There are two ways to pay for the event: a Claude subscription (a
+long-lived OAuth token minted once with [[claude setup-token]] on the
+facilitator's machine) or API credits.  Claude Code accepts either
+through an environment variable, so the container takes whichever is
+present.  Failing fast here, with a message that names both options,
+beats the alternative---a container that starts fine and then greets
+every participant with an authentication error.
+
+<<require a credential>>=
+if [ -z "${CLAUDE_CODE_OAUTH_TOKEN:-}" ] \
+   && [ -z "${ANTHROPIC_API_KEY:-}" ]
+then
+  echo "error: no credential; run the container with either" >&2
+  echo "  -e CLAUDE_CODE_OAUTH_TOKEN  (claude setup-token)" >&2
+  echo "  -e ANTHROPIC_API_KEY        (API credits)" >&2
+  exit 1
+fi
+@
+
+\subsection{The event environment file}
+
+This is the one genuinely non-obvious mechanic in the container.
+Variables passed with [[docker run -e]] reach the entry point, but
+\emph{not} the shells that [[sshd]] spawns: an SSH login gets a fresh
+environment built from PAM and the login shell, not from PID~1's.  So
+the entry point serialises the runtime configuration to a file, and
+the launcher (\cref{sec:launcher}) sources that file before starting
+Claude.
+
+<<write the event environment file>>=
+: > /etc/event.env
+for var in CLAUDE_CODE_OAUTH_TOKEN ANTHROPIC_API_KEY \
+           ANTHROPIC_MODEL CLAUDE_FLAGS
+do
+  eval "value=\${$var:-}"
+  if [ -n "$value" ]
+  then
+    printf 'export %s="%s"\n' "$var" "$value" >> /etc/event.env
+  fi
+done
+chmod 644 /etc/event.env
+@
+
+The file is world-readable, which means participants can read the
+credential.  This is not an oversight: the sessions \emph{run} with
+that credential, so anyone could equally ask Claude to print its own
+environment.  The protection is not file permissions but the
+credential itself---a budget-capped API key or a token the
+facilitator revokes after the event.
+
+\subsection{Persisting the SSH host keys}
+
+Docker containers are rebuilt and restarted; SSH clients remember
+host keys.  If the keys changed on every rebuild, every participant
+would hit the dreaded \enquote{remote host identification has
+changed} wall mid-event.  We therefore keep the keys on the volume:
+on first start we let [[ssh-keygen -A]] fill in any missing keys and
+copy them out to [[/data/ssh]]; on every later start we copy them
+back in.  We copy rather than symlink into the volume because
+[[sshd]] refuses keys with lax permissions, and permissions on
+host-mounted volumes are whatever the host happens to have---copying
+lets us reset ownership and mode unconditionally.
+
+<<persist the SSH host keys>>=
+mkdir -p /data/ssh
+if [ -n "$(ls -A /data/ssh)" ]
+then
+  cp /data/ssh/ssh_host_* /etc/ssh/
+else
+  ssh-keygen -A
+  cp /etc/ssh/ssh_host_* /data/ssh/
+fi
+chown root:root /etc/ssh/ssh_host_*
+chmod 600 /etc/ssh/ssh_host_*_key
+chmod 644 /etc/ssh/ssh_host_*_key.pub
+@
+
+\subsection{Creating the team accounts}
+
+The accounts live in [[/etc]], which is \emph{not} persisted---so
+they are recreated on every start, idempotently, against the
+persistent home directories.  Two details matter.
+
+The UIDs are pinned (2001, 2002, \dots, in [[TEAMS]] order) so that
+file ownership on the volume is stable across container runs; without
+pinning, a future start could allocate UIDs in a different order and
+silently swap the teams' file ownership.  The [[chown -R]] then makes
+the account the owner of whatever is in its home directory---in
+particular the seed files, which were written on the host by whoever
+ran [[prepare.sh]] (\cref{sec:prepare}) and therefore arrive with a
+host user's UID.
+
+[[useradd --no-create-home]] plus our own [[mkdir -p]] keeps the
+account creation working both when the volume is already seeded and
+when someone starts an unseeded container to poke around.
+
+<<create the team accounts>>=
+uid=2001
+for team in $TEAMS
+do
+  if ! id "$team" >/dev/null 2>&1
+  then
+    useradd --uid "$uid" --home-dir "/data/groups/$team" \
+      --no-create-home --shell /usr/local/bin/group-session "$team"
+    passwd -d "$team"
+  fi
+  mkdir -p "/data/groups/$team"
+  chown -R "$team:$team" "/data/groups/$team"
+  uid=$((uid + 1))
+done
+@
+
+[[passwd -d]] removes the password rather than locking the account:
+combined with [[PermitEmptyPasswords]] and PAM's [[nullok]]
+(\cref{sec:dockerfile,sec:sshd}) this is what lets participants log
+in with no password at all.
+
+\subsection{Pre-approving the API key}
+
+When Claude Code finds an [[ANTHROPIC_API_KEY]] in the environment,
+it asks---once per account---whether to use it.  It records the
+answer under [[customApiKeyResponses]] in [[~/.claude.json]], as the
+key's last twenty characters.  The subscription token
+([[CLAUDE_CODE_OAUTH_TOKEN]]) does not trigger this question, so the
+recommended credential path is unaffected; but if the event falls
+back to an API key, the first member of every team would burn the
+start of their turn on a security question they cannot judge anyway.
+The seed configuration cannot answer it, because the key is only
+known at [[docker run]] time---so the entry point answers it, here.
+
+The merge is done in Python rather than shell because editing JSON
+with [[sed]] is how config files get corrupted, and the image ships
+[[python3]] anyway.  The [[chown]] afterwards is needed because this
+runs as root after the accounts' homes have already been handed over
+to the teams.
+
+<<approve the API key for each team>>=
+if [ -n "${ANTHROPIC_API_KEY:-}" ]
+then
+  for team in $TEAMS
+  do
+    config="/data/groups/$team/.claude.json"
+    python3 - "$config" "$ANTHROPIC_API_KEY" <<'EOF'
+<<record the key as approved>>
+EOF
+    chown "$team:$team" "$config"
+  done
+fi
+@
+
+The script tolerates a missing configuration file (an unseeded
+volume) by starting from an empty one; everything else it leaves
+untouched.
+
+<<record the key as approved>>=
+import json
+import sys
+
+path, key = sys.argv[1], sys.argv[2]
+try:
+    with open(path) as f:
+        config = json.load(f)
+except FileNotFoundError:
+    config = {}
+approved = config.setdefault(
+    "customApiKeyResponses", {}).setdefault("approved", [])
+if key[-20:] not in approved:
+    approved.append(key[-20:])
+with open(path, "w") as f:
+    json.dump(config, f, indent=2)
+@
+
+\subsection{Starting the SSH daemon}
+
+Debian's [[sshd]] refuses to start without its privilege-separation
+directory, and [[/run]] is a fresh tmpfs in every container---a
+classic sshd-in-Docker trap, so we create it explicitly.  We [[exec]]
+so that [[sshd]] becomes PID~1 and receives the signals from
+[[docker stop]]; [[-D]] keeps it in the foreground (a daemonising
+PID~1 would end the container), and [[-e]] sends the log to stderr
+where [[docker logs]] picks it up.
+
+<<start the SSH daemon>>=
+mkdir -p /run/sshd
+exec /usr/sbin/sshd -D -e
+@
+
+\section{Runtime: the launcher}\label{sec:launcher}
+
+The launcher is each team account's \emph{login shell}.  That single
+design choice does most of the work in this project: every SSH login
+runs it, there is no other shell to fall back into, and when Claude
+exits the connection closes---so \enquote{fresh session per connect}
+needs no further machinery.  Note what this also means: two teammates
+connecting concurrently get two independent Claude sessions in the
+same directory.  That is intended; coordinating is the team's
+problem, and a productive part of the game.
+
+It sources the event environment file because, as explained in
+\cref{sec:entrypoint}, an SSH session does not inherit the
+container's [[docker run -e]] environment.  It changes to [[$HOME]]
+explicitly because the working directory is the contract---Claude
+must run in the team directory for the transcripts to land there.
+Finally it [[exec]]s Claude rather than running it as a child: the
+launcher has nothing left to do, and leaving a useless parent shell
+around would only add a process between [[sshd]] and Claude.
+
+<<[[group-session]]>>=
+#!/bin/sh
+. /etc/event.env
+cd "$HOME"
+exec claude $CLAUDE_FLAGS
+@
+
+[[$CLAUDE_FLAGS]] is deliberately unquoted: it is a list of flags,
+not a single argument, and the word splitting is the point.
+
+There is deliberately no first-session special case: with the
+specification withheld to paper (\cref{sec:seeds}), there is nothing
+for the launcher to reveal, so every connection runs the same three
+lines.
+
+\section{SSH configuration}\label{sec:sshd}
+
+The configuration replaces Debian's default file wholesale, so this
+section is the complete truth about how the daemon behaves.
+
+<<[[sshd_config]]>>=
+PermitRootLogin no
+PasswordAuthentication yes
+PermitEmptyPasswords yes
+KbdInteractiveAuthentication no
+UsePAM yes
+X11Forwarding no
+AllowTcpForwarding no
+ClientAliveInterval 60
+PrintMotd no
+PrintLastLog no
+AcceptEnv LANG LC_*
+@
+
+Empty passwords are a deliberate trade-off, not an accident: the
+container runs for under an hour, on a laptop, on the event's local
+network, and the accounts can do nothing but run Claude in a sandbox.
+The UX win---academics type one command and are in---outweighs the
+risk.  If the event network turns out to be hostile, the fallback is
+two lines in the entry point: replace [[passwd -d]] with
+[[echo "$team:summer" | chpasswd]] and drop
+[[PermitEmptyPasswords]].
+
+The rest of the file removes capabilities we do not want to hand
+out: no root login, no X11, no TCP forwarding (the container should
+not become anyone's jump host).  [[KbdInteractiveAuthentication no]]
+forces the plain password path, which is the one we configured PAM's
+[[nullok]] for.  [[ClientAliveInterval]] cleans up sessions whose
+laptops wandered off to another room.  Omitting Debian's usual
+[[Subsystem sftp]] line disables SFTP/SCP entirely---file transfer
+in or out goes through the facilitator and the host volume, not
+through participants' clients.
+
+\section{Host-side preparation}\label{sec:prepare}
+
+Seeding is the facilitator's job, on the host, any time before the
+event---this script never runs in the container.  The split follows
+from persistence (\cref{sec:overview}): since the team homes live on
+the host volume, anything placed there before the container starts
+is simply \emph{there} when the first participant connects.  Keeping
+the container free of seeding logic also means restarting it can
+never clobber a team's work.
+
+<<[[prepare.sh]]>>=
+#!/bin/sh
+set -eu
+
+<<determine directories and teams>>
+
+for team in $teams
+do
+  <<seed the team home directory>>
+done
+@
+
+The script takes the data directory and the team names as arguments,
+with defaults matching the container's ([[TEAMS]] in
+\cref{sec:dockerfile}); the seed sources are located relative to the
+script itself so it can be run from anywhere.
+
+<<determine directories and teams>>=
+scriptdir="$(cd "$(dirname "$0")" && pwd)"
+datadir="${1:-.data}"
+if [ $# -gt 0 ]
+then
+  shift
+fi
+teams="${*:-groupa groupb groupc}"
+@
+
+Seeding is idempotent so the facilitator can re-run it after editing
+the templates: a file is only copied when the destination does not
+yet exist, so files a team (or an earlier run) already created are
+never clobbered.  (GNU [[cp -n]] would say this in one flag, but it
+nowadays warns that its no-clobber behaviour is non-portable, so we
+spell the check out.)  Ownership is
+deliberately \emph{not} handled here---it would require root, and the
+container's entry point [[chown]]s the homes at every start anyway.
+
+The loop globs the template twice because some seeds are dotfile
+directories.  A plain [[template/*]] never matches names beginning
+with a dot, yet the status-line configuration (\cref{sec:seeds}) lives
+in [[.claude/]] and [[.config/]]; the second pattern, [[.[!.]*]],
+picks those up while excluding [[.]] and [[..]].  When a pattern
+matches nothing the shell leaves it unexpanded, so the existence guard
+skips the literal non-match rather than trying to copy it.  [[cp -r]]
+already recurses, so a whole [[.claude/]] tree copies in one step; the
+existence check is per top-level entry, which keeps the coarse
+idempotency---a home that already has a [[.claude/]] is left alone
+wholesale.
+
+The Claude configuration is the one file that cannot be a plain
+copy: Claude Code tracks per-project trust by the project's absolute
+path as seen \emph{inside} the container,
+[[/data/groups/<team>]], which differs for each team.  We therefore
+instantiate it from a template by substituting the placeholder.
+
+<<seed the team home directory>>=
+home="$datadir/groups/$team"
+mkdir -p "$home"
+for file in "$scriptdir/template/"* "$scriptdir/template/".[!.]*
+do
+  [ -e "$file" ] || continue
+  if [ ! -e "$home/$(basename "$file")" ]
+  then
+    cp -r "$file" "$home/"
+  fi
+done
+if [ ! -f "$home/.claude.json" ]
+then
+  sed "s|HOMEDIR|/data/groups/$team|" \
+    "$scriptdir/claude-defaults/.claude.json" > "$home/.claude.json"
+fi
+@
+
+\section{Seed content}\label{sec:seeds}
+
+\subsection{Claude configuration}
+
+Without configuration, the first [[claude]] run greets the user with
+a few one-time questions: a theme picker and a workspace-trust
+dialogue.  Burning the first minutes of the first team member's turn
+on questions only the facilitator can meaningfully answer would be a
+poor start, so we pre-answer them.  (The API-key approval is the one answer that
+cannot live here, since the key is only known at run time; the entry
+point handles it, \cref{sec:entrypoint}.)  [[HOMEDIR]] is the
+placeholder that [[prepare.sh]] substitutes with the team's
+in-container home.
+
+<<[[.claude.json]]>>=
+{
+  "hasCompletedOnboarding": true,
+  "theme": "dark",
+  "projects": {
+    "HOMEDIR": {
+      "hasTrustDialogAccepted": true,
+      "hasCompletedProjectOnboarding": true
+    }
+  }
+}
+@
+
+\subsection{Status line}
+
+The status line is configured in two files because the work is split
+between two tools.  Claude Code only needs to know \emph{which command}
+to run for its status line; the layout---what to show and in what
+colour---is [[ccstatusline]]'s own concern, kept in [[ccstatusline]]'s
+own configuration file.  Separating them this way means the layout can
+be reshaped without touching Claude's settings, and Claude's settings
+stay small---the status-line entry point and the default model, nothing
+more.
+
+Both files seed straight into the team home, which is also the
+in-container [[HOME]] (\cref{sec:overview}), so they land where each
+tool looks: [[~/.claude/settings.json]] for Claude and
+[[~/.config/ccstatusline/settings.json]] for the renderer.  Neither
+needs the path substitution that [[.claude.json]] does---nothing in
+them depends on the team's directory---so they are plain seed files the
+facilitator can edit before the event.
+
+Claude's settings name the renderer directly.  Because both tools are
+baked into the image and on [[PATH]] (\cref{sec:dockerfile}), the
+command is just [[ccstatusline]]---no [[bunx]] wrapper to resolve a
+package at render time, which is what keeps the line instant and
+offline.
+
+They also pin the model.  The [[ANTHROPIC_MODEL]] environment variable
+(\cref{sec:dockerfile}) is meant to choose it, but an environment
+variable is only as good as its propagation: should it fail to reach
+Claude---unset on the host, dropped on the way through [[docker run]],
+or lost before the launcher sources it---Claude falls back to the
+account's own default, which need not be the small model the game is
+budgeted for.  Naming the model in the seed makes
+[[claude-sonnet-4-6]] the baseline that holds regardless.  The
+environment variable still wins when it \emph{does} arrive, so the
+hacker space's larger model (\cref{sec:overview}, [[HACK_MODEL]]) keeps
+overriding the seed at run time; the seed only decides what happens
+when nothing overrides it.
+
+<<[[.claude/settings.json]]>>=
+{
+  "model": "claude-sonnet-4-6",
+  "statusLine": {
+    "type": "command",
+    "command": "ccstatusline",
+    "padding": 0
+  }
+}
+@
+
+The renderer's own configuration lays out three lines.  The first is
+the working context---model, remaining context length, and the git
+branch and dirty-file count---so a player can see at a glance what they
+are working with.  The second is the shared budget the relay runs on:
+the rolling session usage, when it resets, and the weekly total.  The
+third defers to [[ccusage]] for a fuller usage breakdown; like
+[[ccstatusline]] it is on [[PATH]], so the custom command is plainly
+[[ccusage statusline]].
+
+<<[[ccstatusline/settings.json]]>>=
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "1",
+        "type": "model",
+        "color": "cyan"
+      },
+      {
+        "id": "2",
+        "type": "separator"
+      },
+      {
+        "id": "3",
+        "type": "context-length",
+        "color": "brightBlack"
+      },
+      {
+        "id": "4",
+        "type": "separator"
+      },
+      {
+        "id": "5",
+        "type": "git-branch",
+        "color": "magenta"
+      },
+      {
+        "id": "6",
+        "type": "separator"
+      },
+      {
+        "id": "7",
+        "type": "git-changes",
+        "color": "yellow"
+      }
+    ],
+    [
+      {
+        "id": "01b88659-4447-49d4-9f42-589863af40a2",
+        "type": "session-usage"
+      },
+      {
+        "id": "3e8e9624-1fb0-417d-9513-4d66234dadfc",
+        "type": "separator"
+      },
+      {
+        "id": "a50e1638-c85f-4591-96cb-df3a3791ad9e",
+        "type": "reset-timer"
+      },
+      {
+        "id": "45febe85-67a1-424d-a5c6-d7ac88cd8302",
+        "type": "separator"
+      },
+      {
+        "id": "4ba2c607-2112-4b23-865d-ddff39288cbf",
+        "type": "weekly-usage"
+      }
+    ],
+    [
+      {
+        "id": "8aa2e3f0-3bff-4b80-96fa-7e89879f1bf7",
+        "type": "custom-command",
+        "commandPath": "ccusage statusline"
+      }
+    ]
+  ],
+  "flexMode": "full-minus-40",
+  "compactThreshold": 60,
+  "colorLevel": 2,
+  "inheritSeparatorColors": false,
+  "globalBold": false,
+  "gitCacheTtlSeconds": 5,
+  "minimalistMode": false,
+  "powerline": {
+    "enabled": false,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [],
+    "endCaps": [],
+    "autoAlign": false,
+    "continueThemeAcrossLines": false
+  }
+}
+@
+
+\subsection{Team instructions}
+
+The relay is a game of telephone, and the seed content is shaped by
+what we deliberately \emph{withhold}.  The specification never enters
+the container: the first player is handed it on paper, and everyone
+after knows only what their teammates left behind.  With no
+[[SPEC.md]] on the machine---and no copy of it smuggled into
+[[CLAUDE.md]]---a fresh session genuinely cannot recover the spec, so
+the degradation along the relay is real rather than honour-system.
+Giving the teams little is the point; working the rest out is the
+game.
+
+What we seed is therefore deliberately thin.  [[CLAUDE.md]], which
+Claude Code loads into every session automatically, does just enough
+to be a good host: it says a relay game is afoot and points at
+[[RULES.md]], so a player can ask Claude how the game works and get a
+straight answer without having to know the file is there.  It stops
+short of the task itself---no spec, no hints.
+
+<<[[CLAUDE.md]]>>=
+# Team workspace
+
+You are helping a team play a relay game: building a small project
+together, one teammate at the keyboard at a time, with a fresh
+session every turn.
+
+How the relay works — turns, what carries over between sessions, what
+counts as fair play — is written in RULES.md.  Read it when a player
+asks how the game works or what is allowed.
+@
+
+[[RULES.md]] carries the rules themselves and says outright that the
+telephone dynamic is intentional, so nobody mistakes a withheld
+specification for a broken setup.
+
+<<[[RULES.md]]>>=
+# Rules of the relay
+
+<!-- TODO: confirm turn length, budget and veto rules before the
+     event. -->
+
+1. One team member at the keyboard at a time, in turns of roughly
+   ten minutes.
+2. Only the first player is shown the full specification.  Everyone
+   after that knows only what their teammates left behind.
+3. Every connection starts a fresh Claude session: no chat history
+   survives between turns.  Only the files in this directory do.
+4. The team shares one token budget for the whole relay; spending it
+   wisely is part of the game.
+5. Anything not violating these rules is fair play.
+@
+
+The specification stays out of all of this.  It is Ric's
+\enquote{Academic Maze Royale} concept: the maze game from his Knowit
+dry run, reskinned so the loot is academic currency---citations,
+grants, PhD students.  We record its text here, since it lives neither
+in the seed content nor in the container; this is the sheet Ric prints
+and hands the first player:
+
+\begin{verbatim}
+# Tenure Track — The Academic Maze Royale
+
+Build a web-based, two-player maze game.  Players
+compete against the clock to gather academic loot:
+
+- Citations
+- Research grants
+- PhD students (who trail slowly behind the player)
+
+Players are hunted by Reviewer #2 and get a speed
+boost from random coffee cups.
+\end{verbatim}
+
+We keep it as terse as that slide on purpose: the relay degrades
+detail on its own, and pinning down exact scores, timings or a finish
+condition would only fight the game and the teams' own design
+choices.
+
+
+\section{Building and running}\label{sec:buildrun}
+
+The [[Makefile]] (committed alongside this document, since it cannot
+tangle itself) wraps the workflow:
+
+\begin{description}
+\item[ [[make]] ]  tangles all the files above and weaves this PDF;
+\item[ [[make prepare]] ]  seeds [[.data/]] on the host
+  (\cref{sec:prepare});
+\item[ [[make build]] ]  builds the Docker image;
+\item[ [[make run]] ]  starts the container, publishing port 2222 and
+  mounting [[.data/]]; the credential and [[TEAMS]] are taken from the
+  calling environment.
+\end{description}
+
+The team accounts default to [[groupa groupb groupc]], but their number
+and names are just the space-separated [[TEAMS]] variable, which both
+[[make prepare]] and [[make run]] honour:
+\begin{verbatim}
+export TEAMS="profs lecturers phds"
+make prepare
+make run
+\end{verbatim}
+(equivalently [[make prepare TEAMS="..."]] on each line).  The same
+list deliberately drives both targets because they touch different
+halves of the same accounts: [[make prepare]] creates the home
+directories on the host volume, while [[make run]] passes [[TEAMS]]
+into the container, whose entry point creates the matching Unix
+accounts against those homes (\cref{sec:prepare,sec:dockerfile}).  A
+mismatch would leave a team with a home but no account, or an account
+pointing at an unseeded home---so keeping it one variable is what keeps
+the two halves in step.
+
+Port 2222 rather than 22 because the facilitator's laptop most
+likely runs its own SSH daemon on 22; participants connect with
+[[ssh -p 2222 groupa@<ip-address>]].  No client software needs
+installing: macOS and Linux ship an SSH client, and so does
+Windows~10 and later (in PowerShell), so PuTTY or WSL are not
+required.
+
+On capacity: an idle Claude session holds roughly 200\,MB of memory,
+so even an unrealistic fifty \emph{simultaneous} sessions need about
+10\,GB---a modern laptop hosts the event comfortably, and the SSH
+daemon's connection-rate defaults are nowhere near a bottleneck at
+this scale.
+
+\subsection{A second container: the hacker space}
+
+The event runs in three stages---lobby (survey and discussion),
+blind build (the relay game), and a hacker space where people who
+have finished drip in and play freely, possibly on a larger model.
+The same image serves the hacker space as a \emph{second container},
+with its own name, port, account list, model and data volume.  A
+single [[make hackspace]] brings it up: it seeds [[.hackdata/]] and
+starts a container named [[hackspace]] on port 2223, defaulting to
+four [[hack]] accounts on the larger [[claude-opus-4-8]] model.
+Like [[make run]] it reads the credential from the environment, so
+pass the token the same way:
+
+\begin{verbatim}
+CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-... make hackspace
+\end{verbatim}
+
+Each default is its own variable---[[HACK_TEAMS]], [[HACK_PORT]],
+[[HACK_MODEL]]---so the room can be reshaped without editing the
+[[Makefile]]:
+
+\begin{verbatim}
+make hackspace HACK_TEAMS="alice bob carol" HACK_PORT=2224
+\end{verbatim}
+
+The separate volume is the important part: the game's
+[[.data/]] stays pristine for the evaluation, no matter what the
+hacker space gets up to.  The two containers do not interact at
+all---they only share the image---so the hacker space can be
+started, restarted or reconfigured mid-event without touching the
+game.  Since people arrive in drips and drabs, the account list is
+whatever suits the room: a handful of shared sandboxes, or
+one account per participant.
+
+\subsection{Credentials}
+
+The recommended path is the facilitator's Claude subscription: run
+[[claude setup-token]] once on the facilitator's own machine and
+pass the resulting token:
+
+\begin{verbatim}
+CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-... make run
+\end{verbatim}
+
+Do \emph{not} try the seemingly simpler route of copying the
+facilitator's logged-in credentials file,
+[[~/.claude/.credentials.json]], into the team homes: those tokens
+refresh-rotate, and three accounts refreshing the same token
+concurrently will fail mid-event.  The long-lived setup token exists
+precisely for this use case.
+
+Two caveats come with the subscription route.  First, all teams
+share one account's five-hour rolling rate limit; short turns on the
+small default model should fit, but the limit is a single point of
+throttling.  The instant fallback is to restart the container with
+an API key instead ([[ANTHROPIC_API_KEY=... make run]])---a
+budget-capped key doubles as the spending limit for the game.
+Second, sharing a consumer account is the facilitator's conscious,
+facilitator-operated choice to make.
+
+\subsection{What persists where}
+
+Everything worth keeping ends up under [[.data/]] on the host:
+
+\begin{description}
+\item[ [[.data/groups/<team>/]] ]  the team's project---their game,
+  their documentation, their [[CLAUDE.md]];
+\item[ [[.claude/projects/]] ]  inside each team directory: the
+  session transcripts ([[*.jsonl]]), one file per connection, which
+  the post-event evaluation reads;
+\item[ [[.data/ssh/]] ]  the SSH host keys, so rebuilding the image
+  never triggers \enquote{host identification changed} warnings.
+\end{description}
+
+The container itself holds no state: stop it, rebuild it, restart
+it---as long as [[.data/]] survives, so does the event.  Turning that
+directory into something a colleague can read and grade is the subject
+of \cref{sec:harvest}.
+
+\section{Harvesting the results}\label{sec:harvest}
+
+When the event is over, [[.data/groups/]] holds everything worth
+keeping---but in a form awkward to share.  Two obstacles stand in the
+way of simply tarring it up on the host.  First, ownership: the entry
+point handed each home to its team's in-container UID (2001, 2002,
+\dots, \cref{sec:entrypoint}), which maps to no user on the
+facilitator's laptop, and the transcripts are mode~600.  The host user
+can traverse the directories but cannot read the files---and neither
+can [[ccusage]] run as that user.  Second, the facilitator wants more
+than the raw bytes: a readable summary of what each team built and how
+to run it, and a tally of what each team's relay cost in tokens.
+
+Only the \emph{first} obstacle truly needs the container.  Reading
+mode-600 files owned by a foreign UID is a job for root, and the
+throwaway container---root, with [[ccusage]] baked in
+(\cref{sec:dockerfile})---is exactly the privileged reader we already
+have.  Everything else is ordinary work: formatting numbers, asking an
+LLM for a summary, rolling a tarball.  So we split the harvest in two.
+
+\begin{description}
+\item[Phase one, in the container]  As root, read the protected files:
+  capture each team's usage and stage a pruned, \emph{host-owned} copy
+  of the data.  Nothing that needs privilege is left for later.
+\item[Phase two, on the host]  With the staged copy now readable, write
+  the READMEs with the facilitator's \emph{own} [[claude]] and pack the
+  archives with the host's own [[tar]] and [[zip]].
+\end{description}
+
+Running [[claude]] on the host rather than in the container is the
+deliberate move.  The facilitator is already logged in---the same login
+that paid for the event---so the harvest needs no credential plumbed
+into a [[docker run]], and a host [[claude -p]] writes its transcript
+under the facilitator's [[~/.claude]], never a team's, so it cannot
+perturb the very usage we are reporting.  That usage is captured in
+phase one, before phase two runs at all, which makes the separation
+airtight: the figures are fixed on disk before the first summary is
+written.
+
+We cannot simply append the READMEs to a finished [[data.tar.gz]]---a
+gzip stream is not appendable---so phase two writes them into the
+staging tree first and packs once.  The one tree yields both
+[[tar.gz]] and [[zip]], so the two archives are structurally identical.
+
+The work is one script, [[team-report]], with three modes; the
+[[Makefile]] wires them together:
+
+\begin{description}
+\item[ [[make ccusage]] ]  phase-one reading only: prints a per-team
+  usage table.  No staging, no [[claude]];
+\item[ [[make data.tar.gz]] / [[make data.zip]] ]  runs [[stage]] in
+  the container, then [[pack]] on the host, producing both archives.
+\end{description}
+
+<<[[team-report]]>>=
+#!/bin/sh
+set -eu
+
+<<harvest configuration>>
+<<the usage formatter>>
+<<collecting each team's usage>>
+<<the usage report>>
+<<staging the team data>>
+<<packing the archive>>
+
+<<dispatch on the requested mode>>
+@
+
+\subsection{Configuration}
+
+A handful of constants.  [[groups]] is where the mounted volume exposes
+the team homes, used by the two phase-one modes; the host phase takes
+its staging directory as an argument instead, since on the host there
+is no fixed mount point.  The formatter (below) is written to a fresh
+temporary file the script can call in any mode.  The prune list names
+the caches that are pure noise for an evaluator---npm's download cache,
+Claude's own backups and shell snapshots, and the downloaded plugin
+marketplace (tens of megabytes of example images, dwarfing the
+transcripts)---so the archive carries the project and its transcripts,
+not megabytes of recreatable cache.
+
+<<harvest configuration>>=
+groups=/data/groups
+tmp="$(mktemp -d)"
+fmt="$tmp/usagefmt.py"
+prune=".npm .cache .local .claude/cache .claude/backups
+       .claude/shell-snapshots .claude/plugins"
+@
+
+\subsection{Computing the usage}
+
+The usage numbers come from [[ccusage]], which reads the [[.jsonl]]
+transcripts under a config directory named by [[CLAUDE_CONFIG_DIR]].
+Pointing it at a team's [[.claude]] in turn is what makes the figures
+\emph{per team} rather than for the machine as a whole; running inside
+the container as root is what makes the mode-600 transcripts readable
+at all.  [[collect_usage]] takes the directory to deposit the per-team
+JSON in, because its two callers want it in different places: the
+report mode in a throwaway temporary, the [[stage]] mode alongside the
+data it is about to hand to the host.
+
+<<collecting each team's usage>>=
+collect_usage() {
+  dest="$1"
+  mkdir -p "$dest"
+  for team in $TEAMS
+  do
+    CLAUDE_CONFIG_DIR="$groups/$team/.claude" \
+      ccusage session --json > "$dest/$team.json" 2>/dev/null \
+      || printf '{"session":[],"totals":{}}\n' > "$dest/$team.json"
+  done
+}
+@
+
+A team that never ran a session has no transcripts, and [[ccusage]]
+then exits non-zero; the fallback writes an empty-but-valid document so
+the parser downstream need not special-case it.
+
+The parsing lives in a small Python program rather than in the shell,
+because the same three views of the data---a terminal table, a
+per-team Markdown section, and a cross-team summary table---are far
+easier to express in Python, and writing it once keeps the token and
+cost arithmetic in a single place.  [[ccusage]] reports each session
+under a [[session]] list (keyed by a [[period]] UUID, with its
+[[modelsUsed]] and a [[metadata.lastActivity]] timestamp) and the
+team aggregate under [[totals]]; the helpers below read exactly those
+fields.
+
+<<the usage formatter>>=
+cat > "$fmt" <<'PYEOF'
+<<usage-formatter Python>>
+PYEOF
+@
+
+<<usage-formatter Python>>=
+import json
+import sys
+
+
+def load(path):
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {"session": [], "totals": {}}
+
+
+def totals(doc):
+    t = doc.get("totals") or {}
+    return int(t.get("totalTokens") or 0), float(t.get("totalCost") or 0)
+
+
+def fmt_int(n):
+    return f"{n:,}"
+
+
+def fmt_usd(c):
+    return f"${c:,.2f}"
+
+
+def session_rows(doc):
+    for s in doc.get("session") or []:
+        yield {
+            "id": (s.get("period") or "")[:8],
+            "when": ((s.get("metadata") or {}).get("lastActivity")
+                     or "")[:10],
+            "models": ", ".join(s.get("modelsUsed") or []),
+            "tokens": int(s.get("totalTokens") or 0),
+            "cost": float(s.get("totalCost") or 0),
+        }
+@
+
+I split the heredoc here only to keep the narrative readable; noweb
+concatenates the two [[usage-formatter Python]] chunks back into one
+program.  The first holds the shared helpers, the next three each add a
+command.  We dispatch on the first argument so the shell can ask for
+whichever view it needs.
+
+The terminal view, for [[make ccusage]], prints one block per team and
+a grand total---enough for the facilitator to compare teams at a
+glance.
+
+<<usage-formatter Python>>=
+def cmd_text(work, teams):
+    grand_tokens = grand_cost = 0
+    for team in teams:
+        doc = load(f"{work}/{team}.json")
+        tokens, cost = totals(doc)
+        grand_tokens += tokens
+        grand_cost += cost
+        print(f"== {team} ==")
+        rows = list(session_rows(doc))
+        if not rows:
+            print("  (no sessions)")
+        for r in rows:
+            print(f"  {r['id']}  {r['when']}  "
+                  f"{fmt_int(r['tokens']):>14} tok  "
+                  f"{fmt_usd(r['cost']):>10}  {r['models']}")
+        print(f"  total: {fmt_int(tokens)} tok, {fmt_usd(cost)}")
+        print()
+    print(f"grand total: {fmt_int(grand_tokens)} tok, "
+          f"{fmt_usd(grand_cost)}")
+@
+
+The per-team Markdown section is appended to each team's README.  We
+build it from the captured numbers rather than asking [[claude]] to
+transcribe them, so the figures in the archive are exact and not at the
+mercy of a paraphrase.
+
+<<usage-formatter Python>>=
+def cmd_team_usage(path):
+    doc = load(path)
+    tokens, cost = totals(doc)
+    print()
+    print("## Token usage")
+    print()
+    print(f"- **Total tokens:** {fmt_int(tokens)}")
+    print(f"- **Estimated cost:** {fmt_usd(cost)}")
+    rows = list(session_rows(doc))
+    if rows:
+        print()
+        print("| Session | Last activity | Models | Tokens | Cost |")
+        print("|---|---|---|--:|--:|")
+        for r in rows:
+            print(f"| {r['id']} | {r['when']} | {r['models']} | "
+                  f"{fmt_int(r['tokens'])} | {fmt_usd(r['cost'])} |")
+@
+
+The top-level summary table links to each team's own README and
+borrows that README's first prose line as a one-line description of
+what they built.  Reusing the line the model already wrote avoids a
+second, separate [[claude]] call just for a sentence.
+
+<<usage-formatter Python>>=
+def first_prose_line(stage, team):
+    try:
+        with open(f"{stage}/{team}/README.md") as f:
+            for line in f:
+                line = line.strip()
+                if line and line[0] not in "#|":
+                    return line
+    except FileNotFoundError:
+        pass
+    return "—"
+
+
+def cmd_summary(work, stage, teams):
+    print("# TCS Summer Event — team contributions")
+    print()
+    print("Each team relay-built a small project in shared Claude "
+          "sessions.  This archive carries every team's work and the "
+          "transcripts that produced it; follow a team's link for what "
+          "they built, how to run it, and their token usage.")
+    print()
+    print("| Team | What they built | Tokens | Cost |")
+    print("|---|---|--:|--:|")
+    grand_tokens = grand_cost = 0
+    for team in teams:
+        tokens, cost = totals(load(f"{work}/{team}.json"))
+        grand_tokens += tokens
+        grand_cost += cost
+        desc = first_prose_line(stage, team)
+        print(f"| [{team}]({team}/README.html) | {desc} | "
+              f"{fmt_int(tokens)} | {fmt_usd(cost)} |")
+    print(f"| **Grand total** | | **{fmt_int(grand_tokens)}** | "
+          f"**{fmt_usd(grand_cost)}** |")
+@
+
+<<usage-formatter Python>>=
+command = sys.argv[1]
+if command == "text":
+    cmd_text(sys.argv[2], sys.argv[3:])
+elif command == "team-usage":
+    cmd_team_usage(sys.argv[2])
+elif command == "summary":
+    cmd_summary(sys.argv[2], sys.argv[3], sys.argv[4:])
+@
+
+\subsection{The usage report}
+
+In [[ccusage]] mode the script does nothing but collect and print: no
+staging, no [[claude]].  That is the whole point of having a mode---the
+facilitator can check the budget at any time, even mid-event from a
+second terminal, without touching the archive.  It collects into a
+throwaway temporary, since these numbers are wanted on the terminal,
+not on disk.
+
+<<the usage report>>=
+print_report() {
+  collect_usage "$tmp"
+  python3 "$fmt" text "$tmp" $TEAMS
+}
+@
+
+\subsection{Phase one: staging, in the container}
+
+[[stage]] is the only privileged step.  It captures the usage beside
+the data (so phase two need not---and cannot---recompute it), copies
+each team's home wholesale and deletes the prune list, then hands the
+whole tree to the host with a single [[chown -R]].  Deleting the prune
+list rather than naming what to keep errs on the side of keeping a
+team's actual work.  Usage lands in [[$out/usage]] and the data in
+[[$out/data]], kept apart so the usage sidecar never ends up inside the
+archive.  [[HOST_UID]] and [[HOST_GID]] are passed in because the
+container cannot otherwise know who ran [[make]].
+
+<<staging the team data>>=
+stage_data() {
+  out="$1"
+  collect_usage "$out/usage"
+  mkdir -p "$out/data"
+  for team in $TEAMS
+  do
+    cp -a "$groups/$team" "$out/data/$team"
+    for cache in $prune
+    do
+      rm -rf "$out/data/$team/$cache"
+    done
+  done
+  chown -R "$HOST_UID:$HOST_GID" "$out"
+}
+@
+
+\subsection{Phase two: packing, on the host}
+
+[[pack]] runs on the host, on the now-readable staging tree, and uses
+the facilitator's own tools throughout.  It writes each team's README,
+assembles the top-level one, renders the lot to HTML, and rolls both
+archives into the directory [[make]] was invoked from.  Because
+everything it touches is already host-owned, it needs no privilege and
+no [[chown]].
+
+The READMEs are written as Markdown but shipped as HTML: an evaluator
+opening the archive double-clicks [[README.html]] in a browser and the
+team links in the summary table are live, clicking straight through to
+each team's own [[README.html]].  The conversion is deliberately the
+\emph{last} step before packing---the summary table borrows each team's
+first prose line from its Markdown (\cref{sec:harvest}), so the
+[[.md]] files must still exist when the summary is assembled.  Only
+once the summary is on disk do we render everything and drop the
+Markdown.
+
+<<packing the archive>>=
+pack_archive() {
+  out="$1"
+  start="$(pwd)"
+  data="$out/data"
+  usage="$out/usage"
+  <<write each team's README>>
+  python3 "$fmt" summary "$usage" "$data" $TEAMS > "$data/README.md"
+  <<render the READMEs to HTML>>
+  <<pack both archives afresh>>
+}
+@
+
+We delete any earlier archives before packing.  [[tar -czf]] truncates
+its output, but [[zip -r]] \emph{updates} an existing archive in
+place---it adds and refreshes entries but never drops ones whose files
+have since disappeared.  Without the [[rm]], a second run (or a stale
+archive left in the working directory) would keep yesterday's now-gone
+[[README.md]] entries alongside today's [[README.html]], so the two
+archives would disagree about their own contents.  Removing first makes
+the pack idempotent and the [[.tar.gz]] and [[.zip]] structurally
+identical, as \cref{sec:harvest} promised.
+
+<<pack both archives afresh>>=
+rm -f "$start/data.tar.gz" "$start/data.zip"
+( cd "$data" && tar -czf "$start/data.tar.gz" . )
+( cd "$data" && zip -qr "$start/data.zip" . )
+@
+
+Each team's README is the one place [[claude]] is used, and we
+assemble it from three deterministic parts: a heading we print, the
+prose [[claude]] writes, and the usage section appended from the JSON
+captured in phase one (not regenerated, so the figures in the archive
+are exactly those phase one settled).  Keeping the heading and the
+table in the shell---rather than asking [[claude]] for them---means the
+model is responsible only for the description and run instructions, in
+British English to match the rest of the event's prose.
+
+The subtle part is \emph{how} we take [[claude]]'s prose.  Capturing
+its stdout, as an earlier version did, bakes far more than the document
+into the archive: this harvest runs the facilitator's own
+[[claude]], whose [[~/.claude]] carries a time-tracking hook that
+announces itself (\enquote{Started tracking\dots}) and an explanatory
+output style that appends an \enquote{Insight} block to every reply---all
+on stdout, ahead of and after the actual answer.  So instead we have
+[[claude]] \emph{write} its prose to a file with the Write tool and
+read that file back, discarding stdout entirely
+(\cref{sec:claude-body}).  This also repairs the summary table:
+[[first_prose_line]] (\cref{sec:harvest}) now meets the team's real
+first sentence rather than the hook's status line.
+
+<<write each team's README>>=
+for team in $TEAMS
+do
+  files="$(<<the team's contribution files>>)"
+  readme="$data/$team/README.md"
+  printf '# %s\n\n' "$team" > "$readme"
+  if [ -n "$files" ]
+  then
+    <<summarise the team's work with Claude>>
+  else
+    printf '_No project files were produced._\n' >> "$readme"
+  fi
+  python3 "$fmt" team-usage "$usage/$team.json" >> "$readme"
+done
+@
+
+The contribution files are the team-authored ones at the top of the
+home: we skip the seeds [[CLAUDE.md]] and [[RULES.md]] (identical for
+every team, so no evidence of what \emph{this} team did) and every
+dotfile (configuration and the [[.claude]] tree, not project work).
+
+<<the team's contribution files>>=
+find "$data/$team" -maxdepth 1 -type f \
+  ! -name CLAUDE.md ! -name RULES.md ! -name '.*' | sort
+@
+
+\subsection{Taking Claude's prose through a file}
+\label{sec:claude-body}
+
+The prompt inlines each file under a header naming it, then asks for a
+first line of plain description (which the summary table later reuses,
+\cref{sec:harvest}) followed by run instructions.  We also ask it to
+render any file the reader should open as a Markdown link to that file
+by its bare name: the README is written beside the team's own files,
+so a relative link such as [[[game.html](game.html)]] resolves to the
+sibling once \cref{sec:render-html} turns it into an anchor---the
+evaluator launches the game from the README with one click rather than
+hunting for the file in the tree.  The one change from
+a plain [[claude -p]] is the destination: we instruct it to put the
+documentation in a file named [[body.md]] with the Write tool, and we
+run it inside a fresh, empty scratch directory whose only purpose is to
+receive that file.  Confining the single writable tool to a throwaway
+directory keeps the safety property the inline-files design already
+had---[[claude]] is given no way to read the team's data and now no way
+to modify it either, so it still cannot wander.  We read [[body.md]]
+back and append it; if it is missing or empty (the model failed, or the
+Write was refused), a placeholder keeps the README well-formed rather
+than aborting the whole archive.
+
+<<summarise the team's work with Claude>>=
+scratch="$(mktemp -d)"
+{
+  printf '%s\n' \
+    "You are documenting a team's contribution for an" \
+    "evaluation archive.  Write in British English." \
+    "Use the Write tool to create a file named body.md in the" \
+    "current directory containing exactly the documentation and" \
+    "nothing else: begin with one plain sentence, on its own" \
+    "line and with no heading, saying what the team built; then" \
+    "a section headed \"### How to run it\" with exact," \
+    "step-by-step instructions to run or open the project." \
+    "Whenever you name a file the reader should open or run," \
+    "write it as a Markdown link to that file by its bare" \
+    "name, for example [game.html](game.html), so they can" \
+    "launch it with one click; the documentation sits in the" \
+    "same directory as these files." \
+    "Describe only what the files below show; invent nothing." \
+    "The files:"
+  for file in $files
+  do
+    printf '\n--- %s ---\n' "$(basename "$file")"
+    cat "$file"
+  done
+} | ( cd "$scratch" && claude -p --allowedTools Write \
+        --permission-mode acceptEdits >/dev/null 2>&1 )
+if [ -s "$scratch/body.md" ]
+then
+  cat "$scratch/body.md" >> "$readme"
+else
+  printf '_Summary unavailable._\n' >> "$readme"
+fi
+rm -rf "$scratch"
+@
+
+\subsection{Rendering the READMEs to HTML}
+\label{sec:render-html}
+
+We render with [[pandoc]] in \emph{standalone} mode ([[-s]]): a bare
+HTML fragment has no [[<head>]] and many browsers then mis-guess the
+encoding, whereas a standalone document opens cleanly on a
+double-click---the whole point of shipping HTML rather than Markdown.
+[[pandoc]] is a host tool, in keeping with phase two using the
+facilitator's own tools throughout.
+
+Standalone mode wants a document title for the [[<title>]] element; we
+lift it from the file's first [[#]] heading, which both generators
+above already emit as line one (the team name, or the event title for
+the summary).  Reusing that heading means the browser tab is labelled
+without inventing a second source of truth.  We delete each Markdown
+file once rendered so the archive carries only the browser-openable
+form, as requested.
+
+<<render the READMEs to HTML>>=
+for md in "$data/README.md" "$data"/*/README.md
+do
+  title="$(head -n1 "$md" | sed 's/^#* *//')"
+  pandoc -s --metadata title="$title" -o "${md%.md}.html" "$md"
+  rm "$md"
+done
+@
+
+\subsection{Dispatch}
+
+The three modes map to the two phases: [[ccusage]] and [[stage]] are
+the in-container readers, [[pack]] is the host finisher.  Each takes
+its own output location, so nothing is assumed about where the script
+runs.
+
+<<dispatch on the requested mode>>=
+case "${1:-ccusage}" in
+  ccusage) print_report ;;
+  stage)   stage_data "$2" ;;
+  pack)    pack_archive "$2" ;;
+  *)
+    echo "usage: team-report {ccusage|stage <dir>|pack <dir>}" >&2
+    exit 1
+    ;;
+esac
+@
+
+\end{document}
