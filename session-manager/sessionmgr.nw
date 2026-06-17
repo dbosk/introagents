@@ -1383,32 +1383,61 @@ pack_archive() {
   <<write each team's README>>
   python3 "$fmt" summary "$usage" "$data" $TEAMS > "$data/README.md"
   <<render the READMEs to HTML>>
-  ( cd "$data" && tar -czf "$start/data.tar.gz" . )
-  ( cd "$data" && zip -qr "$start/data.zip" . )
+  <<pack both archives afresh>>
 }
 @
 
-Each team's README is the one place [[claude]] is used.  We feed it the
-team's own files inline---so it needs no tools and cannot wander---and
-ask for a description and concrete run instructions, in British English
-to match the rest of the event's prose.  The usage section is appended
-from the JSON captured in phase one, not regenerated, so the figures in
-the archive are exactly those phase one settled.
+We delete any earlier archives before packing.  [[tar -czf]] truncates
+its output, but [[zip -r]] \emph{updates} an existing archive in
+place---it adds and refreshes entries but never drops ones whose files
+have since disappeared.  Without the [[rm]], a second run (or a stale
+archive left in the working directory) would keep yesterday's now-gone
+[[README.md]] entries alongside today's [[README.html]], so the two
+archives would disagree about their own contents.  Removing first makes
+the pack idempotent and the [[.tar.gz]] and [[.zip]] structurally
+identical, as \cref{sec:harvest} promised.
+
+<<pack both archives afresh>>=
+rm -f "$start/data.tar.gz" "$start/data.zip"
+( cd "$data" && tar -czf "$start/data.tar.gz" . )
+( cd "$data" && zip -qr "$start/data.zip" . )
+@
+
+Each team's README is the one place [[claude]] is used, and we
+assemble it from three deterministic parts: a heading we print, the
+prose [[claude]] writes, and the usage section appended from the JSON
+captured in phase one (not regenerated, so the figures in the archive
+are exactly those phase one settled).  Keeping the heading and the
+table in the shell---rather than asking [[claude]] for them---means the
+model is responsible only for the description and run instructions, in
+British English to match the rest of the event's prose.
+
+The subtle part is \emph{how} we take [[claude]]'s prose.  Capturing
+its stdout, as an earlier version did, bakes far more than the document
+into the archive: this harvest runs the facilitator's own
+[[claude]], whose [[~/.claude]] carries a time-tracking hook that
+announces itself (\enquote{Started tracking\dots}) and an explanatory
+output style that appends an \enquote{Insight} block to every reply---all
+on stdout, ahead of and after the actual answer.  So instead we have
+[[claude]] \emph{write} its prose to a file with the Write tool and
+read that file back, discarding stdout entirely
+(\cref{sec:claude-body}).  This also repairs the summary table:
+[[first_prose_line]] (\cref{sec:harvest}) now meets the team's real
+first sentence rather than the hook's status line.
 
 <<write each team's README>>=
 for team in $TEAMS
 do
   files="$(<<the team's contribution files>>)"
-  {
-    printf '# %s\n\n' "$team"
-    if [ -n "$files" ]
-    then
-      <<summarise the team's work with Claude>>
-    else
-      printf '_No project files were produced._\n'
-    fi
-    python3 "$fmt" team-usage "$usage/$team.json"
-  } > "$data/$team/README.md"
+  readme="$data/$team/README.md"
+  printf '# %s\n\n' "$team" > "$readme"
+  if [ -n "$files" ]
+  then
+    <<summarise the team's work with Claude>>
+  else
+    printf '_No project files were produced._\n' >> "$readme"
+  fi
+  python3 "$fmt" team-usage "$usage/$team.json" >> "$readme"
 done
 @
 
@@ -1422,20 +1451,34 @@ find "$data/$team" -maxdepth 1 -type f \
   ! -name CLAUDE.md ! -name RULES.md ! -name '.*' | sort
 @
 
+\subsection{Taking Claude's prose through a file}
+\label{sec:claude-body}
+
 The prompt inlines each file under a header naming it, then asks for a
 first line of plain description (which the summary table later reuses,
-\cref{sec:harvest}) followed by run instructions.  If [[claude]] fails
-for any reason, a placeholder keeps the README well-formed rather than
-aborting the whole archive.
+\cref{sec:harvest}) followed by run instructions.  The one change from
+a plain [[claude -p]] is the destination: we instruct it to put the
+documentation in a file named [[body.md]] with the Write tool, and we
+run it inside a fresh, empty scratch directory whose only purpose is to
+receive that file.  Confining the single writable tool to a throwaway
+directory keeps the safety property the inline-files design already
+had---[[claude]] is given no way to read the team's data and now no way
+to modify it either, so it still cannot wander.  We read [[body.md]]
+back and append it; if it is missing or empty (the model failed, or the
+Write was refused), a placeholder keeps the README well-formed rather
+than aborting the whole archive.
 
 <<summarise the team's work with Claude>>=
+scratch="$(mktemp -d)"
 {
   printf '%s\n' \
     "You are documenting a team's contribution for an" \
     "evaluation archive.  Write in British English." \
-    "Begin with one plain sentence, on its own line and with" \
-    "no heading, saying what the team built.  Then add a" \
-    "section headed \"### How to run it\" with exact," \
+    "Use the Write tool to create a file named body.md in the" \
+    "current directory containing exactly the documentation and" \
+    "nothing else: begin with one plain sentence, on its own" \
+    "line and with no heading, saying what the team built; then" \
+    "a section headed \"### How to run it\" with exact," \
     "step-by-step instructions to run or open the project." \
     "Describe only what the files below show; invent nothing." \
     "The files:"
@@ -1444,7 +1487,15 @@ aborting the whole archive.
     printf '\n--- %s ---\n' "$(basename "$file")"
     cat "$file"
   done
-} | claude -p || printf '_Summary unavailable._\n'
+} | ( cd "$scratch" && claude -p --allowedTools Write \
+        --permission-mode acceptEdits >/dev/null 2>&1 )
+if [ -s "$scratch/body.md" ]
+then
+  cat "$scratch/body.md" >> "$readme"
+else
+  printf '_Summary unavailable._\n' >> "$readme"
+fi
+rm -rf "$scratch"
 @
 
 \subsection{Rendering the READMEs to HTML}
