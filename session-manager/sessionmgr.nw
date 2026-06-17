@@ -3,9 +3,15 @@
 
 \title{%
   The session manager:\\
-  an SSH-into-Claude host for the TCS Summer Event%
+  an SSH-into-Claude host
 }
-\author{Daniel Bosk}
+\author{Daniel Bosk and Dan-Claude\thanks{%
+  Dan-Claude is the first author's AI agent provided with a diverse skill set.
+  In this work Dan-Claude was first powered by Claude Fable 5 to implement the 
+  ideas of the first author.
+  After the US government forced Anthropic to retract Fable 5, Claude Opus 4.8 
+  was used to power Dan-Claude for adding more features.
+}}
 
 \begin{document}
 \maketitle
@@ -22,8 +28,16 @@
   across connections and teammates.  Project files and Claude's
   session transcripts persist on the host for post-event evaluation.
 \end{abstract}
+\clearpage
+
+\null\vfill
+\begin{quote}
+\input{LICENSE}
+\end{quote}
+\clearpage
 
 \tableofcontents
+\clearpage
 
 \section{Introduction}\label{sec:intro}
 
