@@ -1294,7 +1294,7 @@ def cmd_summary(work, stage, teams):
         grand_tokens += tokens
         grand_cost += cost
         desc = first_prose_line(stage, team)
-        print(f"| [{team}]({team}/README.md) | {desc} | "
+        print(f"| [{team}]({team}/README.html) | {desc} | "
               f"{fmt_int(tokens)} | {fmt_usd(cost)} |")
     print(f"| **Grand total** | | **{fmt_int(grand_tokens)}** | "
           f"**{fmt_usd(grand_cost)}** |")
@@ -1359,9 +1359,20 @@ stage_data() {
 
 [[pack]] runs on the host, on the now-readable staging tree, and uses
 the facilitator's own tools throughout.  It writes each team's README,
-assembles the top-level one, and rolls both archives into the directory
-[[make]] was invoked from.  Because everything it touches is already
-host-owned, it needs no privilege and no [[chown]].
+assembles the top-level one, renders the lot to HTML, and rolls both
+archives into the directory [[make]] was invoked from.  Because
+everything it touches is already host-owned, it needs no privilege and
+no [[chown]].
+
+The READMEs are written as Markdown but shipped as HTML: an evaluator
+opening the archive double-clicks [[README.html]] in a browser and the
+team links in the summary table are live, clicking straight through to
+each team's own [[README.html]].  The conversion is deliberately the
+\emph{last} step before packing---the summary table borrows each team's
+first prose line from its Markdown (\cref{sec:harvest}), so the
+[[.md]] files must still exist when the summary is assembled.  Only
+once the summary is on disk do we render everything and drop the
+Markdown.
 
 <<packing the archive>>=
 pack_archive() {
@@ -1371,6 +1382,7 @@ pack_archive() {
   usage="$out/usage"
   <<write each team's README>>
   python3 "$fmt" summary "$usage" "$data" $TEAMS > "$data/README.md"
+  <<render the READMEs to HTML>>
   ( cd "$data" && tar -czf "$start/data.tar.gz" . )
   ( cd "$data" && zip -qr "$start/data.zip" . )
 }
@@ -1433,6 +1445,32 @@ aborting the whole archive.
     cat "$file"
   done
 } | claude -p || printf '_Summary unavailable._\n'
+@
+
+\subsection{Rendering the READMEs to HTML}
+
+We render with [[pandoc]] in \emph{standalone} mode ([[-s]]): a bare
+HTML fragment has no [[<head>]] and many browsers then mis-guess the
+encoding, whereas a standalone document opens cleanly on a
+double-click---the whole point of shipping HTML rather than Markdown.
+[[pandoc]] is a host tool, in keeping with phase two using the
+facilitator's own tools throughout.
+
+Standalone mode wants a document title for the [[<title>]] element; we
+lift it from the file's first [[#]] heading, which both generators
+above already emit as line one (the team name, or the event title for
+the summary).  Reusing that heading means the browser tab is labelled
+without inventing a second source of truth.  We delete each Markdown
+file once rendered so the archive carries only the browser-openable
+form, as requested.
+
+<<render the READMEs to HTML>>=
+for md in "$data/README.md" "$data"/*/README.md
+do
+  title="$(head -n1 "$md" | sed 's/^#* *//')"
+  pandoc -s --metadata title="$title" -o "${md%.md}.html" "$md"
+  rm "$md"
+done
 @
 
 \subsection{Dispatch}
