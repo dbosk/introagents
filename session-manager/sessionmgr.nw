@@ -196,6 +196,7 @@ FROM node:22-bookworm-slim
 <<install the runtime files>>
 
 EXPOSE 22
+EXPOSE 8000-8099
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 @
 
@@ -271,7 +272,7 @@ altogether.
 RUN sed -i '/pam_motd/d' /etc/pam.d/sshd
 @
 
-Three knobs are environment variables with sensible defaults, all
+Four knobs are environment variables with sensible defaults, all
 overridable at [[docker run]] time.  [[TEAMS]] names the accounts to
 create.  [[ANTHROPIC_MODEL]] starts everyone on [[claude-sonnet-4-6]],
 capable enough for the game while leaving Opus as a conscious upgrade;
@@ -281,12 +282,17 @@ token budget is part of the game.  [[CLAUDE_FLAGS]] defaults to
 automatically so prompts do not eat the participants' ten-minute
 turns.  We deliberately avoid [[--dangerously-skip-permissions]]: the
 sessions run with real credentials in a shared container, so an
-unattended, no-questions bypass is not a trade we want.
+unattended, no-questions bypass is not a trade we want.  [[WEB_PORTS]]
+is the range a session may serve test builds on (\cref{sec:webtest}); a
+default lives here so the variable is always defined, but the value
+that matters is the matching range the [[Makefile]] actually publishes,
+which is why the hacker space can override it to a non-clashing range.
 
 <<event environment defaults>>=
 ENV TEAMS="groupa groupb groupc"
 ENV ANTHROPIC_MODEL="claude-sonnet-4-6"
 ENV CLAUDE_FLAGS="--permission-mode auto"
+ENV WEB_PORTS="8000-8099"
 @
 
 Finally the runtime files: the entry point, the launcher and the
@@ -343,7 +349,7 @@ then
 fi
 @
 
-\subsection{The event environment file}
+\subsection{The event environment file}\label{sec:eventenv}
 
 This is the one genuinely non-obvious mechanic in the container.
 Variables passed with [[docker run -e]] reach the entry point, but
@@ -351,12 +357,18 @@ Variables passed with [[docker run -e]] reach the entry point, but
 environment built from PAM and the login shell, not from PID~1's.  So
 the entry point serialises the runtime configuration to a file, and
 the launcher (\cref{sec:launcher}) sources that file before starting
-Claude.
+Claude.  Alongside the credential and model, the list carries
+[[HOST_IP]]---the address participants reached the laptop on---so that a
+session can hand a player the complete URL of a test server it spins up
+for them (\cref{sec:webtest}).  It is the one value Claude cannot work
+out for itself: [[sshd]] inside the container sees the connection
+arriving on Docker's internal network, not the laptop's address on the
+room's LAN.
 
 <<write the event environment file>>=
 : > /etc/event.env
 for var in CLAUDE_CODE_OAUTH_TOKEN ANTHROPIC_API_KEY \
-           ANTHROPIC_MODEL CLAUDE_FLAGS
+           ANTHROPIC_MODEL CLAUDE_FLAGS HOST_IP WEB_PORTS
 do
   eval "value=\${$var:-}"
   if [ -n "$value" ]
@@ -859,7 +871,13 @@ Claude Code loads into every session automatically, does just enough
 to be a good host: it says a relay game is afoot and points at
 [[RULES.md]], so a player can ask Claude how the game works and get a
 straight answer without having to know the file is there.  It stops
-short of the task itself---no spec, no hints.
+short of the task itself---no spec, no hints about what to build.  The
+one capability it does spell out is how to preview the work in a
+browser (\cref{sec:webtest}): the deliverable is a web app, so a player
+who wants to \emph{see} what the team has built so far should not have
+to reinvent the serving recipe under a ten-minute clock.  This reveals
+the medium, not the task---which problem to solve still arrives only on
+the first player's printed sheet.
 
 <<[[CLAUDE.md]]>>=
 # Team workspace
@@ -871,6 +889,17 @@ session every turn.
 How the relay works — turns, what carries over between sessions, what
 counts as fair play — is written in RULES.md.  Read it when a player
 asks how the game works or what is allowed.
+
+When a player wants to see the project running in a browser, you can
+serve it over HTTP.  The container publishes the port range in the
+$WEB_PORTS environment variable (for example 8000-8099) to the outside;
+pick a free port in that range and start a simple static server bound
+to 0.0.0.0 on it from the project directory, for example
+`python3 -m http.server <port> --bind 0.0.0.0`.  Then tell the player
+to open `http://$HOST_IP:<port>/` — the same address they SSH'd to,
+with that port.  If the port is already taken, another team is probably
+using it, so pick another free one in the range.  If $HOST_IP is empty,
+tell the player to reuse the IP address from their ssh command.
 @
 
 [[RULES.md]] carries the rules themselves and says outright that the
@@ -932,8 +961,9 @@ tangle itself) wraps the workflow:
   (\cref{sec:prepare});
 \item[ [[make build]] ]  builds the Docker image;
 \item[ [[make run]] ]  starts the container, publishing port 2222 and
-  mounting [[.data/]]; the credential and [[TEAMS]] are taken from the
-  calling environment.
+  the [[8000]]--[[8099]] range (\cref{sec:webtest}) and mounting
+  [[.data/]]; the credential, [[TEAMS]] and [[HOST_IP]] are taken from
+  the calling environment.
 \end{description}
 
 The team accounts default to [[groupa groupb groupc]], but their number
@@ -967,7 +997,43 @@ so even an unrealistic fifty \emph{simultaneous} sessions need about
 daemon's connection-rate defaults are nowhere near a bottleneck at
 this scale.
 
-\subsection{A second container: the hacker space}
+\subsection{Seeing the game in a browser}\label{sec:webtest}
+
+The deliverable is a web app, but participants reach the machine over a
+text-only SSH session, so there is no on-screen browser to open the
+work in.  They view it from their own laptop instead: when a player
+wants to try the game, Claude serves it over HTTP and the player points
+a browser at the laptop running the container.  For that to reach
+anything, two pieces have to line up.
+
+First, the port has to cross the container boundary.  [[make run]]
+publishes the whole [[8000]]--[[8099]] range, so a server Claude starts
+on any free port in it is reachable from the room.  A range rather than
+a single port because all teams share one container: each running game
+needs its own port, and Claude simply picks one that is free.  The
+published range and the range the seed offers Claude have to be the
+same set of numbers, so rather than hard-code [[8000]]--[[8099]] in two
+places we pass it in once as [[WEB_PORTS]] (\cref{sec:eventenv}); the
+seed (\cref{sec:seeds}) reads the range from there, tells Claude to
+stay inside it, and to bind [[0.0.0.0]] rather than [[localhost]], since
+a server bound only to the loopback interface would be invisible from
+outside the container.  Threading the range through a variable is what
+lets the hacker space (\cref{sec:hackspace}) run a \emph{second}
+container on the same laptop: it publishes a different range and passes
+that same range as its [[WEB_PORTS]], so the two never fight over a host
+port.  Note that this is ordinary Docker port publishing, unrelated to
+[[AllowTcpForwarding no]] (\cref{sec:sshd})---that switch disables SSH
+\emph{tunnelling}, a different mechanism that we still want off.
+
+Second, the player needs the right address.  Claude knows the port it
+chose but cannot discover the laptop's LAN address from inside the
+container, so we feed that address in as [[HOST_IP]]
+(\cref{sec:eventenv}) and let the session assemble the full
+[[http://$HOST_IP:<port>/]] URL.  [[make run]] fills [[HOST_IP]] in
+automatically from the host's primary address, overridable when that
+guess picks the wrong interface.
+
+\subsection{A second container: the hacker space}\label{sec:hackspace}
 
 The event runs in three stages---lobby (survey and discussion),
 blind build (the relay game), and a hacker space where people who
@@ -985,8 +1051,11 @@ CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-... make hackspace
 \end{verbatim}
 
 Each default is its own variable---[[HACK_TEAMS]], [[HACK_PORT]],
-[[HACK_MODEL]]---so the room can be reshaped without editing the
-[[Makefile]]:
+[[HACK_MODEL]], [[HACK_WEB_PORTS]]---so the room can be reshaped without
+editing the [[Makefile]].  [[HACK_WEB_PORTS]] defaults to
+[[8100]]--[[8199]], a different range from the game's, so the hacker
+space can publish its own test-server ports without clashing with a
+game container still running on the same laptop (\cref{sec:webtest}):
 
 \begin{verbatim}
 make hackspace HACK_TEAMS="alice bob carol" HACK_PORT=2224

@@ -19,6 +19,18 @@ CFGSEEDS=	template/.claude/settings.json \
 # Dockerfile's ENV TEAMS default (see sessionmgr.nw, sec:dockerfile).
 TEAMS ?=	groupa groupb groupc
 
+# The laptop's LAN address, passed into the container as HOST_IP so a
+# session can hand players the full URL of a test server it serves on
+# the published web-test range (see sessionmgr.nw, sec:webtest).  ?=
+# with an auto-detected default (first address from `hostname -I`);
+# override HOST_IP=... when that guess picks the wrong interface.
+HOST_IP ?=	$(shell hostname -I 2>/dev/null | awk '{print $$1}')
+
+# The host port range published for in-session test servers, passed in
+# as WEB_PORTS so the -p mapping and the value the seed offers Claude
+# stay one number (see sessionmgr.nw, sec:webtest).
+WEB_PORTS ?=	8000-8099
+
 .PHONY: all
 all: ${SCRIPTS} ${CONFIGS} ${SEEDS} ${CFGSEEDS} sessionmgr.pdf
 
@@ -68,8 +80,10 @@ require-credential:
 
 run: require-credential
 	docker run --rm -d --name introllm-session -p 2222:22 \
+	  -p ${WEB_PORTS}:${WEB_PORTS} \
 	  -e CLAUDE_CODE_OAUTH_TOKEN -e ANTHROPIC_API_KEY \
-	  -e ANTHROPIC_MODEL -e TEAMS="${TEAMS}" \
+	  -e ANTHROPIC_MODEL -e TEAMS="${TEAMS}" -e HOST_IP="${HOST_IP}" \
+	  -e WEB_PORTS="${WEB_PORTS}" \
 	  -v "${CURDIR}/.data:/data" introllm-session
 
 # The post-game hacker space: a second, independent container so the
@@ -80,12 +94,18 @@ run: require-credential
 HACK_TEAMS ?=	hack1 hack2 hack3 hack4
 HACK_PORT ?=	2223
 HACK_MODEL ?=	claude-opus-4-8
+# A distinct web-test range from the game's WEB_PORTS, so both
+# containers can publish on the same laptop without a host-port clash;
+# passed in as the hacker space's own WEB_PORTS.
+HACK_WEB_PORTS ?=	8100-8199
 
 hackspace: require-credential ${SEEDS} prepare.sh
 	./prepare.sh .hackdata ${HACK_TEAMS}
 	docker run --rm -d --name hackspace -p ${HACK_PORT}:22 \
+	  -p ${HACK_WEB_PORTS}:${HACK_WEB_PORTS} \
 	  -e CLAUDE_CODE_OAUTH_TOKEN -e ANTHROPIC_API_KEY \
 	  -e ANTHROPIC_MODEL="${HACK_MODEL}" -e TEAMS="${HACK_TEAMS}" \
+	  -e HOST_IP="${HOST_IP}" -e WEB_PORTS="${HACK_WEB_PORTS}" \
 	  -v "${CURDIR}/.hackdata:/data" introllm-session
 
 # Post-event harvest (see sessionmgr.nw, sec:harvest).
