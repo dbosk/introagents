@@ -1,0 +1,23 @@
+# Everything here tangles or weaves from chatbot.nw except chatbot.nw,
+# Makefile, standalone.tex and README.md.
+chatbot.mk
+prompt_vulnerable.py
+prompt_hardened.py
+refund_before.py
+refund_after.py
+chatbot.py
+shop.py
+record.py
+burst.py
+eli5.py
+test_chatbot.py
+test_sandbox.py
+run.sh
+sandbox.sh
+chatbot.tex
+chatbot.pdf
+ltxobj/
+_minted*/
+__pycache__/
+.pytest_cache/
+.venv/

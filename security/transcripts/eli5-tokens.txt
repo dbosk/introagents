@@ -1,0 +1,17 @@
+One programming question, asked twice
+Model: anthropic/claude-sonnet-5-5
+Recorded 2026-11-27 with eli5.py, default options
+
+Expert prompt:
+    Python: idiomatic way to count word frequencies in a list
+    of strings? Code only, no explanation.
+Input tokens: 40
+Output tokens: 236
+
+Beginner prompt:
+    I am completely new to programming. How do I count how
+    many times each word appears in a list of words in Python?
+    Please explain it like I am five, step by step.
+Input tokens: 51
+Output tokens: 1092
+

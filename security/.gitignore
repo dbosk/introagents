@@ -42,3 +42,5 @@ literature-search/*-check/
 literature-search/*-runs/
 literature-search/*-progress.md
 literature-search/*.log
+# earlier recordings, superseded by the files beside them
+transcripts/recording-*/
