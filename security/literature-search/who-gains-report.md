@@ -440,3 +440,25 @@ and one has an arXiv copy to read (SSRN 5521379 = arXiv 2510.10165).
 - **Some cited studies are preprints or working papers.** Ni, Becker,
   Peng, Wang, del Rio-Chanona, Chen and Bao, Cruces, Autor, Aparicio and
   Khandare are among them.
+
+## Bib checks (new recipe, 2026-11-27 ~17:20)
+
+- `scholar prov check who-gains.bib --quotes --metadata`: 23 entries, 0
+  errors. Quotes: 32 found, 0 not found, 0 not checked. Metadata: 15
+  agree with Crossref, 0 differ, 8 not checked.
+- The full texts used for quotes were registered in scholar's cache with
+  `scholar pdf import --doi ... --from ...` (9 files). The working-paper
+  versions are imported under the published DOI, with their origin in
+  `--from`. The quotes were then cut so that line-end hyphens and dashes
+  in the extracted text do not break the match; they are still verbatim.
+- The 8 "not checked" metadata cells were checked by hand. Seven are
+  DataCite DOIs (arXiv, Salford) that Crossref does not know; their
+  title, creators and year from `api.datacite.org/dois/<doi>` agree with
+  the bib. Camuffo2026Beyond was rate-limited in scholar; Crossref
+  REST (`api.crossref.org/works/10.1287/stsc.2025.0432`) agrees on title,
+  authors and year.
+- One metadata fix: DellAcqua2026Navigating now spells the co-author
+  "Lifshitz, Hila", as in the Organization Science record (the working
+  paper has Lifshitz-Assaf).
+- `scripts/check_provenance.py --quotes --text KEY=FILE who-gains.bib`:
+  OK, complete provenance.
