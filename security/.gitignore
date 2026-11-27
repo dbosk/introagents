@@ -42,6 +42,8 @@ literature-search/*-check/
 literature-search/*-runs/
 literature-search/*-progress.md
 literature-search/*.log
+# cited by a provenance block in ltnotes.bib
+!literature-search/variation-theory-counter.log
 # earlier recordings, superseded by the files beside them
 transcripts/recording-*/
 # raw exports of whole search sessions (tens of megabytes each)
