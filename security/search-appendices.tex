@@ -45,11 +45,25 @@ gone through by the author.
 % One chapter per backed claim, each written by its search.  A chapter
 % is included once its search has also delivered the table of hits that
 % the chapter ends with.
-\newcommand{\searchchapter}[1]{%
+%
+% A chapter's title is its research question, which is too long for the
+% running head (two lines there make every page 12pt too tall), so each
+% chapter gets a short form of the question for the head.
+\newcommand{\searchhead}{}
+\makeatletter
+\renewcommand{\chaptermark}[1]{%
+  \markboth{\@chapapp\ \thechapter.\ \searchhead}%
+           {\@chapapp\ \thechapter.\ \searchhead}%
+}
+\makeatother
+\newcommand{\searchchapter}[2]{%
+  \renewcommand{\searchhead}{#2}%
   \IfFileExists{literature-search/#1-full.tex}%
     {\InputIfFileExists{literature-search/#1-chapter.tex}{}{}}%
     {}%
 }
-\searchchapter{who-gains}
-\searchchapter{insecure-code}
-\searchchapter{prompt-injection}
+\searchchapter{who-gains}{Who gains more from AI assistance?}
+\searchchapter{insecure-code}%
+  {Is code written with an AI assistant less secure?}
+\searchchapter{prompt-injection}%
+  {Can prompt injection be reliably prevented?}

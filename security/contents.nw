@@ -1624,12 +1624,15 @@ asks who checks.
     \begin{itemize}
       \item AI coding tools often write code with security flaws: in
         studies, between a quarter and two fifths of the programs.
-      \item Newer models do better, and not well enough to skip the
-        checking.
-      \item Do \emph{people} write less secure code with AI than
+        So do people: compared directly, AI-written code was about as
+        vulnerable as code written by developers.
+      \item Newer models do somewhat better, and not well enough to
+        skip the checking.
+      \item Do people write less secure code \emph{with} AI than
         without?
         One well-known study said yes, and that they trusted it more.
-        Others found little or no difference.
+        Others, the largest among them, found little or no
+        difference.
     \end{itemize}
   \end{example}
 \end{frame}
@@ -1645,6 +1648,16 @@ snippets attributed to AI tools had a security
 weakness\autocite{Fu2025Weaknesses}.
 The share depends on the tasks and the model, so none of these numbers
 is \emph{the} rate.
+Nor do they show that AI writes worse code than people do.
+Where the two have been compared directly, a study of code taken from
+developers' real use of ChatGPT found that \enquote{LLM-generated code
+is about as likely to contain vulnerabilities as developer-written
+code}\autocite{Belozerov2026Repair}, and one that compared ChatGPT's
+answers with answers that people had posted to the same questions
+found 20\% fewer vulnerabilities in ChatGPT's\autocite{Hamer2024Copy}.
+The point is not that the AI is worse than a programmer.
+It is that neither can be trusted unchecked, and that the AI writes
+far more code than anyone reads.
 Agents that work by themselves fare no better: in one study of 186
 real tasks, 57\% of one agent's solutions worked, and 11.8\% both
 worked and were secure\autocite{Zhao2026VibeCoding}.
@@ -1653,15 +1666,24 @@ On the second point, a comparison of 32 models found that each family's
 newest models wrote more secure code than its older ones, and that none
 closed the gap between code that works and code that is also
 secure\autocite{SantosdeMoura2026Newer}.
+Better is not the same as safer, either: an earlier comparison found
+that \enquote{Models that are more capable at coding tend to be more
+prone to insecure code suggestions}\autocite{Bhatt2023CyberSecEval}.
 
 The third point is the one most often repeated, and the weakest.
 In one experiment with 47 participants, most of them university
 students, those who had an AI assistant wrote less secure code and were
 more likely to believe that their code was
 secure\autocite{Perry2023Users}.
-Other experiments, also small, found little or no difference, or more
-secure code with the assistant on a harder
-task\autocite{Sandoval2023LostC,Asare2024UserCentered,ZareShahneh2025Copilot}.
+The largest comparison so far, of 159 freelance developers who worked
+without AI or with Google's Gemini, did \enquote{not observe significant
+differences} in how secure their software was; what did make a
+difference there was programming experience, which \enquote{cannot be
+fully substituted by Gemini}\autocite{Jost2026Gemini}.
+Smaller experiments found little or no difference, or more secure code
+with the assistant on a harder
+task\autocite{Sandoval2023LostC,Asare2024UserCentered,%
+ZareShahneh2025Copilot}.
 On confidence, a study of 100 users of AI tools found that their
 confidence followed how secure their code really was, although they
 could not tell secure suggestions from insecure
@@ -1688,6 +1710,9 @@ In a study of 16 models and 576\,000 generated programs, at least 5.2\%
 of the packages that commercial models recommended, and 21.7\% of those
 that open-source models recommended, did not
 exist\autocite{Spracklen2025Package}.
+A later study found such rates overstated, for Python by up to 9.4
+percentage points\autocite{Djire2026Defenses}; the phenomenon is real,
+and its size is uncertain.
 That such names are then registered by attackers has so far rarely been
 observed: in one study, which has not yet been through peer review,
 about one invented name in a hundred had been registered within six

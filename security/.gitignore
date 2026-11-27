@@ -44,3 +44,5 @@ literature-search/*-progress.md
 literature-search/*.log
 # earlier recordings, superseded by the files beside them
 transcripts/recording-*/
+# raw exports of whole search sessions (tens of megabytes each)
+literature-search/*.csv
