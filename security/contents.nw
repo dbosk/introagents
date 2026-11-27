@@ -1020,6 +1020,15 @@ text.
 The rule stopped some attempts and not others; \cref{ex:results}
 counts them.
 
+The model matters too.
+The bot in the lecture runs on Claude Haiku 4.5, and that is a
+choice: against the same bot, with the rule, its successor Haiku 5.5
+did not reveal the code in any of fifteen recorded attempts.
+A newer model made the same mistake in the program harmless, for those
+attempts.
+It did not remove the mistake, and \cref{sec:stopped} is about why
+that is not something to rely on.
+
 \begin{frame}[fragile]
   \begin{example}[The mistake (\texttt{prompt\_vulnerable.py})]
     \label{ex:secret-fix}
