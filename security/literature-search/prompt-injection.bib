@@ -416,7 +416,7 @@
   url = {https://arxiv.org/pdf/2311.16119},
 }
 
-% === provenance: Toyer2023TensorTrust ===
+% === provenance: Toyer2024TensorTrust ===
 % SCREENED-BY: agent (awaiting human review)
 % CLAIM: Human-made prompt injection attacks from an online game succeed
 %   against many models and transfer to deployed applications.
@@ -457,15 +457,16 @@
 %   indirect injection fails against deployed systems. Claim stands, worded
 %   as 'works against real systems', not 'always succeeds'.
 % DATE: 2026-11-27
-@online{Toyer2023TensorTrust,
+@inproceedings{Toyer2024TensorTrust,
   title = {Tensor Trust: Interpretable Prompt Injection Attacks from an Online Game},
   author = {Sam Toyer and Olivia Watkins and Ethan Adrian Mendes and Justin Svegliato and Luke Bailey and Tiffany Wang and Isaac Ong and Karim Elmaaroufi and Pieter Abbeel and Trevor Darrell and Alan Ritter and Stuart Russell},
-  year = {2023},
+  booktitle = {International Conference on Learning Representations (ICLR 2024)},
+  year = {2024},
   doi = {10.48550/arXiv.2311.01011},
   eprint = {2311.01011},
   eprinttype = {arXiv},
   url = {https://arxiv.org/pdf/2311.01011},
-  note = {Preprint},
+  note = {ICLR 2024 per the OpenAlex/Scopus/S2 records in the session; the arXiv v1 was read},
 }
 
 % === provenance: Perez2022Ignore ===
@@ -544,7 +545,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -676,7 +677,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -693,7 +694,7 @@
   url = {https://arxiv.org/pdf/2503.00061},
 }
 
-% === provenance: Nasr2025AttackerSecond ===
+% === provenance: Nasr2026AttackerSecond ===
 % SCREENED-BY: agent (awaiting human review)
 % CLAIM: Twelve recent defences, most of which reported near-zero attack
 %   success, were bypassed by adaptive attacks with high success.
@@ -710,15 +711,17 @@
 %   "doi:10.48550/arxiv.2510.09023")
 % PICKED: Broadest adaptive evaluation (12 defences of all families,
 %   including detectors, prompting, training and MELON); authors from
-%   OpenAI, Anthropic, Google DeepMind, ETH; preprint (flagged).
-% QUOTE (p. 1): "we bypass 12 recent defenses (based on a diverse set of
-%   techniques) with attack success rate above 90% for most; importantly,
-%   the majority of defenses originally reported near-zero attack success
-%   rates"
-% QUOTE (p. 8): "Our search-based attack reaches a 76% ASR against MELON on
+%   Anthropic, Google DeepMind, OpenAI, ETH Zurich and others; peer-reviewed
+%   (USENIX Security 2026; the arXiv preprint was read first, the published
+%   PDF then checked for both quotes).
+% QUOTE (p. 2): "we bypass 12 recent defenses (based on a diverse set of
+%   techniques) with attack success rate above 90% (under adaptive attacks)
+%   for most; importantly, the majority of defenses originally reported
+%   near-zero attack success rates"
+% QUOTE (p. 11): "Our search-based attack reaches a 76% ASR against MELON on
 %   Llama-3.3-70B"
-% VERIFIED: full-text (arXiv v1) read; abstract and section on defences
-%   relying on secret knowledge; applies.
+% VERIFIED: full-text (USENIX Security 2026 PDF; also arXiv v1) read;
+%   abstract and section on defences relying on secret knowledge; applies.
 % COUNTER: scholar search, queries C2 (attack AND defence terms AND
 %   adaptive/bypass terms AND robust/resilient/near-
 %   zero/effective/secure/state-of-the-art), C4 (guarantee terms AND utility
@@ -730,19 +733,20 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
-@online{Nasr2025AttackerSecond,
-  title = {The Attacker Moves Second: Stronger Adaptive Attacks Bypass Defenses Against Llm Jailbreaks and Prompt Injections},
-  author = {Milad Nasr and Nicholas Carlini and Chawin Sitawarin and Sander V. Schulhoff and Jamie Hayes and Michael Ilie and Juliette Pluto and Shuang Song and Harsh Chaudhari and Ilia Shumailov and Abhradeep Thakurta and Kai Yuanqing Xiao and Andreas Terzis and Florian Tramèr},
-  year = {2025},
-  doi = {10.48550/arXiv.2510.09023},
+@inproceedings{Nasr2026AttackerSecond,
+  title = {The Attacker Moves Second: Stronger Adaptive Attacks Bypass Defenses Against LLM Jailbreaks and Prompt Injections},
+  author = {Nasr, Milad and Carlini, Nicholas and Sitawarin, Chawin and Schulhoff, Sander V. and Hayes, Jamie and Ilie, Michael and Pluto, Juliette and Song, Shuang and Chaudhari, Harsh and Shumailov, Ilia and Thakurta, Abhradeep Guha and Xiao, Kai Yuanqing and Terzis, Andreas and Tram{\`e}r, Florian},
+  booktitle = {Proceedings of the 35th USENIX Security Symposium (USENIX Security 26)},
+  publisher = {USENIX Association},
+  year = {2026},
   eprint = {2510.09023},
   eprinttype = {arXiv},
-  url = {https://arxiv.org/pdf/2510.09023},
-  note = {Preprint, under review (PDF header)},
+  url = {https://www.usenix.org/system/files/usenixsecurity26-nasr.pdf},
+  note = {Open-access USENIX Security 2026 paper; author list and affiliations from the USENIX presentation page and PDF},
 }
 
 % === provenance: Chen2025MetaSecAlign ===
@@ -784,7 +788,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -815,7 +819,7 @@
 %   the session in all, list: scholar prov found-via
 %   "doi:10.1145/3733799.3762980")
 % PICKED: Peer-reviewed (AISec 2025) adaptive attack on a whole class of
-%   detectors; corroborates Zhan2025Adaptive and Nasr2025AttackerSecond for
+%   detectors; corroborates Zhan2025Adaptive and Nasr2026AttackerSecond for
 %   detection.
 % QUOTE (p. 1): "Recent defenses based on known-answer detection (KAD)
 %   scheme have reported near-perfect performance"
@@ -834,7 +838,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -885,7 +889,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -930,7 +934,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -962,7 +966,7 @@
 %   of the session in all, list: scholar prov found-via
 %   "doi:10.48550/arxiv.2403.14720")
 % PICKED: The prompt-hardening defence named in the claim; reported fairly
-%   as a qualifying result (and later bypassed: Nasr2025AttackerSecond).
+%   as a qualifying result (and later bypassed: Nasr2026AttackerSecond).
 % QUOTE (p. 1): "spotlighting reduces the attack success rate from greater
 %   than 50% to below 2% in our experiments with minimal impact on task
 %   efficacy"
@@ -979,19 +983,20 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
-@online{Hines2024Spotlighting,
+@inproceedings{Hines2024Spotlighting,
   title = {Defending Against Indirect Prompt Injection Attacks With Spotlighting},
   author = {Keegan Hines and Gary Lopez and Matthew Hall and Federico Zarfati and Yonatan Zunger and Emre Kiciman},
+  booktitle = {Conference on Applied Machine Learning in Information Security (CAMLIS 2024), CEUR Workshop Proceedings},
   year = {2024},
   doi = {10.48550/arXiv.2403.14720},
   eprint = {2403.14720},
   eprinttype = {arXiv},
   url = {https://arxiv.org/pdf/2403.14720},
-  note = {Preprint (Microsoft)},
+  note = {Venue per the OpenAlex/Scopus records in the session (CAMLIS; CEUR Workshop Proceedings); the arXiv version was read},
 }
 
 % === provenance: Chen2025SecAlign ===
@@ -1029,7 +1034,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -1077,7 +1082,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -1150,7 +1155,7 @@
 %   of the session in all, list: scholar prov found-via
 %   "doi:10.1109/sp61157.2025.00250")
 % PICKED: Peer-reviewed detector explicitly trained against adaptive
-%   attacks; qualifies (later bypassed by Nasr2025AttackerSecond).
+%   attacks; qualifies (later bypassed by Nasr2026AttackerSecond).
 % QUOTE (p. 1): "existing detection methods have limited effectiveness
 %   against state-of-the-art attacks, let alone adaptive ones"
 % QUOTE (p. 1): "DataSentinel effectively detects both existing and adaptive
@@ -1168,7 +1173,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -1216,7 +1221,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -1267,7 +1272,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -1298,7 +1303,7 @@
 %   of the session in all, list: scholar prov found-via
 %   "doi:10.48550/arxiv.2502.05174")
 % PICKED: Defence whose title claims provability; qualifies; bypassed at 76
-%   % by Nasr2025AttackerSecond.
+%   % by Nasr2026AttackerSecond.
 % QUOTE (p. 1): "MELON outperforms SOTA defenses in both attack prevention
 %   and utility preservation"
 % VERIFIED: full-text (arXiv v4) read; abstract; qualifies.
@@ -1310,7 +1315,7 @@
 %   dblp failed), session prompt-injection, 2026-11-27; verbatim queries:
 %   prompt-injection-queries.sh --print) -- found: system-level designs
 %   claiming provable or deterministic security for a defined class of
-%   attacks (Debenedetti2026CaMeL, Costa2025FIDES, Wu2024IFC,
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
 %   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
 %   the claim: the surviving wording says that design-level defences give
 %   guarantees for a class of attacks at a cost in utility or generality.
@@ -1357,7 +1362,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -1405,7 +1410,7 @@
 %   dblp failed), session prompt-injection, 2026-11-27; verbatim queries:
 %   prompt-injection-queries.sh --print) -- found: system-level designs
 %   claiming provable or deterministic security for a defined class of
-%   attacks (Debenedetti2026CaMeL, Costa2025FIDES, Wu2024IFC,
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
 %   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
 %   the claim: the surviving wording says that design-level defences give
 %   guarantees for a class of attacks at a cost in utility or generality.
@@ -1457,7 +1462,7 @@
 %   dblp failed), session prompt-injection, 2026-11-27; verbatim queries:
 %   prompt-injection-queries.sh --print) -- found: system-level designs
 %   claiming provable or deterministic security for a defined class of
-%   attacks (Debenedetti2026CaMeL, Costa2025FIDES, Wu2024IFC,
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
 %   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
 %   the claim: the surviving wording says that design-level defences give
 %   guarantees for a class of attacks at a cost in utility or generality.
@@ -1514,7 +1519,7 @@
 %   dblp failed), session prompt-injection, 2026-11-27; verbatim queries:
 %   prompt-injection-queries.sh --print) -- found: system-level designs
 %   claiming provable or deterministic security for a defined class of
-%   attacks (Debenedetti2026CaMeL, Costa2025FIDES, Wu2024IFC,
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
 %   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
 %   the claim: the surviving wording says that design-level defences give
 %   guarantees for a class of attacks at a cost in utility or generality.
@@ -1560,7 +1565,7 @@
 %   dblp failed), session prompt-injection, 2026-11-27; verbatim queries:
 %   prompt-injection-queries.sh --print) -- found: system-level designs
 %   claiming provable or deterministic security for a defined class of
-%   attacks (Debenedetti2026CaMeL, Costa2025FIDES, Wu2024IFC,
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
 %   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
 %   the claim: the surviving wording says that design-level defences give
 %   guarantees for a class of attacks at a cost in utility or generality.
@@ -1576,7 +1581,7 @@
   note = {Preprint},
 }
 
-% === provenance: Costa2025FIDES ===
+% === provenance: Costa2026FIDES ===
 % SCREENED-BY: agent (awaiting human review)
 % CLAIM: Information-flow control with deterministic policy enforcement
 %   gives AI agents security guarantees while completing a broad range of
@@ -1592,8 +1597,9 @@
 %   doi:10.48550/arxiv.2505.23643; returned by 12 query x provider searches
 %   of the session in all, list: scholar prov found-via
 %   "doi:10.48550/arxiv.2505.23643")
-% PICKED: Formal model plus implementation; preprint (flagged); corroborates
-%   CaMeL with an independent design.
+% PICKED: Formal model plus implementation; accepted at NeurIPS 2026
+%   (poster; proceedings not yet out); corroborates CaMeL with an
+%   independent design.
 % QUOTE (p. 1): "FIDES, a planner that tracks confidentiality and integrity
 %   labels, deterministically enforces security policies"
 % QUOTE (p. 1): "enables us to complete a broad range of tasks with security
@@ -1608,20 +1614,21 @@
 %   dblp failed), session prompt-injection, 2026-11-27; verbatim queries:
 %   prompt-injection-queries.sh --print) -- found: system-level designs
 %   claiming provable or deterministic security for a defined class of
-%   attacks (Debenedetti2026CaMeL, Costa2025FIDES, Wu2024IFC,
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
 %   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
 %   the claim: the surviving wording says that design-level defences give
 %   guarantees for a class of attacks at a cost in utility or generality.
 % DATE: 2026-11-27
-@online{Costa2025FIDES,
+@inproceedings{Costa2026FIDES,
   title = {Securing AI Agents with Information-Flow Control},
   author = {Manuel Costa and Boris Köpf and Aashish Kolluri and Andrew Paverd and Mark Russinovich and Ahmed Salem and Shruti Tople and Lukas Wutschitz and Santiago Zanella-Béguelin},
-  year = {2025},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS 2026)},
+  year = {2026},
   doi = {10.48550/arXiv.2505.23643},
   eprint = {2505.23643},
   eprinttype = {arXiv},
   url = {https://arxiv.org/pdf/2505.23643},
-  note = {Preprint (Microsoft)},
+  note = {Accepted as a NeurIPS 2026 poster (neurips.cc virtual site, poster 152696, opened 2026-11-27); proceedings not yet available; the arXiv v2 was read},
 }
 
 % === provenance: Shi2025Progent ===
@@ -1659,7 +1666,7 @@
 %   dblp failed), session prompt-injection, 2026-11-27; verbatim queries:
 %   prompt-injection-queries.sh --print) -- found: system-level designs
 %   claiming provable or deterministic security for a defined class of
-%   attacks (Debenedetti2026CaMeL, Costa2025FIDES, Wu2024IFC,
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
 %   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
 %   the claim: the surviving wording says that design-level defences give
 %   guarantees for a class of attacks at a cost in utility or generality.
@@ -1708,7 +1715,7 @@
 %   dblp failed), session prompt-injection, 2026-11-27; verbatim queries:
 %   prompt-injection-queries.sh --print) -- found: system-level designs
 %   claiming provable or deterministic security for a defined class of
-%   attacks (Debenedetti2026CaMeL, Costa2025FIDES, Wu2024IFC,
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
 %   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
 %   the claim: the surviving wording says that design-level defences give
 %   guarantees for a class of attacks at a cost in utility or generality.
@@ -1940,7 +1947,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -1991,7 +1998,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -2041,7 +2048,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -2088,7 +2095,7 @@
 %   dblp failed), session prompt-injection, 2026-11-27; verbatim queries:
 %   prompt-injection-queries.sh --print) -- found: system-level designs
 %   claiming provable or deterministic security for a defined class of
-%   attacks (Debenedetti2026CaMeL, Costa2025FIDES, Wu2024IFC,
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
 %   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
 %   the claim: the surviving wording says that design-level defences give
 %   guarantees for a class of attacks at a cost in utility or generality.
@@ -2248,7 +2255,7 @@
 %   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
 %   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
 %   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
-%   adaptive attacks (Nasr2025AttackerSecond, Zhan2025Adaptive,
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
 %   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
 %   adaptive attacks'.
 % DATE: 2026-11-27
@@ -2345,7 +2352,7 @@
 %   dblp failed), session prompt-injection, 2026-11-27; verbatim queries:
 %   prompt-injection-queries.sh --print) -- found: system-level designs
 %   claiming provable or deterministic security for a defined class of
-%   attacks (Debenedetti2026CaMeL, Costa2025FIDES, Wu2024IFC,
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
 %   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
 %   the claim: the surviving wording says that design-level defences give
 %   guarantees for a class of attacks at a cost in utility or generality.

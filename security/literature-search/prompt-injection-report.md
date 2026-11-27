@@ -53,16 +53,17 @@ Files:
    This covers filters and detectors, prompt tricks such as delimiters or
    "spotlighting", and specially trained models. One peer-reviewed study
    bypassed all eight agent defences it tested, with over 50 % success. A
-   preprint bypassed twelve recent defences against jailbreaks and prompt
+   USENIX Security 2026 paper bypassed twelve recent defences against jailbreaks and prompt
    injections, with over 90 % success for most of them; most of these
    defences had reported near-zero attack success. The authors of a leading
    trained defence write that their model "remains vulnerable to strong
    adaptive attacks" and that "PI is not solved".
-   [Zhan2025Adaptive, Nasr2025AttackerSecond (preprint),
+   [Zhan2025Adaptive, Nasr2026AttackerSecond (USENIX Security 2026),
    Choudhary2025NotDetect, Chen2025MetaSecAlign (preprint); the defences'
    own claims: Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy]
-   Strength: strong. Three independent groups agree, and so do the authors of
-   a defence about their own work.
+   Strength: strong. Three independent peer-reviewed groups agree (NAACL
+   Findings, USENIX Security, AISec), and so do the authors of a defence
+   about their own work.
    Qualification: a few 2026 defences claim robustness against adaptive
    attacks, and others have not yet tested them. They are
    Zhong2026Rennervate (NDSS), Zhao2026LTBD (preprint) and
@@ -80,10 +81,11 @@ Files:
    "constrain the actions of agents to explicitly prevent them from solving
    arbitrary tasks".
    [Debenedetti2026CaMeL, BeurerKellner2025Patterns (preprint),
-   Costa2025FIDES (preprint), Shi2025Progent (preprint), Wu2024IFC
+   Costa2026FIDES (accepted, NeurIPS 2026), Shi2025Progent (preprint), Wu2024IFC
    (preprint)]
-   Strength: moderate. There are few studies, and only CaMeL is
-   peer-reviewed. The guarantees hold only under the stated assumptions; for
+   Strength: moderate. There are few studies; CaMeL is peer-reviewed
+   (SaTML 2026) and FIDES is accepted at NeurIPS 2026; the rest are
+   preprints. The guarantees hold only under the stated assumptions; for
    example, CaMeL "cannot defend against text-to-text attacks".
 
 5. **So: assume that anything the model reads can steer it, and limit what
@@ -127,6 +129,11 @@ prevent this from happening"). The refinement: architectural defences can be
 unconstrained general-purpose agent [BeurerKellner2025Patterns].
 
 ### Changes since the preliminary version
+
+- Nasr et al. is no longer a preprint. It was published at USENIX Security
+  2026, and the open-access PDF was checked. The published abstract adds
+  "(under adaptive attacks)" after "above 90%". Its key is now
+  Nasr2026AttackerSecond.
 
 - The twelve defences that Nasr et al. bypass are defences against
   jailbreaks *and* prompt injections. The wording now says so. Checked in the
@@ -236,8 +243,40 @@ CLASSIFICATION-SECTION
 
 ### Non-scholar sources (all recorded)
 
-No WebSearch or WebFetch was used. Direct API look-ups, all for works the
-session had already found:
+All of these were look-ups for works the session had already found, used
+to check venues and published versions; none was used for discovery.
+
+- WebSearch (standard mode), 27 Nov 2026, about 14:40, each with its
+  verbatim query and outcome:
+  - `"The Attacker Moves Second" adaptive attacks bypass defenses LLM
+    jailbreaks prompt injections conference`: found the USENIX Security
+    2026 presentation page; retained (verified, see below).
+  - `"Design Patterns for Securing LLM Agents against Prompt Injections"
+    published venue`: arXiv only; no venue found.
+  - `"Meta SecAlign" OR "Meta-SecAlign" prompt injection conference paper
+    2026`: arXiv only (v3, Feb 2026); no venue found.
+  - `"Progent: Securing AI Agents with Privilege Control" accepted
+    conference`: arXiv only; no venue found.
+  - `"Securing AI Agents with Information-Flow Control" FIDES Costa accepted
+    conference`: found a NeurIPS 2026 poster page; retained (verified, see
+    below).
+  - `"Prompt Injection attack against LLM-integrated Applications" HouYi
+    published conference version`: arXiv only; no venue found.
+- Pages opened with curl:
+  - https://www.usenix.org/conference/usenixsecurity26/presentation/nasr,
+    which gives the title, authors and abstract.
+  - https://www.usenix.org/system/files/usenixsecurity26-nasr.pdf, fetched
+    with fetch_pdf.py; both quotes were found in it.
+  - https://neurips.cc/virtual/2026/poster/152696, which redirects to
+    /loc/paris/poster/152696 and lists FIDES as a poster on 10 Dec 2026.
+- Semantic Scholar graph API, 8 arXiv ids: rate-limited (HTTP 429) for 7 of
+  them. The eighth (Wu et al., 2409.19091) lists only arXiv as venue.
+- OpenAlex works API (title search): HTTP 429 for every query, so it was not
+  used.
+- Crossref `works?query.bibliographic=<title>` for 32 titles: matches only
+  for Rennervate (NDSS) and SecOPD (EMNLP).
+
+Earlier look-ups:
 
 - arXiv API: `https://export.arxiv.org/api/query?id_list=<41 ids>`, at
   13:25, for authors, titles and dates.
@@ -255,11 +294,11 @@ session had already found:
 - Attacks and their success: Greshake2023Signed, Liu2023HouYi,
   Zhan2024InjecAgent, Debenedetti2024AgentDojo, Dziemian2026Competition,
   Khodayari2026Wild, Fu2024Imprompter, Schulhoff2023HackAPrompt,
-  Toyer2023TensorTrust, Perez2022Ignore, Zhang2025ASB.
+  Toyer2024TensorTrust, Perez2022Ignore, Zhang2025ASB.
 - One channel for instructions and data: Zverev2025Separate,
   Chen2025StruQ (the mechanism, and its own limitation).
 - Defences that fail under adaptive attack: Zhan2025Adaptive,
-  Nasr2025AttackerSecond, Chen2025MetaSecAlign (its own limitation),
+  Nasr2026AttackerSecond, Chen2025MetaSecAlign (its own limitation),
   Choudhary2025NotDetect, Chen2025DetectRemove, Liu2024Formalizing,
   Wu2024IFC (its critique of model-level defences).
 - Prompt extraction: Zhang2024Extraction, Liang2024Leaked.
@@ -279,7 +318,7 @@ session had already found:
   9.0 %, against 94.0 % for Meta-SecAlign. The same paper also supports (b):
   it says trained models "still suffer from near 100% attack success rates
   (ASRs) against adaptive prompt injections".
-- Guarantees by design: Debenedetti2026CaMeL, Costa2025FIDES,
+- Guarantees by design: Debenedetti2026CaMeL, Costa2026FIDES,
   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI,
   Pandey2026Certified. Pandey2026Certified certifies structured actions; it
   "admits no unsafe action" under a bounded corruption budget.
@@ -330,8 +369,6 @@ lie beside the question:
   injections succeed against deployed web agents. This could strengthen
   statement 2.
 - Published versions of sources that were read as preprints:
-  - Nasr et al. (2510.09023): check whether the 12-defence result and "above
-    90 % for most" survive peer review.
   - CaMeL (doi:10.1109/SaTML68715.2026.00040): the arXiv "updated version"
     was read; check that the published paper gives the same 77 % and 84 %.
   - StruQ (USENIX Security 2025) and MELON (ICML 2025): published PDFs not
@@ -350,11 +387,27 @@ lie beside the question:
   smaller model (see Screening).
 - **Full texts** were read in their arXiv or other open versions, which may
   differ from the published versions.
-- **Several load-bearing sources are preprints:** Nasr2025AttackerSecond,
-  Chen2025MetaSecAlign, BeurerKellner2025Patterns, Dziemian2026Competition.
-  The conclusion on defences under adaptive attack does not rest on them
-  alone, since Zhan2025Adaptive and Choudhary2025NotDetect are
-  peer-reviewed.
+- **Several load-bearing sources are preprints:** Chen2025MetaSecAlign,
+  BeurerKellner2025Patterns, Dziemian2026Competition, Shi2025Progent,
+  Liu2023HouYi. The conclusion on defences under adaptive attack does not
+  rest on them, since Zhan2025Adaptive, Nasr2026AttackerSecond and
+  Choudhary2025NotDetect are peer-reviewed.
+- **Published versions.** These were checked on 27 Nov 2026 against the
+  session's WoS, Scopus and OpenAlex records, against Crossref, and by
+  recorded web searches; DBLP was down and S2 rate-limited, so a published
+  version may have been missed. Found:
+  - Nasr et al.: USENIX Security 2026. The open-access PDF was opened and
+    both quotes were checked in it.
+  - FIDES: NeurIPS 2026 poster. The neurips.cc page was opened; the
+    proceedings are not yet out.
+  - Tensor Trust: ICLR 2024.
+  - Spotlighting: CAMLIS 2024 (CEUR).
+  - StruQ: USENIX Security 2025. Formalizing: USENIX Security 2024. MELON:
+    ICML 2025. These three come from WoS records.
+  - Zverev, ASB, ISE: ICLR 2025.
+  - No published version was found for Meta-SecAlign, the design patterns,
+    Progent, HouYi, Wu et al. (IFC), PFI, Imprompter, the 2026 competition,
+    PromptArmor or Liang et al.
 - **Benchmarks measure fixed task suites.** No source measures prevention in
   a deployed business system over time.
 - **The field moves fast.** This report covers the literature indexed by 27
