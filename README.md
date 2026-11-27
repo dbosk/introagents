@@ -20,6 +20,10 @@ streamline and improve your study efficiency.
 
 Practical guides for GitHub student benefits, model access, local models and Ollama, Claude Code, skills, `AGENTS.md`, Copilot, OpenCode, and the Python package `llm`.
 
+### [Security](security/)
+
+A two-hour lecture on language models, agents and security for students in a first programming course, with a support chatbot that is vulnerable by design and that you can run and attack yourself.
+
 ### [TCS](tcs/)
 
 Staff-oriented material on AI tool use in TCS, plus a link to the LaTeX source in the repository.

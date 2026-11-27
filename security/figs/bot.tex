@@ -1,0 +1,30 @@
+% The parts of a support bot.  Text is set at the size around the
+% figure; the figure is never scaled.
+\begin{tikzpicture}[
+    font=\footnotesize,
+    node distance=3mm and 5mm,
+    part/.style={draw, rounded corners, align=center,
+                 text width=24mm, inner sep=3pt},
+    core/.style={draw, thick, align=center, text width=17mm,
+                 inner sep=4pt},
+    >={Stealth[length=2mm]},
+  ]
+  \node[part] (company)  {The company's instructions};
+  \node[part, below=of company] (customer) {The customer's message};
+  \node[part, below=of customer] (lookup)
+    {What the program looked up};
+  \node[core, right=of customer] (text)  {One text};
+  \node[core, right=of text]     (model) {Language model};
+  \node[part, right=of model, yshift=8mm]  (reply)
+    {Text for the customer};
+  \node[part, right=of model, yshift=-8mm] (tool)
+    {Request to use a tool};
+  \draw[->] (company.east)  -- (text);
+  \draw[->] (customer.east) -- (text);
+  \draw[->] (lookup.east)   -- (text);
+  \draw[->] (text) -- (model);
+  \draw[->] (model) -- (reply.west);
+  \draw[->] (model) -- (tool.west);
+  \draw[->] (tool.south) |- node[pos=0.75, above]
+    {the program runs the tool} (lookup.south east);
+\end{tikzpicture}

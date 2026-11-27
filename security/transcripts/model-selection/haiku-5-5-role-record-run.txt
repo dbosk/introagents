@@ -1,0 +1,6 @@
+record.py run on 2026-11-27T10:57
+Model: anthropic/claude-haiku-5-5
+Rounds: 3; modes: vulnerable; repeats: 3
+Tokens: 7479 in, 2526 out
+Cost: $0.0020
+logs.db in llm's user directory after the run: False

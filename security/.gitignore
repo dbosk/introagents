@@ -1,0 +1,50 @@
+notes.pdf
+slides.pdf
+notes-sv.pdf
+slides-sv.pdf
+# the build directory, and the one the other edition of a bilingual deck
+# builds in
+ltxobj/
+ltxobj-sv/
+contents.tex
+examples/
+# didactic's \runpython, \codebycode and \runbyrun write these into the
+# output directory since v2.18.1; older versions wrote them here, beside
+# the sources
+didactic_output_*.txt
+didactic_pair_*.txt
+*.pytxcode
+pythontex-files-*
+# tangled from the makefiles submodule's tex.mk.nw by the build
+latexmkrc
+# the Mentipy venv, its QR codes, the questions and what students answered
+.venv/
+mentipy-obj/
+mentipy-images/
+mentipy.json
+mentipy-answers.jsonl
+# written by the support bot's launcher when it starts
+bot-url.tex
+# sources fetched by hand for checking quotations; not redistributed
+fetched/
+# briefs for the agents that did the searches and built the bot
+briefs/
+# the old name of literature-search/, kept as a link while searches run
+litteratursokning
+# written beside the sources by a LaTeX run outside the Makefile
+*.unq
+py_default_default_*.stdout
+py_default_default_*.stderr
+# working data of the literature searches: screening batches, checks by
+# meaning, raw provider answers, agents' progress notes
+literature-search/*-screen/
+literature-search/*-check/
+literature-search/*-runs/
+literature-search/*-progress.md
+literature-search/*.log
+# cited by a provenance block in ltnotes.bib
+!literature-search/variation-theory-counter.log
+# earlier recordings, superseded by the files beside them
+transcripts/recording-*/
+# raw exports of whole search sessions (tens of megabytes each)
+literature-search/*.csv

@@ -1,0 +1,54 @@
+                                                  budget                        
+  iacr                Yes          ok             shares the openalex key and   
+                                                  budget                        
+  openalex-semantic   Yes          ok             shares the openalex key and   
+                                                  budget; 1 request/s           
+  hal                 Yes          ok                                           
+  scopus              Yes          ok             COMPLETE view (abstracts,     
+                                                  all authors)                  
+ ────────────────────────────────────────────────────────────────────────────── 
+
+s2: key rejected HTTP 403 -- check or replace S2_API_KEY
+dblp: http error non-JSON response (HTTP 202, text/html)
+== "variation theory" learning contrast generalisation critique
+== "variation theory" learning criticism limitations
+Session: "variation theory" learning criticism limitations
+Date: 2026-11-27 10:57
+Queries by provider:
+  [3863414] openalex: "variation theory" learning criticism limitations --limit 
+0 — hits: 335 — order: relevance — searched 2026-11-27
+  [1938daf] wos: "variation theory" learning criticism limitations --limit 0 — 
+hits: 0 — order: relevance — searched 2026-11-27
+  [f9faef9] scopus: "variation theory" learning criticism limitations --limit 0 
+— hits: 9 — order: relevance — searched 2026-11-27
+  [bb46f34] s2: "variation theory" learning criticism limitations --limit 0 — 
+failed (skipped: rate limited (HTTP 429) after 3 retries; resets 10:57 (in 17s))
+— searched 2026-11-27
+  [c3206a6] openalex: "variation theory" learning contrast generalisation 
+critique --limit 0 — hits: 99 — order: relevance — searched 2026-11-27
+  [a38cc09] wos: "variation theory" learning contrast generalisation critique 
+--limit 0 — hits: 0 — order: relevance — searched 2026-11-27
+  [ee532fb] scopus: "variation theory" learning contrast generalisation critique
+--limit 0 — hits: 10 — order: relevance — searched 2026-11-27
+  [b7f6fc5] s2 (via bulk): "variation theory" learning contrast generalisation 
+critique --limit 0 — hits: 0 — order: unknown — searched 2026-11-27
+
+Screening tier: of 408 pending papers, 203 within the first 100 places of a 
+relevance-ordered answer, 0 returned by 3 or more databases.
+
+Doubtful abstracts: 4 papers have an abstract that looks like something other 
+than an abstract (marked below); replace one with `scholar sessions set-abstract
+--replace`.
+
+Pending (408):
+  • Teaching About Electricity in Primary School Multimodality and Variation 
+Theory as Analytical Lenses (openalex)
+    doi:10.1007/s11165-022-10047-9
+  • Focusing on the object of learning and the critical aspects : a case study 
+of teacher candidates applying variation theory (openalex)
+    doi:10.14288/1.0365810
+  • A quasi-experimental case study involving teaching division to low attaining
+grade 5 learners using variation theory. (openalex)
+    hash:a89ef3ac9ac9068d
+  • Online learning experiences of students in the MEd in open and distance 
+learning : a phenomenography of the dual university initiative (openalex)

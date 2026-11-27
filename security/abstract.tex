@@ -1,0 +1,48 @@
+% The abstract of the notes: overview, learning objectives, prerequisites.
+
+\emph{Overview}
+These notes ask one question of everything a language model produces: who
+checks?
+They open with what the reader already does with AI and expects of it,
+and test those expectations against a current case, the proofs of the
+Riemann hypothesis announced in the autumn of 2026.
+They then turn to security, where the same question decides what an
+attacker can do: first for a company that builds a language model into a
+product, tried out against a support chatbot that is vulnerable by
+design, and then for the reader's own use of AI agents.
+
+\emph{Learning objectives}
+After this lecture, the student should be able to:
+% The master list in students/index.md: outcomes 12 (verify model
+% output), 14 (privacy and reliability risks, mitigations) and 16
+% (reflect on the wider consequences).  SecLOCheck and SecLOEvidence
+% serve 12 and 16; SecLOInjection, SecLOProduct and SecLOAgents serve 14.
+\begin{restatable}{lo}{SecLOCheck}\label{SecLOCheck}%
+  explain why handing a task to an AI still takes someone who can say
+  exactly what is wanted and who can check the result independently of
+  the AI that produced it.
+\end{restatable}
+\begin{restatable}{lo}{SecLOEvidence}\label{SecLOEvidence}%
+  describe what studies have found about who gains from AI assistance,
+  and name what the result depends on.
+\end{restatable}
+\begin{restatable}{lo}{SecLOInjection}\label{SecLOInjection}%
+  explain prompt injection: why any text that a language model reads can
+  work as an instruction, whoever wrote it.
+\end{restatable}
+\begin{restatable}{lo}{SecLOProduct}\label{SecLOProduct}%
+  for a language model built into a product, identify what an outsider
+  can read out, do and spend through it, and say where the defence has
+  to be placed.
+\end{restatable}
+\begin{restatable}{lo}{SecLOAgents}\label{SecLOAgents}%
+  analyse their own use of an AI agent by what it can read, who can
+  write what it reads and what it can do, and choose measures that take
+  one of the three away.
+\end{restatable}
+
+\emph{Prerequisites}
+The student should have written and run small programs in Python and
+have tried a chatbot such as ChatGPT, Copilot or Claude.
+No mathematics beyond upper secondary school and no earlier course in
+security is assumed.

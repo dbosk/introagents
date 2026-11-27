@@ -1,0 +1,45 @@
+2026-11-27T12:59:50+01:00
+Route: direct
+                                Provider Health                                 
+ ────────────────────────────────────────────────────────────────────────────── 
+  Provider            Configured   Status            Detail                     
+ ────────────────────────────────────────────────────────────────────────────── 
+  s2                  Yes          rate limited      HTTP 429 (transient; try   
+                                                     again later)               
+  openalex            Yes          ok                API key configured;        
+                                                     $0.000 of $1.00 daily +    
+                                                     $4.86 prepaid (expires     
+                                                     2027-02-16) + 48631        
+                                                     one-time credits (expires  
+                                                     2027-02-16) left; resets   
+                                                     01:00 (in 11h59m)          
+  dblp                Yes          http error        non-JSON response (HTTP    
+                                                     202, text/html)            
+  wos                 Yes          ok                                           
+  ieee                Yes          quota exhausted   daily quota spent          
+                                                     (200/200 requests); retry  
+                                                     01:00 (in 11h59m)          
+  arxiv               Yes          ok                                           
+  ssrn                Yes          ok                shares the openalex key    
+                                                     and budget                 
+  biorxiv             Yes          ok                shares the openalex key    
+                                                     and budget                 
+  medrxiv             Yes          ok                shares the openalex key    
+                                                     and budget                 
+  chemrxiv            Yes          ok                shares the openalex key    
+                                                     and budget                 
+  researchsquare      Yes          ok                shares the openalex key    
+                                                     and budget                 
+  preprintsorg        Yes          ok                shares the openalex key    
+                                                     and budget                 
+  iacr                Yes          ok                shares the openalex key    
+                                                     and budget                 
+  openalex-semantic   Yes          ok                shares the openalex key    
+                                                     and budget; 1 request/s    
+  hal                 Yes          ok                                           
+  scopus              Yes          ok                standard view (no          
+                                                     abstracts, first author    
+                                                     only)                      
+ ────────────────────────────────────────────────────────────────────────────── 
+
+dblp: http error non-JSON response (HTTP 202, text/html)

@@ -1,0 +1,1186 @@
+% insecure-code.bib -- sources for the research question
+% "Do people who program with an LLM-based coding assistant produce less
+% secure code, and are they more confident in its security, than people
+% without one?"
+% Query labels (S1-S8, C1-C8) refer to insecure-code-queries.md; all were
+% run as: scholar search "<query>" -n insecure-code -l 0 -p dblp -p wos
+% -p ieee -p openalex -p scopus -p s2 -p arxiv --in title-abstract
+% (dblp failed on every query; failed cells listed in the query matrix).
+% First searches 2026-11-27 09:51-12:06 UTC on the direct route (KTH tunnel
+% down); redo of failed cells and repair queries S9/C9 13:35-14:24 UTC
+% through the KTH tunnel.
+
+% ---------------------------------------------------------------------
+% (a) People with versus without an assistant
+% ---------------------------------------------------------------------
+
+% === provenance: Perry2023Users ===
+% CLAIM: In a controlled experiment (47 participants, mainly university
+%   students, codex-davinci-002), participants with an AI assistant wrote
+%   significantly less secure code than those without and were more likely
+%   to believe they had written secure code.
+% FOUND-VIA: scholar search S1, S2, C1 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S1 (arxiv, openalex, scopus, wos),
+%   S2 (openalex, scopus, wos), C1 (openalex, s2, scopus, wos); also
+%   rank 1 of the check by meaning (openalex-semantic), question 1.
+% PICKED: the primary controlled experiment for both halves of the
+%   question (security and confidence); peer-reviewed (CCS 2023); the
+%   most often cited study in the later user studies read here.
+% QUOTE (abstract): "participants who had access to an AI assistant wrote
+%   significantly less secure code than those without access to an
+%   assistant. Participants with access to an AI assistant were also more
+%   likely to believe they wrote secure code"
+% VERIFIED: full-text (arXiv v3, 2211.03622, same paper as the CCS DOI);
+%   applies because it measures exactly both halves of the question.
+%   Population and model from the full text: "we were left with 47
+%   participants -- 33 in the experiment group and 14 in the control group"
+%   (Sect. 3); "our participant group consisted mainly of university
+%   students" (Sect. 7.2); model codex-davinci-002.
+% COUNTER: scholar search C1, C2, C7 (insecure-code-queries.md) on wos,
+%   ieee, openalex, scopus, s2, arxiv -- found Sandoval2023LostC,
+%   Asare2024UserCentered, ZareShahneh2025Copilot (small or no difference,
+%   or more secure with Copilot on a hard task) and Khalid2026Trust
+%   (confidence tracked actual security); claim narrowed to one study
+%   among mixed results.
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Perry2023Users,
+  author    = {Perry, Neil and Srivastava, Megha and Kumar, Deepak and Boneh, Dan},
+  title     = {Do Users Write More Insecure Code with {AI} Assistants?},
+  booktitle = {Proceedings of the 2023 ACM SIGSAC Conference on Computer and Communications Security (CCS '23)},
+  publisher = {ACM},
+  year      = {2023},
+  pages     = {2785--2799},
+  doi       = {10.1145/3576915.3623157},
+  url       = {https://arxiv.org/pdf/2211.03622},
+}
+
+% === provenance: Sandoval2023LostC ===
+% CLAIM: In a randomised user study with 58 computer-science students
+%   writing C with code-cushman-001, AI-assisted users produced critical
+%   security bugs at a rate no more than 10 % higher than the control.
+% FOUND-VIA: scholar search S1, S5, S6, C1, C6, C7 (insecure-code-queries.md)
+%   -n insecure-code -l 0; returned by S1 (arxiv, openalex, scopus, wos),
+%   C1 (openalex, s2, wos), C7 (arxiv, openalex, s2, wos); rank 3 of the
+%   check by meaning, question 1.
+% PICKED: the other early controlled user study, peer-reviewed (USENIX
+%   Security 2023), with a different result from Perry2023Users.
+% QUOTE (abstract): "AI-assisted users produce critical security bugs at a
+%   rate no greater than 10% more than the control, indicating the use of
+%   LLMs does not introduce new security risks"
+% VERIFIED: full-text (arXiv v4, 2208.09727); applies because it compares
+%   users with and without an assistant on security. Participants: "58
+%   computer science undergraduate and graduate students" (Sect. 1);
+%   model code-cushman-001; pages from the USENIX page (citation_firstpage
+%   2205, citation_lastpage 2222).
+% COUNTER: see Perry2023Users
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Sandoval2023LostC,
+  author    = {Sandoval, Gustavo and Pearce, Hammond and Nys, Teo and Karri, Ramesh and Garg, Siddharth and Dolan-Gavitt, Brendan},
+  title     = {Lost at {C}: A User Study on the Security Implications of Large Language Model Code Assistants},
+  booktitle = {32nd USENIX Security Symposium (USENIX Security 23)},
+  publisher = {USENIX Association},
+  year      = {2023},
+  pages     = {2205--2222},
+  isbn      = {978-1-939133-37-3},
+  url       = {https://arxiv.org/pdf/2208.09727},
+}
+
+% === provenance: Asare2024UserCentered ===
+% CLAIM: In a user study with 25 participants (mostly graduate students),
+%   access to Copilot went with more secure solutions on a harder problem
+%   and had no effect on an easier one.
+% FOUND-VIA: scholar search S1, S3, S5, C1, C3, C6 (insecure-code-queries.md)
+%   -n insecure-code -l 0; returned by S1 (arxiv, ieee, openalex, scopus,
+%   wos) and C1 (ieee, openalex, s2, scopus, wos); rank 7 of the check by
+%   meaning, question 1.
+% PICKED: peer-reviewed (ICSE 2024) non-exact replication of
+%   Perry2023Users and Sandoval2023LostC with Copilot; qualifies the claim.
+% QUOTE (abstract): "In our set of participants (n=25), we find that access
+%   to Copilot accompanies a more secure solution when tackling harder
+%   problems. For the easier problem, we observe no effect of Copilot
+%   access on the security of solutions."
+% VERIFIED: full-text (arXiv v4, 2308.06587); applies because it compares
+%   the same participants with and without Copilot on security.
+%   Participants: "4 undergraduate students (16%), 19 graduate students
+%   (76%), and 2 professionals (8%)" (Sect. 4.1).
+% COUNTER: see Perry2023Users
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Asare2024UserCentered,
+  author    = {Asare, Owura and Nagappan, Meiyappan and Asokan, N.},
+  title     = {A User-centered Security Evaluation of {Copilot}},
+  booktitle = {Proceedings of the IEEE/ACM 46th International Conference on Software Engineering (ICSE '24)},
+  publisher = {ACM},
+  year      = {2024},
+  pages     = {1--11},
+  doi       = {10.1145/3597503.3639154},
+  url       = {https://arxiv.org/pdf/2308.06587},
+}
+
+% === provenance: ZareShahneh2025Copilot ===
+% CLAIM: In a within-subject study with 13 participants (7 novices, 6
+%   professionals), Copilot reduced some kinds of vulnerabilities but not
+%   others, and did not change code security for either group.
+% FOUND-VIA: scholar search S1, S5, S6, C1, C6, C7 (insecure-code-queries.md)
+%   -n insecure-code -l 0; returned by openalex for all six; rank 48 of
+%   the check by meaning, question 1.
+% PICKED: the only full text of the study also published as
+%   ZareAssal2026Copilot (closed access); gives the participant numbers.
+% QUOTE (abstract): "We found that GitHub Copilot helped reduce certain
+%   types of vulnerabilities but did not improve others. The use of
+%   Copilot did not have an effect on code security between novices and
+%   experienced developers."
+% VERIFIED: full-text (Carleton University master's thesis, December
+%   2025); applies because each participant did one task with and one
+%   without Copilot. "In total, 13 participants completed our study: 7
+%   novice developers and 6 professional" (Ch. 3).
+% COUNTER: see Perry2023Users
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@mastersthesis{ZareShahneh2025Copilot,
+  author = {Zare Shahneh, Ali},
+  title  = {The Impact of {GitHub Copilot} on the Security of Code by Novice and Experienced Developers},
+  school = {Carleton University},
+  type   = {Master's thesis},
+  year   = {2025},
+  doi    = {10.22215/etd/2025-17028},
+  url    = {https://carleton.scholaris.ca/bitstreams/54684e91-9e78-4b56-b49f-c519a937ac70/download},
+}
+
+% === provenance: ZareAssal2026Copilot ===
+% CLAIM: (peer-reviewed version of ZareShahneh2025Copilot) Most
+%   participants wrote insecure code regardless of experience; Copilot
+%   generally did not affect code security.
+% FOUND-VIA: scholar search S1, S5, S6 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S1 (openalex, scopus), S5 (openalex,
+%   s2, scopus), S6 (openalex, scopus); rank 15 of the check by meaning,
+%   question 1.
+% PICKED: the peer-reviewed publication (HCI for Cybersecurity, Privacy
+%   and Trust, LNCS 2026) of the thesis; corroborates it.
+% QUOTE (abstract): "We found that most participants wrote insecure code,
+%   regardless of their levels of experience. GitHub Copilot helped avoid
+%   certain types of vulnerabilities, yet it generally did not affect code
+%   security for both novice and experienced participants."
+% VERIFIED: full-text (publisher's PDF from Springer through the KTH
+%   network with curl, 2026-11-27, imported into scholar's PDF cache with
+%   scholar pdf import); applies because it
+%   reports "an IRB-approved within-subject user study with 13 developers"
+%   (Sect. 1), each with one task with and one without Copilot.
+% COUNTER: see Perry2023Users
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@incollection{ZareAssal2026Copilot,
+  author    = {Zare, Ali and Assal, Hala},
+  title     = {{GitHub Copilot} and Code Security: An Empirical Evaluation in the Context of Developers' Professional Experience},
+  booktitle = {HCI for Cybersecurity, Privacy and Trust},
+  series    = {Lecture Notes in Computer Science},
+  publisher = {Springer},
+  year      = {2026},
+  pages     = {605--618},
+  doi       = {10.1007/978-3-032-29723-5_35},
+  abstract  = {With the growing use of Artificial Intelligence (AI) and Large Language Models (LLMs) in software engineering, it is important to understand their impact on software security and how developers with varying levels of experience use them. This work explores the relationship between developers' levels of experience and the security of their code when using an AI tool (GitHub Copilot). We designed and conducted a within-subject user study involving novice and experienced developers, in which participants completed two programming tasks, one with access to Copilot and one without. We found that most participants wrote insecure code, regardless of their levels of experience. GitHub Copilot helped avoid certain types of vulnerabilities, yet it generally did not affect code security for both novice and experienced participants. We also found that the two groups differed in how they use the AI tool when writing code.},
+}
+
+% === provenance: Yardim2026Password ===
+% CLAIM: In a password-storage study (21 computer-science students in a lab,
+%   80 freelancers online), many participants relied on AI-generated code
+%   and prioritised convenience; the authors report that the AI tool alone
+%   was insufficient without explicit security instructions.
+% FOUND-VIA: scholar search S1, S6, C1, C7 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S1 (openalex, scopus, wos), C1 (s2);
+%   rank 13 of the check by meaning, question 1.
+% PICKED: the most recent controlled study with an AI-assistance factor
+%   and a non-student sample (freelancers); peer-reviewed (CHI 2026).
+% QUOTE (abstract): "many participants relied on AI-assisted code
+%   generation for security-related tasks, often prioritizing convenience
+%   over security. However, explicit security-focused instructions can
+%   redirect this behavior toward secure outcomes, demonstrating that AI
+%   tools alone are insufficient without targeted guidance."
+% VERIFIED: abstract only (closed access; no open copy found via OpenAlex
+%   locations or arXiv title search; ACM refused automated access also through the KTH tunnel, 2026-11-27); the effect sizes
+%   per condition are not checked. To fetch.
+% COUNTER: see Perry2023Users
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Yardim2026Password,
+  author    = {Yardim, Asli and Serafini, Raphael and Jost, Nadine and Ortloff, Anna-Marie and Gabriel Speckels, Joshua and Naiakshina, Alena},
+  title     = {\mkbibquote{The {AI} tool can't make it any worse.} Investigating Developers' Security Behavior with {AI} Assistants in a Password Storage Study},
+  booktitle = {Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems (CHI '26)},
+  publisher = {ACM},
+  year      = {2026},
+  pages     = {1--33},
+  doi       = {10.1145/3772318.3791693},
+  abstract  = {Past research showed that software developers often require explicit instructions to implement security measures. With the rapid rise of AI assistant tools such as ChatGPT, it remains unclear whether AI assistance supports or undermines secure practices, whether explicit security instructions are still essential, and how developers behave without guidance. To investigate these research questions, we conducted a qualitative lab study with 21 computer science students and a quantitative online study with 80 freelance developers. We focused on secure password storage and asked participants to implement registration logic under four conditions: without instructions, with AI assistance, with security instructions, or with both AI assistance and security instructions. Our study reveals a clear behavioral shift: In our task, many participants relied on AI-assisted code generation for security-related tasks, often prioritizing convenience over security. However, explicit security-focused instructions can redirect this behavior toward secure outcomes, demonstrating that AI tools alone are insufficient without targeted guidance.},
+}
+
+% === provenance: Khalid2026Trust ===
+% CLAIM: In an observational study of 100 AI users (students and
+%   freelancers) choosing among AI suggestions for C tasks, participants
+%   could not tell secure from insecure suggestions, but their confidence
+%   in their code's security correlated with its actual security.
+% FOUND-VIA: scholar search S1, S2, S3, S4, C1, C2, C3, C5
+%   (insecure-code-queries.md) -n insecure-code -l 0; returned by C2
+%   (arxiv, openalex, s2) and S1 (arxiv, openalex); rank 9 of the check by
+%   meaning, question 1.
+% PICKED: the largest study of confidence in AI-generated code read here;
+%   qualifies the over-confidence half of the claim.
+% QUOTE (abstract): "We observed no difference in selection rates between
+%   the most and least secure suggestions, suggesting participants
+%   struggled to distinguish secure from insecure code." ... "Participants'
+%   confidence in their code's security correlated with its actual
+%   security, indicating they were realistic about their ability to
+%   produce secure code with AI."
+% VERIFIED: full-text (arXiv v1, 2609.21020, preprint); applies to the
+%   confidence half only: there was no group without AI. Recruitment: "We
+%   recruited 100 participants through three university mailing lists and
+%   Upwork" (Sect. 3.5); confidence result (Sect. 4.3): OR = 0.7,
+%   p = 0.007.
+% COUNTER: see Perry2023Users
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Khalid2026Trust,
+  author       = {Khalid, Hamza and Thompson, Ronald E. and Sabater, Alejandra and Mussiba, Perucy and Fulton, Kelsey R. and Votipka, Daniel},
+  title        = {{(Don't)} Trust, but {(Don't)} Verify: Developers' Attention to Security in {AI}-Generated Code},
+  year         = {2026},
+  howpublished = {arXiv preprint 2609.21020},
+  doi          = {10.48550/arXiv.2609.21020},
+  url          = {https://arxiv.org/pdf/2609.21020},
+}
+
+% === provenance: Park2025Aware ===
+% CLAIM: In classroom deployments with 61 undergraduates using a
+%   deliberately poisoned code model, students frequently accepted
+%   insecure suggestions despite security coursework and stated
+%   scepticism.
+% FOUND-VIA: scholar search S2, S3, S6, C2, C4, C7 (insecure-code-queries.md)
+%   -n insecure-code -l 0; returned by S6 (arxiv, openalex), C2 (arxiv,
+%   openalex); rank 45 of the check by meaning, question 1.
+% PICKED: the only study read here with first-year-like student users in
+%   class; corroborates that stated scepticism does not prevent accepting
+%   insecure code.
+% QUOTE (abstract): "students frequently accepted insecure LLM-generated
+%   code despite prior security coursework and stated skepticism"
+% VERIFIED: full-text (arXiv v3, 2511.20878, preprint); applies with the
+%   caveat that the model was adversarially configured to suggest
+%   insecure code, so it measures vigilance, not the base rate.
+% COUNTER: see Perry2023Users
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Park2025Aware,
+  author       = {Park, Jaehwan and Park, Seonhye and Lim, Kyungchan and Kim, Hyoungshick and Kim, Doowon},
+  title        = {Aware but Unprepared: Measuring the Security Awareness--Behavior Gap in Student Use of {LLM}-Generated Code with {Bifr\"ost}},
+  year         = {2025},
+  howpublished = {arXiv preprint 2511.20878},
+  doi          = {10.48550/arXiv.2511.20878},
+  url          = {https://arxiv.org/pdf/2511.20878},
+}
+
+% === provenance: Yuan2025Mindset ===
+% CLAIM: Computing students' use of AI assistants has a high chance of
+%   producing insecure programs in common curriculum tasks; a security
+%   mindset improves the security of their AI-assisted code.
+% FOUND-VIA: scholar search S6, C7, S3, C3 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S6 (ieee, openalex, scopus, wos), C7
+%   (openalex, s2, scopus, wos); rank 17 of the check by meaning,
+%   question 1.
+% PICKED: education journal (IEEE Trans. Educ.) study of students;
+%   corroboration for the student population.
+% QUOTE (abstract): "their usage of AI assistants has a high chance of
+%   producing insecure programs in programming tasks that frequently appear
+%   in computing curricula"
+% VERIFIED: abstract only (closed access; the publisher refused automated access also through the KTH tunnel, 2026-11-27); corroboration;
+%   sample size and design not checked. To fetch.
+% COUNTER: see Perry2023Users
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@article{Yuan2025Mindset,
+  author   = {Yuan, Jiawei and Li, Yanyan},
+  title    = {The Impact of Security Mindset on the Use of {AI} Assistants in Computing Education},
+  journal  = {IEEE Transactions on Education},
+  volume   = {68},
+  number   = {6},
+  pages    = {484--491},
+  year     = {2025},
+  doi      = {10.1109/TE.2025.3610340},
+  abstract = {The recent advances in large-language models (LLMs) have started shifting the way computing-related students write codes. LLM-based AI assistants, such as ChatGPT and Copilot, are now increasingly adopted to produce functional code by computing-related students. Although studies have shown that these AI assistants can improve coding efficiency, they also raise security challenges, especially when users lack a security mindset. Given the fact that AI assistants are increasingly integrated into computing education, this article performed an empirical study to explore the impact of a security mindset on the use of AI assistants for computing-related students in their coding and development. Our three-stage study showed that a significant portion of computing-related students currently lack security awareness toward the use of AI assistants. In addition, their usage of AI assistants has a high chance of producing insecure programs in programming tasks that frequently appear in computing curricula. Meanwhile, the results of our study indicate that a security mindset can greatly contribute to students' usage of AI assistants in terms of code security. Our study further discussed and evaluated strategies to improve students' secure usage of AI assistants in computing education by integrating a security mindset.},
+}
+
+% === provenance: Kudriavtseva2025Perceptions ===
+% CLAIM: In a survey of 105 developers, only about a quarter expressed
+%   confidence in AI-generated code, and experienced developers perceived
+%   their secure-coding proficiency to decrease when using such tools.
+% FOUND-VIA: scholar search S2, S3, S5, C3, C6 (insecure-code-queries.md)
+%   -n insecure-code -l 0; returned by S2 (openalex, scopus, wos); rank 12
+%   of the check by meaning, question 1.
+% PICKED: peer-reviewed (SAC 2025) survey of self-reported confidence;
+%   qualifies the over-confidence claim (self-report, no measured code).
+% QUOTE (abstract): "Only about a quarter of the developers expressed
+%   confidence in the code generated by AI, and, moreover, experienced
+%   developers perceive that their proficiency in secure coding decreases
+%   when using GAI tools."
+% VERIFIED: full-text (publisher's version, CC BY-SA, Leiden University
+%   repository); applies to perceived confidence, not measured security.
+% COUNTER: see Perry2023Users
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Kudriavtseva2025Perceptions,
+  author    = {Kudriavtseva, Arina and Hotak, Nisar Ahmad and Gadyatskaya, Olga},
+  title     = {My Code Is Less Secure with Gen {AI}: Surveying Developers' Perceptions of the Impact of Code Generation Tools on Security},
+  booktitle = {Proceedings of the 40th ACM/SIGAPP Symposium on Applied Computing (SAC '25)},
+  publisher = {ACM},
+  year      = {2025},
+  pages     = {1637--1646},
+  doi       = {10.1145/3672608.3707778},
+  url       = {https://scholarlypublications.universiteitleiden.nl/download/1887/4283611/1?col=81522199340002711},
+}
+
+% === provenance: Jost2026Gemini ===
+% CLAIM: In an online study with 159 freelance developers assigned to no
+%   AI, free Gemini or paid Gemini for a security-related task, there was
+%   no significant difference in code security between the conditions;
+%   programming experience improved security.
+% FOUND-VIA: scholar search S1, C1 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S1 (arxiv, openalex), C1 (openalex,
+%   s2); rank 40
+%   of the check by meaning, question 1.
+% PICKED: the largest controlled comparison with and without an assistant
+%   read here, with professional (freelance) developers and a 2024 model;
+%   qualifies the claim.
+% QUOTE (abstract): "While we did not observe significant differences
+%   between using Gemini in terms of secure software development,
+%   programming experience significantly improved code security and cannot
+%   be fully substituted by Gemini."
+% VERIFIED: full-text (arXiv v2, 2603.15298, preprint); applies because it
+%   has a no-AI control group. "We conducted an online study with 159
+%   developers recruited via Upwork" (Sect. 1).
+% COUNTER: see Perry2023Users
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Jost2026Gemini,
+  author       = {Jost, Nadine and Berens, Benjamin and Karl, Manuel and Horstmann, Stefan Albert and Johns, Martin and Naiakshina, Alena},
+  title        = {The Impact of {AI}-Assisted Development on Software Security: A Study of {Gemini} and Developer Experience},
+  year         = {2026},
+  howpublished = {arXiv preprint 2603.15298},
+  doi          = {10.48550/arXiv.2603.15298},
+  url          = {https://arxiv.org/pdf/2603.15298},
+}
+
+% === provenance: Serafini2025Manipulated ===
+% CLAIM: With a manipulated ChatGPT-like assistant suggesting insecure MD5
+%   password storage, 76 freelance developers showed high trust in the
+%   AI code; 32 % of those warned still accepted the weak suggestion, often
+%   expressing confidence.
+% FOUND-VIA: scholar search S2, S3, C2, C3 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S2 (openalex, scopus, wos), C2
+%   (scopus, wos), C3 (openalex, s2, scopus, wos); rank 8 of
+%   the check by meaning, question 1.
+% PICKED: peer-reviewed (CHI 2025) study of trust and confidence with
+%   developers; supports the over-trust half, in a manipulated setting.
+% QUOTE (abstract): "We found a high level of trust in AI-generated code,
+%   even when insecure suggestions were presented."
+% VERIFIED: abstract only (closed access; the publisher refused automated access also through the KTH tunnel, 2026-11-27); corroboration
+%   of over-trust, with the caveat that the assistant was manipulated to
+%   be insecure. To fetch.
+% COUNTER: see Perry2023Users
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Serafini2025Manipulated,
+  author    = {Serafini, Raphael and Yardim, Asli and Naiakshina, Alena},
+  title     = {Exploring the Impact of Intervention Methods on Developers' Security Behavior in a Manipulated {ChatGPT} Study},
+  booktitle = {Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems (CHI '25)},
+  publisher = {ACM},
+  year      = {2025},
+  pages     = {1--26},
+  doi       = {10.1145/3706598.3713989},
+  abstract  = {Increased AI use in software development raises concerns about AI-generated code security. We investigated the impact of security prompts, insecure AI suggestion warnings, and the use of password storage guidelines (OWASP, NIST) on the security behavior of software developers when presented with insecure AI assistance. In an online lab setting, we conducted a study with 76 freelance developers who completed a password storage task divided into four conditions. Three conditions included a manipulated ChatGPT-like AI assistant, suggesting an insecure MD5 implementation. We found a high level of trust in AI-generated code, even when insecure suggestions were presented. While security prompts, AI warnings, and guidelines improved security awareness, 32\% of those notified about insecure AI recommendations still accepted weak implementation suggestions, mistakenly considering it secure and often expressing confidence in their choice. Based on our results, we discuss security implications and provide recommendations for future research.},
+}
+
+% ---------------------------------------------------------------------
+% (b) How often generated code is vulnerable
+% ---------------------------------------------------------------------
+
+% === provenance: Pearce2022Asleep ===
+% CLAIM: Of 1,689 programs that GitHub Copilot generated for 89
+%   security-relevant scenarios (2021), about 40 % were vulnerable.
+% FOUND-VIA: scholar search S3, S5, S2, C3 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S3 (ieee, openalex, scopus), S5 (ieee,
+%   openalex, scopus); rank 1 of the check by meaning, question 3.
+% PICKED: the first systematic measurement, peer-reviewed (IEEE S&P 2022),
+%   replicated by Majdinasab2024Replication.
+% QUOTE (abstract): "In total, we produce 89 different scenarios for
+%   Copilot to complete, producing 1,689 programs. Of these, we found
+%   approximately 40 % to be vulnerable."
+% VERIFIED: full-text (arXiv v3, 2108.09293); applies because it measures
+%   the vulnerability rate of assistant-generated code; scenarios were
+%   built so that a CWE was possible, so the rate is not a base rate.
+% COUNTER: scholar search C3, C6 (insecure-code-queries.md) on wos, ieee,
+%   openalex, scopus, s2 -- found Majdinasab2024Replication (rate fell to
+%   27.25 % with a newer Copilot), Hamer2024Copy (ChatGPT code had 20 %
+%   fewer vulnerabilities than Stack Overflow answers),
+%   Asare2023Copilot (not as bad as humans), SantosdeMoura2026Newer
+%   (newer models safer); claim worded as "often", not as a fixed rate or
+%   as "worse than humans".
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Pearce2022Asleep,
+  author    = {Pearce, Hammond and Ahmad, Baleegh and Tan, Benjamin and Dolan-Gavitt, Brendan and Karri, Ramesh},
+  title     = {Asleep at the Keyboard? Assessing the Security of {GitHub Copilot}'s Code Contributions},
+  booktitle = {2022 IEEE Symposium on Security and Privacy (SP)},
+  publisher = {IEEE},
+  year      = {2022},
+  pages     = {754--768},
+  doi       = {10.1109/SP46214.2022.9833571},
+  url       = {https://arxiv.org/pdf/2108.09293},
+}
+
+% === provenance: Majdinasab2024Replication ===
+% CLAIM: Replicating Pearce2022Asleep with a newer Copilot, the share of
+%   vulnerable Python suggestions fell from 36.54 % to 27.25 %, but
+%   Copilot still suggested insecure code.
+% FOUND-VIA: scholar search S3, S5, C3, C6 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S3 (ieee, openalex, scopus, wos), C3
+%   (ieee, openalex, s2, scopus, wos); rank 7 of the check by meaning,
+%   question 3.
+% PICKED: peer-reviewed (SANER 2024) replication; shows both persistence
+%   and improvement over model versions.
+% QUOTE (abstract): "even with the improvements in newer versions of
+%   Copilot, the percentage of vulnerable code suggestions has reduced from
+%   36.54% to 27.25%. Nonetheless, it remains evident that the model still
+%   suggests insecure code."
+% VERIFIED: full-text (arXiv v1, 2311.11177); applies because it is a
+%   targeted replication on the same scenarios (Python only).
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Majdinasab2024Replication,
+  author    = {Majdinasab, Vahid and Bishop, Michael Joshua and Rasheed, Shawn and Moradidakhel, Arghavan and Tahir, Amjed and Khomh, Foutse},
+  title     = {Assessing the Security of {GitHub Copilot}'s Generated Code -- A Targeted Replication Study},
+  booktitle = {2024 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER)},
+  publisher = {IEEE},
+  year      = {2024},
+  pages     = {435--444},
+  doi       = {10.1109/SANER60148.2024.00051},
+  url       = {https://arxiv.org/pdf/2311.11177},
+}
+
+% === provenance: Fu2025Weaknesses ===
+% CLAIM: Of 733 AI-generated snippets found in GitHub projects, 29.5 % of
+%   the Python and 24.2 % of the JavaScript snippets had security
+%   weaknesses; Copilot Chat could fix up to 55.5 % of them.
+% FOUND-VIA: scholar search S3, S5, C3, C4, C6 (insecure-code-queries.md)
+%   -n insecure-code -l 0; returned by S3 (openalex, scopus, wos), S5
+%   (openalex, s2, scopus, wos), C4 (openalex, scopus, wos); rank 3 of the
+%   check by meaning, question 3.
+% PICKED: field data (real projects, not a benchmark), peer-reviewed
+%   (TOSEM 2025).
+% QUOTE (abstract): "Our analysis identified 733 snippets, revealing a high
+%   likelihood of security weaknesses, with 29.5% of Python and 24.2% of
+%   JavaScript snippets affected."
+% VERIFIED: full-text (arXiv v4, 2310.02059, the accepted TOSEM version);
+%   applies because it measures weaknesses in code attributed to AI tools
+%   in real repositories.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@article{Fu2025Weaknesses,
+  author  = {Fu, Yujia and Liang, Peng and Tahir, Amjed and Li, Zengyang and Shahin, Mojtaba and Yu, Jiaxin and Chen, Jinfu},
+  title   = {Security Weaknesses of {Copilot}-Generated Code in {GitHub} Projects: An Empirical Study},
+  journal = {ACM Transactions on Software Engineering and Methodology},
+  volume  = {34},
+  number  = {8},
+  pages   = {1--34},
+  year    = {2025},
+  doi     = {10.1145/3716848},
+  url     = {https://arxiv.org/pdf/2310.02059},
+}
+
+% === provenance: Asare2023Copilot ===
+% CLAIM: Prompted with the contexts in which human developers introduced
+%   C/C++ vulnerabilities, Copilot reproduced the vulnerable code about
+%   33 % of the time and the fix about 25 %; the authors conclude it is not
+%   as bad as human developers.
+% FOUND-VIA: scholar search S3, S5, C3, C4, C6 (insecure-code-queries.md)
+%   -n insecure-code -l 0; returned by S3 (openalex, scopus, wos), C3
+%   (openalex, s2, scopus, wos); rank 4 of the check by meaning,
+%   question 3.
+% PICKED: peer-reviewed (EMSE 2023) direct comparison with code written by
+%   humans; qualifies the claim.
+% QUOTE (abstract): "We find that Copilot replicates the original
+%   vulnerable code about 33% of the time while replicating the fixed code
+%   at a 25% rate." ... "we conclude that Copilot, despite performing
+%   differently across various vulnerability types, is not as bad as human
+%   developers at introducing vulnerabilities in code."
+% VERIFIED: full-text (arXiv v5, 2204.04741); applies to the comparison
+%   with human-introduced vulnerabilities.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@article{Asare2023Copilot,
+  author  = {Asare, Owura and Nagappan, Meiyappan and Asokan, N.},
+  title   = {Is {GitHub}'s {Copilot} as Bad as Humans at Introducing Vulnerabilities in Code?},
+  journal = {Empirical Software Engineering},
+  volume  = {28},
+  number  = {6},
+  year    = {2023},
+  doi     = {10.1007/s10664-023-10380-1},
+  url     = {https://arxiv.org/pdf/2204.04741},
+}
+
+% === provenance: Hamer2024Copy ===
+% CLAIM: For 108 security-related Java questions, ChatGPT-generated code
+%   had 20 % fewer CodeQL-detected vulnerabilities than the Stack Overflow
+%   answers (248 versus 302), a statistically significant difference.
+% FOUND-VIA: scholar search S2, S3, S6, C3, C7 (insecure-code-queries.md)
+%   -n insecure-code -l 0; returned by S3 (ieee, openalex, scopus, wos),
+%   C3 (ieee, openalex, s2, scopus, wos); rank 8 of the check by meaning,
+%   question 3.
+% PICKED: peer-reviewed (IEEE SPW 2024) comparison with the human-written
+%   source that novices otherwise copy from; qualifies the claim.
+% QUOTE (abstract): "ChatGPT-generated code contained 248 vulnerabilities
+%   compared to the 302 vulnerabilities found in SO snippets, producing 20%
+%   fewer vulnerabilities with a statistically significant difference."
+% VERIFIED: full-text (arXiv v1, 2403.15600); applies because it compares
+%   generated code with human answers to the same questions.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Hamer2024Copy,
+  author    = {Hamer, Sivana and d'Amorim, Marcelo and Williams, Laurie},
+  title     = {Just Another Copy and Paste? Comparing the Security Vulnerabilities of {ChatGPT} Generated Code and {StackOverflow} Answers},
+  booktitle = {2024 IEEE Security and Privacy Workshops (SPW)},
+  publisher = {IEEE},
+  year      = {2024},
+  pages     = {87--94},
+  doi       = {10.1109/SPW63631.2024.00014},
+  url       = {https://arxiv.org/pdf/2403.15600},
+}
+
+% === provenance: Wang2025Wild ===
+% CLAIM: In commits of the top 1,000 GitHub repositories and 7,000+
+%   CVE-linked changes, some CWE families are over-represented in
+%   AI-tagged code and near-identical insecure templates recur across
+%   unrelated projects.
+% FOUND-VIA: scholar search S3, S5, C3, C6 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S5 (openalex, s2), C6 (openalex, s2);
+%   rank 17 of the check by meaning, question 3.
+% PICKED: the largest field measurement read here; corroboration.
+% QUOTE (abstract): "some CWE families are overrepresented in AI-tagged
+%   code, and near-identical insecure templates recur across unrelated
+%   projects"
+% VERIFIED: full-text (arXiv v1, 2512.18567, preprint); corroboration; the
+%   AI/human labels come from the authors' own detector.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Wang2025Wild,
+  author       = {Wang, Bin and Yu, Wenjie and Zhong, Yilu and Yu, Hao and Lian, Keke and Lu, Chaohua and Zheng, Hongfang and Zhang, Dong and Li, Hui},
+  title        = {{AI} Code in the Wild: Measuring Security Risks and Ecosystem Shifts of {AI}-Generated Code in Modern Software},
+  year         = {2025},
+  howpublished = {arXiv preprint 2512.18567},
+  doi          = {10.48550/arXiv.2512.18567},
+  url          = {https://arxiv.org/pdf/2512.18567},
+}
+
+% === provenance: Lee2026HumanAI ===
+% CLAIM: Given the same Stack Overflow questions, three LLMs used
+%   security-sensitive functions more often than human answers did, but
+%   the human-written code used them more dangerously.
+% FOUND-VIA: scholar search S3, C3 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S3 (openalex, scopus, wos), C3
+%   (openalex, s2, scopus, wos); rank 46 of the check by meaning,
+%   question 2.
+% PICKED: a direct comparison with human-written code (SAC 2026 short
+%   paper, 3 pages); qualifies the claim.
+% QUOTE (abstract): "SSFs are used more in AI-generated code, but are more
+%   dangerously used in human-written code."
+% VERIFIED: abstract only (closed access; the publisher refused automated access also through the KTH tunnel, 2026-11-27); corroboration
+%   of Hamer2024Copy and Asare2023Copilot; a short paper.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Lee2026HumanAI,
+  author    = {Lee, Joonku and Ju, Sieun and Woo, Seunghoon and Lee, Heejo},
+  title     = {Human vs {AI}: Insecure Use of Security-Sensitive Functions in {AI}-generated Code in Comparison to Human-written Code},
+  booktitle = {Proceedings of the 41st ACM/SIGAPP Symposium on Applied Computing (SAC '26)},
+  publisher = {ACM},
+  year      = {2026},
+  pages     = {2045--2047},
+  doi       = {10.1145/3748522.3779860},
+  abstract  = {As unsafe code created by Large Language Models (LLMs) pose a significant security risk, uncovering the root cause of insecure AI-generated code has become a major challenge. This paper presents a comparative study between human-written code and AI-generated code to reveal the fundamental differences between LLMs and developers when creating dangerous code. Experiments focus on the unsafe use of Security-Sensitive Functions (SSFs), i.e., functions that are insecure when used improperly. Stack Overflow questions are used as common inputs for both programmers and three LLMs to create code samples, which are evaluated using multiple code testing tools. Our evaluation reveals that SSFs are used more in AI-generated code, but are more dangerously used in human-written code. SSFs that frequently cause vulnerabilities must be considered when preventing software risks in AI-generated code.},
+}
+
+% === provenance: Licorish2025Jury ===
+% CLAIM: On 72 Python tasks, both human-written and GPT-4 code had
+%   security flaws; the human code had a greater variety of problems, the
+%   GPT-4 code more severe outliers.
+% FOUND-VIA: scholar search S3 (insecure-code-queries.md) -n insecure-code
+%   -l 0; returned by S3 (openalex); kept as qualifies-claim by the tier-1
+%   classification.
+% PICKED: a direct comparison with human-written code; corroborates that
+%   generated code is not uniformly worse than human code.
+% QUOTE (abstract): "We observe security flaws in code generated by both
+%   humans and GPT-4, however, code generated by humans shows a greater
+%   variety of problems, but GPT-4 code included more severe outliers."
+% VERIFIED: full-text (arXiv v1, 2501.16857, preprint); corroboration,
+%   static analysis (Bandit) only.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Licorish2025Jury,
+  author       = {Licorish, Sherlock A. and Bajpai, Ansh and Arora, Chetan and Wang, Fanyu and Tantithamthavorn, Kla},
+  title        = {Comparing Human and {LLM} Generated Code: The Jury is Still Out!},
+  year         = {2025},
+  howpublished = {arXiv preprint 2501.16857},
+  doi          = {10.48550/arXiv.2501.16857},
+  url          = {https://arxiv.org/pdf/2501.16857},
+}
+
+% === provenance: Belozerov2026Repair ===
+% CLAIM: In 2,315 GPT-generated C/C++/C# snippets taken from real developer
+%   conversations (DevGPT), LLM-generated code was about as likely to
+%   contain vulnerabilities as developer-written code; newer models
+%   detected and repaired most of them.
+% FOUND-VIA: scholar search S3, C3, C4 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S3 (openalex, scopus, wos), C3
+%   (openalex, s2, wos), C4 (scopus, wos); kept as qualifies-claim by the
+%   tier-1 classification.
+% PICKED: peer-reviewed (EMSE 2026) field data from real developer use,
+%   with a comparison to developer-written code; qualifies the claim.
+% QUOTE (abstract): "We also observe that LLM-generated code is about as
+%   likely to contain vulnerabilities as developer-written code, and that
+%   LLMs may confidently provide incorrect information, posing risks for
+%   less experienced developers."
+% VERIFIED: full-text (arXiv 2504.20814, the EMSE article's preprint);
+%   applies to the comparison with developer-written code.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@article{Belozerov2026Repair,
+  author  = {Belozerov, Vladislav and Barclay, Peter J. and Sami, Ashkan},
+  title   = {Secure Coding with {AI} -- From Detection to Repair},
+  journal = {Empirical Software Engineering},
+  volume  = {31},
+  number  = {4},
+  year    = {2026},
+  doi     = {10.1007/s10664-026-10812-8},
+  url     = {https://arxiv.org/pdf/2504.20814},
+}
+
+% === provenance: Schreiber2025GitHub ===
+% CLAIM: Of 7,703 files in public GitHub repositories explicitly attributed
+%   to AI tools, 87.9 % had no CWE-mapped vulnerability found by CodeQL;
+%   rates differed by language (Python 16-18.5 %).
+% FOUND-VIA: scholar search S3, S5, C3, C6 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S3 (openalex, scopus, wos), S5
+%   (openalex, s2, scopus, wos); kept as qualifies-claim by the tier-1
+%   classification.
+% PICKED: peer-reviewed (ICICS 2025, LNCS) field measurement; qualifies
+%   the "often" rates from benchmarks.
+% QUOTE (abstract): "while 87.9% of AI-generated code does not contain
+%   identifiable CWE-mapped vulnerabilities, significant patterns emerge
+%   regarding language-specific vulnerabilities and tool performance"
+% VERIFIED: full-text (arXiv 2510.26103); applies to code that developers
+%   committed, static analysis only.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Schreiber2025GitHub,
+  author    = {Schreiber, Maximilian and Tippe, Pascal},
+  title     = {Security Vulnerabilities in {AI}-Generated Code: A Large-Scale Analysis of Public {GitHub} Repositories},
+  booktitle = {Information and Communications Security (ICICS)},
+  series    = {Lecture Notes in Computer Science},
+  publisher = {Springer},
+  year      = {2025},
+  pages     = {153--172},
+  doi       = {10.1007/978-981-95-3537-8_9},
+  url       = {https://arxiv.org/pdf/2510.26103},
+}
+
+% === provenance: CaballeroIgnacio2026Trends ===
+% CLAIM: In 253,390 AI-attributed and 9,544 human-written files on GitHub,
+%   human-written Python had a significantly higher prevalence of
+%   security-relevant CWEs than AI-attributed Python (21.08 % vs 11.15 %).
+% FOUND-VIA: scholar search S5, C6 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S5 (openalex, s2), C6 (openalex, s2);
+%   kept as qualifies-claim by the tier-1 classification.
+% PICKED: the largest in-the-wild comparison with human code found;
+%   qualifies the claim (workshop paper).
+% QUOTE (abstract): "human-written Python exhibited significantly higher
+%   security-relevant CWE prevalence than AI-attributed Python (21.08% vs
+%   11.15%)"
+% VERIFIED: abstract only (ACM, closed to automated access; no preprint
+%   found on arXiv); corroboration of Hamer2024Copy. To fetch.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{CaballeroIgnacio2026Trends,
+  author    = {Caballero-Ignacio, Clarisa and Stephens, Lucas and Sage, Josiah and Motwani, Manish and Ma, Zane},
+  title     = {Vulnerability Trends across Open-Source {AI}-Attributed Code},
+  booktitle = {Proceedings of the 2nd Workshop on Explainable and Reliable Software Systems},
+  publisher = {ACM},
+  year      = {2026},
+  pages     = {12--21},
+  doi       = {10.1145/3842650.3843174},
+  abstract  = {Recent advances in large language models (LLMs) have led to widespread adoption of AI-coding tools and increasing deployment of AI-assisted code. While AI's potential for programming productivity is becoming evident, the security of AI-attributed code is still poorly understood. In this work, we collect the largest set of in-the-wild AI-attributed code to date, examining 253,390 files containing AI-assisted code from seven tools and 9,544 human-written files from public GitHub repositories. Our analyses reveal significant differences in security-relevant CWE prevalence across programming languages and AI tools, with tool-specific differences varying by language. Additionally, human-written Python exhibited significantly higher security-relevant CWE prevalence than AI-attributed Python (21.08\% vs 11.15\%) and higher file-level CVSS severity. Ultimately, our results extend prior work showing that vulnerable AI-assisted code is making it into public repositories, indicating a need for stronger review practices and greater developer security awareness when using these tools.},
+}
+
+% === provenance: SantosdeMoura2026Newer ===
+% CLAIM: Across 32 LLMs from seven families (three releases each), newer
+%   models generate more secure code in absolute terms, but no family
+%   closes the gap between functional and secure code.
+% FOUND-VIA: scholar search S3 (insecure-code-queries.md) -n insecure-code
+%   -l 0; returned by S3 (openalex); rank 42 of the check by meaning,
+%   question 2, and rank 23 of question 4.
+% PICKED: the broadest longitudinal comparison of model generations read
+%   here (2026); directly answers "has it changed with newer models".
+% QUOTE (abstract): "Newer models do become safer in absolute terms,
+%   although no family closes the gap."
+% VERIFIED: full-text (arXiv v1, 2610.08240, preprint); applies because it
+%   follows the same benchmark (CWEval, 119 tasks, 31 CWEs) across model
+%   versions.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{SantosdeMoura2026Newer,
+  author       = {Santos de Moura, Thiago and Matuschek, Fynn and Toffalini, Flavio and Noller, Yannic},
+  title        = {Newer and Bigger, but Safer? A Longitudinal Study of the Functionality--Security Gap in {LLM}-Generated Code},
+  year         = {2026},
+  howpublished = {arXiv preprint 2610.08240},
+  doi          = {10.48550/arXiv.2610.08240},
+  url          = {https://arxiv.org/pdf/2610.08240},
+}
+
+% === provenance: Cannavale2026Smarter ===
+% CLAIM: Across four versions each of GPT, Llama and Claude Sonnet,
+%   functional correctness plateaued above 90 % while security improved
+%   only marginally (proprietary) or stagnated (open-weight), with
+%   occasional regressions.
+% FOUND-VIA: scholar search S3, C3 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S3 (ieee, openalex), C3 (ieee,
+%   openalex, s2).
+% PICKED: peer-reviewed (ICSME 2026) longitudinal study; corroborates and
+%   partly contrasts SantosdeMoura2026Newer.
+% QUOTE (abstract): "while proprietary models demonstrate marginal
+%   improvements, open-weight models exhibit stagnation, and the most
+%   advanced models occasionally introduce new regressions due to
+%   increased code complexity"
+% VERIFIED: abstract only (closed access; the publisher refused automated access also through the KTH tunnel, 2026-11-27); corroboration.
+%   To fetch.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Cannavale2026Smarter,
+  author    = {Cannavale, Alfonso and Recupito, Gilberto and De Roover, Coen and Palomba, Fabio and De Lucia, Andrea},
+  title     = {Smarter, but Not Safer: An Empirical Analysis of the Functional-Security Gap in Evolving {LLMs}},
+  booktitle = {2026 IEEE International Conference on Software Maintenance and Evolution (ICSME)},
+  publisher = {IEEE},
+  year      = {2026},
+  pages     = {356--367},
+  doi       = {10.1109/ICSME67971.2026.00039},
+  abstract  = {Large Language Models (LLMs) have become tools for software development and maintenance, demonstrating impressive capabilities in automating tasks such as code generation and refactoring. However, it remains empirically unclear whether the rapid scaling of these capabilities is accompanied by proportional improvements in security, or whether a discrepancy, defined as the Security-Functionality Gap, persists across model generations. To address this question, we conducted an evolutionary study analyzing the trajectory of 12 state-of-the-art models across the GPT, Llama, and Claude Sonnet lineages. By leveraging an outcome-driven benchmark based on dynamic execution, we quantified the divergence between the models' ability to generate functionally correct code versus secure code over four sequential versions per lineage. Results reveal that, while functional correctness has effectively plateaued (> 90\%) across all families, functional-security correctness has evolved more slowly. Specifically, while proprietary models demonstrate marginal improvements, open-weight models exhibit stagnation, and the most advanced models occasionally introduce new regressions due to increased code complexity. These findings suggest that security alignment is not an intrinsic byproduct of model scaling, highlighting the urgent need for external guardrails in AI-assisted maintenance pipelines.},
+}
+
+% === provenance: Bhatt2023CyberSecEval ===
+% CLAIM: In a 2023 benchmark of seven Llama 2, Code Llama and GPT models,
+%   models more capable at coding were more prone to insecure code
+%   suggestions.
+% FOUND-VIA: scholar search S9, C9 (insecure-code-queries.md; repair queries
+%   after the check by meaning, where it was rank 3 of question 2 and in no
+%   session) -n insecure-code -l 0; returned by S9 (openalex), C9
+%   (openalex, s2).
+% PICKED: a widely used industry benchmark (Meta) whose finding runs
+%   against "newer models are safer"; qualifies SantosdeMoura2026Newer
+%   for the 2023 models.
+% QUOTE (Sect. 1, key findings): "Models that are more capable at coding
+%   tend to be more prone to insecure code suggestions."
+% VERIFIED: full-text (arXiv v1, 2312.04724, technical report, not
+%   peer-reviewed); applies to the 2023 model families tested.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Bhatt2023CyberSecEval,
+  author       = {Bhatt, Manish and Chennabasappa, Sahana and Nikolaidis, Cyrus and Wan, Shengye and Evtimov, Ivan and Gabi, Dominik and Song, Daniel and Ahmad, Faizan and Aschermann, Cornelius and Fontana, Lorenzo and Frolov, Sasha and Giri, Ravi Prakash and Kapil, Dhaval and Kozyrakis, Yiannis and LeBlanc, David and Milazzo, James and Straumann, Aleksandar and Synnaeve, Gabriel and Vontimitta, Varun and Whitman, Spencer and Saxe, Joshua},
+  title        = {Purple Llama {CyberSecEval}: A Secure Coding Benchmark for Language Models},
+  year         = {2023},
+  howpublished = {arXiv preprint 2312.04724},
+  doi          = {10.48550/arXiv.2312.04724},
+  url          = {https://arxiv.org/pdf/2312.04724},
+}
+
+% === provenance: Zhao2026VibeCoding ===
+% CLAIM: On 186 real-world feature tasks (SusVibes), coding agents with
+%   frontier models perform poorly on security: 57 % of SWE-Agent with
+%   Claude 4 Sonnet solutions are functionally correct but only 11.8 % are
+%   secure.
+% FOUND-VIA: scholar search S3, S4, S5, C3, C6 (insecure-code-queries.md)
+%   -n insecure-code -l 0; returned by S4 (arxiv, openalex, s2, scopus),
+%   S5 (openalex, s2, scopus); rank 4 of the check by meaning, question 5.
+% PICKED: peer-reviewed (ICML 2026) benchmark of agentic tools on real
+%   repositories; answers the agentic part of sub-question (b).
+% QUOTE (abstract): "Although 57% of the solutions from SWE-Agent with
+%   Claude 4 Sonnet are functionally correct, only 11.8% are secure."
+% VERIFIED: full-text (arXiv v4, 2512.03262); applies because tasks are
+%   real feature requests whose human implementations were vulnerable, so
+%   the rate is for security-sensitive tasks, not all coding.
+% COUNTER: scholar search C5 (insecure-code-queries.md) on wos, openalex,
+%   scopus, s2 -- found Siddiq2026Agentic (agents mostly do security
+%   hardening in real PRs) and many new-technique papers that reduce
+%   vulnerabilities; claim worded as "not safe by default".
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Zhao2026VibeCoding,
+  author    = {Zhao, Songwen and Wang, Danqing and Zhang, Kexun and Luo, Jiaxuan and Li, Zhuo and Li, Lei},
+  title     = {Is Vibe Coding Safe? Benchmarking Vulnerability of Agent-Generated Code in Real-World Tasks},
+  booktitle = {Proceedings of the International Conference on Machine Learning (ICML 2026)},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {306},
+  year      = {2026},
+  doi       = {10.48550/arXiv.2512.03262},
+  url       = {https://arxiv.org/pdf/2512.03262},
+}
+
+% === provenance: Sun2026Propagate ===
+% CLAIM: Coding agents write vulnerable code more often when the existing
+%   code base contains insecure code, in backend generation and in C/C++
+%   repository tasks.
+% FOUND-VIA: scholar search S3 (insecure-code-queries.md) -n insecure-code
+%   -l 0; returned by S3 (openalex); rank 10 of the check by meaning,
+%   question 5.
+% PICKED: the only study read here of how agents treat vulnerabilities
+%   already present in a repository; corroboration.
+% QUOTE (abstract): "We find that in both settings, insecure existing code
+%   leads to agents writing vulnerable code more often."
+% VERIFIED: full-text (arXiv v1, 2611.11455, preprint); corroboration.
+% COUNTER: see Zhao2026VibeCoding
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Sun2026Propagate,
+  author       = {Sun, Chenhao and M{\"u}ndler-Sasahara, Niels and Vero, Mark and Vechev, Martin},
+  title        = {Coding Agents Propagate Vulnerabilities in Code Bases},
+  year         = {2026},
+  howpublished = {arXiv preprint 2611.11455},
+  doi          = {10.48550/arXiv.2611.11455},
+  url          = {https://arxiv.org/pdf/2611.11455},
+}
+
+% === provenance: DectotLeMonnier2026Agentic ===
+% CLAIM: Comparing 7,200 agent and 6,620 human pull requests in 818
+%   repositories, agents introduced fewer or less severe issues on small
+%   bug fixes, and differences on larger PRs were task-dependent; agent code
+%   was neither uniformly secure nor insecure.
+% FOUND-VIA: scholar search S4, C5 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S4 (openalex, s2, scopus), C5 (openalex,
+%   s2, scopus); rank 23 of the check by meaning, question 5.
+% PICKED: peer-reviewed (MSR 2026) field comparison of agents with human
+%   developers; qualifies the agentic part.
+% QUOTE (abstract): "agents introduce fewer or less severe issues on small,
+%   focused bug fixes, while differences on larger pull requests are
+%   task-dependent" ... "agent-generated code is neither uniformly secure nor
+%   insecure; its safety depends on task context"
+% VERIFIED: abstract only (ACM, closed to automated access; no preprint
+%   found on arXiv); a short paper (5 pages). To fetch.
+% COUNTER: see Zhao2026VibeCoding
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{DectotLeMonnier2026Agentic,
+  author    = {{Dectot--Le Monnier de Gouville}, Esteban and Hamdaqa, Mohammad and Chouchen, Moataz},
+  title     = {When {AI} Writes Code: Investigating Security Issues in Agentic Software Changes},
+  booktitle = {Proceedings of the 23rd International Conference on Mining Software Repositories (MSR)},
+  publisher = {ACM},
+  year      = {2026},
+  pages     = {832--836},
+  doi       = {10.1145/3793302.3793584},
+  abstract  = {AI code agents are increasingly used to generate software changes, raising questions about whether their outputs can be trusted. We investigate this by quantifying security issues in agent-generated code using a repository-level Static Application Security Testing (SAST) pipeline. We analyze 7,200 Agent Pull Requests (APRs) and 6,620 Human Pull Requests (HPRs) from 818 repositories with at least 500 GitHub stars, using four SAST engines to assess the introduction and severity of Common Weakness Enumeration (CWE) indicators. Our results show that agents introduce security risks (RQ1), including critical weaknesses such as hard-coded credentials and command injection. However, security performance varies across agents and task types, with statistically significant differences emerging for specific tasks (RQ2). Comparing agents to humans (RQ3), we find that agents introduce fewer or less severe issues on small, focused bug fixes, while differences on larger pull requests are task-dependent and driven by a small number of high-impact changes rather than systematic performance gaps. Overall, agent-generated code is neither uniformly secure nor insecure; its safety depends on task context, emphasizing the need for task-aware deployment and human-oversight.},
+}
+
+% === provenance: ChenJiang2025Agents ===
+% CLAIM: Of 4,892 patches from 10 software-development agents on 500
+%   SWE-Bench Verified issues, most agents maintained code reliability and
+%   security, avoiding new bugs or vulnerabilities.
+% FOUND-VIA: scholar search S4, S5, C5 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S4 (arxiv, ieee, openalex, s2, scopus,
+%   wos), C5 (openalex, s2, scopus, wos); kept as qualifies-claim by the
+%   tier-1 classification.
+% PICKED: peer-reviewed (SANER 2025) evaluation of agent patches on real
+%   issues; qualifies the agentic part (bug-fix tasks, not
+%   security-sensitive features).
+% QUOTE (abstract): "Most agents maintained code reliability and security,
+%   avoiding new bugs or vulnerabilities"
+% VERIFIED: full-text (arXiv 2410.12468); static analysis of patches.
+% COUNTER: see Zhao2026VibeCoding
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{ChenJiang2025Agents,
+  author    = {Chen, Zhi and Jiang, Lingxiao},
+  title     = {Evaluating Software Development Agents: Patch Patterns, Code Quality, and Issue Complexity in Real-World {GitHub} Scenarios},
+  booktitle = {2025 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER)},
+  publisher = {IEEE},
+  year      = {2025},
+  pages     = {657--668},
+  doi       = {10.1109/SANER64311.2025.00068},
+  url       = {https://arxiv.org/pdf/2410.12468},
+}
+
+% === provenance: Siddiq2026Agentic ===
+% CLAIM: Of over 33,000 agent-authored pull requests on GitHub, about 4 %
+%   are security-related, mostly hardening (tests, configuration, error
+%   handling) rather than vulnerability fixes, and they are merged less
+%   often than other agent PRs.
+% FOUND-VIA: scholar search S4, S5, C4, C5, C6 (insecure-code-queries.md)
+%   -n insecure-code -l 0; returned by S4 (openalex, scopus, wos), C5
+%   (openalex, scopus, wos); rank 13 of the check by meaning, question 5.
+% PICKED: peer-reviewed (IST) field study of agents in real repositories;
+%   qualifies the agentic part (agents also contribute security work).
+% QUOTE (abstract, across a page break): "Security-related Agentic-PRs
+%   constitute a meaningful share of ... agent activity (approximately 4%).
+%   Rather than focusing solely
+%   on vulnerability fixes, agents most frequently perform supportive
+%   security hardening activities"
+% VERIFIED: full-text (arXiv v2, 2601.00477, of the IST article);
+%   applies to what agents contribute, not to vulnerability rates.
+% COUNTER: see Zhao2026VibeCoding
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@article{Siddiq2026Agentic,
+  author  = {Siddiq, Mohammed Latif and Zhao, Xinye and Lopes, Vinicius Carvalho and Casey, Beatrice and Santos, Joanna C. S.},
+  title   = {Security in the Age of {AI} Teammates: An Empirical Study of Agentic Pull Requests on {GitHub}},
+  journal = {Information and Software Technology},
+  volume  = {201},
+  pages   = {108333},
+  year    = {2027},
+  doi     = {10.1016/j.infsof.2026.108333},
+  url     = {https://arxiv.org/pdf/2601.00477},
+}
+
+% === provenance: Blain2026Broken ===
+% CLAIM: Of 3,500 code artifacts from seven LLMs for 500 security-critical
+%   prompts, 55.8 % contained at least one vulnerability found by the
+%   authors' formal-verification pipeline.
+% FOUND-VIA: scholar search S3 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S3 (openalex); rank 30 of the check by meaning, question 1,
+%   and rank 23 of question 2.
+% PICKED: corroboration only: a vendor preprint by the founders of the
+%   company whose tool (COBALT) it evaluates; lower evidence grade.
+% QUOTE (abstract): "Across all models, 55.8% of artifacts contain at least
+%   one COBALT-identified vulnerability"
+% VERIFIED: full-text (arXiv v2, 2604.05292); corroboration, vendor
+%   evaluation of its own tool, not peer-reviewed.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Blain2026Broken,
+  author       = {Blain, Dominik and Noiseux, Maxime},
+  title        = {Broken by Default: A Formal Verification Study of Security Vulnerabilities in {AI}-Generated Code},
+  year         = {2026},
+  howpublished = {arXiv preprint 2604.05292},
+  doi          = {10.48550/arXiv.2604.05292},
+  url          = {https://arxiv.org/pdf/2604.05292},
+}
+
+% === provenance: Patir2026SoK ===
+% CLAIM: Models and coding agents can recognise relevant secure-coding
+%   principles but still fail to turn them into secure and functional code.
+% FOUND-VIA: scholar search S3, S4, C3, C5 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S4 (arxiv, openalex, s2), C5
+%   (openalex, s2); rank 37 of the check by meaning, question 1.
+% PICKED: systematisation of knowledge (2026) with its own evaluation
+%   across models and agents; corroboration.
+% QUOTE (abstract): "substantial knowledge-actuation gaps remain: models
+%   can recognize relevant security principles but still fail to
+%   translate them into secure and functional code."
+% VERIFIED: full-text (arXiv v1, 2606.25195, preprint); corroboration.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Patir2026SoK,
+  author       = {Patir, Rupam and Guo, Keyan and Cai, Haipeng and Hu, Hongxin},
+  title        = {{SoK}: {AI} Secure Code Generation: Progress, Pitfalls, and Paths Forward},
+  year         = {2026},
+  howpublished = {arXiv preprint 2606.25195},
+  doi          = {10.48550/arXiv.2606.25195},
+  url          = {https://arxiv.org/pdf/2606.25195},
+}
+
+% ---------------------------------------------------------------------
+% (c) Package hallucination
+% ---------------------------------------------------------------------
+
+% === provenance: Spracklen2025Package ===
+% CLAIM: Across 16 code-generating LLMs and 576,000 code samples, at least
+%   5.2 % (commercial models) and 21.7 % (open-source models) of suggested
+%   packages did not exist, with 205,474 unique hallucinated names.
+% FOUND-VIA: scholar search S7, S8, C8 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S7 (arxiv, openalex, scopus, wos), S8
+%   (arxiv, openalex, s2, scopus, wos); rank 1 of the check by meaning,
+%   question 6.
+% PICKED: the primary large-scale measurement, peer-reviewed (USENIX
+%   Security 2025), replicated by Churilov2026Range.
+% QUOTE (abstract): "the average percentage of hallucinated packages is at
+%   least 5.2% for commercial models and 21.7% for open-source models,
+%   including a staggering 205,474 unique examples of hallucinated package
+%   names"
+% VERIFIED: full-text (arXiv v3, 2406.10279, 2 Mar 2025); applies because
+%   it measures how often generated code names non-existent packages.
+%   Pages from the USENIX page (citation_firstpage 3687, lastpage 3706).
+% COUNTER: scholar search C8 (insecure-code-queries.md) on wos, openalex,
+%   scopus, s2 -- found Churilov2026Range (2026 frontier models 3.6-5.0 %
+%   of mentions; about 1 % of names registered in six months) and
+%   Okwor2026Registration (0 of 22 registered hallucinated names
+%   malicious); exploitation claim softened to "rarely observed".
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Spracklen2025Package,
+  author    = {Spracklen, Joseph and Wijewickrama, Raveen and Sakib, A. H. M. Nazmus and Maiti, Anindya and Viswanath, Bimal and Jadliwala, Murtuza},
+  title     = {We Have a Package for You! A Comprehensive Analysis of Package Hallucinations by Code Generating {LLMs}},
+  booktitle = {34th USENIX Security Symposium (USENIX Security 25)},
+  publisher = {USENIX Association},
+  year      = {2025},
+  pages     = {3687--3706},
+  isbn      = {978-1-939133-52-6},
+  url       = {https://arxiv.org/pdf/2406.10279},
+}
+
+% === provenance: Krishna2025Phantoms ===
+% CLAIM: Package hallucination rates depend on the model, the programming
+%   language, model size and how specific the coding request is.
+% FOUND-VIA: scholar search S7, S8, S3, C3 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S7 (arxiv, openalex), S8 (arxiv,
+%   openalex, s2); rank 3 of the check by meaning, question 6.
+% PICKED: independent measurement (2025); corroborates and qualifies
+%   (rates vary).
+% QUOTE (abstract): "package hallucination rate is predicated not only on
+%   model choice, but also programming language, model size, and
+%   specificity of the coding task request."
+% VERIFIED: full-text (arXiv v1, 2501.19012, preprint); corroboration.
+% COUNTER: see Spracklen2025Package
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Krishna2025Phantoms,
+  author       = {Krishna, Arjun and Galinkin, Erick and Derczynski, Leon and Martin, Jeffrey},
+  title        = {Importing Phantoms: Measuring {LLM} Package Hallucination Vulnerabilities},
+  year         = {2025},
+  howpublished = {arXiv preprint 2501.19012},
+  doi          = {10.48550/arXiv.2501.19012},
+  url          = {https://arxiv.org/pdf/2501.19012},
+}
+
+% === provenance: Djire2026Defenses ===
+% CLAIM: Earlier evaluations inflated package hallucination rates by
+%   counting standard-library modules as hallucinations, by up to 9.4
+%   percentage points for Python; adversarial prompts raise the rate by up
+%   to 45 points.
+% FOUND-VIA: scholar search S7, S8, C8 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S7 (arxiv, openalex, s2, scopus), S8
+%   (arxiv, openalex, s2, scopus), C8 (openalex, s2, scopus); rank 27 of
+%   the check by meaning, question 6.
+% PICKED: peer-reviewed (ASE 2026) measurement that qualifies the published
+%   rates.
+% QUOTE (abstract): "we show that prior evaluation methodologies
+%   systematically inflate hallucination rates by misclassifying
+%   standard-library modules as hallucinations in some languages. For
+%   Python, the overestimation reaches 9.4 percentage points."
+% VERIFIED: full-text (arXiv 2608.22652); qualifies the size of the
+%   rates, not their existence.
+% COUNTER: see Spracklen2025Package
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@inproceedings{Djire2026Defenses,
+  author    = {Djire, Alberick Euraste and Olatunji, Iyiola E. and Tessa, Melissa and Barr, Earl T. and Klein, Jacques and Bissyand{\'e}, Tegawend{\'e} F.},
+  title     = {Evaluating Inference-Time Defenses against Package Hallucination in {LLM}-Generated Code},
+  booktitle = {Proceedings of the 41st IEEE/ACM International Conference on Automated Software Engineering (ASE)},
+  publisher = {ACM},
+  year      = {2026},
+  pages     = {3290--3302},
+  doi       = {10.1145/3832783.3837555},
+  url       = {https://arxiv.org/pdf/2608.22652},
+}
+
+% === provenance: Churilov2026Range ===
+% CLAIM: Five 2026 frontier models still hallucinate 3.6-5.0 % of the
+%   packages they mention; about 1 % of hallucinated names were registered
+%   within six months, and one was registered with malware.
+% FOUND-VIA: scholar search S7, S8, C8 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by S7 (arxiv, openalex), S8 (arxiv,
+%   openalex, s2), C8 (openalex, s2); rank 8 of the check by meaning,
+%   question 6.
+% PICKED: the only replication with 2026 models read here; answers
+%   whether newer models changed the rate, and measures exploitation.
+% QUOTE (abstract): "Hallucination rates are 3.6-5.0% of package mentions
+%   (2.2-3.4% of generations)" ... "about 1% of hallucinated names were
+%   registered within six months" ... "one hallucinated name was
+%   registered with malware after our runs."
+% VERIFIED: full-text (arXiv v4, 2605.17062, November 2026); single-author
+%   preprint by an independent researcher, not peer-reviewed in this
+%   version (a workshop version is mentioned); weight accordingly.
+% COUNTER: see Spracklen2025Package
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Churilov2026Range,
+  author       = {Churilov, Aleksandr},
+  title        = {The Range Shrinks, the Threat Remains: Re-evaluating {LLM} Package Hallucinations on the 2026 Frontier-Model Cohort},
+  year         = {2026},
+  howpublished = {arXiv preprint 2605.17062, version 4},
+  doi          = {10.48550/arXiv.2605.17062},
+  url          = {https://arxiv.org/pdf/2605.17062},
+}
+
+% === provenance: Okwor2026Registration ===
+% CLAIM: Of 1,641 package names invented by five open-weight code models,
+%   none had been registered; of 149 previously reported hallucinated
+%   names, 22 were registered and none of those was malicious.
+% FOUND-VIA: scholar search S7, S8, C8 (insecure-code-queries.md) -n
+%   insecure-code -l 0; returned by openalex for all three; rank 6 of the
+%   check by meaning, question 6.
+% PICKED: the only study read here that measures exploitation directly;
+%   qualifies the slopsquatting claim.
+% QUOTE (abstract): "22 are registered, and adjudicating each by true
+%   registration date and static content inspection, zero are malicious"
+% VERIFIED: full-text (Zenodo preprint, 2026-07-05); single-author grey
+%   literature, not peer-reviewed; small registered sample (22) as the
+%   author states; weight accordingly.
+% COUNTER: see Spracklen2025Package
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Okwor2026Registration,
+  author       = {Okwor, Daniel},
+  title        = {From Hallucination to Registration: Do the Package Names That {LLMs} Invent Actually Get Claimed?},
+  year         = {2026},
+  howpublished = {Preprint, Zenodo},
+  doi          = {10.5281/zenodo.21199426},
+  url          = {https://zenodo.org/api/records/21199427/files/slopsquatting_census.pdf/content},
+}
+
+% ---------------------------------------------------------------------
+% Method
+% ---------------------------------------------------------------------
+
+% === provenance: Rethlefsen2021PRISMAS ===
+% CLAIM: PRISMA-S item 16 asks a search report to describe how records
+%   from several databases were deduplicated (cited in the Method only).
+% FOUND-VIA: known item: named with its DOI in the backing-claims skill's
+%   appendix guide (deduplication paragraph); retrieved by DOI from
+%   OpenAlex (works/doi:10.1186/s13643-020-01542-z) and read in the
+%   University of Ottawa repository copy.
+% PICKED: the reporting guideline whose item the Method follows.
+% QUOTE (Table 1, item 16): "Describe the processes and any software used
+%   to deduplicate records from multiple database searches and other
+%   information sources."
+% VERIFIED: full-text (open-access article, repository copy); applies
+%   because the Method reports deduplication as this item asks.
+% COUNTER: none found, searched: not searched -- a reporting guideline
+%   cited for what it asks, not for a claim about the world.
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@article{Rethlefsen2021PRISMAS,
+  author  = {Rethlefsen, Melissa L. and Kirtley, Shona and Waffenschmidt, Siw and Ayala, Ana Patricia and Moher, David and Page, Matthew J. and Koffel, Jonathan B. and Blunt, Heather and Brigham, Tara and Chang, Steven and Clark, Justin and Conway, Aislinn and Couban, Rachel and de Kock, Shelley and Farrah, Kelly and Fehrmann, Paul and Foster, Margaret and Fowler, Susan A. and Glanville, Julie and Harris, Elizabeth and Hoffecker, Lilian and Isojarvi, Jaana and Kaunelis, David and Ket, Hans and Levay, Paul and Lyon, Jennifer and McGowan, Jessie and Murad, M. Hassan and Nicholson, Joey and Pannabecker, Virginia and Paynter, Robin and Pinotti, Rachel and Ross-White, Amanda and Sampson, Margaret and Shields, Tracy and Stevens, Adrienne and Sutton, Anthea and Weinfurter, Elizabeth and Wright, Kath and Young, Sarah and {PRISMA-S Group}},
+  title   = {{PRISMA-S}: An Extension to the {PRISMA} Statement for Reporting Literature Searches in Systematic Reviews},
+  journal = {Systematic Reviews},
+  volume  = {10},
+  number  = {1},
+  pages   = {39},
+  year    = {2021},
+  doi     = {10.1186/s13643-020-01542-z},
+  url     = {https://ruor.uottawa.ca/bitstreams/e6f88dad-d0a6-4c09-bf30-c85327e27402/download},
+}

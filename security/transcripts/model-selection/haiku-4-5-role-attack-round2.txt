@@ -1,0 +1,4 @@
+Round 2: the scripted attack that worked most often
+Model: anthropic/claude-haiku-4-5-20251001; 3 tries per attack and bot;
+recorded 2026-11-27 with record.py.
+

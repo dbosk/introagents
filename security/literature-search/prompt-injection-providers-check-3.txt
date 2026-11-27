@@ -1,0 +1,15 @@
+2026-11-27T13:41:20+01:00
+Route: proxy socks5h://127.0.0.1:1081 (SCHOLAR_PROXY)
+  s2                  Yes          ok                                           
+  openalex            Yes          ok                API key configured;        
+  wos                 Yes          ok                                           
+  ieee                Yes          quota exhausted   daily quota spent          
+  ssrn                Yes          ok                shares the openalex key    
+  biorxiv             Yes          ok                shares the openalex key    
+  medrxiv             Yes          ok                shares the openalex key    
+  chemrxiv            Yes          ok                shares the openalex key    
+  researchsquare      Yes          ok                shares the openalex key    
+  preprintsorg        Yes          ok                shares the openalex key    
+  iacr                Yes          ok                shares the openalex key    
+  openalex-semantic   Yes          ok                shares the openalex key    
+  scopus              Yes          ok                COMPLETE view (abstracts,  

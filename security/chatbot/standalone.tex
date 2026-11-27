@@ -1,0 +1,47 @@
+% The support chatbot's literate program typeset on its own.  The body,
+% chatbot.tex, is woven from chatbot.nw as a chapter without a preamble,
+% so that the lecture notes can include it as an appendix; this driver
+% gives it a title, a bibliography and the indices.  It loads only
+% packages that the lecture's preamble (../preamble.tex) also loads,
+% plus noweb, so that a body that builds here builds there too.
+\documentclass[a4paper,11pt,oneside]{memoir}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[swedish,british]{babel}
+\usepackage{booktabs}
+\usepackage{import}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit}
+\usepackage[strict]{csquotes}
+\usepackage{minted}
+\usepackage[natbib,style=verbose,citestyle=verbose,singletitle=false,
+            maxbibnames=99]{biblatex}
+\addbibresource{../literature-search/known-items.bib}
+\usepackage[colorlinks]{hyperref}
+\usepackage[capitalise]{cleveref}
+
+\usepackage[minted]{noweb}
+\noweboptions{breakcode}
+
+\title{Mossberry Mercantile's support chatbot:\\
+  a deliberately vulnerable bot for a classroom attack}
+\author{Daniel Bosk and Dan-Claude\thanks{%
+  Dan-Claude is the first author's AI agent.  The program was written
+  by Claude Opus~5.5 working as Dan-Claude, from a plan approved by
+  the first author.}}
+
+\begin{document}
+\maketitle
+\tableofcontents*
+
+\import{./}{chatbot.tex}
+
+\printbibliography
+
+\chapter*{Index of chunks}
+\nowebchunks
+
+\chapter*{Index of identifiers}
+\nowebindex
+\end{document}

@@ -1,0 +1,69 @@
+% The appendices that back the notes' claims: first how the claims were
+% checked, then one chapter per claim that took a literature search.
+% Each search chapter is written from that search's record and lives in
+% literature-search/.
+
+\chapter{How the claims in these notes were checked}
+\label{app:checking}
+
+These notes ask who checks, so they owe the reader the same answer
+about themselves.
+Much of the text was drafted with an AI agent, and none of its claims
+was taken from what a language model remembers.
+Each was checked in one of three ways.
+
+\section{Claims about programs}
+What a program does is shown by running it.
+The output in \cref{ex:primes-run} is produced when these notes are
+built, by the program printed in \cref{ex:primes}.
+The conversations with the support bot are recordings of real runs,
+with the model and the date in their headers, and the bot's own source,
+with its tests, is printed in full in \cref{bot:chapter}.
+
+\section{Claims that a source says something}
+What a named source says (a news report, a standard, a court's
+decision) was checked by opening that source and copying the passage.
+The bibliography entry of every such source records the passage and the
+date it was read.
+
+\section{Claims about what is true in general}
+A claim about how things are (who gains from AI assistance, whether an
+attack can be prevented) cannot be settled by one source that agrees.
+Each such claim was turned into a question and searched for in the
+research literature in both directions: for studies that support it and
+for studies that contradict or limit it.
+The appendices that follow report those searches, one question each:
+which databases were searched with which queries, what was found, and
+what the notes may therefore say.
+
+\section{Who did the checking}
+The searches and the first reading of the sources were done by AI
+agents, which recorded a verbatim passage for every source they cite.
+An appendix marked \enquote{awaiting human review} has not yet been
+gone through by the author.
+
+% One chapter per backed claim, each written by its search.  A chapter
+% is included once its search has also delivered the table of hits that
+% the chapter ends with.
+%
+% A chapter's title is its research question, which is too long for the
+% running head (two lines there make every page 12pt too tall), so each
+% chapter gets a short form of the question for the head.
+\newcommand{\searchhead}{}
+\makeatletter
+\renewcommand{\chaptermark}[1]{%
+  \markboth{\@chapapp\ \thechapter.\ \searchhead}%
+           {\@chapapp\ \thechapter.\ \searchhead}%
+}
+\makeatother
+\newcommand{\searchchapter}[2]{%
+  \renewcommand{\searchhead}{#2}%
+  \IfFileExists{literature-search/#1-full.tex}%
+    {\InputIfFileExists{literature-search/#1-chapter.tex}{}{}}%
+    {}%
+}
+\searchchapter{who-gains}{Who gains more from AI assistance?}
+\searchchapter{insecure-code}%
+  {Is code written with an AI assistant less secure?}
+\searchchapter{prompt-injection}%
+  {Can prompt injection be reliably prevented?}

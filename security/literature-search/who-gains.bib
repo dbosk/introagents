@@ -1,0 +1,747 @@
+% who-gains.bib -- sources for "Who gains more from generative-AI assistance at work?"
+% Screened and verified by an AI agent on 2026-11-27; awaiting human review.
+
+% === provenance: Brynjolfsson2025Generative ===
+% CLAIM: In customer support, generative-AI assistance raised the productivity of
+%   novice and low-skilled agents most, with minimal effect (and small quality
+%   declines) for the most experienced and skilled.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C2/openalex (place 18), C2/wos (place 1),
+%   C2/scopus (place 2), C1/openalex (place 163), C1/wos (place 4), C1/scopus
+%   (place 6), C2/s2 (place 99), C1/s2 (place 708)
+% PICKED: Largest field study of the question (5,172 agents, staggered roll-out),
+%   top-5 economics journal; primary source. The 2023 NBER version was read in
+%   full; the QJE version in abstract.
+% QUOTE (abstract, arXiv v2 = QJE version): "Less experienced and lower-skilled workers improve both the speed and
+%   quality of their output"
+% VERIFIED: full-text of arXiv 2304.11771v2 (November 2024, whose abstract matches the
+%   QJE abstract: the most experienced and highest-skilled workers "see small
+%   gains in speed and small declines in quality") and of NBER WP 31161 (2023:
+%   "a 34% improvement for novice and low-skilled workers"). Applies: direct
+%   comparison by skill and tenure.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@article{Brynjolfsson2025Generative,
+  author = {Brynjolfsson, Erik and Li, Danielle and Raymond, Lindsey},
+  title = {Generative {AI} at Work},
+  journal = {The Quarterly Journal of Economics},
+  year = {2025},
+  volume = {140},
+  number = {2},
+  pages = {889--942},
+  doi = {10.1093/qje/qjae044},
+  abstract = {We study the staggered introduction of a generative AI–based conversational assistant using data from 5,172 customer-support agents. Access to AI assistance increases worker productivity, as measured by issues resolved per hour, by 15\% on average, with substantial heterogeneity across workers. The effects vary significantly across different agents. Less experienced and lower-skilled workers improve both the speed and quality of their output, while the most experienced and highest-skilled workers see small gains in speed and small declines in quality.},
+}
+
+% === provenance: Noy2023Experimental ===
+% CLAIM: In professional writing tasks, ChatGPT access reduced inequality between
+%   workers because lower-ability workers gained more (in quality and time),
+%   while higher-ability workers kept their quality and became faster.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C1/s2 (place 1132), S1/s2 (place 352)
+% PICKED: Preregistered RCT with professionals in Science; the earliest experimental
+%   evidence on the question. The Science full text sits behind a Cloudflare
+%   check (also through the KTH tunnel), so the authors' March 2023 working
+%   paper (444 participants; the published version reports 453) was read in
+%   full, and the published abstract.
+% QUOTE (abstract, working paper): "Inequality between workers decreases, as ChatGPT compresses the
+%   productivity distribution by benefiting low-ability workers more."
+% QUOTE (section 2.3, working paper): "This reduction in inequality is driven by the fact that participants who
+%   scored lower on the first round benefit more from ChatGPT access"
+% VERIFIED: full-text of the March 2023 MIT working paper (economics.mit.edu copy)
+%   plus the published Science abstract (OpenAlex). Applies: direct comparison
+%   by first-round grade; the working paper also reports that ChatGPT mostly
+%   substitutes for effort rather than complementing skills.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@article{Noy2023Experimental,
+  author = {Noy, Shakked and Zhang, Whitney},
+  title = {Experimental Evidence on the Productivity Effects of Generative Artificial Intelligence},
+  journal = {Science},
+  year = {2023},
+  volume = {381},
+  number = {6654},
+  pages = {187--192},
+  doi = {10.1126/science.adh2586},
+  abstract = {We examined the productivity effects of a generative artificial intelligence (AI) technology, the assistive chatbot ChatGPT, in the context of midlevel professional writing tasks. In a preregistered online experiment, we assigned occupation-specific, incentivized writing tasks to 453 college-educated professionals and randomly exposed half of them to ChatGPT. Our results show that ChatGPT substantially raised productivity: The average time taken decreased by 40\% and output quality rose by 18\%. Inequality between workers decreased, and concern and excitement about AI temporarily rose.},
+}
+
+% === provenance: DellAcqua2026Navigating ===
+% CLAIM: For consultants on tasks inside the AI frontier, bottom-half performers
+%   gained most (43 % vs 17 %); on a task outside the frontier, AI users were
+%   less likely to be correct.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C1/wos (place 281), S2/wos (place 165)
+% PICKED: Preregistered RCT with 758 BCG consultants; defines the inside/outside-
+%   frontier moderator. Working-paper full text read (MIT Sloan copy of SSRN
+%   4573321); the published Organization Science abstract keeps the out-of-
+%   frontier result but not the 43/17 split.
+% QUOTE (abstract, working paper, sentence 6): "those below the average performance threshold increasing by 43% and those
+%   above increasing by 17% compared to their own scores"
+% QUOTE (abstract, working paper, sentence 7): "consultants using AI were 19 percentage points less likely to produce
+%   correct solutions compared to those without AI"
+% VERIFIED: full-text of the 2023 working paper (HBS WP 24-013 / SSRN 4573321);
+%   published abstract read (OpenAlex). Applies: skill split inside the
+%   frontier and harm outside it in one experiment.
+% COUNTER: both directions searched in session who-gains (S1 amplify, S2 harm, C1
+%   equalize, C2 heterogeneity, C3 verification/task, C4 perceived, C5
+%   reviews, C6-C7 design repairs) -- levelling and amplification both found;
+%   this source is used only for the moderator it reports
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@article{DellAcqua2026Navigating,
+  author = {Dell'Acqua, Fabrizio and McFowland, III, Edward and Mollick, Ethan and Lifshitz, Hila and Kellogg, Katherine C. and Rajendran, Saran and Krayer, Lisa and Candelon, Fran{\c{c}}ois and Lakhani, Karim R.},
+  title = {Navigating the Jagged Technological Frontier: Field Experimental Evidence of the Effects of Artificial Intelligence on Knowledge Worker Productivity and Quality},
+  journal = {Organization Science},
+  year = {2026},
+  volume = {37},
+  number = {2},
+  pages = {403--423},
+  doi = {10.1287/orsc.2025.21838},
+  note = {Working paper version: Harvard Business School Working Paper 24-013, 2023, doi:10.2139/ssrn.4573321},
+}
+
+% === provenance: Cui2026Effects ===
+% CLAIM: Across three field RCTs with 4,867 developers, less experienced developers
+%   had greater productivity gains from an AI coding assistant.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C1/openalex (place 7), C1/wos (place 24),
+%   C3/openalex (place 2), C3/wos (place 48), C1/s2 (place 1782), C3/s2 (place
+%   3431), C6/s2 (place 79)
+% PICKED: Largest randomised evidence on coding assistants at work (Microsoft,
+%   Accenture, a Fortune 100 firm); Management Science.
+% QUOTE (abstract): "less experienced developers had higher adoption rates and greater
+%   productivity gains"
+% VERIFIED: abstract only, corroboration (no open copy found; the publisher (INFORMS)
+%   and SSRN answered with a Cloudflare bot check, also through the KTH
+%   tunnel, 2026-11-27). Applies: direct comparison by experience.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@article{Cui2026Effects,
+  author = {Cui, Kevin Zheyuan and Demirer, Mert and Jaffe, Sonia and Musolff, Leon and Peng, Sida and Salz, Tobias},
+  title = {The Effects of Generative {AI} on High-Skilled Work: Evidence from Three Field Experiments with Software Developers},
+  journal = {Management Science},
+  year = {2026},
+  volume = {72},
+  number = {11},
+  pages = {9408--9420},
+  doi = {10.1287/mnsc.2025.00535},
+  abstract = {This study evaluates the effect of generative artificial intelligence (AI) on software developer productivity via randomized controlled trials at Microsoft, Accenture, and an anonymous Fortune 100 company. These field experiments, run by the companies as part of their ordinary course of business, provided a random subset of developers with access to an AI-based coding assistant suggesting intelligent code completions. Although each experiment is noisy and results vary across experiments, when data are combined across three experiments and 4,867 developers, our analysis reveals a 26.08\% increase (standard error: 10.3\%) in completed tasks among developers using the AI tool. Notably, less experienced developers had higher adoption rates and greater productivity gains.},
+}
+
+% === provenance: Peng2023Impact ===
+% CLAIM: In a controlled Copilot experiment, developers with less programming
+%   experience benefited most.
+% FOUND-VIA: scholar sessions check who-gains -s "Experienced software developers using
+%   AI coding tools were slower in a randomized controlled trial despite
+%   believing they were faster." (OpenAlex semantic search), place 2; in no
+%   keyword answer, since its abstract names no skill or experience term
+% PICKED: Early controlled experiment on Copilot; corroborates the coding field
+%   RCTs. Preprint.
+% QUOTE (p. 2): "Developers with less programming experience, older programmers, and those
+%   who program more hours per day benefited the most."
+% VERIFIED: full-text of arXiv 2302.06590. Applies: heterogeneity by experience in a
+%   randomised task.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@misc{Peng2023Impact,
+  author = {Peng, Sida and Kalliamvakou, Eirini and Cihon, Peter and Demirer, Mert},
+  title = {The Impact of {AI} on Developer Productivity: Evidence from {GitHub} {Copilot}},
+  year = {2023},
+  eprint = {2302.06590},
+  archiveprefix = {arXiv},
+  doi = {10.48550/arXiv.2302.06590},
+}
+
+% === provenance: Cruces2026Does ===
+% CLAIM: In a randomised workplace-style task, AI closed about three quarters of
+%   the education gap, yet higher-education participants used the tool more
+%   effectively and the gap re-emerged without AI.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C2/openalex (place 102), C1/openalex (place 4),
+%   S2/openalex (place 636), C7/openalex (place 36)
+% PICKED: Recent RCT (1,174 adults) outside firms, so skill varies more than within
+%   one employer; includes a no-AI follow-up. NBER working paper.
+% QUOTE (abstract, results): "AI increases performance for all participants, with substantially larger
+%   gains for lower-education individuals"
+% QUOTE (abstract, chat logs): "higher-education participants use the tool more effectively across
+%   several margins"
+% QUOTE (abstract, follow-up): "although a sizable education gap re-emerges"
+% VERIFIED: full-text of NBER WP 34851. Applies: levelling while assisted, persistence
+%   of the gap without AI.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@techreport{Cruces2026Does,
+  author = {Cruces, Guillermo and Fernandez Meijide, Diego and Galiani, Sebastian and G{\'a}lvez, Ramiro H. and Lombardi, Mar{\'i}a},
+  title = {Does Generative {AI} Narrow Education-Based Productivity Gaps? Evidence from a Randomized Experiment},
+  institution = {National Bureau of Economic Research},
+  type = {Working Paper},
+  number = {34851},
+  year = {2026},
+  doi = {10.3386/w34851},
+}
+
+% === provenance: Ni2026Generative ===
+% CLAIM: In a randomised field experiment in Alibaba customer service, lower-
+%   performing agents benefited most while top performers saw quality decline.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C2/openalex (place 65), C1/openalex (place
+%   447), C3/openalex (place 566), C2/s2 (place 143), C1/s2 (place 1069),
+%   C3/s2 (place 2030), C7/openalex (place 2398), C7/s2 (place 3510)
+% PICKED: Second large customer-service field experiment, randomised, independent of
+%   the Brynjolfsson setting. Preprint.
+% QUOTE (abstract): "Lower-performing agents benefit the most, indicating that gen AI can
+%   narrow performance gaps. Top-performing agents experience declines in both
+%   subjective and objective service quality."
+% VERIFIED: full-text of arXiv 2603.29888 (July 2026 version). Applies: heterogeneity
+%   by baseline performance.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@misc{Ni2026Generative,
+  author = {Ni, Xiao and Wang, Yiwei and Feng, Tianjun and Lu, Lauren Xiaoyuan and Wang, Yitong and Zhou, Congyi},
+  title = {Generative {AI} in Action: Field Experimental Evidence from {Alibaba}'s Customer Service Operations},
+  year = {2026},
+  eprint = {2603.29888},
+  archiveprefix = {arXiv},
+  doi = {10.48550/arXiv.2603.29888},
+}
+
+% === provenance: Caplin2026ABCs ===
+% CLAIM: In a controlled experiment, AI improved performance more for people with
+%   low baseline ability, and more for those with calibrated beliefs about
+%   their ability.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C2/wos (place 27), C2/scopus (place 91), C1/wos
+%   (place 107), C1/scopus (place 119), C4/wos (place 207), C4/scopus (place
+%   492), C7/openalex (place 3512), C7/scopus (place 2083) and 1 more
+% PICKED: Controlled experiment that separates ability from calibration (knowing
+%   one's own ability); Management Science.
+% QUOTE (abstract): "AI improves performance more for people with low baseline ability.
+%   However, holding ability constant, AI assistance is more valuable for
+%   people who are calibrated"
+% VERIFIED: abstract only, corroboration (closed access, tunnel down). Applies:
+%   ability split and a judgement-related moderator.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@article{Caplin2026ABCs,
+  author = {Caplin, Andrew and Deming, David and Li, Shangwen and Martin, Daniel and Marx, Philip and Weidmann, Ben and Ye, Kadachi Jiada},
+  title = {The {ABCs} of Who Benefits from Working with {AI}: Ability, Beliefs, and Calibration},
+  journal = {Management Science},
+  year = {2026},
+  volume = {72},
+  number = {7},
+  pages = {5843--5852},
+  doi = {10.1287/mnsc.2024.08994},
+  abstract = {We use a controlled experiment to show that ability and belief calibration jointly determine the benefits of working with artificial intelligence (AI). AI improves performance more for people with low baseline ability. However, holding ability constant, AI assistance is more valuable for people who are calibrated, meaning they have accurate beliefs about their own ability. People who know they have low ability gain the most from working with AI. In a counterfactual analysis, we show that eliminating miscalibration would cause AI to reduce performance inequality nearly twice as much as it already does.},
+}
+
+% === provenance: Hou2025DoubleEdged ===
+% CLAIM: In design work, novices kept benefiting from generative AI in the
+%   execution stage while experts lost efficiency.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C2/wos (place 93), C1/openalex (place 825),
+%   C1/wos (place 636), C1/s2 (place 373)
+% PICKED: Lab plus field experiments with professional designers; Information
+%   Systems Research. Shows the expert penalty in a creative-production task.
+% QUOTE (abstract, execution stage, novices): "novice designers continue to benefit"
+% QUOTE (abstract, execution stage, experts): "expert designers encounter"
+% VERIFIED: abstract only, corroboration (closed access, tunnel down). Applies:
+%   novice/expert contrast by task stage.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@article{Hou2025DoubleEdged,
+  author = {Hou, Jinghui and Wang, Lei and Wang, Gang and Wang, Harry Jiannan and Yang, Shuai},
+  title = {The Double-Edged Roles of Generative {AI} in the Creative Process: Experiments on Design Work},
+  journal = {Information Systems Research},
+  year = {2025},
+  doi = {10.1287/isre.2024.0937},
+  abstract = {Generative AI (GenAI) promises to revolutionize creative work, but its value is not universal. Using controlled lab settings with students and real-world tests with professional designers, our research shows that GenAI is a double-edged tool. In the initial brainstorming (ideation) stage, GenAI reliably boosts creativity for all users. However, in the execution (implementation) stage, whereas novice designers continue to benefit from GenAI’s assistance, expert designers encounter inefficiencies—spending significantly more time without improving creativity, because GenAI’s methods conflict with experts’ well-established routines.},
+}
+
+% === provenance: Khandare2026Short ===
+% CLAIM: A systematic review of 157 studies finds short-term gains typically
+%   largest for less experienced workers, task-dependent, with experience,
+%   task fit and verification behaviour as moderators.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C3/openalex (place 349), C4/openalex (place
+%   80), C5/openalex (place 8)
+% PICKED: The only PRISMA review in tier 1 that synthesises the skill split for
+%   professional work; low evidence grade (single-author preprint, posted 24
+%   Nov 2026), used as corroboration only.
+% QUOTE (abstract): "Randomised and field experiments consistently report short-term gains in
+%   speed, output and quality, typically largest for less experienced workers.
+%   These gains are task-dependent"
+% VERIFIED: full-text of the Research Square preprint rs-11845791 (same work as the
+%   PsyArXiv record). Applies: synthesis by experience, names moderators.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@misc{Khandare2026Short,
+  author = {Khandare, Chetna},
+  title = {Short-Term Efficiency, Long-Term Cognitive Cost? A Systematic Literature Review of Large Language Model Use in Professional Work},
+  year = {2026},
+  howpublished = {Preprint, Research Square},
+  doi = {10.21203/rs.3.rs-11845791/v1},
+}
+
+% === provenance: Otis2026Uneven ===
+% CLAIM: Kenyan entrepreneurs given a GPT-4 business adviser: low baseline
+%   performers did worse and high performers better, because of which advice
+%   they implemented.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C6/openalex (place 29), C6/wos (place 1), C6/s2
+%   (place 24)
+% PICKED: Field RCT (640 entrepreneurs) on an open-ended task with real revenue
+%   outcomes; Management Science. The clearest randomised evidence for
+%   amplification.
+% QUOTE (abstract, published version): "Subsample analyses show that low performers did nearly 10% worse because
+%   of the AI assistant, whereas high performers may have benefited by over
+%   15%."
+% VERIFIED: abstract of the published version (OpenAlex) and full-text of the February
+%   2024 working paper (NBER conference copy), whose abstract reports "high
+%   performers benefited by just over 15% from AI advice, whereas low
+%   performers did about 8% worse" and attributes it to harder tasks; the
+%   published abstract attributes it to "the advice that entrepreneurs chose
+%   to implement". Applies: amplification on an open-ended task.
+% COUNTER: counter-direction searches of session who-gains: C1 (equalize/level/skill
+%   gap/narrow/low performers) and C2 (heterogeneity/who benefits) on s2,
+%   openalex, scopus, wos, ieee -- found strong levelling evidence
+%   (Brynjolfsson2025Generative, Noy2023Experimental, Cui2026Effects,
+%   DellAcqua2026Navigating, Cruces2026Does); claim narrowed to open-ended,
+%   out-of-frontier or must-be-verified tasks
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@article{Otis2026Uneven,
+  author = {Otis, Nicholas G. and Clarke, Rowan and Delecourt, Sol{\`e}ne and Holtz, David and Koning, Rembrand},
+  title = {The Uneven Impact of Generative Artificial Intelligence on Entrepreneurial Performance: Evidence from a Field Experiment in {Kenya}},
+  journal = {Management Science},
+  year = {2026},
+  doi = {10.1287/mnsc.2024.06909},
+  abstract = {In a field experiment with Kenyan entrepreneurs, we evaluated the impact of AI advice on small business revenues and profits by randomizing access to a GPT-4-powered AI business assistant. Although we are unable to reject the null hypothesis of no average treatment effect on firm revenues and profits, we find that the effect for entrepreneurs who were low performing at baseline is over 0.20-standard-deviations lower than for initial high performers. Subsample analyses show that low performers did nearly 10\% worse because of the AI assistant, whereas high performers may have benefited by over 15\%. This differential impact does not appear to result from differences in the questions posed to the AI or the advice that it provided but rather, from the advice that entrepreneurs chose to implement.},
+}
+
+% === provenance: Kim2024Helping ===
+% CLAIM: In a lab experiment, ChatGPT lowered maths scores because low-ability
+%   subjects could not tell hallucinated answers from correct ones.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): S1/openalex (place 657), S1/wos (place 63),
+%   S1/scopus (place 115), S1/s2 (place 416), C7/openalex (place 2257),
+%   C7/scopus (place 834), C7/wos (place 51)
+% PICKED: Randomised lab experiment that isolates the verification mechanism;
+%   Applied Economics Letters (short paper); full text read in the CESifo
+%   working-paper version.
+% QUOTE (abstract, working paper): "This result is mainly because the low-ability subjects couldn’t discern
+%   the hallucinated answers with the correct ones"
+% VERIFIED: full-text of CESifo Working Paper 11002 (2024). Applies: harm to low-
+%   ability users through failed verification.
+% COUNTER: counter-direction searches of session who-gains: C1 (equalize/level/skill
+%   gap/narrow/low performers) and C2 (heterogeneity/who benefits) on s2,
+%   openalex, scopus, wos, ieee -- found strong levelling evidence
+%   (Brynjolfsson2025Generative, Noy2023Experimental, Cui2026Effects,
+%   DellAcqua2026Navigating, Cruces2026Does); claim narrowed to open-ended,
+%   out-of-frontier or must-be-verified tasks
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@article{Kim2024Helping,
+  author = {Kim, Duk Gyoo and Moon, Ahram},
+  title = {From Helping Hand to Stumbling Block: The {ChatGPT} Paradox in Competency Experiment},
+  journal = {Applied Economics Letters},
+  year = {2024},
+  volume = {32},
+  number = {18},
+  pages = {2669--2673},
+  doi = {10.1080/13504851.2024.2337330},
+}
+
+% === provenance: Daniotti2026Who ===
+% CLAIM: Across about 170,000 GitHub developers, experienced programmers captured
+%   nearly all productivity gains from AI-written code (observational).
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C1/openalex (place 581), C1/wos (place 5),
+%   C1/scopus (place 7), S1/openalex (place 91), S1/wos (place 1), S1/scopus
+%   (place 7)
+% PICKED: Largest observational study of AI coding at work, in Science; the main
+%   non-experimental counterweight to the coding RCTs.
+% QUOTE (abstract): "experienced programmers capture nearly all of these productivity and
+%   exploration gains, widening rather than closing the skill gap"
+% VERIFIED: full-text of arXiv 2506.08945v2. Applies: gains by experience, though
+%   adoption is self-selected and output is commits.
+% COUNTER: counter-direction searches of session who-gains: C1 (equalize/level/skill
+%   gap/narrow/low performers) and C2 (heterogeneity/who benefits) on s2,
+%   openalex, scopus, wos, ieee -- found strong levelling evidence
+%   (Brynjolfsson2025Generative, Noy2023Experimental, Cui2026Effects,
+%   DellAcqua2026Navigating, Cruces2026Does); claim narrowed to open-ended,
+%   out-of-frontier or must-be-verified tasks
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@article{Daniotti2026Who,
+  author = {Daniotti, Simone and Wachs, Johannes and Feng, Xiangnan and Neffke, Frank},
+  title = {Who Is Using {AI} to Code? Global Diffusion and Impact of Generative {AI}},
+  journal = {Science},
+  year = {2026},
+  volume = {391},
+  number = {6787},
+  pages = {831--835},
+  doi = {10.1126/science.adz9311},
+}
+
+% === provenance: Becker2025Measuring ===
+% CLAIM: Experienced open-source developers on their own mature projects were 19 %
+%   slower with AI tools yet believed AI had made them about 20 % faster.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C6/openalex (place 15), C6/s2 (place 52)
+% PICKED: The only RCT of experts on their home turf with forecasts and post-hoc
+%   estimates; small (16 developers); METR preprint.
+% QUOTE (abstract): "After completing the study, developers estimate that allowing AI reduced
+%   completion time by 20%. Surprisingly, we find that allowing AI actually
+%   increases completion time by 19%"
+% QUOTE (Table 1): "Developers slowed down more on issues they are more familiar with"
+% VERIFIED: full-text of arXiv 2507.09089v2. Applies: measured versus perceived gains
+%   of experts; authors limit generalisation (section "We do not provide
+%   evidence that").
+% COUNTER: both directions searched in session who-gains (S1 amplify, S2 harm, C1
+%   equalize, C2 heterogeneity, C3 verification/task, C4 perceived, C5
+%   reviews, C6-C7 design repairs) -- levelling and amplification both found;
+%   this source is used only for the moderator it reports
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@misc{Becker2025Measuring,
+  author = {Becker, Joel and Rush, Nate and Barnes, Elizabeth and Rein, David},
+  title = {Measuring the Impact of Early-2025 {AI} on Experienced Open-Source Developer Productivity},
+  year = {2025},
+  eprint = {2507.09089},
+  archiveprefix = {arXiv},
+  doi = {10.48550/arXiv.2507.09089},
+}
+
+% === provenance: Autor2026Does ===
+% CLAIM: Patent lawyers with an AI drafting assistant: larger quality gains for
+%   juniors while using AI, but a lasting unassisted gain only for seniors.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C2/openalex (place 109), C6/openalex (place 8),
+%   C7/openalex (place 484)
+% PICKED: Preregistered three-month RCT with 133 practising lawyers and blinded
+%   expert scoring; separates assisted performance from durable skill. NBER
+%   working paper.
+% QUOTE (abstract, assisted work): "with larger gains among junior lawyers"
+% QUOTE (abstract, unassisted follow-up): "but this advantage was concentrated entirely among senior lawyers (0.45
+%   SD, p = 0.02). Junior lawyers showed no average gain."
+% VERIFIED: full-text of NBER WP 35720. Applies: levelling while assisted,
+%   amplification of what remains without AI.
+% COUNTER: both directions searched in session who-gains (S1 amplify, S2 harm, C1
+%   equalize, C2 heterogeneity, C3 verification/task, C4 perceived, C5
+%   reviews, C6-C7 design repairs) -- levelling and amplification both found;
+%   this source is used only for the moderator it reports
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@techreport{Autor2026Does,
+  author = {Autor, David and Rodchenko, Tanya and Martin, Josh and Iscenko, Zanna and Strand, Scott and Pearl, David and Ferere, Melissa},
+  title = {Does {AI} Assistance Enhance or Erode Expertise? Evidence from a Three-Month Field Experiment in Patent Drafting},
+  institution = {National Bureau of Economic Research},
+  type = {Working Paper},
+  number = {35720},
+  year = {2026},
+  doi = {10.3386/w35720},
+}
+
+% === provenance: Aparicio2026Generative ===
+% CLAIM: Among 276 researchers from undergraduates to senior academics, 2025-2026
+%   AI raised productivity across the expertise ladder, with imprecisely
+%   estimated larger gains for graduate students and seniors.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C7/openalex (place 303), C7/s2 (place 2013)
+% PICKED: Recent RCT in demanding scientific work (reproduction, error-finding,
+%   referee reports); CESifo working paper; useful because the task is expert
+%   work.
+% QUOTE (abstract): "Generative AI assistance now appears capable of raising productivity
+%   across much of the expertise ladder"
+% QUOTE (p. 3): "larger gains for graduate students and senior researchers than for
+%   undergraduates (Table 1, Panel B). All six estimated differences are
+%   positive, but they are imprecise"
+% VERIFIED: full-text of CESifo Working Paper 13138. Applies: no reliable skill
+%   difference in gains on expert research tasks.
+% COUNTER: both directions searched in session who-gains (S1 amplify, S2 harm, C1
+%   equalize, C2 heterogeneity, C3 verification/task, C4 perceived, C5
+%   reviews, C6-C7 design repairs) -- levelling and amplification both found;
+%   this source is used only for the moderator it reports
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@techreport{Aparicio2026Generative,
+  author = {Aparicio, Juan P. and others},
+  title = {Generative {AI} Boosts Productivity Across the Expertise Ladder},
+  institution = {CESifo},
+  type = {CESifo Working Paper},
+  number = {13138},
+  year = {2026},
+  doi = {10.65864/gvte3tr1ge},
+}
+
+% === provenance: Bierbrauer2026Is ===
+% CLAIM: In classroom experiments, AI compressed performance gaps in relative terms
+%   but stronger participants kept an absolute advantage.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C7/openalex (place 2465)
+% PICKED: Small classroom study (278 prompt-level observations), conference
+%   contribution; corroborates the relative/absolute distinction of
+%   Cruces2026Does.
+% QUOTE (abstract): "Stronger participants retain an absolute advantage, while AI-assisted
+%   performance is compressed relative to unaided performance."
+% VERIFIED: abstract only, corroboration (repository record, no full text fetched).
+%   Applies: relative versus absolute gaps.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@misc{Bierbrauer2026Is,
+  author = {Bierbrauer, Christoph},
+  title = {Is {AI} Productivity Mediated by User Skill? Prompting Skill, Subject Knowledge, and Human Capital in {AI}-Assisted Knowledge Production},
+  year = {2026},
+  howpublished = {Conference contribution, University of Salford repository},
+  doi = {10.17866/rd.salford.34352880},
+  abstract = {Using 278 prompt-level observations from classroom experiments, we test a model-agnostic production function across two regimes: one where students prompt AI cold, and another where they first solve tasks independently. AI-assisted performance exceeds independently produced solutions on average. Stronger participants retain an absolute advantage, while AI-assisted performance is compressed relative to unaided performance. Our results suggest AI may compress performance gaps in relative terms but preserve them in absolute terms, challenging the narrative about AI as either a great equalizer or a skill-biased accelerant of inequality.},
+}
+
+% === provenance: Zhang2026Engaging ===
+% CLAIM: In a randomised field experiment in food-delivery customer service, AI
+%   suggestions helped less-experienced agents most, and helped least where
+%   problems lay beyond the AI's capability.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C1/openalex (place 2912), C1/scopus (place
+%   148), C4/s2 (place 303), C1/s2 (place 419), C6/openalex (place 82),
+%   C4/openalex (place 2397), C6/s2 (place 23)
+% PICKED: Third customer-service field RCT, independent firm; Management Science.
+%   Corroboration.
+% QUOTE (abstract): "The benefits were most pronounced for less-experienced agents. However,
+%   AI’s impact varied by conversation type"
+% VERIFIED: abstract only, corroboration (closed access, tunnel down). Applies:
+%   experience split plus a task moderator.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@article{Zhang2026Engaging,
+  author = {Zhang, Shunyuan and Narayandas, Das},
+  title = {Engaging Customers with {AI} in Online Chats: Evidence from a Randomized Field Experiment},
+  journal = {Management Science},
+  year = {2026},
+  volume = {72},
+  number = {1},
+  pages = {73--95},
+  doi = {10.1287/mnsc.2022.03920},
+  abstract = {Collaborating with a meal delivery company, we conducted a randomized field experiment that exploited exogenous variation in giving agents access to AI-generated suggestions. We found that AI improved both the efficiency and effectiveness of the interactions: AI-assisted agents responded faster, engaged customers more deeply, and achieved greater improvements in customer sentiment. The benefits were most pronounced for less-experienced agents. However, AI’s impact varied by conversation type: It improved efficiency and customer sentiment in subscription cancellation requests but was the least effective in repeat complaint scenarios because of systemic issues beyond the AI’s capability.},
+}
+
+% === provenance: Chen2024Large ===
+% CLAIM: Writing ad copy, LLM feedback helped non-experts close the gap to experts,
+%   while letting the LLM write (ghostwriting) harmed experts.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C6/scopus (place 27), C6/wos (place 24),
+%   C7/openalex (place 4), C7/scopus (place 205), C7/wos (place 160)
+% PICKED: Experiment with expert and non-expert users and a real outcome (clicks);
+%   Management Science; shows that mode of use moderates who gains.
+% QUOTE (abstract): "Using LLMs as sounding boards enhances the quality of the resultant ad
+%   copies for nonexperts. However, using LLMs as ghostwriters did not provide
+%   significant benefits and is, in fact, detrimental to expert users."
+% VERIFIED: abstract only, corroboration (closed access, tunnel down). Applies:
+%   expert/non-expert split by mode of use.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@article{Chen2024Large,
+  author = {Chen, Zenan and Chan, Jason},
+  title = {Large Language Model in Creative Work: The Role of Collaboration Modality and User Expertise},
+  journal = {Management Science},
+  year = {2024},
+  volume = {70},
+  number = {12},
+  pages = {9101--9117},
+  doi = {10.1287/mnsc.2023.03014},
+  abstract = {To examine the effects of human-LLM collaboration on business outcomes, we conducted an experiment where we tasked expert and nonexpert users to write an ad copy with and without the assistance of LLMs. Here, we investigate and compare two ways of working with LLMs: (1) using LLMs as "ghostwriters," which assume the main role of the content generation task, and (2) using LLMs as "sounding boards" to provide feedback on human-created content. We measure the quality of the ads using the number of clicks generated by the created ads on major social media platforms. Our results show that different collaboration modalities can result in very different outcomes for different user types. Using LLMs as sounding boards enhances the quality of the resultant ad copies for nonexperts. However, using LLMs as ghostwriters did not provide significant benefits and is, in fact, detrimental to expert users.},
+}
+
+% === provenance: Camuffo2026Beyond ===
+% CLAIM: In a randomised experiment with 976 managers, experienced managers gained
+%   quality with AI without inflated confidence, while highly educated
+%   managers gained confidence without quality.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C6/openalex (place 149), C6/scopus (place 74),
+%   C6/wos (place 72), C7/openalex (place 7501), C7/scopus (place 4652),
+%   C7/wos (place 1676), C6/s2 (place 72)
+% PICKED: Large randomised experiment on strategic decisions; Strategy Science; the
+%   only tier-1 study that splits measured and felt gains by experience.
+% QUOTE (abstract): "experienced managers achieve quality improvements without confidence
+%   inflation, whereas highly educated managers exhibit confidence gains
+%   without corresponding quality improvements"
+% VERIFIED: abstract only, corroboration (closed access, tunnel down). Applies:
+%   experience versus confidence.
+% COUNTER: both directions searched in session who-gains (S1 amplify, S2 harm, C1
+%   equalize, C2 heterogeneity, C3 verification/task, C4 perceived, C5
+%   reviews, C6-C7 design repairs) -- levelling and amplification both found;
+%   this source is used only for the moderator it reports
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@article{Camuffo2026Beyond,
+  author = {Camuffo, Arnaldo and Gambardella, Alfonso and Kazemi, Saeid and Pandey, Abhinav},
+  title = {Beyond Black Boxes: Designing and Testing Agentic {AI} Systems for Strategy},
+  journal = {Strategy Science},
+  year = {2026},
+  volume = {11},
+  number = {1},
+  pages = {137--156},
+  doi = {10.1287/stsc.2025.0432},
+  abstract = {In a randomized experiment with 976 managers comparing this agentic AI system, general AI (GPT-4o), and a human-only condition, we find that experienced managers achieve quality improvements without confidence inflation, whereas highly educated managers exhibit confidence gains without corresponding quality improvements. We establish user-system-problem fit as a core design dimension requiring alignment between architectural complexity and practitioner expertise.},
+}
+
+% === provenance: Wang2024Tutor ===
+% CLAIM: In an RCT with more than 700 tutors (v3 of the preprint; v1 reported 900),
+%   an LLM-based assistant helped the students of lower-rated tutors most.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C6/openalex (place 12), C7/openalex (place
+%   1773), C7/s2 (place 2778), C6/s2 (place 45)
+% PICKED: Large RCT in live work (tutoring); preprint. Corroboration from a
+%   different occupation.
+% QUOTE (abstract): "Gains were largest for students of lower-rated tutors (9 percentage
+%   points)"
+% VERIFIED: full-text of arXiv 2410.03017v3 (10 Oct 2026). Applies: worker-skill
+%   split, outcome measured on the tutors' students.
+% COUNTER: counter-direction searches of session who-gains: S1
+%   (amplify/complement/widen/high performers/returns to skill) and S2 (over-
+%   reliance/slower/worse/harm/jagged frontier) on s2, openalex, scopus, wos,
+%   ieee -- found amplification under conditions (Otis2026Uneven,
+%   Kim2024Helping, Daniotti2026Who, Autor2026Does: durable gains for seniors
+%   only); claim narrowed to well-defined tasks inside the model's competence
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@misc{Wang2024Tutor,
+  author = {Wang, Rose E. and Ribeiro, Ana T. and Robinson, Carly D. and Loeb, Susanna and Demszky, Dora},
+  title = {Tutor {CoPilot}: A Human-{AI} Approach for Scaling Real-Time Expertise},
+  year = {2024},
+  eprint = {2410.03017},
+  archiveprefix = {arXiv},
+  doi = {10.48550/arXiv.2410.03017},
+}
+
+% === provenance: DelRioChanona2025AI ===
+% CLAIM: A review of RCT, field and trace evidence finds novices benefit more on
+%   simple tasks, while on complex tasks the evidence is mixed.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C1/openalex (place 2116), S1/openalex (place
+%   675), C6/openalex (place 120), C7/openalex (place 5521)
+% PICKED: Review by labour economists (ILO and others) covering RCTs, field
+%   experiments and trace data; the clearest statement of the task-complexity
+%   moderator in a synthesis. Not a formal systematic review; preprint.
+% QUOTE (abstract): "Novice workers tend to benefit more from LLMs in simple tasks. Across
+%   complex tasks, evidence is mixed on whether low or high-skilled workers
+%   benefit more."
+% VERIFIED: full-text of arXiv 2509.15265. Applies: synthesis by skill and task
+%   complexity; notes experiments focus on simple tasks.
+% COUNTER: both directions searched in session who-gains (S1 amplify, S2 harm, C1
+%   equalize, C2 heterogeneity, C3 verification/task, C4 perceived, C5
+%   reviews, C6-C7 design repairs) -- levelling and amplification both found;
+%   this source is used only for the moderator it reports
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@misc{DelRioChanona2025AI,
+  author = {del Rio-Chanona, R. Maria and Ernst, Ekkehard and Merola, Rossana and Samaan, Daniel and Teutloff, Ole},
+  title = {{AI} and Jobs: A Review of Theory, Estimates, and Evidence},
+  year = {2025},
+  eprint = {2509.15265},
+  archiveprefix = {arXiv},
+  doi = {10.48550/arXiv.2509.15265},
+}
+
+% === provenance: Chen2026Training ===
+% CLAIM: In a randomised legal exam with 164 law students, untrained LLM access was
+%   counterproductive: lower-ability users adopted it unproductively; brief
+%   training reversed this.
+% FOUND-VIA: scholar search, session who-gains (queries in who-gains-report.md, Search
+%   protocol; label/provider): C7/openalex (place 2557), C7/s2 (place 1442)
+% PICKED: Randomised experiment on a professional-style task that tests training;
+%   preprint; small sample and student participants.
+% QUOTE (abstract, final paragraph): "without training, higher-ability practitioners opt out"
+% QUOTE (abstract, final paragraph, continued): "users adopt but unproductively"
+% VERIFIED: full-text of arXiv 2603.04982. Applies: lower-ability users do not gain
+%   without instruction; most differences short of significance (stated in the
+%   abstract).
+% COUNTER: counter-direction searches of session who-gains: C1 (equalize/level/skill
+%   gap/narrow/low performers) and C2 (heterogeneity/who benefits) on s2,
+%   openalex, scopus, wos, ieee -- found strong levelling evidence
+%   (Brynjolfsson2025Generative, Noy2023Experimental, Cui2026Effects,
+%   DellAcqua2026Navigating, Cruces2026Does); claim narrowed to open-ended,
+%   out-of-frontier or must-be-verified tasks
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@misc{Chen2026Training,
+  author = {Chen, Benjamin M. and Bao, Hong},
+  title = {Training for Technology: Adoption and Productive Use of Generative {AI} in Legal Analysis},
+  year = {2026},
+  eprint = {2603.04982},
+  archiveprefix = {arXiv},
+  doi = {10.48550/arXiv.2603.04982},
+}

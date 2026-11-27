@@ -1,0 +1,2498 @@
+% prompt-injection.bib -- sources for the claim "Can prompt injection against
+% LLM-integrated applications and agents be reliably prevented?"
+% Generated 2026-11-27 by the restarted literature agent; scholar session
+% "prompt-injection". Every entry: full text opened in this session.
+
+% === provenance: Greshake2023Signed ===
+% CLAIM: Indirect prompt injection (instructions placed in data an
+%   LLM-integrated application retrieves) blurs data and instructions and
+%   works against real systems.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 79];
+%   session "prompt-injection", paper id doi:10.1145/3605764.3623985,
+%   returned by 21 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Primary source that introduced and named indirect prompt
+%   injection; peer-reviewed (AISec 2023); demonstrations against real
+%   products (Bing Chat). Preferred over later benchmarks for the origin.
+% QUOTE (p. 1): "We argue that LLM-Integrated Applications blur the line
+%   between data and instructions."
+% QUOTE (p. 1, passage 2): "We demonstrate our attacks' practical viability
+%   against both real-world systems, such as Bing's GPT-4 powered Chat and
+%   code-completion engines"
+% QUOTE (p. 1, passage 3): "effective mitigations of these emerging threats
+%   are currently lacking"
+% VERIFIED: full-text (arXiv version, same title and authors as the AISec
+%   paper) read; abstract and Sec. 1; applies: origin and real-system
+%   demonstration of indirect prompt injection.
+% COUNTER: scholar search, queries C1 (attack AND application terms AND
+%   overstated/ineffective/unrealistic/limited impact/low success/rarely/no
+%   evidence/in the wild/hype), C7 (attack AND benchmark AND agent AND
+%   robust/resilient/near-zero/secure) and CR2 (tool agents AND
+%   malicious/hidden instructions AND exfiltration/hijack AND robust/...) on
+%   wos, openalex, scopus, s2 (ieee for C1, C7; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: qualifying reports of low
+%   per-attempt success for the most robust frontier models (0.5 % in
+%   Dziemian2026Competition), of RAG attacks that mostly collapse in a
+%   realistic pipeline while LLM-driven injections stay effective
+%   (Yin2026Generator), of moderate end-to-end success around 40 %
+%   (DeStefano2026RagnRoll) and of inflated benchmark numbers
+%   (Shaw2026SilentFailures, Bhagwatkar2025Firewalls); no study showing that
+%   indirect injection fails against deployed systems. Claim stands, worded
+%   as 'works against real systems', not 'always succeeds'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Greshake2023Signed,
+  title = {Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection},
+  author = {Greshake, Kai and Abdelnabi, Sahar and Mishra, Shailesh and Endres, Christoph and Holz, Thorsten and Fritz, Mario},
+  booktitle = {Proceedings of the 16th ACM Workshop on Artificial Intelligence and Security (AISec)},
+  publisher = {ACM},
+  year = {2023},
+  pages = {79--90},
+  doi = {10.1145/3605764.3623985},
+  eprint = {2302.12173},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2302.12173},
+}
+
+% === provenance: Liu2023HouYi ===
+% CLAIM: Prompt injection works against commercial LLM-integrated
+%   applications (31 of 36 tested), including theft of the application
+%   prompt.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 14];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2306.05499,
+%   returned by 12 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Largest test against commercial black-box applications in the
+%   screened set; preprint (flagged); corroborates Greshake2023Signed with a
+%   count.
+% QUOTE (p. 1): "We deploy HouYi on 36 actual LLM-integrated applications
+%   and discern 31 applications susceptible to prompt injection."
+% QUOTE (p. 1, passage 2): "uncomplicated application prompt theft"
+% VERIFIED: full-text (arXiv) read; abstract and Sec. 1; applies:
+%   real-application success rate. Preprint, not peer-reviewed as far as
+%   checked.
+% COUNTER: scholar search, queries C1 (attack AND application terms AND
+%   overstated/ineffective/unrealistic/limited impact/low success/rarely/no
+%   evidence/in the wild/hype), C7 (attack AND benchmark AND agent AND
+%   robust/resilient/near-zero/secure) and CR2 (tool agents AND
+%   malicious/hidden instructions AND exfiltration/hijack AND robust/...) on
+%   wos, openalex, scopus, s2 (ieee for C1, C7; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: qualifying reports of low
+%   per-attempt success for the most robust frontier models (0.5 % in
+%   Dziemian2026Competition), of RAG attacks that mostly collapse in a
+%   realistic pipeline while LLM-driven injections stay effective
+%   (Yin2026Generator), of moderate end-to-end success around 40 %
+%   (DeStefano2026RagnRoll) and of inflated benchmark numbers
+%   (Shaw2026SilentFailures, Bhagwatkar2025Firewalls); no study showing that
+%   indirect injection fails against deployed systems. Claim stands, worded
+%   as 'works against real systems', not 'always succeeds'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Liu2023HouYi,
+  title = {Prompt Injection attack against LLM-integrated Applications},
+  author = {Yi Liu and Gelei Deng and Yuekang Li and Kailong Wang and Zihao Wang and Xiaofeng Wang and Tianwei Zhang and Yepang Liu and Haoyu Wang and Yan Zheng and Leo Yu Zhang and Yang Liu},
+  year = {2023},
+  doi = {10.48550/arXiv.2306.05499},
+  eprint = {2306.05499},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2306.05499},
+  note = {Preprint},
+}
+
+% === provenance: Zhan2024InjecAgent ===
+% CLAIM: Tool-using LLM agents are vulnerable to indirect prompt injection.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 3]; session
+%   "prompt-injection", paper id doi:10.18653/v1/2024.findings-acl.624,
+%   returned by 12 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: First benchmark of indirect injection against tool-integrated
+%   agents; peer-reviewed; 30 agents tested. Corroboration for sub-question
+%   (a).
+% QUOTE (p. 1): "We evaluate 30 different LLM agents and show that agents
+%   are vulnerable to IPI attacks, with ReAct-prompted GPT-4 vulnerable to
+%   attacks 24% of the time."
+% VERIFIED: full-text (arXiv v3) read; abstract; applies: measured
+%   vulnerability of agents.
+% COUNTER: scholar search, queries C1 (attack AND application terms AND
+%   overstated/ineffective/unrealistic/limited impact/low success/rarely/no
+%   evidence/in the wild/hype), C7 (attack AND benchmark AND agent AND
+%   robust/resilient/near-zero/secure) and CR2 (tool agents AND
+%   malicious/hidden instructions AND exfiltration/hijack AND robust/...) on
+%   wos, openalex, scopus, s2 (ieee for C1, C7; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: qualifying reports of low
+%   per-attempt success for the most robust frontier models (0.5 % in
+%   Dziemian2026Competition), of RAG attacks that mostly collapse in a
+%   realistic pipeline while LLM-driven injections stay effective
+%   (Yin2026Generator), of moderate end-to-end success around 40 %
+%   (DeStefano2026RagnRoll) and of inflated benchmark numbers
+%   (Shaw2026SilentFailures, Bhagwatkar2025Firewalls); no study showing that
+%   indirect injection fails against deployed systems. Claim stands, worded
+%   as 'works against real systems', not 'always succeeds'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Zhan2024InjecAgent,
+  title = {InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents},
+  author = {Zhan, Qiusi and Liang, Zhixiang and Ying, Zifan and Kang, Daniel},
+  booktitle = {Findings of the Association for Computational Linguistics: ACL 2024},
+  publisher = {Association for Computational Linguistics},
+  year = {2024},
+  pages = {10471--10506},
+  doi = {10.18653/v1/2024.findings-acl.624},
+  eprint = {2403.02691},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2403.02691},
+}
+
+% === provenance: Debenedetti2024AgentDojo ===
+% CLAIM: LLMs have no formal way to distinguish instructions from data;
+%   prompt injection exploits this in agents.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 5]; session
+%   "prompt-injection", paper id doi:10.52202/079017-2636, returned by 6
+%   query x provider searches of this session in all (found_by records of
+%   the session).
+% PICKED: Standard benchmark of agent prompt injection used by most later
+%   defences (CaMeL, Progent, MELON, Task Shield); peer-reviewed.
+% QUOTE (p. 1): "LLMs operate directly on text, lacking a formal way to
+%   distinguish instructions from data"
+% QUOTE (p. 1, passage 2): "existing prompt injection attacks break some
+%   security properties but not all"
+% VERIFIED: full-text (arXiv) read; abstract and Sec. 1; applies: mechanism
+%   (single channel) and benchmark. The second quote qualifies: attacks do
+%   not break everything.
+% COUNTER: scholar search, query C6 (LLM AND
+%   instructions-and-data/structured queries/same channel AND
+%   separate/distinguish/robust/by design/enforce) on wos, ieee, openalex,
+%   scopus, s2 (dblp failed), session prompt-injection, 2026-11-27; verbatim
+%   queries: prompt-injection-queries.sh --print) -- found: methods that
+%   improve separation (Chen2025StruQ, Wu2025ISE, Wallace2024Hierarchy),
+%   none reporting full separation; claim stands as 'no reliable separation
+%   in current models'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Debenedetti2024AgentDojo,
+  title = {AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents},
+  author = {Debenedetti, Edoardo and Zhang, Jie and Balunovic, Mislav and Beurer-Kellner, Luca and Fischer, Marc and Tramèr, Florian},
+  booktitle = {Advances in Neural Information Processing Systems 37 (NeurIPS 2024)},
+  publisher = {Curran Associates},
+  year = {2024},
+  pages = {82895--82920},
+  doi = {10.52202/079017-2636},
+  eprint = {2406.13352},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2406.13352},
+}
+
+% === provenance: Dziemian2026Competition ===
+% CLAIM: In a 2026 public red-teaming competition, every frontier model
+%   tested was successfully attacked by indirect prompt injection.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p s2 --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 364];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2603.15714,
+%   returned by 13 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Largest and most recent measurement (272,000 attempts, 13 frontier
+%   models); preprint from an established group (CMU/Gray Swan, flagged).
+%   Also gives the qualifying fact that per-attempt success can be low (0.5
+%   %).
+% QUOTE (p. 1): "The competition attracted 464 participants who submitted
+%   272,000 attack attempts against 13 frontier models, yielding 8,648
+%   successful attacks across 41 scenarios."
+% QUOTE (p. 1, passage 2): "All models proved vulnerable, with attack
+%   success rates ranging from 0.5% (Claude Opus 4.5) to 8.5% (Gemini 2.5
+%   Pro)."
+% VERIFIED: full-text (arXiv) read; abstract; applies: all models
+%   vulnerable; qualifies: low per-attempt rates for the most robust models.
+% COUNTER: scholar search, queries C1 (attack AND application terms AND
+%   overstated/ineffective/unrealistic/limited impact/low success/rarely/no
+%   evidence/in the wild/hype), C7 (attack AND benchmark AND agent AND
+%   robust/resilient/near-zero/secure) and CR2 (tool agents AND
+%   malicious/hidden instructions AND exfiltration/hijack AND robust/...) on
+%   wos, openalex, scopus, s2 (ieee for C1, C7; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: qualifying reports of low
+%   per-attempt success for the most robust frontier models (0.5 % in
+%   Dziemian2026Competition), of RAG attacks that mostly collapse in a
+%   realistic pipeline while LLM-driven injections stay effective
+%   (Yin2026Generator), of moderate end-to-end success around 40 %
+%   (DeStefano2026RagnRoll) and of inflated benchmark numbers
+%   (Shaw2026SilentFailures, Bhagwatkar2025Firewalls); no study showing that
+%   indirect injection fails against deployed systems. Claim stands, worded
+%   as 'works against real systems', not 'always succeeds'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Dziemian2026Competition,
+  title = {How Vulnerable Are AI Agents to Indirect Prompt Injections? Insights from a Large-Scale Public Competition},
+  author = {Mateusz Dziemian and Maxwell Lin and Xiaohan Fu and Micha Nowak and Nick Winter and Eliot Jones and Andy Zou and Lama Ahmad and Kamalika Chaudhuri and Sahana Chennabasappa and Xander Davies and Lauren Deason and Benjamin L. Edelman and Tanner Emek and Ivan Evtimov and Jim Gust and Maia Hamin and Kat He and Klaudia Krawiecka and Riccardo Patana and Neil Perry and Troy Peterson and Xiangyu Qi and Javier Rando and Zifan Wang and Zihan Wang and Spencer Whitman and Eric Winsor and Arman Zharmagambetov and Matt Fredrikson and Zico Kolter},
+  year = {2026},
+  doi = {10.48550/arXiv.2603.15714},
+  eprint = {2603.15714},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2603.15714},
+  note = {Preprint},
+}
+
+% === provenance: Khodayari2026Wild ===
+% CLAIM: Indirect prompt injections are already present on the public web.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 1033];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2604.27202,
+%   returned by 8 query x provider searches of this session in all (found_by
+%   records of the session).
+% PICKED: Only large-scale measurement of injections in the wild in the
+%   screened set; preprint (CISPA, flagged).
+% QUOTE (p. 1): "Analyzing 1.2B URLs from 24.8M hosts, we identify 15.3K
+%   validated instances across 11.7K pages."
+% VERIFIED: full-text (arXiv v2) read; abstract; applies: prevalence on the
+%   web (not success against a system).
+% COUNTER: scholar search, queries C1 (attack AND application terms AND
+%   overstated/ineffective/unrealistic/limited impact/low success/rarely/no
+%   evidence/in the wild/hype), C7 (attack AND benchmark AND agent AND
+%   robust/resilient/near-zero/secure) and CR2 (tool agents AND
+%   malicious/hidden instructions AND exfiltration/hijack AND robust/...) on
+%   wos, openalex, scopus, s2 (ieee for C1, C7; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: qualifying reports of low
+%   per-attempt success for the most robust frontier models (0.5 % in
+%   Dziemian2026Competition), of RAG attacks that mostly collapse in a
+%   realistic pipeline while LLM-driven injections stay effective
+%   (Yin2026Generator), of moderate end-to-end success around 40 %
+%   (DeStefano2026RagnRoll) and of inflated benchmark numbers
+%   (Shaw2026SilentFailures, Bhagwatkar2025Firewalls); no study showing that
+%   indirect injection fails against deployed systems. Claim stands, worded
+%   as 'works against real systems', not 'always succeeds'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Khodayari2026Wild,
+  title = {Indirect Prompt Injection in the Wild: An Empirical Study of Prevalence, Techniques, and Objectives},
+  author = {Soheil Khodayari and Xuenan Zhang and Bhupendra Acharya and Giancarlo Pellegrino},
+  year = {2026},
+  doi = {10.48550/arXiv.2604.27202},
+  eprint = {2604.27202},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2604.27202},
+  note = {Preprint},
+}
+
+% === provenance: Fu2024Imprompter ===
+% CLAIM: Optimised injected prompts can make real agent products leak user
+%   data through tool use.
+% FOUND-VIA: scholar search '(agent OR agents OR agentic OR "LLM-integrated"
+%   OR "tool use" OR "tool-using" OR "tool-integrated") AND ("adversarial
+%   prompt" OR "adversarial prompts" OR "malicious instruction" OR
+%   "malicious instructions" OR "malicious prompt" OR "malicious prompts" OR
+%   "hidden instruction" OR "hidden instructions") AND (exfiltration OR
+%   exfiltrate OR "tool misuse" OR "improper tool use" OR hijack OR
+%   hijacking OR manipulate OR manipulation)' -p openalex --year 2022-2026
+%   --in title-abstract --limit 0 -n prompt-injection [query R2, rank 1];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2410.14923,
+%   returned by 2 query x provider searches of this session in all (found_by
+%   records of the session).
+% PICKED: Real-product exfiltration demonstration (Mistral LeChat, ChatGLM);
+%   preprint (UCSD, flagged); returned by the repair query R2.
+% QUOTE (p. 1): "This attack shows a nearly 80% success rate in an
+%   end-to-end evaluation."
+% QUOTE (p. 1, passage 2): "they reliably work on emerging agent-based
+%   systems like Mistral's LeChat, ChatGLM, and Meta's Llama"
+% VERIFIED: full-text (arXiv) read; abstract; applies: data exfiltration in
+%   real agents.
+% COUNTER: scholar search, queries C1 (attack AND application terms AND
+%   overstated/ineffective/unrealistic/limited impact/low success/rarely/no
+%   evidence/in the wild/hype), C7 (attack AND benchmark AND agent AND
+%   robust/resilient/near-zero/secure) and CR2 (tool agents AND
+%   malicious/hidden instructions AND exfiltration/hijack AND robust/...) on
+%   wos, openalex, scopus, s2 (ieee for C1, C7; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: qualifying reports of low
+%   per-attempt success for the most robust frontier models (0.5 % in
+%   Dziemian2026Competition), of RAG attacks that mostly collapse in a
+%   realistic pipeline while LLM-driven injections stay effective
+%   (Yin2026Generator), of moderate end-to-end success around 40 %
+%   (DeStefano2026RagnRoll) and of inflated benchmark numbers
+%   (Shaw2026SilentFailures, Bhagwatkar2025Firewalls); no study showing that
+%   indirect injection fails against deployed systems. Claim stands, worded
+%   as 'works against real systems', not 'always succeeds'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Fu2024Imprompter,
+  title = {Imprompter: Tricking LLM Agents into Improper Tool Use},
+  author = {Xiaohan Fu and Shuheng Li and Zihan Wang and Yihao Liu and Rajesh K. Gupta and Taylor Berg-Kirkpatrick and Earlence Fernandes},
+  year = {2024},
+  doi = {10.48550/arXiv.2410.14923},
+  eprint = {2410.14923},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2410.14923},
+  note = {Preprint},
+}
+
+% === provenance: Schulhoff2023HackAPrompt ===
+% CLAIM: A global competition showed that LLMs can be manipulated by prompt
+%   hacking.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p scopus --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 445];
+%   session "prompt-injection", paper id
+%   doi:10.18653/v1/2023.emnlp-main.302, returned by 4 query x provider
+%   searches of this session in all (found_by records of the session).
+% PICKED: Peer-reviewed (EMNLP 2023) large-scale human study; corroboration.
+% QUOTE (p. 1): "We elicit 600K+ adversarial prompts against three
+%   state-of-the-art LLMs."
+% QUOTE (p. 1, passage 2): "empirically verifies that current LLMs can
+%   indeed be manipulated via prompt hacking"
+% VERIFIED: full-text (arXiv) read; abstract; applies: direct prompt
+%   injection at scale.
+% COUNTER: scholar search, queries C1 (attack AND application terms AND
+%   overstated/ineffective/unrealistic/limited impact/low success/rarely/no
+%   evidence/in the wild/hype), C7 (attack AND benchmark AND agent AND
+%   robust/resilient/near-zero/secure) and CR2 (tool agents AND
+%   malicious/hidden instructions AND exfiltration/hijack AND robust/...) on
+%   wos, openalex, scopus, s2 (ieee for C1, C7; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: qualifying reports of low
+%   per-attempt success for the most robust frontier models (0.5 % in
+%   Dziemian2026Competition), of RAG attacks that mostly collapse in a
+%   realistic pipeline while LLM-driven injections stay effective
+%   (Yin2026Generator), of moderate end-to-end success around 40 %
+%   (DeStefano2026RagnRoll) and of inflated benchmark numbers
+%   (Shaw2026SilentFailures, Bhagwatkar2025Firewalls); no study showing that
+%   indirect injection fails against deployed systems. Claim stands, worded
+%   as 'works against real systems', not 'always succeeds'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Schulhoff2023HackAPrompt,
+  title = {Ignore This Title and HackAPrompt: Exposing Systemic Vulnerabilities of LLMs Through a Global Prompt Hacking Competition},
+  author = {Schulhoff, Sander and Pinto, Jeremy and Khan, Anaum and Bouchard, Louis-François and Si, Chenglei and Anati, Svetlina and Tagliabue, Valen and Kost, Anson and Carnahan, Christopher and Boyd-Graber, Jordan},
+  booktitle = {Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing},
+  publisher = {Association for Computational Linguistics},
+  year = {2023},
+  pages = {4945--4977},
+  doi = {10.18653/v1/2023.emnlp-main.302},
+  eprint = {2311.16119},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2311.16119},
+}
+
+% === provenance: Toyer2024TensorTrust ===
+% CLAIM: Human-made prompt injection attacks from an online game succeed
+%   against many models and transfer to deployed applications.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p scopus --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 47];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2311.01011,
+%   returned by 13 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Large human-generated attack set; covers both hijacking and
+%   extraction; corroboration.
+% QUOTE (p. 1): "Our benchmark results show that many models are vulnerable
+%   to the attack strategies in the Tensor Trust dataset."
+% QUOTE (p. 1, passage 2): "some attack strategies from the dataset
+%   generalize to deployed LLM-based applications"
+% VERIFIED: full-text (arXiv v1) read; abstract; applies: hijacking and
+%   extraction.
+% COUNTER: scholar search, queries C1 (attack AND application terms AND
+%   overstated/ineffective/unrealistic/limited impact/low success/rarely/no
+%   evidence/in the wild/hype), C7 (attack AND benchmark AND agent AND
+%   robust/resilient/near-zero/secure) and CR2 (tool agents AND
+%   malicious/hidden instructions AND exfiltration/hijack AND robust/...) on
+%   wos, openalex, scopus, s2 (ieee for C1, C7; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: qualifying reports of low
+%   per-attempt success for the most robust frontier models (0.5 % in
+%   Dziemian2026Competition), of RAG attacks that mostly collapse in a
+%   realistic pipeline while LLM-driven injections stay effective
+%   (Yin2026Generator), of moderate end-to-end success around 40 %
+%   (DeStefano2026RagnRoll) and of inflated benchmark numbers
+%   (Shaw2026SilentFailures, Bhagwatkar2025Firewalls); no study showing that
+%   indirect injection fails against deployed systems. Claim stands, worded
+%   as 'works against real systems', not 'always succeeds'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Toyer2024TensorTrust,
+  title = {Tensor Trust: Interpretable Prompt Injection Attacks from an Online Game},
+  author = {Sam Toyer and Olivia Watkins and Ethan Adrian Mendes and Justin Svegliato and Luke Bailey and Tiffany Wang and Isaac Ong and Karim Elmaaroufi and Pieter Abbeel and Trevor Darrell and Alan Ritter and Stuart Russell},
+  booktitle = {International Conference on Learning Representations (ICLR 2024)},
+  year = {2024},
+  doi = {10.48550/arXiv.2311.01011},
+  eprint = {2311.01011},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2311.01011},
+  note = {ICLR 2024 per the OpenAlex/Scopus/S2 records in the session; the arXiv v1 was read},
+}
+
+% === provenance: Perez2022Ignore ===
+% CLAIM: Early demonstration of goal hijacking and prompt leaking with
+%   simple handcrafted inputs.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 1002];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2211.09527,
+%   returned by 9 query x provider searches of this session in all (found_by
+%   records of the session).
+% PICKED: Earliest paper in scope (Nov 2022) naming goal hijacking and
+%   prompt leaking; workshop paper (flagged).
+% QUOTE (p. 1): "we investigate two types of attacks – goal hijacking and
+%   prompt leaking"
+% VERIFIED: full-text (arXiv) read; abstract; applies: origin of the two
+%   attack types.
+% COUNTER: scholar search, query C5 (system prompt/prompt
+%   extraction/leaking/stealing AND extract/leak AND LLM AND
+%   defence/protect/obfuscation/secure/robust) on wos, ieee, openalex,
+%   scopus, s2 (dblp failed), session prompt-injection, 2026-11-27; verbatim
+%   queries: prompt-injection-queries.sh --print) -- found: protective
+%   schemes (Zhuang2026ProxyPrompt protects 94.70 % of prompts in its
+%   evaluation; Wang2024Raccoon finds a defended GPT-4 configuration
+%   resilient). Claim narrowed: prompts are readily extracted from
+%   undefended models; defences reduce but are not shown to eliminate
+%   extraction.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Perez2022Ignore,
+  title = {Ignore Previous Prompt: Attack Techniques For Language Models},
+  author = {Fábio Perez and Ian Ribeiro},
+  year = {2022},
+  doi = {10.48550/arXiv.2211.09527},
+  eprint = {2211.09527},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2211.09527},
+  note = {ML Safety Workshop, NeurIPS 2022 (per the arXiv record)},
+}
+
+% === provenance: Zhang2025ASB ===
+% CLAIM: A benchmark of agent attacks found high attack success and limited
+%   effectiveness of current defences.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 138];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2410.02644,
+%   returned by 22 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Peer-reviewed benchmark with 11 defences; corroboration for (a)
+%   and (b).
+% QUOTE (p. 1): "with the highest average attack success rate of 84.30%, but
+%   limited effectiveness shown in current defenses"
+% VERIFIED: full-text (arXiv) read; abstract; applies.
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Zhang2025ASB,
+  title = {Agent Security Bench (ASB): Formalizing and Benchmarking Attacks and Defenses in LLM-based Agents},
+  author = {Hanrong Zhang and Jingyuan Huang and Kai Mei and Yifei Yao and Zhenting Wang and Chenlu Zhan and Hongwei Wang and Yongfeng Zhang},
+  booktitle = {International Conference on Learning Representations (ICLR 2025)},
+  year = {2025},
+  doi = {10.48550/arXiv.2410.02644},
+  eprint = {2410.02644},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2410.02644},
+  note = {Accepted by ICLR 2025 (per the arXiv record and the PDF header)},
+}
+
+% === provenance: Zverev2025Separate ===
+% CLAIM: Current LLMs do not separate instructions from data, and prompt
+%   engineering or fine-tuning does not fix this without utility loss.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p scopus --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 649];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2403.06833,
+%   returned by 19 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Only formal measure of instruction-data separation in the screened
+%   set; peer-reviewed (ICLR 2025); many models.
+% QUOTE (p. 1): "all models fail to achieve high separation, and canonical
+%   mitigation techniques, such as prompt engineering and fine-tuning,
+%   either fail to substantially improve separation or reduce model utility"
+% VERIFIED: full-text (arXiv) read; abstract; applies at the claim's scope
+%   (current models).
+% COUNTER: scholar search, query C6 (LLM AND
+%   instructions-and-data/structured queries/same channel AND
+%   separate/distinguish/robust/by design/enforce) on wos, ieee, openalex,
+%   scopus, s2 (dblp failed), session prompt-injection, 2026-11-27; verbatim
+%   queries: prompt-injection-queries.sh --print) -- found: methods that
+%   improve separation (Chen2025StruQ, Wu2025ISE, Wallace2024Hierarchy),
+%   none reporting full separation; claim stands as 'no reliable separation
+%   in current models'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Zverev2025Separate,
+  title = {Can LLMs Separate Instructions From Data? And What Do We Even Mean By That?},
+  author = {Egor Zverev and Sahar Abdelnabi and Soroush Tabesh and Mario Fritz and Christoph H. Lampert},
+  booktitle = {International Conference on Learning Representations (ICLR 2025)},
+  year = {2025},
+  doi = {10.48550/arXiv.2403.06833},
+  eprint = {2403.06833},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2403.06833},
+  note = {Published as a conference paper at ICLR 2025 (PDF header)},
+}
+
+% === provenance: Chen2025StruQ ===
+% CLAIM: There is no separation between prompt and data in LLM inputs; a
+%   structured-query defence helps but is not fully secure.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p scopus --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 204];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2402.06363,
+%   returned by 18 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Defence paper whose authors state the mechanism and the limitation
+%   themselves; both support and qualify.
+% QUOTE (p. 1): "there is no separation between prompts and data"
+% QUOTE (p. 2): "StruQ decreases the attack success rate of Tree-of-Attacks
+%   with Pruning (TAP, [17]) from 97% to 9% and that of Greedy Coordinate
+%   Gradient (GCG, [18]) from 97% to 58% on Llama"
+% QUOTE (p. 2, passage 2): "StruQ is not yet fully secure, and more research
+%   is needed"
+% VERIFIED: full-text (arXiv v2) read; Sec. 1; applies.
+% COUNTER: scholar search, query C6 (LLM AND
+%   instructions-and-data/structured queries/same channel AND
+%   separate/distinguish/robust/by design/enforce) on wos, ieee, openalex,
+%   scopus, s2 (dblp failed), session prompt-injection, 2026-11-27; verbatim
+%   queries: prompt-injection-queries.sh --print) -- found: methods that
+%   improve separation (Chen2025StruQ, Wu2025ISE, Wallace2024Hierarchy),
+%   none reporting full separation; claim stands as 'no reliable separation
+%   in current models'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Chen2025StruQ,
+  title = {StruQ: Defending Against Prompt Injection with Structured Queries},
+  author = {Sizhe Chen and Julien Piet and Chawin Sitawarin and David Wagner},
+  year = {2025},
+  doi = {10.48550/arXiv.2402.06363},
+  eprint = {2402.06363},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2402.06363},
+  note = {To appear at USENIX Security Symposium 2025 (per the arXiv record)},
+}
+
+% === provenance: Zhan2025Adaptive ===
+% CLAIM: All eight evaluated defences against indirect prompt injection in
+%   agents were bypassed by adaptive attacks.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 8]; session
+%   "prompt-injection", paper id doi:10.18653/v1/2025.findings-naacl.395,
+%   returned by 19 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Peer-reviewed, dedicated adaptive-attack evaluation of agent
+%   defences; primary source for sub-question (b).
+% QUOTE (p. 1): "we evaluate eight different defenses and bypass all of them
+%   using adaptive attacks, consistently achieving an attack success rate of
+%   over 50%"
+% VERIFIED: full-text (arXiv) read; abstract; applies.
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Zhan2025Adaptive,
+  title = {Adaptive Attacks Break Defenses Against Indirect Prompt Injection Attacks on LLM Agents},
+  author = {Zhan, Qiusi and Fang, Richard and Panchal, Henil Shalin and Kang, Daniel},
+  booktitle = {Findings of the Association for Computational Linguistics: NAACL 2025},
+  publisher = {Association for Computational Linguistics},
+  year = {2025},
+  pages = {7101--7117},
+  doi = {10.18653/v1/2025.findings-naacl.395},
+  eprint = {2503.00061},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2503.00061},
+}
+
+% === provenance: Nasr2026AttackerSecond ===
+% CLAIM: Twelve recent defences, most of which reported near-zero attack
+%   success, were bypassed by adaptive attacks with high success.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 192];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2510.09023,
+%   returned by 10 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Broadest adaptive evaluation (12 defences of all families,
+%   including detectors, prompting, training and MELON); authors from
+%   Anthropic, Google DeepMind, OpenAI, ETH Zurich and others; peer-reviewed
+%   (USENIX Security 2026; the arXiv preprint was read first, the published
+%   PDF then checked for both quotes).
+% QUOTE (p. 2): "human-guided exploration—we bypass 12 recent defenses
+%   (based on a diverse set of techniques) with attack success rate above
+%   90% (under adaptive attacks) for most; importantly, the majority of
+%   defenses originally reported near-zero attack success rates"
+% QUOTE (p. 11): "Our search-based attack reaches a 76% ASR against MELON on
+%   Llama 3.3-70B"
+% VERIFIED: full-text (USENIX Security 2026 PDF; also arXiv v1) read;
+%   abstract and section on defences relying on secret knowledge; applies.
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Nasr2026AttackerSecond,
+  title = {The Attacker Moves Second: Stronger Adaptive Attacks Bypass Defenses Against LLM Jailbreaks and Prompt Injections},
+  author = {Nasr, Milad and Carlini, Nicholas and Sitawarin, Chawin and Schulhoff, Sander V. and Hayes, Jamie and Ilie, Michael and Pluto, Juliette and Song, Shuang and Chaudhari, Harsh and Shumailov, Ilia and Thakurta, Abhradeep Guha and Xiao, Kai Yuanqing and Terzis, Andreas and Tramèr, Florian},
+  booktitle = {Proceedings of the 35th USENIX Security Symposium (USENIX Security 26)},
+  publisher = {USENIX Association},
+  year = {2026},
+  eprint = {2510.09023},
+  eprinttype = {arXiv},
+  url = {https://www.usenix.org/system/files/usenixsecurity26-nasr.pdf},
+  note = {Open-access USENIX Security 2026 paper; author list and affiliations from the USENIX presentation page and PDF},
+}
+
+% === provenance: Chen2025MetaSecAlign ===
+% CLAIM: The authors of a leading fine-tuned defence state that it remains
+%   vulnerable to strong adaptive attacks and that prompt injection is not
+%   solved.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p s2 --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 2045];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2507.02735,
+%   returned by 7 query x provider searches of this session in all (found_by
+%   records of the session).
+% PICKED: Admission against interest by defence authors; strongest form of
+%   evidence that model-level defences are not reliable prevention. Preprint
+%   (flagged).
+% QUOTE (p. 10): "our model, similar to existing defenses, remains
+%   vulnerable to strong adaptive attacks"
+% QUOTE (p. 10, passage 2): "That is, PI is not solved."
+% QUOTE (p. 1): "Meta-SecAlign maintains almost all the undefended LLM's
+%   utility while achieving better overall security than SecAlign against
+%   various static and GCG adaptive attacks"
+% VERIFIED: full-text (arXiv, latest version in cache) read; abstract and
+%   Sec. 5.2-5.3; applies; the third quote is its qualifying (positive)
+%   claim.
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Chen2025MetaSecAlign,
+  title = {Meta-SecAlign: Training LLMs against Prompt Injection for Robust Agents},
+  author = {Sizhe Chen and Arman Zharmagambetov and David Wagner and Chuan Guo},
+  year = {2025},
+  doi = {10.48550/arXiv.2507.02735},
+  eprint = {2507.02735},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2507.02735},
+  note = {Preprint},
+}
+
+% === provenance: Choudhary2025NotDetect ===
+% CLAIM: Known-answer detection defences that reported near-perfect
+%   performance are evaded by an adaptive attack.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p wos --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 44];
+%   session "prompt-injection", paper id doi:10.1145/3733799.3762980,
+%   returned by 30 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Peer-reviewed (AISec 2025) adaptive attack on a whole class of
+%   detectors; corroborates Zhan2025Adaptive and Nasr2026AttackerSecond for
+%   detection.
+% QUOTE (p. 1): "Recent defenses based on known-answer detection (KAD)
+%   scheme have reported near-perfect performance"
+% QUOTE (p. 1, passage 2): "It consistently evades KAD defenses, achieving
+%   detection rates as low as 0% while reliably inducing malicious behavior
+%   with a success rate of 91%"
+% VERIFIED: full-text (arXiv v3, the AISec paper) read; abstract; applies.
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Choudhary2025NotDetect,
+  title = {How Not to Detect Prompt Injections with an LLM},
+  author = {Choudhary, Sarthak and Anshumaan, Divyam and Palumbo, Nils and Jha, Somesh},
+  booktitle = {Proceedings of the 18th ACM Workshop on Artificial Intelligence and Security (AISec)},
+  publisher = {ACM},
+  year = {2025},
+  pages = {218--229},
+  doi = {10.1145/3733799.3762980},
+  eprint = {2507.05630},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2507.05630},
+}
+
+% === provenance: Chen2025DetectRemove ===
+% CLAIM: Off-the-shelf detectors struggle to detect indirect prompt
+%   injection; specially trained detectors do better in-domain but
+%   over-defend out of domain.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p scopus --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 12];
+%   session "prompt-injection", paper id doi:10.18653/v1/2025.acl-long.890,
+%   returned by 8 query x provider searches of this session in all (found_by
+%   records of the session).
+% PICKED: Peer-reviewed (ACL 2025) evaluation of detection and removal;
+%   qualifies and supports.
+% QUOTE (p. 2): "open-source detection models (ProtectAI.com, 2024; Meta,
+%   2024) struggle to effectively detect indirect prompt injection attacks,
+%   whereas specifically trained models show satisfactory performance"
+% VERIFIED: full-text (arXiv v5) read; Sec. on findings; applies
+%   (non-adaptive setting).
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Chen2025DetectRemove,
+  title = {Can Indirect Prompt Injection Attacks Be Detected and Removed?},
+  author = {Chen, Yulin and Li, Haoran and Sui, Yuan and He, Yufei and Liu, Yue and Song, Yangqiu and Hooi, Bryan},
+  booktitle = {Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  publisher = {Association for Computational Linguistics},
+  year = {2025},
+  pages = {18189--18206},
+  doi = {10.18653/v1/2025.acl-long.890},
+  eprint = {2502.16580},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2502.16580},
+}
+
+% === provenance: Liu2024Formalizing ===
+% CLAIM: A systematic evaluation found no existing prompt injection defence
+%   sufficient.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p wos --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 306];
+%   session "prompt-injection", paper id hash:098efd7ca8b9a2e8, returned by
+%   4 query x provider searches of this session in all (found_by records of
+%   the session).
+% PICKED: Early systematic benchmark of attacks and defences; corroboration.
+% QUOTE (p. 2): "We find that no existing defenses are sufficient."
+% VERIFIED: full-text (arXiv) read; Sec. 1; applies (as of 2023).
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Liu2024Formalizing,
+  title = {Formalizing and Benchmarking Prompt Injection Attacks and Defenses},
+  author = {Yupei Liu and Yuqi Jia and Runpeng Geng and Jinyuan Jia and Neil Zhenqiang Gong},
+  year = {2024},
+  doi = {10.48550/arXiv.2310.12815},
+  eprint = {2310.12815},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2310.12815},
+  note = {Published in USENIX Security Symposium 2024 (per the arXiv record)},
+}
+
+% === provenance: Hines2024Spotlighting ===
+% CLAIM: Spotlighting (marking the provenance of input text) reduces
+%   indirect injection success from over 50 % to under 2 % in the authors'
+%   experiments.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p scopus --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 154];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2403.14720,
+%   returned by 10 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: The prompt-hardening defence named in the claim; reported fairly
+%   as a qualifying result (and later bypassed: Nasr2026AttackerSecond).
+% QUOTE (p. 1): "spotlighting reduces the attack success rate from greater
+%   than 50% to below 2% in our experiments with minimal impact on task
+%   efficacy"
+% VERIFIED: full-text (arXiv) read; abstract; qualifies (non-adaptive
+%   evaluation).
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Hines2024Spotlighting,
+  title = {Defending Against Indirect Prompt Injection Attacks With Spotlighting},
+  author = {Keegan Hines and Gary Lopez and Matthew Hall and Federico Zarfati and Yonatan Zunger and Emre Kiciman},
+  booktitle = {Conference on Applied Machine Learning in Information Security (CAMLIS 2024), CEUR Workshop Proceedings},
+  year = {2024},
+  doi = {10.48550/arXiv.2403.14720},
+  eprint = {2403.14720},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2403.14720},
+  note = {Venue per the OpenAlex/Scopus records in the session (CAMLIS; CEUR Workshop Proceedings); the arXiv version was read},
+}
+
+% === provenance: Chen2025SecAlign ===
+% CLAIM: Preference-optimisation fine-tuning reduces prompt injection
+%   success below 10 % even for unseen, stronger attacks.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p wos --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 119];
+%   session "prompt-injection", paper id doi:10.1145/3719027.3744836,
+%   returned by 28 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Peer-reviewed fine-tuned defence with a strong robustness claim;
+%   qualifies.
+% QUOTE (p. 1): "the first known method that reduces the success rates of
+%   various prompt injections to <10%, even against attacks much more
+%   sophisticated than ones seen during training"
+% QUOTE (p. 1, passage 2): "StruQ [3] suffers from over 50% attack success
+%   rate under an attack that optimizes the injection"
+% VERIFIED: full-text (arXiv) read; abstract and Sec. 1; qualifies; second
+%   quote supports (b).
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Chen2025SecAlign,
+  title = {SecAlign: Defending Against Prompt Injection with Preference Optimization},
+  author = {Chen, Sizhe and Zharmagambetov, Arman and Mahloujifar, Saeed and Chaudhuri, Kamalika and Wagner, David and Guo, Chuan},
+  booktitle = {Proceedings of the 2025 ACM SIGSAC Conference on Computer and Communications Security (CCS)},
+  publisher = {ACM},
+  year = {2025},
+  pages = {2833--2847},
+  doi = {10.1145/3719027.3744836},
+  eprint = {2410.05451},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2410.05451},
+}
+
+% === provenance: Wallace2024Hierarchy ===
+% CLAIM: Training an instruction hierarchy drastically increases robustness
+%   to prompt injection with minimal capability loss.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 1417];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2404.13208,
+%   returned by 7 query x provider searches of this session in all (found_by
+%   records of the session).
+% PICKED: The instruction-hierarchy defence named in the claim; qualifies.
+% QUOTE (p. 1): "it drastically increases robustness—even for attack types
+%   not seen during training—while imposing minimal degradations on standard
+%   capabilities"
+% VERIFIED: full-text (arXiv) read; abstract; qualifies.
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Wallace2024Hierarchy,
+  title = {The Instruction Hierarchy: Training LLMs to Prioritize Privileged Instructions},
+  author = {Eric Wallace and Kai Xiao and Reimar Leike and Lilian Weng and Johannes Heidecke and Alex Beutel},
+  year = {2024},
+  doi = {10.48550/arXiv.2404.13208},
+  eprint = {2404.13208},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2404.13208},
+  note = {Preprint (OpenAI)},
+}
+
+% === provenance: Wu2025ISE ===
+% CLAIM: Instruction-segment embeddings improve robustness to prompt
+%   injection by up to 15.75 and 18.68 points on two benchmarks.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p scopus --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 583];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2410.09102,
+%   returned by 21 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Architectural (embedding-level) separation defence; qualifies,
+%   with modest gains.
+% QUOTE (p. 1): "demonstrate an average robust accuracy increase of up to
+%   15.75% and 18.68%, respectively"
+% VERIFIED: full-text (arXiv) read; abstract; qualifies (improvement, not
+%   prevention).
+% COUNTER: scholar search, query C6 (LLM AND
+%   instructions-and-data/structured queries/same channel AND
+%   separate/distinguish/robust/by design/enforce) on wos, ieee, openalex,
+%   scopus, s2 (dblp failed), session prompt-injection, 2026-11-27; verbatim
+%   queries: prompt-injection-queries.sh --print) -- found: methods that
+%   improve separation (Chen2025StruQ, Wu2025ISE, Wallace2024Hierarchy),
+%   none reporting full separation; claim stands as 'no reliable separation
+%   in current models'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Wu2025ISE,
+  title = {Instructional Segment Embedding: Improving LLM Safety with Instruction Hierarchy},
+  author = {Tong Wu and Shujian Zhang and Kaiqiang Song and Silei Xu and Sanqiang Zhao and Ravi Agrawal and Sathish Reddy Indurthi and Chong Xiang and Prateek Mittal and Wenxuan Zhou},
+  booktitle = {International Conference on Learning Representations (ICLR 2025)},
+  year = {2025},
+  doi = {10.48550/arXiv.2410.09102},
+  eprint = {2410.09102},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2410.09102},
+  note = {ICLR 2025 (arXiv journal reference)},
+}
+
+% === provenance: Liu2025DataSentinel ===
+% CLAIM: A game-theoretic detector is claimed to detect existing and
+%   adaptive prompt injection attacks.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p wos --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 10];
+%   session "prompt-injection", paper id doi:10.1109/sp61157.2025.00250,
+%   returned by 36 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Peer-reviewed detector explicitly trained against adaptive
+%   attacks; qualifies (later bypassed by Nasr2026AttackerSecond).
+% QUOTE (p. 1): "existing detection methods have limited effectiveness
+%   against state-of-the-art attacks, let alone adaptive ones"
+% QUOTE (p. 1, passage 2): "DataSentinel effectively detects both existing
+%   and adaptive prompt injection attacks"
+% VERIFIED: full-text (arXiv v4) read; abstract; qualifies; first quote
+%   supports (b).
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Liu2025DataSentinel,
+  title = {DataSentinel: A Game-Theoretic Detection of Prompt Injection Attacks},
+  author = {Liu, Yupei and Jia, Yuqi and Jia, Jinyuan and Song, Dawn and Gong, Neil Zhenqiang},
+  booktitle = {2025 IEEE Symposium on Security and Privacy (SP)},
+  publisher = {IEEE},
+  year = {2025},
+  pages = {2190--2208},
+  doi = {10.1109/sp61157.2025.00250},
+  eprint = {2504.11358},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2504.11358},
+}
+
+% === provenance: Hung2025AttentionTracker ===
+% CLAIM: A training-free detector based on attention patterns improves
+%   detection over existing methods.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p scopus --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 9]; session
+%   "prompt-injection", paper id doi:10.18653/v1/2025.findings-naacl.123,
+%   returned by 7 query x provider searches of this session in all (found_by
+%   records of the session).
+% PICKED: Peer-reviewed detector; qualifies (improvement in detection,
+%   non-adaptive).
+% QUOTE (p. 1): "showing an AUROC improvement of up to 10.0% over existing
+%   methods"
+% VERIFIED: full-text (arXiv) read; abstract; qualifies.
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Hung2025AttentionTracker,
+  title = {Attention Tracker: Detecting Prompt Injection Attacks in LLMs},
+  author = {Hung, Kuo-Han and Ko, Ching-Yun and Rawat, Ambrish and Chung, I-Hsin and Hsu, Winston H. and Chen, Pin-Yu},
+  booktitle = {Findings of the Association for Computational Linguistics: NAACL 2025},
+  publisher = {Association for Computational Linguistics},
+  year = {2025},
+  pages = {2309--2322},
+  doi = {10.18653/v1/2025.findings-naacl.123},
+  eprint = {2411.00348},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2411.00348},
+}
+
+% === provenance: Shi2025PromptArmor ===
+% CLAIM: An LLM-based filter that removes injected prompts reaches false
+%   positive and negative rates below 1 % on AgentDojo and is claimed
+%   effective against adaptive attacks.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 223];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2507.15219,
+%   returned by 12 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Strongest recent detection claim in the screened set; preprint;
+%   not independently attacked in the sources read; reported as qualifying.
+% QUOTE (p. 1): "PromptArmor achieves both a false positive rate and a false
+%   negative rate below 1% on the AgentDojo benchmark"
+% QUOTE (p. 1, passage 2): "We also demonstrate PromptArmor's effectiveness
+%   against adaptive attacks"
+% VERIFIED: full-text (arXiv) read; abstract; qualifies.
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Shi2025PromptArmor,
+  title = {PromptArmor: Simple yet Effective Prompt Injection Defenses},
+  author = {Tianneng Shi and Kaijie Zhu and Zhun Wang and Yuqi Jia and Will Cai and Weida Liang and Haonan Wang and Hend Alzahrani and Joshua Lu and Kenji Kawaguchi and Basel Alomair and Xuandong Zhao and William Yang Wang and Neil Gong and Wenbo Guo and Dawn Song},
+  year = {2025},
+  doi = {10.48550/arXiv.2507.15219},
+  eprint = {2507.15219},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2507.15219},
+  note = {Preprint},
+}
+
+% === provenance: Zhu2025MELON ===
+% CLAIM: A re-execution defence is presented as provable and outperforming
+%   state-of-the-art defences.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 86];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2502.05174,
+%   returned by 21 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Defence whose title claims provability; qualifies; bypassed at 76
+%   % by Nasr2026AttackerSecond.
+% QUOTE (p. 1): "MELON outperforms SOTA defenses in both attack prevention
+%   and utility preservation"
+% VERIFIED: full-text (arXiv v4) read; abstract; qualifies.
+% COUNTER: scholar search, queries C3 (attack AND
+%   guarantee/by-design/isolation terms AND
+%   solve/eliminate/completely/provable/by design), C4 (same AND utility AND
+%   no loss/negligible/preserving), CR1 (untrusted data AND isolation/least
+%   privilege/information flow AND solve/provable/by design) on wos,
+%   openalex, scopus, s2 (ieee for C3, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: system-level designs
+%   claiming provable or deterministic security for a defined class of
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
+%   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
+%   the claim: the surviving wording says that design-level defences give
+%   guarantees for a class of attacks at a cost in utility or generality.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Zhu2025MELON,
+  title = {MELON: Provable Defense Against Indirect Prompt Injection Attacks in AI Agents},
+  author = {Kaijie Zhu and Xianjun Yang and Jindong Wang and Wenbo Guo and William Yang Wang},
+  booktitle = {International Conference on Machine Learning (ICML 2025)},
+  year = {2025},
+  doi = {10.48550/arXiv.2502.05174},
+  eprint = {2502.05174},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2502.05174},
+  note = {ICML 2025 (per the arXiv record)},
+}
+
+% === provenance: Jia2025TaskShield ===
+% CLAIM: A task-alignment check reduces attack success to about 2 % while
+%   keeping utility near 70 % on AgentDojo.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 12];
+%   session "prompt-injection", paper id doi:10.18653/v1/2025.acl-long.1435,
+%   returned by 17 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Peer-reviewed test-time defence; qualifies.
+% QUOTE (p. 1): "Task Shield reduces attack success rates (2.07%) while
+%   maintaining high task utility (69.79%) on GPT-4o"
+% VERIFIED: full-text (arXiv) read; abstract; qualifies (non-adaptive).
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Jia2025TaskShield,
+  title = {The Task Shield: Enforcing Task Alignment to Defend Against Indirect Prompt Injection in LLM Agents},
+  author = {Jia, Feiran and Wu, Tong and Qin, Xin and Squicciarini, Anna},
+  booktitle = {Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  publisher = {Association for Computational Linguistics},
+  year = {2025},
+  pages = {29680--29697},
+  doi = {10.18653/v1/2025.acl-long.1435},
+  eprint = {2412.16682},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2412.16682},
+}
+
+% === provenance: An2025IPIGuard ===
+% CLAIM: Prompting- and detection-based defences rely on the model's own
+%   security and lack structural constraints; a tool-dependency-graph
+%   defence constrains agent behaviour.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p scopus --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 4]; session
+%   "prompt-injection", paper id doi:10.18653/v1/2025.emnlp-main.53,
+%   returned by 24 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Peer-reviewed structural defence; supports the critique of
+%   model-level defences and qualifies with its own structural design.
+% QUOTE (p. 1): "they fundamentally rely on assumptions about the model's
+%   inherent security, which lacks structural constraints on agent
+%   behaviors"
+% VERIFIED: full-text (ACL Anthology PDF) read; abstract; supports
+%   (critique) and qualifies (structural defence).
+% COUNTER: scholar search, queries C3 (attack AND
+%   guarantee/by-design/isolation terms AND
+%   solve/eliminate/completely/provable/by design), C4 (same AND utility AND
+%   no loss/negligible/preserving), CR1 (untrusted data AND isolation/least
+%   privilege/information flow AND solve/provable/by design) on wos,
+%   openalex, scopus, s2 (ieee for C3, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: system-level designs
+%   claiming provable or deterministic security for a defined class of
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
+%   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
+%   the claim: the surviving wording says that design-level defences give
+%   guarantees for a class of attacks at a cost in utility or generality.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{An2025IPIGuard,
+  title = {IPIGuard: A Novel Tool Dependency Graph-Based Defense Against Indirect Prompt Injection in LLM Agents},
+  author = {An, Hengyu and Zhang, Jinghuai and Du, Tianyu and Zhou, Chunyi and Li, Qingming and Lin, Tao and Ji, Shouling},
+  booktitle = {Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing},
+  publisher = {Association for Computational Linguistics},
+  year = {2025},
+  pages = {1023--1039},
+  doi = {10.18653/v1/2025.emnlp-main.53},
+  url = {https://aclanthology.org/2025.emnlp-main.53.pdf},
+}
+
+% === provenance: Debenedetti2026CaMeL ===
+% CLAIM: A system layer that extracts control and data flow from the trusted
+%   query gives provable security against prompt injection for a defined
+%   class of attacks, at some loss of task completion (77 % vs 84 %).
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p scopus --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 50];
+%   session "prompt-injection", paper id doi:10.1109/satml68715.2026.00040,
+%   returned by 22 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Peer-reviewed (SaTML 2026) primary source for "secure by design";
+%   states guarantees, utility cost and explicit non-goals. Preferred over
+%   the design-pattern preprint for the guarantee.
+% QUOTE (p. 1): "the untrusted data retrieved by the LLM can never impact
+%   the program flow"
+% QUOTE (p. 1, passage 2): "solving 77% of tasks with provable security
+%   (compared to 84% with an undefended system) in AgentDojo"
+% QUOTE (p. 5): "it cannot defend against text-to-text attacks"
+% QUOTE (p. 11): "executions that violate security policies will not be
+%   blocked, but they will require user confirmation"
+% VERIFIED: full-text (arXiv, updated version) read; abstract, Sec. 3.1,
+%   Sec. 5; QUALIFIES the claim (guarantee for a class of attacks) and
+%   supports the design advice.
+% COUNTER: scholar search, queries C3 (attack AND
+%   guarantee/by-design/isolation terms AND
+%   solve/eliminate/completely/provable/by design), C4 (same AND utility AND
+%   no loss/negligible/preserving), CR1 (untrusted data AND isolation/least
+%   privilege/information flow AND solve/provable/by design) on wos,
+%   openalex, scopus, s2 (ieee for C3, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: system-level designs
+%   claiming provable or deterministic security for a defined class of
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
+%   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
+%   the claim: the surviving wording says that design-level defences give
+%   guarantees for a class of attacks at a cost in utility or generality.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Debenedetti2026CaMeL,
+  title = {Defeating Prompt Injections by Design},
+  author = {Debenedetti, Edoardo and Shumailov, Ilia and Fan, Tianqi and Hayes, Jamie and Carlini, Nicholas and Fabian, Daniel and Kern, Christoph and Shi, Chongyang and Terzis, Andreas and Tramèr, Florian},
+  booktitle = {2026 IEEE Conference on Secure and Trustworthy Machine Learning (SaTML)},
+  publisher = {IEEE},
+  year = {2026},
+  pages = {587--618},
+  doi = {10.1109/SaTML68715.2026.00040},
+  eprint = {2503.18813},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2503.18813},
+}
+
+% === provenance: BeurerKellner2025Patterns ===
+% CLAIM: Agents with provable resistance to prompt injection are possible
+%   only by constraining what an agent can do after it has read untrusted
+%   input; general-purpose agents are unlikely to give reliable guarantees.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 4]; session
+%   "prompt-injection", paper id doi:10.48550/arxiv.2506.08837, returned by
+%   10 query x provider searches of this session in all (found_by records of
+%   the session).
+% PICKED: Multi-institution (ETH, IBM, Google, Microsoft, Invariant Labs and
+%   others) design paper; preprint (flagged); clearest statement of the
+%   design principle and its utility trade-off.
+% QUOTE (p. 4): "we believe it is unlikely that general-purpose agents can
+%   provide meaningful and reliable safety guarantees"
+% QUOTE (p. 4, passage 2): "once an LLM agent has ingested untrusted input,
+%   it must be constrained so that it is impossible for that input to
+%   trigger any consequential actions—that is, actions with negative side
+%   effects on the system or its environment"
+% QUOTE (p. 2): "These design patterns constrain the actions of agents to
+%   explicitly prevent them from solving arbitrary tasks."
+% QUOTE (p. 11): "we could ask for user confirmation before the LLM executes
+%   each command"
+% VERIFIED: full-text (arXiv) read; abstract, Sec. 1-3, case studies;
+%   supports the design advice and qualifies the "cannot be prevented"
+%   reading.
+% COUNTER: scholar search, queries C3 (attack AND
+%   guarantee/by-design/isolation terms AND
+%   solve/eliminate/completely/provable/by design), C4 (same AND utility AND
+%   no loss/negligible/preserving), CR1 (untrusted data AND isolation/least
+%   privilege/information flow AND solve/provable/by design) on wos,
+%   openalex, scopus, s2 (ieee for C3, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: system-level designs
+%   claiming provable or deterministic security for a defined class of
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
+%   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
+%   the claim: the surviving wording says that design-level defences give
+%   guarantees for a class of attacks at a cost in utility or generality.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{BeurerKellner2025Patterns,
+  title = {Design Patterns for Securing LLM Agents against Prompt Injections},
+  author = {Luca Beurer-Kellner and Beat Buesser and Ana-Maria Creţu and Edoardo Debenedetti and Daniel Dobos and Daniel Fabian and Marc Fischer and David Froelicher and Kathrin Grosse and Daniel Naeff and Ezinwanne Ozoani and Andrew Paverd and Florian Tramèr and Václav Volhejn},
+  year = {2025},
+  doi = {10.48550/arXiv.2506.08837},
+  eprint = {2506.08837},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2506.08837},
+  note = {Preprint},
+}
+
+% === provenance: Wu2024IFC ===
+% CLAIM: Model-level defences are likely vulnerable to tailored attacks;
+%   separating planner and executor allows information-flow control at the
+%   system level.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p s2 --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 212];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2409.19091,
+%   returned by 18 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Early system-level IFC design for indirect injection; preprint
+%   (flagged).
+% QUOTE (p. 1): "they are likely vulnerable to attacks specifically tailored
+%   to defeat that defense"
+% VERIFIED: full-text (arXiv v2) read; Sec. 1; supports (b) and qualifies
+%   (c).
+% COUNTER: scholar search, queries C3 (attack AND
+%   guarantee/by-design/isolation terms AND
+%   solve/eliminate/completely/provable/by design), C4 (same AND utility AND
+%   no loss/negligible/preserving), CR1 (untrusted data AND isolation/least
+%   privilege/information flow AND solve/provable/by design) on wos,
+%   openalex, scopus, s2 (ieee for C3, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: system-level designs
+%   claiming provable or deterministic security for a defined class of
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
+%   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
+%   the claim: the surviving wording says that design-level defences give
+%   guarantees for a class of attacks at a cost in utility or generality.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Wu2024IFC,
+  title = {System-Level Defense against Indirect Prompt Injection Attacks: An Information Flow Control Perspective},
+  author = {Fangzhou Wu and Ethan Cecchetti and Chaowei Xiao},
+  year = {2024},
+  doi = {10.48550/arXiv.2409.19091},
+  eprint = {2409.19091},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2409.19091},
+  note = {Preprint},
+}
+
+% === provenance: Costa2026FIDES ===
+% CLAIM: Information-flow control with deterministic policy enforcement
+%   gives AI agents security guarantees while completing a broad range of
+%   tasks.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 1297];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2505.23643,
+%   returned by 12 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Formal model plus implementation; accepted at NeurIPS 2026
+%   (poster; proceedings not yet out); corroborates CaMeL with an
+%   independent design.
+% QUOTE (p. 1): "FIDES, a planner that tracks confidentiality and integrity
+%   labels, deterministically enforces security policies"
+% QUOTE (p. 1, passage 2): "enables us to complete a broad range of tasks
+%   with security guarantees"
+% VERIFIED: full-text (arXiv v2) read; abstract; qualifies (guarantees by
+%   design).
+% COUNTER: scholar search, queries C3 (attack AND
+%   guarantee/by-design/isolation terms AND
+%   solve/eliminate/completely/provable/by design), C4 (same AND utility AND
+%   no loss/negligible/preserving), CR1 (untrusted data AND isolation/least
+%   privilege/information flow AND solve/provable/by design) on wos,
+%   openalex, scopus, s2 (ieee for C3, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: system-level designs
+%   claiming provable or deterministic security for a defined class of
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
+%   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
+%   the claim: the surviving wording says that design-level defences give
+%   guarantees for a class of attacks at a cost in utility or generality.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Costa2026FIDES,
+  title = {Securing AI Agents with Information-Flow Control},
+  author = {Manuel Costa and Boris Köpf and Aashish Kolluri and Andrew Paverd and Mark Russinovich and Ahmed Salem and Shruti Tople and Lukas Wutschitz and Santiago Zanella-Béguelin},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS 2026)},
+  year = {2026},
+  doi = {10.48550/arXiv.2505.23643},
+  eprint = {2505.23643},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2505.23643},
+  note = {Accepted as a NeurIPS 2026 poster (neurips.cc virtual site, poster 152696, opened 2026-11-27); proceedings not yet available; the arXiv v2 was read},
+}
+
+% === provenance: Shi2025Progent ===
+% CLAIM: Least-privilege policies on tool calls reduce attack success on
+%   AgentDojo from 39.9 % to 1.0 % while keeping utility; manual policies
+%   provably reduce it to 0 %.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 1210];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2504.11703,
+%   returned by 5 query x provider searches of this session in all (found_by
+%   records of the session).
+% PICKED: Privilege-control design, the closest match to "least privilege
+%   enforced in code"; preprint (flagged).
+% QUOTE (p. 2): "Progent reduces the attack success rate (ASR) from 39.9% to
+%   1.0% on AgentDojo, and from 70.3% to 3.9% on ASB, while maintaining the
+%   agent's utility in both cases"
+% QUOTE (p. 9): "These manually defined policies can provably reduce the ASR
+%   to 0%."
+% QUOTE (p. 1): "security requires deterministic enforcement that holds
+%   regardless of how the LLM reasons, even under adversarial influence"
+% VERIFIED: full-text (arXiv v3) read; Sec. 1 and 8; qualifies and supports
+%   the design advice.
+% COUNTER: scholar search, queries C3 (attack AND
+%   guarantee/by-design/isolation terms AND
+%   solve/eliminate/completely/provable/by design), C4 (same AND utility AND
+%   no loss/negligible/preserving), CR1 (untrusted data AND isolation/least
+%   privilege/information flow AND solve/provable/by design) on wos,
+%   openalex, scopus, s2 (ieee for C3, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: system-level designs
+%   claiming provable or deterministic security for a defined class of
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
+%   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
+%   the claim: the surviving wording says that design-level defences give
+%   guarantees for a class of attacks at a cost in utility or generality.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Shi2025Progent,
+  title = {Progent: Securing AI Agents with Privilege Control},
+  author = {Tianneng Shi and Jingxuan He and Zhun Wang and Hongwei Li and Linyu Wu and Wenbo Guo and Dawn Song},
+  year = {2025},
+  doi = {10.48550/arXiv.2504.11703},
+  eprint = {2504.11703},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2504.11703},
+  note = {Preprint},
+}
+
+% === provenance: Kim2025PFI ===
+% CLAIM: The principle of least privilege should restrict the effect of
+%   untrusted data on privileged tools; a design based on it mitigates
+%   privilege escalation while preserving utility.
+% FOUND-VIA: scholar search '(LLM OR LLMs OR "language model" OR "language
+%   models" OR agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG) AND ("untrusted data" OR "untrusted input"
+%   OR "untrusted inputs" OR "untrusted content" OR "untrusted sources" OR
+%   "untrusted tool") AND (isolation OR isolate OR "least privilege" OR
+%   "privilege separation" OR "information flow" OR "control flow" OR
+%   integrity OR guardrail OR guardrails OR defense OR defence OR mitigation
+%   OR mitigate OR prevent OR prevention)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query R1, rank 2]; session
+%   "prompt-injection", paper id doi:10.48550/arxiv.2503.15547, returned by
+%   4 query x provider searches of this session in all (found_by records of
+%   the session).
+% PICKED: System design returned by the repair query R1; preprint (flagged);
+%   corroborates the least-privilege advice.
+% QUOTE (p. 1): "the principle of least privilege should be enforced to
+%   restrict the impact of untrusted data on the privileged tools"
+% QUOTE (p. 1, passage 2): "PFI effectively mitigates privilege escalation
+%   attacks while successfully preserving the utility of LLM agents"
+% VERIFIED: full-text (arXiv v2) read; abstract and Sec. 1; supports the
+%   design advice.
+% COUNTER: scholar search, queries C3 (attack AND
+%   guarantee/by-design/isolation terms AND
+%   solve/eliminate/completely/provable/by design), C4 (same AND utility AND
+%   no loss/negligible/preserving), CR1 (untrusted data AND isolation/least
+%   privilege/information flow AND solve/provable/by design) on wos,
+%   openalex, scopus, s2 (ieee for C3, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: system-level designs
+%   claiming provable or deterministic security for a defined class of
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
+%   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
+%   the claim: the surviving wording says that design-level defences give
+%   guarantees for a class of attacks at a cost in utility or generality.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Kim2025PFI,
+  title = {Prompt Flow Integrity to Prevent Privilege Escalation in LLM Agents},
+  author = {Juhee Kim and Woohyuk Choi and Byoungyoung Lee},
+  year = {2025},
+  doi = {10.48550/arXiv.2503.15547},
+  eprint = {2503.15547},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2503.15547},
+  note = {Preprint},
+}
+
+% === provenance: Zhang2024Extraction ===
+% CLAIM: Simple text-based attacks reveal hidden prompts with high
+%   probability, including from deployed systems despite defences.
+% FOUND-VIA: scholar search '("system prompt" OR "system prompts" OR "prompt
+%   extraction" OR "prompt leaking" OR "prompt leakage" OR "prompt leak" OR
+%   "prompt stealing" OR "prompt theft" OR "hidden prompt" OR "hidden
+%   prompts") AND (extract OR extracting OR extraction OR leak OR leaking OR
+%   leakage OR leaked OR steal OR stealing OR theft OR reveal OR revealing
+%   OR recover OR recovering OR exfiltrate OR exfiltration) AND (LLM OR LLMs
+%   OR "language model" OR "language models" OR agent OR agents OR agentic
+%   OR chatbot OR chatbots OR "retrieval-augmented" OR RAG)' -p openalex
+%   --year 2022-2026 --in title-abstract --limit 0 -n prompt-injection
+%   [query S8, rank 12]; session "prompt-injection", paper id
+%   doi:10.48550/arxiv.2307.06865, returned by 1 query x provider searches
+%   of this session in all (found_by records of the session).
+% PICKED: Peer-reviewed systematic measurement (11 models, 3 prompt sources)
+%   with verification of extracted prompts; primary source for (d).
+% QUOTE (p. 1): "simple text-based attacks can in fact reveal prompts with
+%   high probability"
+% QUOTE (p. 1, passage 2): "system prompts can be revealed by an adversary
+%   despite existing defenses in place"
+% VERIFIED: full-text (arXiv v3, COLM version) read; abstract; applies.
+% COUNTER: scholar search, query C5 (system prompt/prompt
+%   extraction/leaking/stealing AND extract/leak AND LLM AND
+%   defence/protect/obfuscation/secure/robust) on wos, ieee, openalex,
+%   scopus, s2 (dblp failed), session prompt-injection, 2026-11-27; verbatim
+%   queries: prompt-injection-queries.sh --print) -- found: protective
+%   schemes (Zhuang2026ProxyPrompt protects 94.70 % of prompts in its
+%   evaluation; Wang2024Raccoon finds a defended GPT-4 configuration
+%   resilient). Claim narrowed: prompts are readily extracted from
+%   undefended models; defences reduce but are not shown to eliminate
+%   extraction.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Zhang2024Extraction,
+  title = {Effective Prompt Extraction from Language Models},
+  author = {Yiming Zhang and Nicholas Carlini and Daphne Ippolito},
+  booktitle = {Conference on Language Modeling (COLM 2024)},
+  year = {2024},
+  doi = {10.48550/arXiv.2307.06865},
+  eprint = {2307.06865},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2307.06865},
+  note = {Published as a conference paper at COLM 2024 (PDF header)},
+}
+
+% === provenance: Wang2024Raccoon ===
+% CLAIM: All evaluated models leak their prompts when undefended; some
+%   defended configurations resist extraction.
+% FOUND-VIA: scholar search '("system prompt" OR "system prompts" OR "prompt
+%   extraction" OR "prompt leaking" OR "prompt leakage" OR "prompt leak" OR
+%   "prompt stealing" OR "prompt theft" OR "hidden prompt" OR "hidden
+%   prompts") AND (extract OR extracting OR extraction OR leak OR leaking OR
+%   leakage OR leaked OR steal OR stealing OR theft OR reveal OR revealing
+%   OR recover OR recovering OR exfiltrate OR exfiltration) AND (LLM OR LLMs
+%   OR "language model" OR "language models" OR agent OR agents OR agentic
+%   OR chatbot OR chatbots OR "retrieval-augmented" OR RAG)' -p openalex
+%   --year 2022-2026 --in title-abstract --limit 0 -n prompt-injection
+%   [query S8, rank 39]; session "prompt-injection", paper id
+%   doi:10.18653/v1/2024.findings-acl.791, returned by 6 query x provider
+%   searches of this session in all (found_by records of the session).
+% PICKED: Peer-reviewed extraction benchmark; supports and qualifies (d).
+% QUOTE (p. 2): "while all seven evaluated models are vulnerable in an
+%   undefended state, specific configurations, such as GPT-4-1106,
+%   demonstrate resilience when defended"
+% VERIFIED: full-text (ACL Anthology PDF) read; Sec. 1; supports and
+%   qualifies.
+% COUNTER: scholar search, query C5 (system prompt/prompt
+%   extraction/leaking/stealing AND extract/leak AND LLM AND
+%   defence/protect/obfuscation/secure/robust) on wos, ieee, openalex,
+%   scopus, s2 (dblp failed), session prompt-injection, 2026-11-27; verbatim
+%   queries: prompt-injection-queries.sh --print) -- found: protective
+%   schemes (Zhuang2026ProxyPrompt protects 94.70 % of prompts in its
+%   evaluation; Wang2024Raccoon finds a defended GPT-4 configuration
+%   resilient). Claim narrowed: prompts are readily extracted from
+%   undefended models; defences reduce but are not shown to eliminate
+%   extraction.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Wang2024Raccoon,
+  title = {Raccoon: Prompt Extraction Benchmark of LLM-Integrated Applications},
+  author = {Wang, Junlin and Yang, Tianyi and Xie, Roy and Dhingra, Bhuwan},
+  booktitle = {Findings of the Association for Computational Linguistics: ACL 2024},
+  publisher = {Association for Computational Linguistics},
+  year = {2024},
+  pages = {13349--13365},
+  doi = {10.18653/v1/2024.findings-acl.791},
+  url = {https://aclanthology.org/2024.findings-acl.791.pdf},
+}
+
+% === provenance: Liang2024Leaked ===
+% CLAIM: Current LLMs, including aligned ones such as GPT-4, are highly
+%   vulnerable to prompt extraction.
+% FOUND-VIA: scholar search '("system prompt" OR "system prompts" OR "prompt
+%   extraction" OR "prompt leaking" OR "prompt leakage" OR "prompt leak" OR
+%   "prompt stealing" OR "prompt theft" OR "hidden prompt" OR "hidden
+%   prompts") AND (extract OR extracting OR extraction OR leak OR leaking OR
+%   leakage OR leaked OR steal OR stealing OR theft OR reveal OR revealing
+%   OR recover OR recovering OR exfiltrate OR exfiltration) AND (LLM OR LLMs
+%   OR "language model" OR "language models" OR agent OR agents OR agentic
+%   OR chatbot OR chatbots OR "retrieval-augmented" OR RAG)' -p openalex
+%   --year 2022-2026 --in title-abstract --limit 0 -n prompt-injection
+%   [query S8, rank 2]; session "prompt-injection", paper id
+%   doi:10.48550/arxiv.2408.02416, returned by 4 query x provider searches
+%   of this session in all (found_by records of the session).
+% PICKED: Corroboration for (d); preprint (flagged).
+% QUOTE (p. 1): "current LLMs, even those with safety alignments like GPT-4,
+%   are highly vulnerable to prompt extraction attacks, even under the most
+%   straightforward user attacks"
+% VERIFIED: full-text (arXiv) read; abstract; applies.
+% COUNTER: scholar search, query C5 (system prompt/prompt
+%   extraction/leaking/stealing AND extract/leak AND LLM AND
+%   defence/protect/obfuscation/secure/robust) on wos, ieee, openalex,
+%   scopus, s2 (dblp failed), session prompt-injection, 2026-11-27; verbatim
+%   queries: prompt-injection-queries.sh --print) -- found: protective
+%   schemes (Zhuang2026ProxyPrompt protects 94.70 % of prompts in its
+%   evaluation; Wang2024Raccoon finds a defended GPT-4 configuration
+%   resilient). Claim narrowed: prompts are readily extracted from
+%   undefended models; defences reduce but are not shown to eliminate
+%   extraction.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Liang2024Leaked,
+  title = {Why Are My Prompts Leaked? Unraveling Prompt Extraction Threats in Customized Large Language Models},
+  author = {Zi Liang and Haibo Hu and Qingqing Ye and Yaxin Xiao and Haoyang Li},
+  year = {2024},
+  doi = {10.48550/arXiv.2408.02416},
+  eprint = {2408.02416},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2408.02416},
+  note = {Preprint},
+}
+
+% === provenance: Zhuang2026ProxyPrompt ===
+% CLAIM: A proxy-prompt defence protects 94.70 % of system prompts from
+%   extraction in its evaluation.
+% FOUND-VIA: scholar search '("system prompt" OR "system prompts" OR "prompt
+%   extraction" OR "prompt leaking" OR "prompt leakage" OR "prompt leak" OR
+%   "prompt stealing" OR "prompt theft" OR "hidden prompt" OR "hidden
+%   prompts") AND (extract OR extracting OR extraction OR leak OR leaking OR
+%   leakage OR leaked OR steal OR stealing OR theft OR reveal OR revealing
+%   OR recover OR recovering OR exfiltrate OR exfiltration) AND (LLM OR LLMs
+%   OR "language model" OR "language models" OR agent OR agents OR agentic
+%   OR chatbot OR chatbots OR "retrieval-augmented" OR RAG)' -p scopus
+%   --year 2022-2026 --in title-abstract --limit 0 -n prompt-injection
+%   [query S8, rank 9]; session "prompt-injection", paper id
+%   doi:10.18653/v1/2026.findings-acl.429, returned by 5 query x provider
+%   searches of this session in all (found_by records of the session).
+% PICKED: Peer-reviewed protective scheme; qualifies (d).
+% QUOTE (p. 1): "ProxyPrompt protects 94.70% of prompts from extraction
+%   attacks, outperforming the next-best defense, which only achieves
+%   42.80%"
+% VERIFIED: full-text (arXiv) read; abstract; qualifies.
+% COUNTER: scholar search, query C5 (system prompt/prompt
+%   extraction/leaking/stealing AND extract/leak AND LLM AND
+%   defence/protect/obfuscation/secure/robust) on wos, ieee, openalex,
+%   scopus, s2 (dblp failed), session prompt-injection, 2026-11-27; verbatim
+%   queries: prompt-injection-queries.sh --print) -- found: protective
+%   schemes (Zhuang2026ProxyPrompt protects 94.70 % of prompts in its
+%   evaluation; Wang2024Raccoon finds a defended GPT-4 configuration
+%   resilient). Claim narrowed: prompts are readily extracted from
+%   undefended models; defences reduce but are not shown to eliminate
+%   extraction.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Zhuang2026ProxyPrompt,
+  title = {ProxyPrompt: Securing System Prompts against Prompt Extraction Attacks},
+  author = {Zhuang, Zhixiong and Nicolae, Maria-Irina and Wang, Hui-Po and Fritz, Mario},
+  booktitle = {Findings of the Association for Computational Linguistics: ACL 2026},
+  publisher = {Association for Computational Linguistics},
+  year = {2026},
+  pages = {8813--8845},
+  doi = {10.18653/v1/2026.findings-acl.429},
+  eprint = {2505.11459},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2505.11459},
+}
+
+% === provenance: Peng2026SecOPD ===
+% CLAIM: Fine-tuned (model-level) defences suffer near 100 % attack success
+%   against adaptive prompt injection; an on-policy distillation recipe
+%   reduces this to 9.0 % for one adaptive attack.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 859];
+%   session "prompt-injection", paper id doi:10.18653/2026.emnlp-main.1102,
+%   returned by 12 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Peer-reviewed (EMNLP 2026) newest model-level defence from the
+%   group behind StruQ/SecAlign; both supports (b) (prior defences near 100
+%   % ASR under adaptive attack) and qualifies (9.0 %, not 0).
+% QUOTE (p. 1): "defenders try to train secure LLMs, which, however, still
+%   suffer from near 100% attack success rates (ASRs) against adaptive
+%   prompt injections"
+% QUOTE (p. 1, passage 2): "our defended Qwen3.6-27B achieves a 9.0% ASR
+%   against the SoTA PISmith adaptive prompt injections, compared to 94.0%
+%   for the prior SoTA, Meta-SecAlign"
+% VERIFIED: full-text (arXiv v1) read; abstract and Sec. 1; supports and
+%   qualifies.
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Peng2026SecOPD,
+  title = {SecOPD: Mitigating Adaptive Prompt Injections by On-Policy Distillation},
+  author = {Yibo Peng and Long Lian and David Wagner and Sizhe Chen},
+  booktitle = {Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing (EMNLP)},
+  year = {2026},
+  doi = {10.48550/arXiv.2608.21500},
+  eprint = {2608.21500},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2608.21500},
+  note = {EMNLP 2026 main conference (per the arXiv record); DOI 10.18653/2026.emnlp-main.1102 per the session record},
+}
+
+% === provenance: Zhong2026Rennervate ===
+% CLAIM: An attention-based detector and sanitiser for indirect prompt
+%   injection is claimed to outperform 15 defences and to be robust against
+%   adaptive adversaries.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 338];
+%   session "prompt-injection", paper id doi:10.14722/ndss.2026.240394,
+%   returned by 8 query x provider searches of this session in all (found_by
+%   records of the session).
+% PICKED: Peer-reviewed (NDSS 2026) detection defence with an explicit
+%   adaptive-robustness claim; qualifies; not independently attacked in the
+%   sources read.
+% QUOTE (p. 1): "RENNERVATE outperforms 15 commercial and academic IPI
+%   defense methods"
+% QUOTE (p. 1, passage 2): "We also demonstrate that RENNERVATE is
+%   transferable to unseen attacks and robust against adaptive adversaries."
+% VERIFIED: full-text (arXiv v3) read; abstract; qualifies.
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Zhong2026Rennervate,
+  title = {Attention is All You Need to Defend Against Indirect Prompt Injection Attacks in LLMs},
+  author = {Yinan Zhong and Qianhao Miao and Yanjiao Chen and Jiangyi Deng and Yushi Cheng and Wenyuan Xu},
+  booktitle = {Network and Distributed System Security Symposium (NDSS 2026)},
+  year = {2026},
+  doi = {10.48550/arXiv.2512.08417},
+  eprint = {2512.08417},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2512.08417},
+  note = {Accepted by NDSS 2026 (per the arXiv record)},
+}
+
+% === provenance: Zhao2026LTBD ===
+% CLAIM: Learnable trust-boundary delimiters reach near-zero attack success
+%   and are claimed to remain effective under adaptive attacks.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p s2 --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 686];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2610.11634,
+%   returned by 3 query x provider searches of this session in all (found_by
+%   records of the session).
+% PICKED: Recent delimiter-style (prompt-hardening) defence with an
+%   adaptive-robustness claim; preprint (flagged); qualifies.
+% QUOTE (p. 1): "LTBD achieves 0.00% ASR on AlpacaFarm and only 0.11– 0.19%
+%   ASR on TaskTracker"
+% QUOTE (p. 1, passage 2): "LTBD also remains effective under adaptive
+%   attacks, where adversaries have full knowledge of the defense and
+%   explicitly attempt to bypass it"
+% VERIFIED: full-text (arXiv v1) read; abstract; qualifies.
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Zhao2026LTBD,
+  title = {LTBD: Learnable Trust-Boundary Delimiters for Prompt Injection Defense},
+  author = {Luman Zhao and Minghui Xu and Yue Zhang and Yijun Yang},
+  year = {2026},
+  doi = {10.48550/arXiv.2610.11634},
+  eprint = {2610.11634},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2610.11634},
+  note = {Preprint},
+}
+
+% === provenance: Pandey2026Certified ===
+% CLAIM: A certifier for structured agent actions admits no unsafe action
+%   under a bounded corruption budget, while a realistic injection fools all
+%   but one of five current models.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p s2 --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 599];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2609.34245,
+%   returned by 17 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Formal, certified design-level guarantee for a narrow class of
+%   actions; qualifies (c) and supports (a).
+% QUOTE (p. 1): "a realistic injection fools every model but one and a naive
+%   agent then executes the fraudulent action on most attacks"
+% QUOTE (p. 1, passage 2): "The certifier admits no unsafe action and
+%   recovers the correct value where corroboration permits"
+% VERIFIED: full-text (arXiv v1) read; abstract; qualifies (guarantee for a
+%   defined class) and supports.
+% COUNTER: scholar search, queries C3 (attack AND
+%   guarantee/by-design/isolation terms AND
+%   solve/eliminate/completely/provable/by design), C4 (same AND utility AND
+%   no loss/negligible/preserving), CR1 (untrusted data AND isolation/least
+%   privilege/information flow AND solve/provable/by design) on wos,
+%   openalex, scopus, s2 (ieee for C3, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: system-level designs
+%   claiming provable or deterministic security for a defined class of
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
+%   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
+%   the claim: the surviving wording says that design-level defences give
+%   guarantees for a class of attacks at a cost in utility or generality.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{Pandey2026Certified,
+  title = {Certified Multi-Source Integrity for Structured Agent Actions},
+  author = {Anmol Pandey and Aditya Jain and Liang Chen and Carsten Maple and Christo Panchev},
+  booktitle = {UK AI Conference 2026 (Proceedings of Machine Learning Research)},
+  year = {2026},
+  doi = {10.48550/arXiv.2609.34245},
+  eprint = {2609.34245},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2609.34245},
+  note = {Accepted to UKAI 2026, to appear in PMLR (per the arXiv record)},
+}
+
+% === provenance: Yin2026Generator ===
+% CLAIM: In a realistic retrieval pipeline many published prompt-injection
+%   attacks on RAG recommendation collapse before reaching the generator;
+%   prior protocols overstate their effectiveness; LLM-driven injections
+%   remain effective end to end.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p s2 --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 375];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2605.28017,
+%   returned by 12 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Strongest "threat overstated" result found by the counter-queries;
+%   preprint (flagged); qualifies (a) for RAG settings.
+% QUOTE (p. 1): "We find that prior protocols substantially overstate attack
+%   effectiveness: gradient-based and instruction override attacks largely
+%   collapse before reaching the generator, and only LLM-driven prompt
+%   injections remain effective end-to-end."
+% VERIFIED: full-text (arXiv v2) read; abstract; qualifies.
+% COUNTER: scholar search, queries C1 (attack AND application terms AND
+%   overstated/ineffective/unrealistic/limited impact/low success/rarely/no
+%   evidence/in the wild/hype), C7 (attack AND benchmark AND agent AND
+%   robust/resilient/near-zero/secure) and CR2 (tool agents AND
+%   malicious/hidden instructions AND exfiltration/hijack AND robust/...) on
+%   wos, openalex, scopus, s2 (ieee for C1, C7; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: qualifying reports of low
+%   per-attempt success for the most robust frontier models (0.5 % in
+%   Dziemian2026Competition), of RAG attacks that mostly collapse in a
+%   realistic pipeline while LLM-driven injections stay effective
+%   (Yin2026Generator), of moderate end-to-end success around 40 %
+%   (DeStefano2026RagnRoll) and of inflated benchmark numbers
+%   (Shaw2026SilentFailures, Bhagwatkar2025Firewalls); no study showing that
+%   indirect injection fails against deployed systems. Claim stands, worded
+%   as 'works against real systems', not 'always succeeds'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Yin2026Generator,
+  title = {Can It Reach the Generator? Investigating the Survival of Prompt-Injection Attacks in Realistic RAG Settings},
+  author = {Yu Yin and Shuai Wang and Bevan Koopman and Guido Zuccon},
+  year = {2026},
+  doi = {10.48550/arXiv.2605.28017},
+  eprint = {2605.28017},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2605.28017},
+  note = {Preprint},
+}
+
+% === provenance: DeStefano2026RagnRoll ===
+% CLAIM: End-to-end indirect prompt manipulation of RAG applications
+%   succeeds in about 40 % (up to 60 %) of cases: real, but far from
+%   certain.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p s2 --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 535];
+%   session "prompt-injection", paper id doi:10.1145/3847352.3848095,
+%   returned by 10 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Peer-reviewed (AISec 2026) end-to-end evaluation; both supports
+%   (attacks work) and qualifies (moderate success).
+% QUOTE (p. 1): "Most attacks, against various configurations, settle around
+%   a 40% success rate, which could rise to 60% when considering ambiguous
+%   answers as successful attacks"
+% VERIFIED: full-text (arXiv v2, earlier title "Rag 'n Roll: An End-to-End
+%   Evaluation of Indirect Prompt Manipulations in LLM-based Application
+%   Frameworks") read; abstract; supports and qualifies.
+% COUNTER: scholar search, queries C1 (attack AND application terms AND
+%   overstated/ineffective/unrealistic/limited impact/low success/rarely/no
+%   evidence/in the wild/hype), C7 (attack AND benchmark AND agent AND
+%   robust/resilient/near-zero/secure) and CR2 (tool agents AND
+%   malicious/hidden instructions AND exfiltration/hijack AND robust/...) on
+%   wos, openalex, scopus, s2 (ieee for C1, C7; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: qualifying reports of low
+%   per-attempt success for the most robust frontier models (0.5 % in
+%   Dziemian2026Competition), of RAG attacks that mostly collapse in a
+%   realistic pipeline while LLM-driven injections stay effective
+%   (Yin2026Generator), of moderate end-to-end success around 40 %
+%   (DeStefano2026RagnRoll) and of inflated benchmark numbers
+%   (Shaw2026SilentFailures, Bhagwatkar2025Firewalls); no study showing that
+%   indirect injection fails against deployed systems. Claim stands, worded
+%   as 'works against real systems', not 'always succeeds'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@inproceedings{DeStefano2026RagnRoll,
+  title = {Rag n' Roll: A Framework to Evaluate Indirect Prompt Manipulation Attacks against RAG-based Applications},
+  author = {De Stefano, Gianluca and Schönherr, Lea and Pellegrino, Giancarlo},
+  booktitle = {Proceedings of the 19th ACM Workshop on Artificial Intelligence and Security (AISec)},
+  publisher = {ACM},
+  year = {2026},
+  pages = {138--149},
+  doi = {10.1145/3847352.3848095},
+  eprint = {2408.05025},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2408.05025},
+}
+
+% === provenance: Bhagwatkar2025Firewalls ===
+% CLAIM: A simple tool-input and tool-output firewall achieves perfect
+%   security on four public agent benchmarks, which shows that those
+%   benchmarks have weak attacks and flawed metrics.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 926];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2510.05244,
+%   returned by 19 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Qualifies (b): a simple defence saturates the benchmarks; and
+%   supports the caution that benchmark security numbers do not show
+%   robustness. Preprint.
+% QUOTE (p. 1): "achieves perfect security with high utility across all four
+%   public benchmarks: AgentDojo, Agent Security Bench, InjecAgent and τ
+%   -Bench"
+% QUOTE (p. 1, passage 2): "Our analysis also reveals critical limitations
+%   in these existing benchmarks, including flawed success metrics,
+%   implementation bugs, and most importantly, weak attacks"
+% VERIFIED: full-text (arXiv v2) read; abstract; qualifies.
+% COUNTER: scholar search, queries C2 (attack AND defence terms AND
+%   adaptive/bypass terms AND
+%   robust/resilient/near-zero/effective/secure/state-of-the-art), C4
+%   (guarantee terms AND utility AND no loss/negligible/preserving), CR3
+%   (prompt attacks/prompt security AND defence AND robust) on wos,
+%   openalex, scopus, s2 (ieee for C2, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: defences that report
+%   near-zero attack success, robustness to unseen attacks or to adaptive
+%   attacks (Hines2024Spotlighting, Chen2025SecAlign, Wallace2024Hierarchy,
+%   Wu2025ISE, Liu2025DataSentinel, Shi2025PromptArmor, Jia2025TaskShield,
+%   An2025IPIGuard, Zhu2025MELON); several of them were later bypassed by
+%   adaptive attacks (Nasr2026AttackerSecond, Zhan2025Adaptive,
+%   Choudhary2025NotDetect). Claim narrowed to 'reduce success, bypassed by
+%   adaptive attacks'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Bhagwatkar2025Firewalls,
+  title = {Indirect Prompt Injections: Are Firewalls All You Need, or Stronger Benchmarks?},
+  author = {Rishika Bhagwatkar and Kevin Kasa and Abhay Puri and Gabriel Huang and Irina Rish and Graham W. Taylor and Krishnamurthy Dj Dvijotham and Alexandre Lacoste},
+  year = {2025},
+  doi = {10.48550/arXiv.2510.05244},
+  eprint = {2510.05244},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2510.05244},
+  note = {Preprint (ServiceNow, Mila)},
+}
+
+% === provenance: Shaw2026SilentFailures ===
+% CLAIM: Defects in an agent-security benchmark harness can inflate measured
+%   attack success eighteen-fold.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 732];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2609.32691,
+%   returned by 16 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Measurement-validity critique; preprint by a single independent
+%   author (weak); qualifies how attack-success numbers are read.
+% QUOTE (p. 1): "the tool-identity scorer reports a 21.7% attack-success
+%   rate where the true argument-level rate is 1.2%, an eighteen-fold
+%   inflation"
+% VERIFIED: full-text (arXiv v1) read; abstract; qualifies.
+% COUNTER: scholar search, queries C1 (attack AND application terms AND
+%   overstated/ineffective/unrealistic/limited impact/low success/rarely/no
+%   evidence/in the wild/hype), C7 (attack AND benchmark AND agent AND
+%   robust/resilient/near-zero/secure) and CR2 (tool agents AND
+%   malicious/hidden instructions AND exfiltration/hijack AND robust/...) on
+%   wos, openalex, scopus, s2 (ieee for C1, C7; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: qualifying reports of low
+%   per-attempt success for the most robust frontier models (0.5 % in
+%   Dziemian2026Competition), of RAG attacks that mostly collapse in a
+%   realistic pipeline while LLM-driven injections stay effective
+%   (Yin2026Generator), of moderate end-to-end success around 40 %
+%   (DeStefano2026RagnRoll) and of inflated benchmark numbers
+%   (Shaw2026SilentFailures, Bhagwatkar2025Firewalls); no study showing that
+%   indirect injection fails against deployed systems. Claim stands, worded
+%   as 'works against real systems', not 'always succeeds'.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Shaw2026SilentFailures,
+  title = {Silent Failures in Agentic Security Evaluation: A Validated Harness for Tool-Call Mediation Under Indirect Prompt Injection},
+  author = {Animesh Shaw},
+  year = {2026},
+  doi = {10.48550/arXiv.2609.32691},
+  eprint = {2609.32691},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2609.32691},
+  note = {Preprint (independent researcher)},
+}
+
+% === provenance: Narisetty2026OutOfBand ===
+% CLAIM: System-level (out-of-band) defences are so far validated only on
+%   static benchmarks; in one small independent adaptive reproduction,
+%   Progent held.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 60];
+%   session "prompt-injection", paper id doi:10.48550/arxiv.2606.26479,
+%   returned by 16 query x provider searches of this session in all
+%   (found_by records of the session).
+% PICKED: Only independent adaptive test of a system-level defence in the
+%   screened set; preprint, small scale (flagged); qualifies (c) in both
+%   directions.
+% QUOTE (p. 1): "we warn that every one of them is validated only on static
+%   benchmarks (a fixed set of injection attempts)"
+% QUOTE (p. 1, passage 2): "Averaged over three runs, the defense held:
+%   Progent cut mean attack success roughly sixfold (25.8% to 4.2%), and a
+%   hand-crafted adaptive attack did not raise it (2.6%)"
+% VERIFIED: full-text (arXiv v1) read; abstract; qualifies.
+% COUNTER: scholar search, queries C3 (attack AND
+%   guarantee/by-design/isolation terms AND
+%   solve/eliminate/completely/provable/by design), C4 (same AND utility AND
+%   no loss/negligible/preserving), CR1 (untrusted data AND isolation/least
+%   privilege/information flow AND solve/provable/by design) on wos,
+%   openalex, scopus, s2 (ieee for C3, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: system-level designs
+%   claiming provable or deterministic security for a defined class of
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
+%   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
+%   the claim: the surviving wording says that design-level defences give
+%   guarantees for a class of attacks at a cost in utility or generality.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Narisetty2026OutOfBand,
+  title = {Adaptive Evaluation of Out-of-Band Defenses Against Prompt Injection in LLM Agents},
+  author = {Praneeth Narisetty and Shiva Nagendra Babu Kore and Uday Kumar Reddy Kattamanchi and Jayaram Kumarapu},
+  year = {2026},
+  doi = {10.48550/arXiv.2606.26479},
+  eprint = {2606.26479},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2606.26479},
+  note = {Preprint (LaunchSafe Research)},
+}
+
+% === provenance: Erisen2026Seccomp ===
+% CLAIM: A deterministic syscall-argument gate for LLM agents can be raced,
+%   while kernel-level confinement resisted the tested attacks; frontier
+%   models complied with prompt injection.
+% FOUND-VIA: scholar search '("prompt injection" OR "prompt injections" OR
+%   "indirect injection" OR "injected instruction" OR "injected
+%   instructions" OR "injected prompt" OR "injected prompts" OR "instruction
+%   injection" OR "goal hijacking" OR "prompt hijacking" OR "task
+%   hijacking") AND (LLM OR LLMs OR "language model" OR "language models" OR
+%   agent OR agents OR agentic OR chatbot OR chatbots OR
+%   "retrieval-augmented" OR RAG)' -p openalex --year 2022-2026 --in
+%   title-abstract --limit 0 -n prompt-injection [query S1, rank 1207];
+%   session "prompt-injection", paper id doi:10.5281/zenodo.23070684,
+%   returned by 4 query x provider searches of this session in all (found_by
+%   records of the session).
+% PICKED: Found in the seeded rest sample; industry preprint (weak,
+%   flagged); qualifies statement 5 (enforcement in code must itself be
+%   sound) and supports (a).
+% QUOTE (p. 1): "a time-of-check-to-time-of-use race on its allow path
+%   defeats it at 18.9–23.1% per attempt"
+% QUOTE (p. 1, passage 2): "two frontier models complied with prompt
+%   injection instead of refusing"
+% QUOTE (p. 1, passage 3): "This is empirical evidence within the stated
+%   threat model and tested matrix, not a proof against untested interfaces"
+% VERIFIED: full-text (Zenodo PDF, version 2) read; abstract; qualifies and
+%   supports.
+% COUNTER: scholar search, queries C3 (attack AND
+%   guarantee/by-design/isolation terms AND
+%   solve/eliminate/completely/provable/by design), C4 (same AND utility AND
+%   no loss/negligible/preserving), CR1 (untrusted data AND isolation/least
+%   privilege/information flow AND solve/provable/by design) on wos,
+%   openalex, scopus, s2 (ieee for C3, C4; dblp failed), session
+%   prompt-injection, 2026-11-27; verbatim queries:
+%   prompt-injection-queries.sh --print) -- found: system-level designs
+%   claiming provable or deterministic security for a defined class of
+%   attacks (Debenedetti2026CaMeL, Costa2026FIDES, Wu2024IFC,
+%   BeurerKellner2025Patterns, Shi2025Progent, Kim2025PFI); these QUALIFY
+%   the claim: the surviving wording says that design-level defences give
+%   guarantees for a class of attacks at a cost in utility or generality.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Erisen2026Seccomp,
+  title = {Determinism is not soundness: an empirical evaluation of seccomp argument-inspection gates for containing LLM agents},
+  author = {Erisen, Sadik and Outten, Todd},
+  year = {2026},
+  doi = {10.5281/zenodo.23070684},
+  url = {https://doi.org/10.5281/zenodo.23070684},
+  note = {Preprint (Zenodo record, version 2, August 2026); authors and title from the PDF},
+}
+
+% === provenance: Sidot2026Verify ===
+% CLAIM: In a five-agent CI/CD pipeline of production LLMs an
+%   authority-framed injection gets secret-exfiltrating code shipped,
+%   although the entry agent did not leak its system prompt.
+% FOUND-VIA: scholar search '("system prompt" OR "system prompts" OR "prompt
+%   extraction" OR "prompt leaking" OR "prompt leakage" OR "prompt leak" OR
+%   "prompt stealing" OR "prompt theft" OR "hidden prompt" OR "hidden
+%   prompts") AND (extract OR extracting OR extraction OR leak OR leaking OR
+%   leakage OR leaked OR steal OR stealing OR theft OR reveal OR revealing
+%   OR recover OR recovering OR exfiltrate OR exfiltration) AND (LLM OR LLMs
+%   OR "language model" OR "language models" OR agent OR agents OR agentic
+%   OR chatbot OR chatbots OR "retrieval-augmented" OR RAG)' -p s2 --year
+%   2022-2026 --in title-abstract --limit 0 -n prompt-injection [query S8,
+%   rank 200]; session "prompt-injection", paper id
+%   doi:10.48550/arxiv.2607.19267, returned by 6 query x provider searches
+%   of this session in all (found_by records of the session).
+% PICKED: Found in the seeded rest sample; industry preprint (weak,
+%   flagged); supports (a) and slightly qualifies (d).
+% QUOTE (p. 2): "the entry agent does not leak its system prompt (0/40)"
+% QUOTE (p. 2, passage 2): "ship it—the scanner passes ∼80% of laundered
+%   pull requests, and the worst-case cell reaches 55% compromise"
+% VERIFIED: full-text (arXiv v1) read; abstract; supports and qualifies.
+% COUNTER: scholar search, query C5 (system prompt/prompt
+%   extraction/leaking/stealing AND extract/leak AND LLM AND
+%   defence/protect/obfuscation/secure/robust) on wos, ieee, openalex,
+%   scopus, s2 (dblp failed), session prompt-injection, 2026-11-27; verbatim
+%   queries: prompt-injection-queries.sh --print) -- found: protective
+%   schemes (Zhuang2026ProxyPrompt protects 94.70 % of prompts in its
+%   evaluation; Wang2024Raccoon finds a defended GPT-4 configuration
+%   resilient). Claim narrowed: prompts are readily extracted from
+%   undefended models; defences reduce but are not shown to eliminate
+%   extraction.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Sidot2026Verify,
+  title = {They'll Verify. They Just Won't Act. How Authority Framing and Laundered Code Turn a Trusted Agentic CI/CD Pipeline Into an Attack Surface},
+  author = {Yohann Sidot},
+  year = {2026},
+  doi = {10.48550/arXiv.2607.19267},
+  eprint = {2607.19267},
+  eprinttype = {arXiv},
+  url = {https://arxiv.org/pdf/2607.19267},
+  note = {Preprint (Senthex Research)},
+}

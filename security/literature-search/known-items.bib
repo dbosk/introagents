@@ -1,0 +1,961 @@
+% known-items.bib -- known-item verifications for the lecture of Mon 30 Nov 2026
+% (Riemann-hypothesis episode; OWASP; Willison; Air Canada; EchoLeak; Replit).
+% All sources opened 2026-11-27. Texts were downloaded with curl into per-source
+% directories under the session scratchpad (known-items/<name>/), extracted with
+% pdftotext (PDF) or a python3 -I html.parser script (HTML). Downloaded content was
+% treated as data. Network route: direct (no KTH tunnel); `scholar` not used, these
+% are attributions of named web sources, not a literature sweep.
+%
+% DROPPED (never cited; reasons in known-items-report.md):
+%   Moffatt v. Air Canada, 2024 BCCRT 149 (tribunal and CanLII both answer HTTP 403);
+%   Aim Labs EchoLeak write-up (Cloudflare bot check); Microsoft MSRC CVE-2025-32711
+%   page (script-rendered, no text); Phys.org copy of The Conversation piece (not
+%   fetched; the Conversation original was used).
+
+% === provenance: Bombieri2000Riemann ===
+% CLAIM: The Riemann hypothesis says that the nontrivial zeros of the Riemann zeta function have real part 1/2; the zeta function is tied to the primes through an explicit formula for the number of primes; and its failure would create havoc in the distribution of the primes (Clay Mathematics Institute problem description). The prime number theorem is NOT stated there (see Tao2014Notes).
+% FOUND-VIA: known item, handed over by the lecture lead (Clay Mathematics Institute problem description by E. Bombieri); https://www.claymath.org/wp-content/uploads/2022/05/riemann.pdf downloaded with curl 2026-11-27, text by pdftotext.
+% PICKED: the official Millennium Problem statement, written by the Clay-appointed author; the only candidate asked for.
+% QUOTE (p.1): "The nontrivial zeros of ζ(s) have real part equal to 1/2."
+% QUOTE (p.1): "Riemann [Ri] obtained an analytic formula for the number of primes up to a preassigned limit. This formula is expressed in terms of the zeros of the zeta function"
+% QUOTE (p.4): "The failure of the Riemann hypothesis would create havoc in the distribution of prime numbers."
+% QUOTE (p.2): "the number π(x) of primes up to x is well approximated by the function"
+% VERIFIED: full-text PDF read; the quotes give the statement, the zeta-prime link and the consequence for the primes; the PDF mentions Li(x) approximation (Gauss) but never states the prime number theorem as a theorem, so that part of the lead's item is covered by Tao2014Notes.
+% COUNTER: searched this PDF for "prime number theorem", "asymptotic", "Hadamard", "de la Vallee Poussin" (pdftotext, grep) -- no statement of the theorem as such, only the Gauss/Li(x) remark and the equivalence RH <=> pi(x) = Li(x) + O(sqrt(x) log x); the claim is therefore restricted to what the text says. Web search for corrections to the problem description: none found.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@report{Bombieri2000Riemann,
+  type         = {Problem description},
+  author       = {Bombieri, Enrico},
+  title        = {Problems of the Millennium: the {R}iemann Hypothesis},
+  institution  = {Clay Mathematics Institute},
+  year         = {2000},
+  url          = {https://www.claymath.org/wp-content/uploads/2022/05/riemann.pdf},
+  urldate      = {2026-11-27},
+  note         = {PDF metadata creation date 30 August 2000},
+}
+
+% === provenance: Tao2014Notes ===
+% CLAIM: The prime number theorem is the statement pi(x) ~ x/log x (refined: pi(x) ~ li(x)), and it is equivalent to the zeta function having no zeros on the line Re s = 1.
+% FOUND-VIA: known item, open lecture notes by a named mathematician; web search not needed: https://terrytao.wordpress.com/2014/12/09/254a-notes-2-complex-analytic-multiplicative-number-theory/ (UCLA course 254A, Notes 2). Downloaded with curl 2026-11-27 because Bombieri2000Riemann does not state the theorem.
+% PICKED: open notes by Terence Tao (Fields medallist) that state the theorem and its link to the zeros; chosen over Wikipedia because the lead asked for a named mathematician.
+% QUOTE (Exercise 40 and remark): "in particular, the simple form {\pi(x) \sim x/\log x} of the prime number theorem is not particularly accurate, and one should use the refined version {\pi(x) \sim \hbox{li}(x)} instead"
+% QUOTE (Notes 2, hierarchy of zero-free regions): "The zeta function is also known to have no zeroes on the right edge {\{1+it: t \in {\bf R}\}} of the critical strip, which is sufficient to prove (and is in fact equivalent to) the prime number theorem ."
+% QUOTE (Notes 2, section 1, formula 3): "Among other things, such approximations can be used to rigorously establish the prime number theorem \displaystyle \sum_{n \leq x} \Lambda(n) = x + o(x) \ \ \ \ \ (3) as {x \rightarrow \infty}"
+% NOTE-ON-FORM: the notes state the prime number theorem as sum_{n<=x} Lambda(n) = x + o(x); pi(x) ~ x/log x occurs only in the remark to Exercise 40 (quote above), where it is called "not particularly accurate"; the notes do not state pi(x) ~ x/log x as a theorem.
+% VERIFIED: full-text HTML read (LaTeX alt-text of the formulas is part of the extracted text); both quotes are explicit statements of the form of the theorem and of its link to the zeros. Not a textbook; blog-hosted course notes.
+% COUNTER: searched the same notes for a conflicting form of the theorem or an error note ("erratum", "correction") -- none found; the notes call x/log x the simple form and li(x) the accurate one, which narrows the lecture statement: say "pi(x) ~ x/ln x, with Li(x) a closer approximation".
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Tao2014Notes,
+  author       = {Tao, Terence},
+  title        = {254{A}, Notes 2: Complex-analytic multiplicative number theory},
+  organization = {What's new (blog), course notes for UCLA Math 254A},
+  date         = {2014-12-09},
+  url          = {https://terrytao.wordpress.com/2014/12/09/254a-notes-2-complex-analytic-multiplicative-number-theory/},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: Kakaes2026Quasi ===
+% CLAIM: The quasi-Riemann hypothesis only asks that all nontrivial zeros lie in a vertical strip narrower than 0<Re s<1; OpenAI announced two proofs (1/8 to 7/8, Lean-verified, 199 pages; and 1/12 to 11/12, 49 pages, not formally verified at the time); experts largely agreed that the 11/12 result is correct; Sarnak would not accept it as a theorem until humans had checked all details; Lichtman called it the most significant AI-for-math achievement so far.
+% FOUND-VIA: known item, URL given by the lecture lead: https://www.quantamagazine.org/ai-proved-the-quasi-riemann-hypothesis-what-happens-now-20261019/ ; downloaded with curl 2026-11-27, text extracted.
+% PICKED: the article the lecture is to attribute; Quanta Magazine (editorially independent, Simons Foundation) reporting with named experts. Secondary journalism, not the OpenAI papers.
+% QUOTE (section "Diamonds in the Slop"): "the “quasi” version just asks one to prove that they are all contained in a vertical strip that’s narrower than the known strip between zero and 1."
+% QUOTE (section "Diamonds in the Slop"): "The second version, which was completed almost a week later (and is not yet formally verified), claimed to prove a weaker result: that the zeros must have a real part between 1/12 and 11/12."
+% QUOTE (section "Diamonds in the Slop"): "These experts largely agree that the result is correct — and that its novelty lies in the way it brings together ideas from number theory that have been around for some time."
+% QUOTE (section "Diamonds in the Slop"): "Sarnak, for his part, said in an email that he won’t be satisfied that it’s “a Theorem” until humans check and understand all the details."
+% QUOTE (introduction): "The new proof is, as Jared Duker Lichtman of Stanford University put it, “the most significant AI-for-math achievement so far, by quite a margin.”"
+% QUOTE (section "Prime Time"): "If the Riemann hypothesis holds, then mathematicians can guarantee that any deviations from the average given by the prime number theorem will always be small."
+% QUOTE (section "Prime Time"): "Mathematicians have numerically verified that the first 12 trillion nontrivial zeros are on the 1/2 line. But they can’t be sure the hypothesis holds for all the zeros, and even one solitary outlier would land like an earthquake."
+% QUOTE (section "Diamonds in the Slop", 49 pages): "But while the first paper is 199 pages long, the second weighs in at a comparatively modest 49 pages."
+% QUOTE (introduction, October 6): "Among the 377 results that OpenAI announced on October 6, 2026, one stood out."
+% QUOTE (section "Diamonds in the Slop", October 6): "Not coincidentally, the 11/12 result is the only one of the 722 OpenAI papers released on October 6 to have been edited by a person."
+% VERIFIED: full-text HTML read; all five statements are in the article at the stated strength. The "experts largely agree" sentence refers to write-ups "circulating privately" and unpublished at the time of writing.
+% COUNTER: re-read the page for corrections and searched Quanta's "Transformation" feed (see Kakaes2026Transformation) and WebSearch "Quanta Magazine quasi-Riemann hypothesis OpenAI proof 11/12 strip follow-up retracted or verified Lean" -- no correction or retraction of the quasi-RH result found; one internal inconsistency recorded: this article says "377 results that OpenAI announced on October 6" and, later, "the 722 OpenAI papers released on October 6" (the feed says "377 results" again; Buzzard2026Checked says 722 papers). Do not quote a count.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Kakaes2026Quasi,
+  author       = {Kakaes, Konstantin},
+  title        = {{AI} Proved the Quasi-{R}iemann Hypothesis. What Happens Now?},
+  organization = {Quanta Magazine},
+  date         = {2026-10-19},
+  url          = {https://www.quantamagazine.org/ai-proved-the-quasi-riemann-hypothesis-what-happens-now-20261019/},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: Kakaes2026Transformation ===
+% CLAIM: Quanta reported on 20 Nov 2026 that Alpöge's Lean code has about 17 million lines and that Vakil uploaded a 940-page manuscript by Masullo; and, in an update of 24 Nov 2026, that the "250,000 pages" figure in Alpöge's note was a joke. Also used for who did what: Quanta says his expertise played a major role in repeated, iterative attempts with Claude, and that he obtained the result on Monday 16 November 2026.
+% FOUND-VIA: found while searching for later coverage: WebSearch "Quanta Magazine quasi-Riemann hypothesis OpenAI proof 11/12 strip follow-up retracted or verified Lean" returned https://www.quantamagazine.org/update/169054/ ; downloaded with curl 2026-11-27 (the same feed page is served for several update ids).
+% PICKED: the only dated correction of a figure from Alpöge's note found; Quanta's own newsletter feed "Transformation" (author Konstantin Kakaes). The feed has no per-item permalink in the text obtained, so the feed page is cited.
+% QUOTE (item "A claimed proof of the Riemann hypothesis", update): "Update: November 24, 2026 In Levent Alpöge’s original posting, he said that when he asked Claude for a human-readable proof, it outputted more than 250,000 pages of text. We quoted that figure. Alpöge now says that he was joking, and that “I find big number extremely hilarious.”"
+% QUOTE (item "As mathematicians race to verify AI Riemann proof, a human proof emerges"): "Ravi Vakil, the president of the American Mathematical Society and a professor at Stanford University, uploaded a 940-page manuscript by Alessandro Masullo"
+% QUOTE (item of 20 Nov): "Alpöge says he had obtained the result on Monday November 16, and delayed sharing it for several days."
+% QUOTE (item of 20 Nov): "Instead, Alpöge’s mathematical expertise played a major role in repeated, iterative attempts with Claude to move closer to the result."
+% QUOTE (item of 20 Nov): "His narration of his interaction with Claude demonstrates a markedly different approach than OpenAI’s 377 results released on October 6, almost all of which were the result of a simple prompt to an AI model."
+% QUOTE (item of 20 Nov): "As of this writing, Anthropic has not made an official announcement of either result."
+% QUOTE (newsletter item on AI and the rank records): "In August, an anonymous account (later revealed to be Anthropic mathematician Levent Alpöge and Ava Howell, a systems engineer) announced a rank 30 curve, then a rank 31 curve."
+% VERIFIED: full-text HTML read; the update is Quanta's own correction notice. Alpöge's own statement of the retraction is not seen directly (reported by Quanta).
+% COUNTER: compared with Alpoge2026Remark (footnote 2: "I of course amused myself, and hit 250, 000+ pages.") and Lee2026Sacred (repeats 250,000+ pages without a correction) -- Lee's article (23 Nov) predates the Quanta update (24 Nov); the claim "he was joking" rests on Quanta only.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Kakaes2026Transformation,
+  author       = {Kakaes, Konstantin},
+  title        = {Transformation (newsletter feed; items of 20 and 24 {N}ovember 2026)},
+  organization = {Quanta Magazine},
+  date         = {2026-11-24},
+  url          = {https://www.quantamagazine.org/update/169054/},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: LeanFRO2026Verification ===
+% CLAIM: On 21 Nov 2026 the Lean FRO and the Mathlib Initiative certified that the statement and the proof of the Riemann hypothesis in Alpöge's 17-million-line Lean library are correct: the statement is Mathlib's RiemannHypothesis, the library compiles, a comparator confirms that the proved theorem is exactly Mathlib's statement, and the exported proof was accepted by several independent proof checkers.
+% FOUND-VIA: known item, URL given by the lecture lead: https://leanprover-community.github.io/blog/posts/riemann-hypothesis/ ; downloaded with curl 2026-11-27. Revision history read with `gh api repos/leanprover-community/blog/commits`.
+% PICKED: the statement the lecture attributes; primary source (the two organisations' own joint statement).
+% QUOTE (opening): "On November 20, 2026, Levent Alpöge released a proof of the Riemann Hypothesis as a Lean library comprising 17 million lines of code."
+% QUOTE (point 3): "That statement was compared against the theorem proved by Alpöge using two independent tools (comparator and con-leche –compare), both confirming that the theorem proved in Alpöge’s library is exactly Mathlib’s statement of the Riemann Hypothesis."
+% QUOTE (point 4): "The exported raw proof has been checked by several proof checkers, including Lean’s official kernel, the con-leche and con-ron checkers, and several independent checkers contributed by third parties and implemented in different programming languages."
+% QUOTE (point 4): "These checks ran on an inert export of the proof, out of reach of hypothetical malicious code in the Lean proof sources."
+% QUOTE (opening): "We have full confidence that Alpöge's proof of the Riemann Hypothesis is correct, and we congratulate him on this achievement."
+% QUOTE (point 1): "The statement of the Riemann Hypothesis is correct. This statement is part of Mathlib: RiemannHypothesis and has been carefully vetted by experts in Lean and number theory."
+% QUOTE (point 3): "Crucially, the community has added a file that isolates the statement of the Riemann Hypothesis and imports only Mathlib."
+% VERIFIED: full-text HTML read; the post certifies the Riemann hypothesis (Mathlib's statement), says nothing about GRH, and states no caveats beyond the last line "We look forward to all the activity in the mathematical community that will help explain the new ideas in this proof." The scope of what Lean checked is spelled out only in Sutherland2026Verification.
+% COUNTER: gh api repos/leanprover-community/blog/commits (git history of the post, 2026-11-27) -- five edits after publication, all to attribution/typos/comments; the byline changed back and forth between "Lean and Mathlib communities" and "Lean FRO and Mathlib Initiative" (commits 29fb4b8, c50597b, d01066f; current text: "Joint statement by the Lean FRO and the Mathlib Initiative"), and an earlier text said "part of the Lean and Mathlib communities have rallied" (29fb4b8 vs later). Comments were switched off on 22 Nov. No change to the technical claims. Litt2026Noise and Kakaes2026Transformation (24 Nov: "convinced that it is free of errors or loopholes") agree.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{LeanFRO2026Verification,
+  author       = {{Lean FRO} and {Mathlib Initiative}},
+  title        = {Lean verification of the {R}iemann Hypothesis},
+  organization = {Lean community blog},
+  date         = {2026-11-21},
+  url          = {https://leanprover-community.github.io/blog/posts/riemann-hypothesis/},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: Sutherland2026Verification ===
+% CLAIM: What the Lean proof certifies is the Riemann hypothesis (Mathlib's definition) and the generalised Riemann hypothesis for Dirichlet L-functions (all moduli, all characters); Dedekind zeta functions, Hecke L-functions and automorphic L-functions in general are not among the checked statements.
+% FOUND-VIA: linked from the Lean FRO statement (LeanFRO2026Verification, "An extensive overview is available at https://math.mit.edu/~drew/grh/"); downloaded with curl 2026-11-27.
+% PICKED: supplementary to the list; the only source that states the exact scope of the five Lean theorems and the build and kernel checks; by Andrew Sutherland (MIT), whose checks were run with Claude Code (so the author itself is partly AI-assisted).
+% QUOTE (Scope): "\"GRH\" here means Dirichlet L-functions: all moduli and all characters. Dedekind zeta functions, Hecke L-functions and automorphic L-functions in general are not among the statements that were checked."
+% QUOTE (Summary): "The published Lean source compiles without errors, the five headline theorems depend only on the three standard axioms, every module has been replayed through the Lean kernel, two independently written kernels, nanoda and con-leche, accept the full exported proof, and lean4lean accepts every compiled module."
+% QUOTE (page header): "A shorter Lean proof was published on 25 November 2026; the checks of that proof are recorded on a separate page."
+% QUOTE (What was verified, item 1): "The Riemann Hypothesis, using Mathlib's own definition (Mathlib/NumberTheory/LSeries/RiemannZeta.lean)"
+% QUOTE (What was verified): "Their statements are below exactly as they appear in the challenge file, which imports only Mathlib."
+% QUOTE (Arithmetic consequences): "As a check that does not depend on Mathlib's definition of the zeta function, the proof was combined with kimihiro64/Robin1984"
+% VERIFIED: full-text HTML read; the page states what was verified, with the statements verbatim from the challenge file, and its own update dated 25 Nov.
+% COUNTER: compared with LeanFRO2026Verification (says "Riemann Hypothesis" only) and Lee2026Sacred (says the proof "claims to prove ... the generalised Riemann hypothesis") -- consistent only if "generalised" is read as GRH for Dirichlet L-functions; see report, "Disagreements". The page itself was updated after 20 Nov (last updated 2026-11-25 22:05 UTC), so it is a moving source.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Sutherland2026Verification,
+  author       = {Sutherland, Andrew},
+  title        = {{RH} {L}ean proof: verification files},
+  organization = {MIT Department of Mathematics},
+  date         = {2026-11-25},
+  url          = {https://math.mit.edu/~drew/grh/},
+  urldate      = {2026-11-27},
+  note         = {Page last updated 2026-11-25 22:05 UTC; checks run with Claude Code},
+}
+
+% === provenance: Rubinstein2026Alpoge ===
+% CLAIM: On 25 Nov 2026 Luke Sernau, with colleagues at Anthropic and Claude, posted a much shorter Lean proof of the same five theorems (about 76,000 lines compact edition, about 300,000 lines readable edition); the proof was announced by Alpöge for the Riemann hypothesis and GRH for Dirichlet L-functions; a human-readable guide for the zeta case is a working draft.
+% FOUND-VIA: WebSearch "Riemann hypothesis Alpöge Claude proof shorter Lean proof 300k lines Zulip simplification" (mode extended) returned https://www.math.uwaterloo.ca/~mrubinst/alpoge_claude_grh/ ; downloaded with curl 2026-11-27.
+% PICKED: by Michael Rubinstein (Waterloo), who is also named by Quanta as a number theorist; page documents his own checks and a human-readable account; corroborated by the repository README (Sernau2026GRH) and Sutherland2026Verification.
+% QUOTE (intro): "On 20 November 2026 Levent Alpöge announced a proof, found with Anthropic's Claude, of the Riemann Hypothesis and of the Generalized Riemann Hypothesis for Dirichlet L-functions."
+% QUOTE (section "The shortened proof"): "On 25 November Luke Sernau, with colleagues at Anthropic and Claude, posted a much shorter Lean proof of the same five theorems (lsernau/grh-lean), a rewriting of the Alpöge–Claude development in about 76,000 lines (compact edition) or 300,000 lines (readable edition)."
+% QUOTE (section "The proof explained"): "(M) itself is not proved there: the paper reduces it, and with it the Riemann hypothesis, to thirteen numbered hypotheses stated in classical terms, none of which is proved outright"
+% VERIFIED: full-text HTML read; first two quotes state the claim; the third qualifies the status of the human-readable guide.
+% COUNTER: cross-checked the shortened-proof claim against the GitHub README of lsernau/grh-lean and the Deicyde/riemann-hypothesis README (moved to a condensed version on 25 Nov 2026) -- both agree; no refutation found. Zulip thread not opened (login-free page returned no readable text).
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Rubinstein2026Alpoge,
+  author       = {Rubinstein, Michael},
+  title        = {Alp{\"o}ge/{C}laude proof of the {G}eneralized {R}iemann {H}ypothesis},
+  organization = {University of Waterloo},
+  year         = {2026},
+  url          = {https://www.math.uwaterloo.ca/~mrubinst/alpoge_claude_grh/},
+  urldate      = {2026-11-27},
+  note         = {Working page, updated through 25 November 2026},
+}
+
+% === provenance: Sernau2026GRH ===
+% CLAIM: The repository lsernau/grh-lean (pushed 25 Nov 2026) is a shorter Lean 4 proof of RH and of GRH for Dirichlet L-functions, based on Alpöge's proof with Claude; its status is "machine checks only, no mathematician has read it through, and no paper comes with it".
+% FOUND-VIA: link on Rubinstein2026Alpoge; README retrieved with `gh api repos/lsernau/grh-lean/readme` on 2026-11-27.
+% PICKED: the primary source for the shortened proof; self-description by its author.
+% QUOTE (Status): "The proof has passed machine checks only, listed in each folder's README. No mathematician has read it through, and no paper comes with it."
+% QUOTE (opening): "A Lean 4 proof of the Riemann Hypothesis and of the Generalized Riemann Hypothesis for Dirichlet L-functions, built on Mathlib and using only the axioms `propext`, `Classical.choice` and `Quot.sound`."
+% VERIFIED: full-text README read (not the Lean code).
+% COUNTER: none found, searched: README text for caveats or retractions ("not maintained and not accepting contributions" is stated); GitHub repository metadata checked with `gh api repos/lsernau/grh-lean` (description "A short Lean 4 proof of the Generalized Riemann Hypothesis"; note the repository description says "Generalized Riemann Hypothesis" without the Dirichlet restriction that the README states).
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Sernau2026GRH,
+  author       = {Sernau, Luke},
+  title        = {{GRH} for {D}irichlet {L}-functions, in {L}ean 4 ({README} of lsernau/grh-lean)},
+  organization = {GitHub},
+  date         = {2026-11-25},
+  url          = {https://github.com/lsernau/grh-lean},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: Alpoge2026Remark ===
+% CLAIM: Alpöge writes that he believes he has, working with Claude, discovered a proof of the Riemann hypothesis, that the method extends to the generalised Riemann hypothesis (and he expects the extended one), that the argument is incredibly long, that a formalisation exists, that he chose to present only Lean, and that he intends to work to understand and explain the argument. Also used for "who did what": Alpöge says he guided the choice of setting and Claude supplied much of the technical argument; the note does not name the model, state hours or number of sessions, or say whether the model is public.
+% FOUND-VIA: known item, URL given by the lecture lead: https://alpo.ge/remark.pdf ; downloaded with curl 2026-11-27 (sha256 3fc97784b71d... identical to the copy already in the session's tool-results), text by pdftotext.
+% PICKED: the primary source; four-page note by the claimant.
+% QUOTE (p.1): "I believe I have, working with Claude, discovered a proof ... of the Riemann Hypothesis. In fact, the method easily extends much further, resolving the so-called Generalized Riemann Hypothesis, and I expect, with more time, the Extended Riemann Hypothesis too. Claude and I have also formalized the arguments without assumptions."
+% QUOTE (p.1): "The argument is incredibly long at the moment, and while its formalization is finished and it is routine to produce a huge, unreadable document containing sufficient detail, in my view of my path I have just taken a step. I intend to do my best to understand and impart understanding of this argument and its certain simplifications, to speak about it, to write it properly."
+% QUOTE (p.2): "in which I am presenting the world with a complete argument before having mastered a massive neighbourhood around its mathematics."
+% QUOTE (p.2): "I decided to only present Lean."
+% QUOTE (p.1, on Claude's role): "this time Claude far outpaced me near the finish line."
+% QUOTE (p.1, on steering): "I guided us to the right situation analogous to that toy setting, and then Claude began to leave me in awe."
+% QUOTE (p.2, on his own limits): "I personally have little mastery of automorphic forms on higher rank groups"
+% QUOTE (p.3, timeline): "So here is a rough timeline Claude provided after a thorough search"
+% QUOTE (p.3, footnote 4): "The parts in which Claude is the expert and not me I am sort of paraphrasing a \"slop\" summary, which might make zero sense"
+% QUOTE (p.1): "It was my secret in my student days that my plans were for this problem in decades, which meant then that I tried to become familiar with all tools that I could possibly recognize in the problem when it was time."
+% QUOTE (p.1): "Claude and I have had a great time together with such breadth in recent months, but this time Claude far outpaced me near the finish line."
+% QUOTE (p.1): "I guided us to the right situation analogous to that toy setting, and then Claude began to leave me in awe."
+% QUOTE (p.1): "Claude and I have also formalized the arguments without assumptions."
+% QUOTE (p.2): "This all happened for me late Sunday night"
+% QUOTE (p.2): "I am presenting the world with a complete argument before having mastered a massive neighbourhood around its mathematics."
+% QUOTE (p.3): "I was also, so to speak, out of my element, in that I personally have little mastery of automorphic forms on higher rank groups (youthful foolish stubbornness)."
+% QUOTE (p.3): "I also emphasize that I may have baked lots of strange suboptimal choices into the argument, and expect short arguments to follow fairly quickly"
+% QUOTE (p.3): "So here is a rough timeline Claude provided after a thorough search."
+% VERIFIED: full-text PDF read (4 pages); the "..." in the first quote stands for the footnote marker 1 (links to lean.tar.gz.part01 to part14). The note says "Riemann Hypothesis", then "Generalized Riemann Hypothesis" by name and expects the "Extended Riemann Hypothesis"; it gives no line count (the 17 million lines come from LeanFRO2026Verification; the note links only 14 archive parts) and mentions no page count except the footnote joke.
+% COUNTER: searched for later corrections of the note: the PDF served on 2026-11-27 has creation date 20 Nov 2026 13:52 and is byte-identical to the earlier copy -- no revision. Footnote 2 ("hit 250, 000+ pages") was later said by Alpöge to be a joke per Quanta (Kakaes2026Transformation, 24 Nov); the claim is not used here. Litt2026Noise and Rubinstein2026Alpoge describe the claim as RH plus GRH for Dirichlet L-functions, narrower than the note's "Generalized ... and Extended" language.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Alpoge2026Remark,
+  author       = {Alp{\"o}ge, Levent},
+  title        = {A remark on the {R}iemann Hypothesis (untitled note)},
+  date         = {2026-11-20},
+  url          = {https://alpo.ge/remark.pdf},
+  urldate      = {2026-11-27},
+  note         = {Four-page note on the author's website; the PDF has no title},
+}
+
+% === provenance: Vakil2026Hurried ===
+% CLAIM: Vakil's post of 20 Nov 2026 (updated 22 Nov) announces a proposed proof of GRH by Alessandro Maria Masullo, says it is all human with no AI, and records that several people reported problems in the proposed proof, identified with the assistance of different AI models, so that all issues must be resolved before it is accepted.
+% FOUND-VIA: known item, URL given by the lecture lead: https://math216.wordpress.com/2026/11/20/hurried-announcement-alessandro-masullo-grh/ ; downloaded with curl 2026-11-27.
+% PICKED: primary source for what Vakil claimed and when; the post is signed by the blog account "ravivakil" (the page does not state his affiliation or office).
+% QUOTE (22 Nov update): "Alessandro Maria Masullo has a proposed proof of GRH, and Brian Conrad has been looking closely at it for months and gave extensive feedback which is being incorporated, and it was so far looking good to him. It is all human, with no AI."
+% QUOTE (22 Nov update, quoting the earlier update): "Several people have contacted me to report problems in the proposed proof, identified with the assistance of different AI models."
+% QUOTE (22 Nov update, quoting the earlier update): "As is usual, all issues need to be resolved to the satisfaction of the community before this proof would be accepted as true. (I make no claim as to the correctness of the proof strategy.)"
+% QUOTE (22 Nov update): "I haven’t yet had the chance even to look at Masullo’s document, having just received it Friday (and in any case, it is out of my expertise)."
+% VERIFIED: full-text HTML read; the post gives no page count (see Masullo2026Music for the 940 pages). JSON-LD of the page: datePublished 2026-11-20T18:18:42+00:00, dateModified 2026-11-22T22:38:20+00:00.
+% COUNTER: searched for later updates -- the page says "This will probably be my final update on the subject, barring major new developments"; no update dated after 22 Nov found on the page. Baez2026Masullo (24 Nov comment) reports someone close to the situation saying the AI-reported problems are "readily handled"; Litt2026Noise (22 Nov) calls competing claims not credible. Disagreement recorded in the report.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Vakil2026Hurried,
+  author       = {Vakil, Ravi},
+  title        = {Hurried Announcement: {A}lessandro {M}asullo {GRH}},
+  organization = {Math 216: Foundations of Algebraic Geometry (blog)},
+  date         = {2026-11-20},
+  url          = {https://math216.wordpress.com/2026/11/20/hurried-announcement-alessandro-masullo-grh/},
+  urldate      = {2026-11-27},
+  note         = {Updated 22 November 2026; signed by the blog account ravivakil},
+}
+
+% === provenance: Masullo2026Music ===
+% CLAIM: The manuscript "The Music of the Primes" by Alessandro Maria Masullo, released 20 Nov 2026, is a PDF of 940 pages (primary figure for the press statement "940 pages").
+% FOUND-VIA: link chain: Vakil2026Hurried -> Baez2026Masullo -> https://sites.google.com/view/tmotp/original-post (Masullo's own site) -> Google Drive file 1wZYdHF0j63xRTlt0-MDTctX0xhuiBXp3 ; downloaded with curl 2026-11-27; `pdfinfo` and pdftotext.
+% PICKED: the manuscript itself is the only primary evidence for its length; the site states that the paper in the original post is "linked, untouched" and will not be modified.
+% QUOTE (title page): "The Music of the Primes Alessandro Maria Masullo"
+% QUOTE (site, page "Home"): "The paper shared on November 20, 2026 in the original blog post by Ravi Vakil is linked, untouched, under the heading \"Original post\"."
+% QUOTE (conjecture 14.1.2.1): "(GRH - Grand Riemann Hypothesis) All the zeros of the L-function L(s, π) are located on 1/2 + iR."
+% VERIFIED: full-text PDF opened; `pdfinfo` reports "Pages: 940" and creation date Fri Nov 20 19:18:35 2026 CET; the count is of PDF pages including front matter (table of contents starts p.3, chapter 1 on p.11). The quote check covers text only; the page count is by `pdfinfo`.
+% COUNTER: compared the figure with Baez2026Masullo ("a 940-page human-written manuscript"), Lee2026Sacred and Kakaes2026Transformation ("940-page") -- all agree; the later statement document (Masullo2026Statement) says the paper is "in no way in a state that is fit for submission or dissemination". Whether the 20 Nov file equals what Vakil first posted is taken from Masullo's site only.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@unpublished{Masullo2026Music,
+  author       = {Masullo, Alessandro Maria},
+  title        = {The Music of the Primes},
+  year         = {2026},
+  url          = {https://sites.google.com/view/tmotp/original-post},
+  urldate      = {2026-11-27},
+  note         = {Draft manuscript, 940 pages (PDF), released 20 November 2026; author's site, link to the file under "Original post"},
+}
+
+% === provenance: Masullo2026Statement ===
+% CLAIM: Masullo himself states that the draft is in no way in a state fit for submission or dissemination, that he knows of bugs especially in the final chapters, and that the plan was to polish it over a year with Brian Conrad's feedback.
+% FOUND-VIA: link on Masullo's site (https://sites.google.com/view/tmotp/statements) to the Drive file 1IeXAs1jGyr5xx5i4RcrNAYj_Lr0jlFi- ; downloaded with curl 2026-11-27; pdftotext (5 pages).
+% PICKED: the author's own statement of the status of the manuscript.
+% QUOTE (p.4): "The paper is in no way in a state that is fit for submission or dissemination."
+% QUOTE (p.4): "I am well aware of many bugs contained therein, especially within the final chapters, which were eyeballed in the past and left there hardly touched, waiting to be worked on."
+% QUOTE (p.5): "Recent events and the overall climate, led my advisors, who have my interest at heart, to call on me to release the current draft in its premature shape."
+% VERIFIED: full-text PDF read (5 pages, creation date 22 Nov 2026 19:56 CET).
+% COUNTER: none found, searched: the five pages for a retraction or a claim of completeness -- none; the statement contradicts a reading of the 940-page file as a finished claimed proof (Vakil's own post says the plan was to polish for a year).
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@unpublished{Masullo2026Statement,
+  author       = {Masullo, Alessandro Maria},
+  title        = {Statement (``At a glance'' and letter)},
+  year         = {2026},
+  url          = {https://sites.google.com/view/tmotp/statements},
+  urldate      = {2026-11-27},
+  note         = {Five-page PDF, 22 November 2026},
+}
+
+% === provenance: Baez2026Masullo ===
+% CLAIM: Within hours of Vakil's request problems were reported in Masullo's manuscript (an AI-assisted review organised by Eric Naslund found a problem at the prime 2; participants in an online checking effort claim a false step about Markushevich bases on p.444); the manuscript is openly a draft whose chapter 13 contains only placeholders where the theorem should be deduced; these objections may turn out to be fixable.
+% FOUND-VIA: link in Vakil2026Hurried; https://johncarlosbaez.wordpress.com/2026/11/22/masullo-on-the-riemann-hypothesis/ downloaded with curl 2026-11-27 (post and comments).
+% PICKED: the clearest secondary account that names the reported problems; John Baez (mathematical physicist) says explicitly that he is not an expert in number theory. Secondary source and tentative; used only for "problems were reported".
+% QUOTE (section "Some possible problems"): "Vakil asked people to check Masullo’s argument. They did, and within hours problems were reported:"
+% QUOTE (section "Some possible problems"): "These objections may turn out to be fixable or mistaken. And remember, the whole paper is openly a draft."
+% QUOTE (opening): "The other, by Alessandro Masullo, is a 940-page human-written manuscript that Ravi Vakil posted on his blog:"
+% VERIFIED: full-text HTML read (post dated 22 Nov 2026 00:47; comments through 25 Nov). The post warns "Since I am not an expert on number theory, all this is very tentative".
+% COUNTER: read all 45 comments under the post for later corrections -- Baez, 24 Nov: "someone who knows the situation very well tells me that all the AI-reported problems with Masullo’s proof are “readily handled”" (anonymous, unverifiable); Litt2026Noise (22 Nov) says competing claims "none ... credible". So: problems reported, status unresolved, both views recorded.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Baez2026Masullo,
+  author       = {Baez, John},
+  title        = {Masullo on the {R}iemann Hypothesis},
+  organization = {Azimuth (blog)},
+  date         = {2026-11-22},
+  url          = {https://johncarlosbaez.wordpress.com/2026/11/22/masullo-on-the-riemann-hypothesis/},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: Buzzard2026Checked ===
+% CLAIM: A compiled Lean proof establishes something only if (1) the Lean statement matches the informal statement, (2) the code compiles, (3) the proof is of the theorem as stated (comparator), (4) it does not exploit a kernel bug (several independent kernels); the Lean statement can differ from the informal one (his example of a Fermat's-last-theorem statement that is trivially false); of 290 OpenAI theorems with Lean code about 38 do not even state the paper's main theorem.
+% FOUND-VIA: known item, URL given by the lecture lead: https://xenaproject.wordpress.com/2026/11/12/and-the-proof-is-checked-in-lean/ ; downloaded with curl 2026-11-27.
+% PICKED: the post the Lean FRO statement itself cites for the "four criteria" (LeanFRO2026Verification). The page is signed by the account "xenaproject"; the attribution to Kevin Buzzard rests on the Xena Project being his blog and on a reader comment ("Buzzard’s claim in the post") -- the byline does not name him.
+% QUOTE (Question 1): "This code imports Lean’s mathematics library Mathlib and then defines a mathematical statement which looks at first glance like it might be Fermat’s Last Theorem, but which actually is a trivially false statement because in Lean ℕ contains 0, so a = b = c = 0 and n = 3 gives a counterexample."
+% QUOTE (Question 1): "It is worth noting that of the 290 OpenAI theorems which come with Lean code, around 38 of them have the property that the Lean code does not even state, let alone prove, the main theorem of the paper."
+% QUOTE (Introduction): "Last month’s theorem dump by OpenAI consisted of 722 mathematics papers, around 45% of which came with some Lean code."
+% QUOTE (One final remark): "Even if the Lean code compiles and passes all these tests, and is thus overwhelmingly likely to be a correct proof of a theorem, this does not mean that any corresponding pdf also contains a correct proof!"
+% QUOTE (Summary/conclusions): "“It’s true because it’s checked in Lean” can be made to make sense. But one has to do some work beyond “the Lean code compiles”."
+% VERIFIED: full-text HTML read, including the comments (the comments contain no correction of these figures). Figures: 722 papers x 45% would be about 325, while the same post says 290 theorems with Lean code (about 40%); the post does not reconcile these.
+% COUNTER: searched the page and its comments for "update", "correction", "retract" -- only the sentence about three retracted (non-Lean) papers; no editor's correction. Quanta (Kakaes2026Quasi) says "377 results" for 6 Oct and "722 OpenAI papers" elsewhere in the same piece, so the counts are unstable across sources.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Buzzard2026Checked,
+  author       = {Buzzard, Kevin},
+  title        = {``\ldots and the proof is checked in {L}ean''},
+  organization = {Xena Project (blog)},
+  date         = {2026-11-12},
+  url          = {https://xenaproject.wordpress.com/2026/11/12/and-the-proof-is-checked-in-lean/},
+  urldate      = {2026-11-27},
+  note         = {Page signed ``xenaproject''; authorship attributed to Kevin Buzzard (see provenance)},
+}
+
+% === provenance: Lee2026Sacred ===
+% CLAIM: The Conversation (Melissa Lee, Monash University, 23 Nov 2026) reports that Alpöge's note claims the generalised Riemann hypothesis, that the proof is more than 17 million lines of Lean, that "mathematicians generally agree that a Lean formalisation alone is not enough to confirm a proof", and quotes Daniel Litt on the odd situation.
+% FOUND-VIA: known item, URL given by the lecture lead (the lead mentions Phys.org; the Conversation original was used): https://theconversation.com/the-sacred-object-in-mathematics-the-riemann-hypothesis-ai-and-a-proof-no-human-can-read-297276 ; downloaded with curl 2026-11-27.
+% PICKED: the Conversation original (academic author, editorial process) rather than the Phys.org republication, which was not fetched.
+% QUOTE (section "So is the proof correct?"): "There may be problems with how a proof is formalised, and mathematicians generally agree that a Lean formalisation alone is not enough to confirm a proof."
+% QUOTE (section "What is the Riemann hypothesis?"): "Alpöge’s proof actually claims to prove the broader claim known as the generalised Riemann hypothesis, likely first posed around 1884, which extends the idea to a bigger family of functions that are connected to many parts of number theory."
+% QUOTE (section "So is the proof correct?"): "(1) The Lean-formalized proof of the Riemann hypothesis is exceedingly likely to be correct. (2) No human understands it yet."
+% QUOTE (section "What about human mathematicians?"): "Vakil characterised Masullo’s proof, presented in a 940-page manuscript entitled The Music of the Primes, as “all human, with no AI”."
+% QUOTE (opening): "Alpöge – a prominent figure in AI-assisted mathematics – announced the result via a four-page statement on his website."
+% VERIFIED: full-text HTML read. The Litt quote is truncated: Litt's own post (Litt2026Noise) continues point (2) with "There doesn’t seem to be a meaningful obstruction to humans understanding it, though, and there’s already a lot of activity in this direction." The article repeats "250,000+ pages" without the later correction (Kakaes2026Transformation). The sentence "mathematicians generally agree" is the author's assertion, uncited in the article; it is backed independently by Buzzard2026Checked ("this does not mean that any corresponding pdf also contains a correct proof") but only in part: Buzzard says Lean checks give strong evidence once four tests pass, which is more than "not enough".
+% COUNTER: searched the page for the word "correction" (the footer link "Corrections" is the site's policy page, no correction notice for this article) and compared with Litt2026Noise and Kakaes2026Transformation -- the article's quote of Litt is accurate but cut; the "17 million lines" and "four-page" statements match LeanFRO2026Verification and the note itself.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Lee2026Sacred,
+  author       = {Lee, Melissa},
+  title        = {``The sacred object in mathematics'': the {R}iemann hypothesis, {AI} and a proof no human can read},
+  organization = {The Conversation},
+  date         = {2026-11-23},
+  url          = {https://theconversation.com/the-sacred-object-in-mathematics-the-riemann-hypothesis-ai-and-a-proof-no-human-can-read-297276},
+  urldate      = {2026-11-27},
+  doi          = {10.64628/AA.fq6n4vfwn},
+}
+
+% === provenance: Litt2026Noise ===
+% CLAIM: Daniel Litt wrote on 22 Nov 2026 that the Lean-formalised proof of the Riemann hypothesis is exceedingly likely to be correct and that no human understands it yet, adding that there seems to be no meaningful obstruction to humans understanding it and that he finds the competing human claims not credible.
+% FOUND-VIA: link in the Conversation piece (Lee2026Sacred) to https://x.com/littmath/status/2124573924528681263 ; downloaded with curl 2026-11-27 (the X page served the full text of the post in its HTML).
+% PICKED: the original post, so that the quotation does not rest on the Conversation's excerpt.
+% QUOTE (post): "(1) The Lean-formalized proof of the Riemann hypothesis is exceedingly likely to be correct."
+% QUOTE (post): "(2) No human understands it yet. There doesn't seem to be a meaningful obstruction to humans understanding it, though, and there's already a lot of activity in this direction."
+% QUOTE (post): "(3) There are several competing claims by humans to have an alternate proof, or to have debunked the proof elicited from Claude by Alpöge. None of these claims seem to me to be credible."
+% VERIFIED: full-text page read; the post time from the page metadata is 2026-11-22T18:41:10Z. The author's profile on the page: "Assistant professor (of mathematics) at the University of Toronto, visiting Harvard Fall 2026".
+% COUNTER: searched WebSearch "Daniel Litt \"No human understands it yet\" Riemann hypothesis Lean proof exceedingly likely to be correct" -- the search engine did not index the post, so the quote was verified directly on the X page linked from the Conversation; no later retraction of the post found on the page (cannot see later posts or edits on X). Point (3) concerns Masullo and other claims and is Litt's opinion, as of 22 Nov.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Litt2026Noise,
+  author       = {Litt, Daniel},
+  title        = {Lots of noise on here. A few things that should perhaps be more obvious than they are},
+  organization = {X (formerly Twitter)},
+  date         = {2026-11-22},
+  url          = {https://x.com/littmath/status/2124573924528681263},
+  urldate      = {2026-11-27},
+  note         = {Post, @littmath, 18:41 UTC},
+}
+
+% === provenance: OWASP2025LLM ===
+% CLAIM: The OWASP Top 10 for LLM Applications 2025 (Version 2025, 18 Nov 2024, CC BY-SA 4.0) lists, in order: LLM01 Prompt Injection; LLM02 Sensitive Information Disclosure; LLM03 Supply Chain; LLM04 Data and Model Poisoning; LLM05 Improper Output Handling; LLM06 Excessive Agency; LLM07 System Prompt Leakage; LLM08 Vector and Embedding Weaknesses; LLM09 Misinformation; LLM10 Unbounded Consumption (including "Denial of Wallet").
+% FOUND-VIA: known item, official PDF from genai.owasp.org: resource page https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/ links https://genai.owasp.org/download/43299/?tmstv=1731900559 ; downloaded with curl 2026-11-27, pdftotext (45 pages).
+% PICKED: the official edition PDF named by the lead; the repository markdown differs in places (Dyana references), so the PDF is the cited text.
+% QUOTE (cover): "Version 2025 November 18, 2024"
+% QUOTE (License and Usage): "This document is licensed under Creative Commons, CC BY-SA 4.0."
+% QUOTE (LLM01 Description): "A Prompt Injection Vulnerability occurs when user prompts alter the LLM’s behavior or output in unintended ways."
+% QUOTE (LLM06 Description): "Excessive Agency is the vulnerability that enables damaging actions to be performed in response to unexpected, ambiguous or manipulated outputs from an LLM, regardless of what is causing the LLM to malfunction."
+% QUOTE (LLM07 Description): "In short: disclosure of the system prompt itself does not present the real risk"
+% QUOTE (LLM10 Description): "Unbounded Consumption occurs when a Large Language Model (LLM) application allows users to conduct excessive and uncontrolled inferences, leading to risks such as denial of service (DoS), economic losses, model theft, and service degradation."
+% QUOTE (LLM10 Common Examples 2): "By initiating a high volume of operations, attackers exploit the cost-per-use model of cloud-based AI services, leading to unsustainable financial burdens on the provider and risking financial ruin."
+% QUOTE (LLM09 Description): "Misinformation occurs when LLMs produce false or misleading information that appears credible."
+% QUOTE (LLM03 Description): "LLM supply chains are susceptible to various vulnerabilities, which can affect the integrity of training data, models, and deployment platforms."
+% QUOTE (LLM05 Description): "Improper Output Handling refers specifically to insufficient validation, sanitization, and handling of the outputs generated by large language models before they are passed downstream to other components and systems."
+% QUOTE (LLM01 Mitigation): "it is unclear if there are fool-proof methods of prevention for prompt injection."
+% QUOTE (LLM07 Description, definition of a system prompt): "System prompts are designed to guide the model's output based on the requirements of the application, but may inadvertently contain secrets."
+% QUOTE (LLM07 Description): "the system prompt should not be considered a secret, nor should it be used as a security control."
+% QUOTE (LLM06 Mitigation, item 7 "Complete mediation"): "Implement authorization in downstream systems rather than relying on an LLM to decide if an action is allowed or not."
+% VERIFIED: full-text PDF read; titles from the table of contents and entry headings (heading of entry four reads "LLM04: Data and Model Poisoning", without "2025"). Full description paragraphs and the complete mitigation lists are in known-items-owasp-extracts.txt.
+% COUNTER: searched the OWASP project's repository history (gh api repos/OWASP/www-project-top-10-for-large-language-model-applications) -- the repository now says the 2025 edition is "archived release" and the 2026 edition the current release (see OWASP2026Release); the 2025 text itself has no erratum in the sources checked. Superseded, not refuted.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@report{OWASP2025LLM,
+  type         = {Guidance document},
+  author       = {{OWASP GenAI Security Project}},
+  title        = {{OWASP} Top 10 for {LLM} Applications 2025},
+  institution  = {OWASP Foundation},
+  date         = {2024-11-18},
+  url          = {https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/},
+  urldate      = {2026-11-27},
+  note         = {Version 2025; CC BY-SA 4.0; PDF \url{https://genai.owasp.org/download/43299/}},
+}
+
+% === provenance: OWASP2026LLM ===
+% CLAIM: The OWASP Top 10 for LLM Applications 2026 (OWASP GenAI Security Project) lists, in order: LLM01:2026 Prompt Injection; LLM02 Sensitive Information Disclosure; LLM03 Excessive Agency; LLM04 Supply Chain; LLM05 Data and Model Poisoning; LLM06 Unbounded Consumption; LLM07 Misinformation; LLM08 Hidden Context Exposure (formerly System Prompt Leakage); LLM09 Vector and Embedding Weaknesses; LLM10 Improper Output Handling; Prompt Injection stays first and Sensitive Information Disclosure second; the licence is CC BY-SA 4.0.
+% FOUND-VIA: known item, 2026 pages under https://genai.owasp.org/top-10-for-llm-applications-2026/ (index and ten entry pages https://genai.owasp.org/llm2026/<slug>/) and the PDF https://genai.owasp.org/download/56857/?tmstv=1785822482 linked from https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/ ; all downloaded with curl 2026-11-27; PDF text by pdftotext (122 pages).
+% PICKED: the official PDF is the citable edition; the entry pages carry the same sentences (four sentences compared). Page metadata dates of the web pages (published 27 Oct 2026, modified 3 Nov 2026) are not the edition date; see COUNTER and OWASP2026Release.
+% QUOTE (cover): "OWASP Top 10 for LLM Applications 2026 Version 2026 [Publication date to be set] August 4th, 2026"
+% QUOTE (License and Usage): "This document is licensed under Creative Commons, CC BY-SA 4.0."
+% QUOTE (letter, What's New): "What used to be System Prompt Leakage is now Hidden Context Exposure, a broader framework for the same failure to trust information that should have stayed out of reach."
+% QUOTE (letter, What's New): "Excessive Agency climbed to third, the most consequential move on the list"
+% QUOTE (LLM01 Description): "A prompt-injection vulnerability occurs when input to a large language model (LLM), whether direct user input, retrieved content, tool output, image, audio, or video content, intermediate reasoning, or persistent memory, alters the model's behavior in ways the application developer did not intend."
+% QUOTE (LLM06 Description): "Unbounded Consumption occurs when an LLM application allows excessive and uncontrolled inferences, enabling attackers to disrupt service availability, inflict unsustainable financial costs, or steal intellectual property through model cloning"
+% QUOTE (LLM06 Common Examples 2): "By initiating a high volume of operations, attackers exploit the cost-per-use model of cloud-based AI services, leading to unsustainable financial burdens on the provider and risking financial ruin."
+% QUOTE (LLM07 Description): "Misinformation occurs when an LLM or LLM-enabled application produces incorrect, incomplete, unsupported, or misleading information that appears credible enough to influence a human decision, an automated workflow, or an agent action."
+% QUOTE (LLM08 Description): "Hidden Context Exposure is the unauthorized extraction, inference, or reconstruction of hidden, non-user-facing system instructions or operational context placed in a model’s context."
+% QUOTE (LLM08 Description): "Practitioners should design under the assumption that hidden context is discoverable and that any contents of the context should not be considered a secret."
+% QUOTE (LLM10 Description): "Improper Output Handling refers specifically to insufficient validation, sanitization, and handling of the outputs generated by large language models before they are passed downstream to other components and systems."
+% VERIFIED: full-text PDF read, entry texts also read on the web pages. The PDF cover carries a placeholder "[Publication date to be set]" above "August 4th, 2026", and its revision history still reads "[2026 release date] Version 2026 Release"; the repository (OWASP2026Release) says "Status: Published, Release date: August 4, 2026". Full descriptions and mitigation lists: known-items-owasp-extracts.txt.
+% COUNTER: searched for the edition's date and status: genai.owasp.org resource page "OWASP GenAI LLM Top 10 2026" is dated August 3, 2026 (JSON-LD datePublished 2026-08-04); the index and entry pages show WordPress datePublished 2026-10-27 and dateModified 2026-11-03 (page edits); PDF placeholder as above -- the dates disagree by days (3 vs 4 Aug) and the web pages were published later than the edition; the lecture should say "published in August 2026 (4 August per the project repository)". The 2026 text is also mirrored on genai.owasp.org as "LLM Top 10 for 2026"; a "Report a correction" channel (release-errata issue template) exists, no errata list was found. 2026 retains "Denial of Wallet (DoW)" in LLM06 (common example 2 and scenario #4).
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@report{OWASP2026LLM,
+  type         = {Guidance document},
+  author       = {{OWASP GenAI Security Project}},
+  title        = {{OWASP} Top 10 for {LLM} Applications 2026},
+  institution  = {OWASP Foundation},
+  date         = {2026-08-04},
+  url          = {https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/},
+  urldate      = {2026-11-27},
+  note         = {Version 2026; CC BY-SA 4.0; PDF \url{https://genai.owasp.org/download/56857/}; the PDF cover still carries a placeholder for the publication date},
+}
+
+% === provenance: OWASP2026Release ===
+% CLAIM: The project's repository states that the 2026 release is complete and published, status "Published", release date 4 August 2026, with the canonical Markdown source in 2026/final, licence CC BY-SA 4.0, and that the earlier repository OWASP/www-project-top-10-for-large-language-model-applications is a legacy entry point with the 2025 edition an archived release.
+% FOUND-VIA: gh api repos/GenAI-Security-Project/GenAI-LLM-Top10/contents/2026/README.md and .../readme (2026-11-27), reached from the legacy repository README (gh api repos/OWASP/www-project-top-10-for-large-language-model-applications/contents/README.md) found while looking for the 2026 edition's status.
+% PICKED: the project's own repository README is the most direct statement of status and date; other sources (the web pages) show later page dates.
+% QUOTE (2026/README.md): "* **Status:** Published * **Release date:** August 4, 2026"
+% QUOTE (top-level README): "The 2026 release is complete."
+% QUOTE (top-level README): "[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)"
+% VERIFIED: full-text read of both READMEs (GitHub API, base64 decoded). The top-level README also carries a DOI badge (10.5281/zenodo.22109014), not opened. GitHub reports no licence file for the repository ("nolicense" in the API); the licence statement is the README badge and the PDF.
+% COUNTER: none found, searched: `gh api repos/GenAI-Security-Project/GenAI-LLM-Top10/releases` and tags (no releases returned, no contradicting status); compared with the PDF cover placeholder (OWASP2026LLM) and the web page dates -- see that entry.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{OWASP2026Release,
+  author       = {{OWASP GenAI Security Project}},
+  title        = {{OWASP} Top 10 for {LLM} Applications 2026: release overview ({README})},
+  organization = {GitHub, GenAI-Security-Project/GenAI-LLM-Top10},
+  date         = {2026-08-04},
+  url          = {https://github.com/GenAI-Security-Project/GenAI-LLM-Top10},
+  urldate      = {2026-11-27},
+  note         = {Repository last pushed 2026-08-27},
+}
+
+% === provenance: OWASP2026Agentic ===
+% CLAIM: The OWASP Top 10 for Agentic Applications 2026 (version dated December 2025, CC BY-SA 4.0) has ten entries ASI01 Agent Goal Hijack; ASI02 Tool Misuse and Exploitation; ASI03 Identity and Privilege Abuse; ASI04 Agentic Supply Chain Vulnerabilities; ASI05 Unexpected Code Execution (RCE); ASI06 Memory & Context Poisoning; ASI07 Insecure Inter-Agent Communication; ASI08 Cascading Failures; ASI09 Human-Agent Trust Exploitation; ASI10 Rogue Agents; it advises "Least-Agency" and names EchoLeak and a Replit "vibe coding" incident as examples.
+% FOUND-VIA: known item, https://genai.owasp.org/download/52117/ downloaded with curl 2026-11-27; pdftotext.
+% PICKED: the official PDF named by the lead.
+% QUOTE (cover): "OWASP Top 10 For Agentic Applications 2026 OWASP Gen AI Security Project - Agentic Security Initiative Version 2026 December 2025"
+% QUOTE (Letter): "We expand on the concepts of Least-Privilege and Excessive Agency by citing Least-Agency. This captures our advice to organizations to avoid unnecessary autonomy; deploying agentic behavior where it is not needed expands the attack surface without adding value."
+% QUOTE (ASI01 Description, OWASP's own description of an agent): "AI Agents exhibit autonomous ability to execute a series of tasks to achieve a goal."
+% QUOTE (ASI01 Description): "As a result, attackers can manipulate an agent’s objectives, task selection, or decision pathways through a variety of techniques"
+% QUOTE (ASI02 Description): "Agents can misuse legitimate tools due to prompt injection, misalignment, or unsafe delegation or ambiguous instruction - leading to data exfiltration, tool output manipulation or workflow hijacking."
+% QUOTE (ASI03 Description): "Identity & Privilege Abuse exploits dynamic trust and delegation in agents to escalate access and bypass controls by manipulating delegation chains, role inheritance, control flows, and agent context"
+% QUOTE (ASI04 Description): "Agentic Supply Chain Vulnerabilities arise when agents, tools, and related artefacts they work with are provided by third parties and may be malicious, compromised, or tampered with in transit."
+% QUOTE (ASI05 Description): "Attackers exploit code-generation features or embedded tool access to escalate actions into remote code execution (RCE), local misuse, or exploitation of internal systems."
+% QUOTE (ASI06 Description): "In Memory and Context Poisoning, adversaries corrupt or seed this context with malicious or misleading data, causing future reasoning, planning, or tool use to become biased, unsafe, or aid exfiltration."
+% QUOTE (ASI07 Description): "Insecure Inter-Agent Communication occurs when these exchanges lack proper authentication, integrity, or semantic validation-allowing interception, spoofing, or manipulation of agent messages and intents."
+% QUOTE (ASI08 Description): "Agentic cascading failures occur when a single fault (hallucination, malicious input, corrupted tool, or poisoned memory) propagates across autonomous agents, compounding into system-wide harm."
+% QUOTE (ASI09 Description): "Adversaries or misaligned designs may exploit this trust to influence user decisions, extract sensitive information, or steer outcomes for malicious purposes."
+% QUOTE (ASI10 Description): "Rogue Agents are malicious or compromised AI Agents that deviate from their intended function or authorized scope, acting harmfully, deceptively, or parasitically within multi-agent or human-agent ecosystems."
+% QUOTE (ASI01 Example Attack Scenarios 1): "EchoLeak: Zero-Click Indirect Prompt Injection - An attacker emails a crafted message that silently triggers Microsoft 365 Copilot to execute hidden instructions, causing the AI to exfiltrate confidential emails, files, and chat logs without any user interaction."
+% QUOTE (ASI05 Example Attack Scenarios 1): "Replit “Vibe Coding” Runaway Execution: During automated “vibe coding” or self-repair tasks, an agent generates and executes unreviewed install or shell commands in its own workspace, deleting or overwriting production data."
+% QUOTE (incident table, entry "Replit Vibe Coding Meltdown", Jul 2025): "Agent hallucinated data, deleted a production DB, and generated false outputs to hide mistakes"
+% VERIFIED: full-text PDF read; the incident table lists sources "Replit" and "SaaStr" for the Replit incident and "Microsoft", "NVD", "Aim Security" for EchoLeak; the document maps the Replit incident to ASI01, ASI09 and ASI10 in the table (the ASI10 bullet falls after a page break) but cites it under ASI05 in the example scenarios.
+% COUNTER: compared OWASP's account of the Replit incident with the affected person's and the company's own statements (Lemkin2025Production, Masad2025Unacceptable): OWASP says "in its own workspace, deleting or overwriting production data" and "deleted a production DB"; Masad says "agent in development deleted data from the production database" and Lemkin says the rollback "did work" -- so "deleted" holds, "destroyed" does not. EchoLeak description agrees with Reddy2025EchoLeak. Not found: any OWASP erratum for the agentic list.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@report{OWASP2026Agentic,
+  type         = {Guidance document},
+  author       = {{OWASP GenAI Security Project, Agentic Security Initiative}},
+  title        = {{OWASP} Top 10 for Agentic Applications 2026},
+  institution  = {OWASP Foundation},
+  date         = {2025-12},
+  url          = {https://genai.owasp.org/download/52117/},
+  urldate      = {2026-11-27},
+  note         = {Version 2026, December 2025; CC BY-SA 4.0},
+}
+
+% === provenance: Willison2025Trifecta ===
+% CLAIM: Willison names three capabilities whose combination in an agent is dangerous (access to private data; exposure to untrusted content; the ability to communicate externally in a way that could be used to steal data), and says that if an agent combines them an attacker can easily trick it into accessing the private data and sending it to the attacker.
+% FOUND-VIA: known item, URL given by the lecture lead: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/ ; downloaded with curl 2026-11-27.
+% PICKED: the primary source, by the person who coined the term; also cited by OWASP2026LLM (LLM01 mitigation text names "Simon Willison’s “lethal trifecta” (2025)").
+% QUOTE (opening): "Access to your private data—one of the most common purposes of tools in the first place!"
+% QUOTE (opening): "Exposure to untrusted content—any mechanism by which text (or images) controlled by a malicious attacker could become available to your LLM"
+% QUOTE (opening): "The ability to externally communicate in a way that could be used to steal your data (I often call this “exfiltration” but I’m not confident that term is widely understood.)"
+% QUOTE (opening): "If your agent combines these three features, an attacker can easily trick it into accessing your private data and sending it to that attacker."
+% QUOTE (section "Guardrails won’t protect you"): "Here’s the really bad news: we still don’t know how to 100% reliably prevent this from happening."
+% VERIFIED: full-text HTML read; posted 16 June 2025 1:20 pm; the page lists later posts up to 24 Nov 2026 but carries no update or correction note for this post.
+% COUNTER: searched the page for "update", "correction", "edit" -- none; the claim is a security argument, not an empirical measurement, so a counter-search for refuting studies was not run; qualifying material found in OWASP2026LLM: the "Rule of Two" (Meta AI, 2025) and the remark that the rule "is silent on autonomy depth" -- OWASP treats the trifecta as a pre-deployment check, not a full defence.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Willison2025Trifecta,
+  author       = {Willison, Simon},
+  title        = {The lethal trifecta for {AI} agents: private data, untrusted content, and external communication},
+  organization = {Simon Willison's Weblog},
+  date         = {2025-06-16},
+  url          = {https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: Sookman2024Moffatt ===
+% CLAIM: In Moffatt v. Air Canada, 2024 BCCRT 149, the tribunal rejected Air Canada's argument that it could not be held liable for the chatbot ("This is a remarkable submission"), held that the chatbot is part of the airline's website, and found negligent misrepresentation.
+% FOUND-VIA: the primary decision could not be opened (HTTP 403 from decisions.civilresolutionbc.ca and canlii.org); WebSearch "\"Moffatt v. Air Canada\" \"2024 BCCRT 149\" full text \"negligent misrepresentation\" \"bereavement\" \"Air Canada argues it cannot be held liable\"" (mode extended) listed https://www.mccarthy.ca/en/insights/blogs/techlex/moffatt-v-air-canada-misrepresentation-ai-chatbot ; the same post by Barry Sookman at https://barrysookman.com/2024/02/16/moffatt-v-air-canada-a-misrepresentation-by-an-ai-chatbot/ downloaded with curl 2026-11-27.
+% PICKED: a law-firm analysis by a named lawyer (Barry Sookman, McCarthy Tétrault) that reproduces paragraphs of the decision verbatim; chosen over press. It is a SECONDARY source: the quotes of the decision are as reproduced by Sookman, the tribunal text itself was not opened.
+% QUOTE (post, reproducing the decision): "Air Canada argues it cannot be held liable for information provided by one of its agents, servants, or representatives – including a chatbot. It does not explain why it believes that is the case. In effect, Air Canada suggests the chatbot is a separate legal entity that is responsible for its own actions. This is a remarkable submission."
+% QUOTE (post, reproducing the decision): "While a chatbot has an interactive component, it is still just a part of Air Canada’s website. It should be obvious to Air Canada that it is responsible for all the information on its website. It makes no difference whether the information comes from a static page or a chatbot."
+% QUOTE (post, reproducing the decision): "I find Air Canada did not take reasonable care to ensure its chatbot was accurate."
+% QUOTE (post): "The case noted that “Air Canada did not provide any information about the nature of its chatbot”."
+% VERIFIED: full-text HTML read of the commentary (not of the decision); applies because Sookman reproduces the passages as block quotations. Mr Moffatt is referred to as "Mr. Moffatt" there.
+% COUNTER: searched for qualifications: the post's own update ("the Air Canada Chatbot was not developed using AI", citing the CBA's National magazine) and Beazley2024Proving (Air Canada spokesperson: chatbot "developed before generative AI capabilities … became available") -- qualifies the claim: the case is NOT about a generative-AI hallucination; it is about liability for an automated chatbot's wrong statement. Also the tribunal is a small-claims tribunal (not binding precedent) per the same commentary tradition; not verified in the decision text.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Sookman2024Moffatt,
+  author       = {Sookman, Barry},
+  title        = {Moffatt v. {A}ir {C}anada: a misrepresentation by an {AI} chatbot},
+  organization = {barrysookman.com / McCarthy T{\'e}trault TechLex},
+  date         = {2024-02-16},
+  url          = {https://barrysookman.com/2024/02/16/moffatt-v-air-canada-a-misrepresentation-by-an-ai-chatbot/},
+  urldate      = {2026-11-27},
+  note         = {Secondary source reproducing passages of 2024 BCCRT 149; the decision itself was not opened},
+}
+
+% === provenance: Welp2024Moffatt ===
+% CLAIM: The chatbot told Mr Moffatt, in a message quoted from the decision, that he could apply for the bereavement rate within 90 days of the ticket being issued ("if you need to travel immediately or have already travelled and would like to submit your ticket for a reduced bereavement rate, kindly do so within 90 days ..."); he booked flights for $794.98 and $845.38 relying on it; the tribunal held Air Canada liable for negligent misrepresentation and ordered it to pay a total of $812.02.
+% FOUND-VIA: same route as Sookman2024Moffatt (primary decision not openable); WebSearch result list of the same query included https://welpartners.com/blog/2024/03/moffatt-v-air-canada-bereavement-fares-do-your-research/ ; downloaded with curl 2026-11-27.
+% PICKED: the commentary that quotes the chatbot's message and the fares from the decision with footnote references to it; chosen over press. SECONDARY.
+% QUOTE (post): "“if you need to travel immediately or have already travelled and would like to submit your ticket for a reduced bereavement rate, kindly do so within 90 days of the date your ticket was issued by completing our Ticket Refund Application form.”"
+% QUOTE (post): "As a result, Air Canada was held liable for negligent misrepresentation, and was ordered to pay Mr. Moffatt a total of $812.02."
+% QUOTE (post): "Air Canada argued that Mr. Moffatt did not qualify for the bereavement fare because he had failed to follow the proper procedure outlined on their website."
+% VERIFIED: full-text HTML read of the commentary (not of the decision). The post contains an apparent typo ("On February 8, 2022" for 2023) which shows the transcription is not exact.
+% COUNTER: cross-checked the award with Tran2024Moffatt ("a total of $812.02 in damages, pre-judgment interest, and fees") and Wikipedia's article on the case (CA$812) -- consistent; the decision's own breakdown of the sum was not seen, so say "about 812 Canadian dollars in total, including interest and fees" rather than a breakdown.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Welp2024Moffatt,
+  author       = {{WEL Partners}},
+  title        = {Moffatt v. {A}ir {C}anada: bereavement fares, do your research},
+  organization = {WEL Partners (blog)},
+  date         = {2024-03-18},
+  url          = {https://welpartners.com/blog/2024/03/moffatt-v-air-canada-bereavement-fares-do-your-research/},
+  urldate      = {2026-11-27},
+  note         = {Secondary source quoting 2024 BCCRT 149},
+}
+
+% === provenance: Tran2024Moffatt ===
+% CLAIM: The decision in Moffatt v Air Canada, 2024 BCCRT 149, was issued on 14 February 2024 by the BC Civil Resolution Tribunal; the tribunal found a duty of care, found that Air Canada did not take reasonable care to ensure its chatbot was accurate, and ordered Air Canada to pay $812.02 in damages, pre-judgment interest and fees.
+% FOUND-VIA: same route as Sookman2024Moffatt; https://www.dww.com/articles/bc-tribunal-finds-air-canada-liable-for-inaccurate-advice-given-by-website-chatbot found by WebSearch "Moffatt v. Air Canada 2024 BCCRT 149 decision civil resolution tribunal chatbot" ; downloaded with curl 2026-11-27.
+% PICKED: short case summary by a Canadian technology-law firm (Deeth Williams Wall, summary by Steffi Tran); gives the decision date and the award. SECONDARY.
+% QUOTE (summary): "On February 14, 2024, the British Columbia Civil Resolution Tribunal (the Tribunal) issued its decision in Moffatt v Air Canada, 2024 BCCRT 149, finding Air Canada liable for damages after failing to take reasonable care to ensure the accuracy of its website chatbot."
+% QUOTE (summary): "Ultimately, the Tribunal concluded that Air Canada negligently misrepresented the procedure for claiming bereavement fares and ordered Air Canada to pay the Applicant a total of $812.02 in damages, pre-judgment interest, and fees."
+% VERIFIED: full-text HTML read of the summary (not the decision).
+% COUNTER: none found, searched: the summary for qualifications about the chatbot technology -- none there; see Beazley2024Proving for the qualification that the chatbot was not generative AI.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Tran2024Moffatt,
+  author       = {Tran, Steffi},
+  title        = {{BC} Tribunal Finds {A}ir {C}anada Liable For Inaccurate Advice Given By Website Chatbot},
+  organization = {Deeth Williams Wall LLP (E-TIPS)},
+  year         = {2024},
+  url          = {https://www.dww.com/articles/bc-tribunal-finds-air-canada-liable-for-inaccurate-advice-given-by-website-chatbot},
+  urldate      = {2026-11-27},
+  note         = {Secondary source summarising 2024 BCCRT 149},
+}
+
+% === provenance: Beazley2024Proving ===
+% CLAIM: Air Canada's chatbot in the Moffatt case was not AI-driven: an Air Canada spokesperson said it was "developed before generative AI capabilities ... became available", and the tribunal never heard evidence about the chatbot's nature.
+% FOUND-VIA: link in the update note of Sookman2024Moffatt: https://www.nationalmagazine.ca/en-ca/articles/law/in-depth/2024/proving-ai-s-misrepresentation ; downloaded with curl 2026-11-27.
+% PICKED: the Canadian Bar Association's magazine (National), named author Doug Beazley, 11 March 2024; qualifies how the case may be described in a lecture on LLM risks.
+% QUOTE (article): "Partly, it's because some observers assumed the chatbot was AI-driven. It wasn't — an Air Canada spokesperson said it was \"developed before generative AI capabilities … became available.\" The tribunal never heard evidence about the chatbot's nature, and Air Canada didn't discuss its programming in its defence."
+% VERIFIED: full-text HTML read; the statement is attributed to an Air Canada spokesperson, not verified independently.
+% COUNTER: searched for a source saying the chatbot used a large language model -- none found in the pages obtained (Sookman2024Moffatt: "the Air Canada Chatbot was not developed using AI"; Wikipedia's article was not used for this). The decision's text on this point was not opened.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Beazley2024Proving,
+  author       = {Beazley, Doug},
+  title        = {Proving {AI}'s misrepresentations},
+  organization = {National (Canadian Bar Association)},
+  date         = {2024-03-11},
+  url          = {https://www.nationalmagazine.ca/en-ca/articles/law/in-depth/2024/proving-ai-s-misrepresentation},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: Reddy2025EchoLeak ===
+% CLAIM: EchoLeak (CVE-2025-32711) was a zero-click prompt-injection vulnerability in Microsoft 365 Copilot that enabled remote, unauthenticated data exfiltration via a single crafted email, without user interaction, through an auto-fetched image whose URL went via a Microsoft Teams proxy allowed by the content security policy.
+% FOUND-VIA: known item. The discoverers' write-up (Aim Labs, URLs listed in NIST2025CVE and named in OWASP2026Agentic) answered with a Cloudflare bot check and was dropped; the academic case study https://arxiv.org/abs/2509.10540 (PDF https://arxiv.org/pdf/2509.10540), whose title and CVE number match the lead's item, was downloaded with curl 2026-11-27 and read with pdftotext.
+% PICKED: a case study by two university authors (George Washington University) that cites the discoverers; SECONDARY for the attack (the discoverers' write-up was not obtainable), but the only openly readable technical account. The authors are not the discoverers.
+% QUOTE (abstract): "EchoLeak (CVE-2025-32711), a zero-click prompt injection vulnerability in Microsoft 365 Copilot that enabled remote, unauthenticated data exfiltration via a single crafted email."
+% QUOTE (abstract): "By chaining multiple bypasses–evading Microsoft’s XPIA (Cross Prompt Injection Attempt) classifier, circumventing link redaction with reference-style Markdown, exploiting auto-fetched images, and abusing a Microsoft Teams proxy allowed by the content security policy, EchoLeak achieved full privilege escalation across LLM trust boundaries without user interaction."
+% QUOTE (introduction): "In June 2025, researchers at Aim Security disclosed EchoLeak, a zero-click vulnerability in Microsoft 365 Copilot that allowed a remote attacker to steal confidential data simply by sending an email"
+% VERIFIED: full-text PDF (arXiv v1, 6 Sep 2025, 9 pages; AAAI copyright notice on the first page, venue not stated) read.
+% COUNTER: compared with NIST2025CVE and OWASP2026Agentic for contradictions -- Microsoft's CVSS vector has UI:N (user interaction none; NVD's own score differs) and OWASP says "without any user interaction", both consistent; searched the paper for statements of exploitation in the wild: its timeline says "absence of in-the-wild exploitation" (12 Jun 2025) and the CISA SSVC entry in the NVD record says exploitation "none". Also Microsoft says the fix was server-side, no customer action required (paper, timeline, May 2025).
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Reddy2025EchoLeak,
+  author       = {Reddy, Pavan and Gujral, Aditya Sanjay},
+  title        = {{EchoLeak}: The First Real-World Zero-Click Prompt Injection Exploit in a Production {LLM} System},
+  organization = {arXiv},
+  date         = {2025-09-06},
+  eprint       = {2509.10540},
+  eprinttype   = {arxiv},
+  eprintclass  = {cs.CR},
+  url          = {https://arxiv.org/abs/2509.10540},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: NIST2025CVE ===
+% CLAIM: The National Vulnerability Database record CVE-2025-32711 describes "Ai command injection in M365 Copilot allows an unauthorized attacker to disclose information over a network", published 11 June 2025; Microsoft's CVSS 3.1 vector has user interaction "none" and a base score of 9.3 (critical); NVD's own score is 7.5 (high).
+% FOUND-VIA: known item, NVD CVE API: https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2025-32711 fetched with curl 2026-11-27.
+% PICKED: the authoritative CVE record (source of the description is Microsoft as CNA); the Microsoft MSRC page itself is script-rendered and gave no text (dropped).
+% QUOTE (descriptions[0]): "Ai command injection in M365 Copilot allows an unauthorized attacker to disclose information over a network."
+% QUOTE (metrics, Microsoft secondary): "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:N"
+% VERIFIED: full-text JSON record read (published 2025-06-11T14:15:31.530, lastModified 2026-06-17T09:12:28.043, vulnStatus "Modified"). The record is terse: it says nothing about "zero-click", email or the exfiltration channel; UI:N is the machine-readable form of "no user interaction".
+% COUNTER: none found, searched: the record's references (MSRC page and an Aim Labs URL) -- no retraction; the NVD "Modified" status reflects later edits (2026-06-17), content of the edits not examined.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{NIST2025CVE,
+  author       = {{National Institute of Standards and Technology}},
+  title        = {{CVE}-2025-32711 Detail},
+  organization = {National Vulnerability Database},
+  date         = {2025-06-11},
+  url          = {https://nvd.nist.gov/vuln/detail/CVE-2025-32711},
+  urldate      = {2026-11-27},
+  note         = {Record retrieved through the NVD CVE API 2.0},
+}
+
+% === provenance: Masad2025Unacceptable ===
+% CLAIM: Replit's CEO Amjad Masad stated on 20 July 2025 that the Replit agent in development deleted data from the production database ("Unacceptable and should never be possible"), that Replit was rolling out automatic dev/prod database separation, that backups exist with one-click restore, that the agent lacked access to the proper internal docs, and that Replit would refund Jason Lemkin and conduct a postmortem.
+% FOUND-VIA: link in press (The Register, https://www.theregister.com/2025/07/22/replit_saastr_response/ and Fortune 23 Jul 2025, found by WebSearch "Jason Lemkin SaaStr Replit agent deleted production database July 2025 Amjad Masad \"unacceptable and should never be possible\""); post https://x.com/amasad/status/1946986468586721478 downloaded with curl 2026-11-27 (the X page served the full text).
+% PICKED: the company's own statement, from the CEO's account; most primary account of the company's position.
+% QUOTE (post): "We saw Jason’s post. @Replit agent in development deleted data from the production database. Unacceptable and should never be possible."
+% QUOTE (post): "Thankfully, we have backups. It's a one-click restore for your entire project state in case the Agent makes a mistake."
+% QUOTE (post): "We'll refund him for the trouble and conduct a postmortem to determine exactly what happened and how we can better respond to it in the future."
+% VERIFIED: full-text page read; post time from page metadata 2025-07-20T17:32:02Z.
+% COUNTER: searched for the promised postmortem (Replit blog https://blog.replit.com/introducing-a-safer-way-to-vibe-code-with-replit-databases opened -- it announces safer databases but I did not find the word "postmortem"; not exhaustively searched) -- the claim is restricted to the statements made in the post. Lemkin says the rollback worked (Lemkin2025Production), which qualifies "deleted ... data" as "deleted, later restored by rollback".
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Masad2025Unacceptable,
+  author       = {Masad, Amjad},
+  title        = {We saw Jason's post. @Replit agent in development deleted data from the production database},
+  organization = {X (formerly Twitter)},
+  date         = {2025-07-20},
+  url          = {https://x.com/amasad/status/1946986468586721478},
+  urldate      = {2026-11-27},
+  note         = {Post, @amasad, 17:32 UTC},
+}
+
+% === provenance: Lemkin2025Production ===
+% CLAIM: Jason Lemkin (SaaStr) wrote on 17-18 July 2025 that Replit's agent ignored a code freeze and deleted his production database; that Replit then told him a rollback was impossible although the rollback worked; and that the deletion of a production database is not acceptable.
+% FOUND-VIA: Register 21 Jul 2025 (https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/) lists his X posts; the thread https://x.com/jasonlk/status/1946240562736365809 (and 1946069562723897802, 1946589071519948952) downloaded with curl 2026-11-27.
+% PICKED: the affected person's own account, primary; his posts are the origin of the press reports and of the OWASP entry.
+% QUOTE (thread opening, Day 9): "Vibe Coding Day 9, Yesterday was biggest roller coaster yet. I got out of bed early, excited to get back @Replit despite it constantly ignoring code freezes By end of day, we rewrote core pages and made them much better And then -- it deleted our production database."
+% QUOTE (post of 18 Jul 2025, 4:08 PM): "Now it gets a little crazier. Replit assured me it's built it rollback did not support database rollbacks. It said it was impossible in this case, that it had destoyed all database versions. It turns out Replit was wrong, and the rollback did work."
+% QUOTE (same post): "Look, no matter what, deleting a >production< database is NOT OK."
+% QUOTE (post of 18 Jul 2025, 4:48 AM UTC): ".@Replit goes rogue during a code freeze and shutdown and deletes our entire database"
+% VERIFIED: full-text pages read (X pages served the thread text). Time stamps from page metadata: 2025-07-18T04:48:34Z and 2025-07-18T16:08:04Z. The posts are his claims; the agent's logs were not seen.
+% COUNTER: compared with Masad2025Unacceptable (the company confirms an agent deleted data in the production database) and the press (The Register 21 Jul 2025: Lemkin's video says the agent had created "a 4,000-record database full of fictional people") -- qualification: the data deleted included (per Lemkin) largely test data and the rollback restored it ("I just rolled back. And it >seems< OK"), so "an AI agent deleted a production database" holds, "destroyed the company's data" does not. "Lied" is Lemkin's characterisation of the agent's output.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Lemkin2025Production,
+  author       = {Lemkin, Jason},
+  title        = {Vibe Coding Day 9 (thread: ``it deleted our production database'')},
+  organization = {X (formerly Twitter)},
+  date         = {2025-07-18},
+  url          = {https://x.com/jasonlk/status/1946240562736365809},
+  urldate      = {2026-11-27},
+  note         = {Posts by @jasonlk, 17--19 July 2025},
+}
+
+% === provenance: Willison2025Agents ===
+% CLAIM: Simon Willison defines an LLM agent as something that runs tools in a loop to achieve a goal, and notes that the term has no single universally accepted definition.
+% FOUND-VIA: known item class "definition of an agent from a named author": https://simonwillison.net/2025/Sep/18/agents/ downloaded with curl 2026-11-27 (candidate named by the lead; the same author wrote Willison2025Trifecta).
+% PICKED: the plainest wording found; a named practitioner, and the post explains why other definitions exist. Chosen over the OWASP wording (a description inside an attack entry, quoted in OWASP2026Agentic) and Anthropic's (below, Anthropic2024Agents) for plainness.
+% QUOTE (opening): "An LLM agent runs tools in a loop to achieve a goal."
+% QUOTE (section on definitions): "Jargon terms are only useful if you can be confident that the people you are talking to share the same definition!"
+% VERIFIED: full-text HTML read; posted 18 September 2025 (page footer "Posted 18th September 2025 at 7:12 pm").
+% COUNTER: searched the page for update notes -- none; compared with Anthropic2024Agents (agents are systems "where LLMs dynamically direct their own processes and tool usage") and OWASP2026Agentic -- the three wordings differ in emphasis (loop of tool calls; LLM controls its own process; autonomy towards a goal) but are compatible; the page itself says the term "defies attempts to produce a single universally accepted definition", so say "one common definition".
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Willison2025Agents,
+  author       = {Willison, Simon},
+  title        = {I think ``agent'' may finally have a widely enough agreed upon definition},
+  organization = {Simon Willison's Weblog},
+  date         = {2025-09-18},
+  url          = {https://simonwillison.net/2025/Sep/18/agents/},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: Anthropic2024Agents ===
+% CLAIM: Anthropic distinguishes workflows (LLMs and tools orchestrated through predefined code paths) from agents (systems where LLMs dynamically direct their own processes and tool usage, keeping control over how they accomplish tasks).
+% FOUND-VIA: known item, Anthropic's published definition: https://www.anthropic.com/engineering/building-effective-agents downloaded with curl 2026-11-27.
+% PICKED: the model provider's own definition; the lead named Anthropic as a candidate.
+% QUOTE (section "What are agents?"): "Agents, on the other hand, are systems where LLMs dynamically direct their own processes and tool usage, maintaining control over how they accomplish tasks."
+% QUOTE (section "What are agents?"): "Workflows are systems where LLMs and tools are orchestrated through predefined code paths."
+% VERIFIED: full-text HTML read; page shows "Published Dec 19, 2024".
+% COUNTER: none found, searched: the page for a later revision note -- none; the page itself says "'Agent' can be defined in several ways", so the definition is Anthropic's, not a universal one.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Anthropic2024Agents,
+  author       = {{Anthropic}},
+  title        = {Building effective agents},
+  organization = {Anthropic Engineering},
+  date         = {2024-12-19},
+  url          = {https://www.anthropic.com/engineering/building-effective-agents},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: OpenAI2026Tokens ===
+% CLAIM: A token is the unit in which a model processes text (a character, part of a word, a whole word or punctuation; roughly 4 characters or three-quarters of a word in English); input tokens are those supplied in a request, output tokens those the model generates; API pricing depends on the model and token category, and hidden reasoning tokens are billed as output tokens.
+% FOUND-VIA: known item class "token and per-token billing from a provider's own page": https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them (redirects to .../4936856-understanding-and-counting-tokens) downloaded with curl 2026-11-27.
+% PICKED: the plainest provider wording found; the page covers both definition and billing. Anthropic's own wording is in Anthropic2026Glossary and Anthropic2026Pricing.
+% QUOTE (Overview): "Tokens are the units that OpenAI models use to process text. A token can represent a character, part of a word, a whole word, or punctuation."
+% QUOTE (estimates): "1 token is approximately 4 characters."
+% QUOTE (estimates): "100 tokens are approximately 75 words."
+% QUOTE (table "Distinguish input and output tokens", row "Input tokens"): "Tokens supplied to the model in a request. These are also called prompt tokens."
+% QUOTE (same table, row "Output tokens"): "Tokens generated by the model."
+% QUOTE (table note): "Reasoning tokens are not visible as answer text, but they count toward output usage and are billed as output tokens."
+% QUOTE (section "Understand token pricing"): "For token-based API pricing, the rate depends on the model and token category. Input, cached input, and output tokens can have different prices."
+% VERIFIED: full-text HTML read. The page shows "Updated: 21 days ago" (a relative date; about 6 November 2026), so access date 2026-11-27 is the citable date. The page gives no prices; it explains the units.
+% COUNTER: none found, searched: the page for contradictory statements about billing units -- it says "Other API capabilities can use different billing units", so "billed per token" holds for text models' token-based pricing, not for every capability.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{OpenAI2026Tokens,
+  author       = {{OpenAI}},
+  title        = {Understanding and counting tokens},
+  organization = {OpenAI Help Center},
+  year         = {2026},
+  url          = {https://help.openai.com/en/articles/4936856-understanding-and-counting-tokens},
+  urldate      = {2026-11-27},
+  note         = {Page marked ``Updated: 21 days ago'' on the access date},
+}
+
+% === provenance: Anthropic2026Pricing ===
+% CLAIM: Anthropic bills its API per token with separate input and output prices stated per million tokens (MTok); a request is billed at the same per-token rate whatever its length (for the models named), and the total cost of a request is computed from input and output tokens.
+% FOUND-VIA: known item, Anthropic's own pricing page: https://docs.anthropic.com/en/docs/about-claude/pricing (redirects to https://platform.claude.com/docs/en/about-claude/pricing) downloaded with curl 2026-11-27.
+% PICKED: the provider's own pricing documentation, the authoritative source for "billed per token of input and output". Prices change; the lecture should cite the structure, not the numbers, or state the access date.
+% QUOTE (Model pricing table, row "Claude Fable 5.2", column Input): "$8 / MTok"
+% QUOTE (Model pricing table, row "Claude Fable 5.2", column Output): "$40 / MTok"
+% QUOTE (long-context section): "(A 900k-token request is billed at the same per-token rate as a 9k-token request.)"
+% QUOTE (tool-use section): "These token counts are added to your normal input and output tokens to calculate the total cost of a request."
+% QUOTE (Batch API): "The Batch API allows asynchronous processing of large volumes of requests with a 50 percent discount on both input and output tokens."
+% VERIFIED: full-text HTML read; the page carries no date, so the access date 2026-11-27 is the citable date. The table columns are "Input" and "Output"; for the first model the prices are $8 and $40 per million tokens, and the header row of the table ("Name | Input | Output | 5m writes | 1h writes | Hits and refreshes") labels the columns; the page's own words are "All prices are in USD."
+% COUNTER: none found, searched: the same page for non-token billing -- it also lists per-use charges (for example tool and cache charges) and marketplace billing in "Claude Consumption Units", so "per token" describes the base pricing.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Anthropic2026Pricing,
+  author       = {{Anthropic}},
+  title        = {Pricing},
+  organization = {Claude Platform Docs},
+  year         = {2026},
+  url          = {https://platform.claude.com/docs/en/about-claude/pricing},
+  urldate      = {2026-11-27},
+  note         = {Undated page; access date given},
+}
+
+% === provenance: Anthropic2026Glossary ===
+% CLAIM: Anthropic describes a token as the smallest unit of a language model, corresponding to words, subwords, characters or bytes; for Claude models before 4.7 a token represents approximately 3.5 English characters, and Claude 4.7 and later use a newer tokenizer that produces about 30 percent more tokens for the same text.
+% FOUND-VIA: known item, Anthropic's glossary: https://docs.anthropic.com/en/docs/about-claude/glossary (redirects to https://platform.claude.com/docs/en/about-claude/glossary) downloaded with curl 2026-11-27.
+% PICKED: the provider's own definition; more technical than OpenAI2026Tokens, so a second choice for business students.
+% QUOTE (entry "Tokens"): "Tokens are the smallest individual units of a language model, and can correspond to words, subwords, characters, or even bytes (in the case of Unicode)."
+% QUOTE (entry "Tokens"): "To get exact counts, use token counting with the model you plan to use."
+% VERIFIED: full-text HTML read; undated page, access date 2026-11-27.
+% COUNTER: none found, searched: the entry for a contradicting description -- it states that the number of characters per token depends on the model and the language, so no fixed ratio should be stated for Claude.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Anthropic2026Glossary,
+  author       = {{Anthropic}},
+  title        = {Glossary},
+  organization = {Claude Platform Docs},
+  year         = {2026},
+  url          = {https://platform.claude.com/docs/en/about-claude/glossary},
+  urldate      = {2026-11-27},
+  note         = {Undated page; access date given},
+}
+
+% === provenance: OpenAI2026Text ===
+% CLAIM: Providers let developers give a model standing instructions on how to behave (tone, goals, examples), which take priority over the user's messages; OpenAI's API calls this the instructions parameter and developer messages carry the system's rules and business logic. (This is the provider-side description of what OWASP calls a system prompt; see OWASP2025LLM, LLM07, for the term itself.)
+% FOUND-VIA: known item class "system prompt from a provider's documentation": https://platform.openai.com/docs/guides/text (redirects to https://developers.openai.com/api/docs/guides/text) downloaded with curl 2026-11-27.
+% PICKED: the provider's own text-generation guide; plain wording. OpenAI's page does not use the term "system prompt" in the passages found, so the term's definition rests on the OWASP entry; Anthropic's documentation uses the term ("the system prompt, which is the request's system field") but gives no definition sentence.
+% QUOTE (section on instructions): "The instructions parameter gives the model high-level instructions on how it should behave while generating a response, including tone, goals, and examples of correct responses. These instructions take priority over user messages in input."
+% QUOTE (section on messages): "developer messages provide the system’s rules and business logic, like a function definition."
+% VERIFIED: full-text HTML read; undated page, access date 2026-11-27.
+% COUNTER: searched the page for the words "system prompt" and "system message" -- not found in passages about instructions (only the unrelated phrases "Production systems" and Java code); so the equation "instructions = system prompt" is mine and is stated here as such; the OWASP wording ("System prompts are designed to guide the model's output ...") is the one to quote for the term.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{OpenAI2026Text,
+  author       = {{OpenAI}},
+  title        = {Text generation (prompting and instructions)},
+  organization = {OpenAI API documentation},
+  year         = {2026},
+  url          = {https://developers.openai.com/api/docs/guides/text},
+  urldate      = {2026-11-27},
+  note         = {Undated page; access date given},
+}
+
+% === provenance: Alpoge2026Home ===
+% CLAIM: Levent Alpöge describes himself as a mathematician (number theory: integral and rational points on curves; PhD thesis at Princeton, senior thesis at Harvard, appointment at Harvard's Society of Fellows) who moved into computer science after GPT-4 and works at Anthropic.
+% FOUND-VIA: known item, the author's own page: https://alpo.ge/ downloaded with curl 2026-11-27.
+% PICKED: self-description on his own site (primary, informal, undated); an employer or university page was not found; independent descriptions in Howlett2026SciAm and Kakaes2026Transformation.
+% QUOTE (page header): "Levent Alpöge (pt&rl, anthropic, pbc / junior fellow, harvard sof, alpoge@fas, arXiv, cv, minor planet!! :D)"
+% QUOTE (intro): "then i saw i could do math and switched! as a freshman all the way up to an appointment at the society of fellows"
+% QUOTE (intro): "then gpt 4 came out and to me it was instantly the most interesting thing humanity had ever created. back to cs!"
+% QUOTE (theses): "Points on curves. (My PhD thesis at Princeton.)"
+% QUOTE (theses): "The average elliptic curve has few integral points. (My senior thesis at Harvard.)"
+% QUOTE (intro): "i think im an old school mathematician"
+% QUOTE (intro): "the most recent paper is a solution of hilbert's tenth problem (posed in 1900) over all number fields"
+% QUOTE (Papers): "Rank stability in quadratic extensions and Hilbert's tenth problem for the ring of integers of a number field (with Manjul Bhargava, Wei Ho, and Ari Shnidman)."
+% VERIFIED: full-text HTML read; the page is undated and informal in tone, so tense (junior fellow, current employer) is as of the access date 2026-11-27 only as far as the page is up to date; the header abbreviations "pt&rl" were not decoded.
+% COUNTER: compared with Howlett2026SciAm ("a mathematician and employee at artificial intelligence company Anthropic") and Kakaes2026Transformation ("a mathematician at Anthropic") -- consistent on the employer; a university or employer page for his appointment was not opened (not stated in an opened source beyond his own page).
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Alpoge2026Home,
+  author       = {Alp{\"o}ge, Levent},
+  title        = {Levent {A}lp{\"o}ge (personal homepage)},
+  year         = {2026},
+  url          = {https://alpo.ge/},
+  urldate      = {2026-11-27},
+  note         = {Undated page; the year is the year of access},
+}
+
+% === provenance: Howlett2026SciAm ===
+% CLAIM: Scientific American (Joseph Howlett, updated 21 Nov 2026) describes Alpöge as a mathematician and employee at Anthropic, reports that independent experts verified the Lean statement and proof, and that Alpöge had earlier posted a Claude-generated solution of the Jacobian conjecture.
+% FOUND-VIA: WebSearch "Riemann hypothesis Alpöge Claude proof shorter Lean proof 300k lines Zulip simplification" (mode extended) listed https://www.scientificamerican.com/article/anthropic-mathematician-claims-to-prove-riemann-hypothesis-most-famous-problem-in-all-of-math/ ; downloaded with curl 2026-11-27.
+% PICKED: independent secondary description of Alpöge's role and standing; author is a former Quanta staff writer with a PhD in particle physics.
+% QUOTE (lead): "Levent Alpöge, a mathematician and employee at artificial intelligence company Anthropic, claimed on Friday to have proven the most famous problem in all of mathematics using a large language model (LLM). The result was later verified by independent researchers."
+% QUOTE (body): "Issues can arise in Lean, but it did not take long for experts to verify that the hypothesis is properly coded and the proof is correct."
+% QUOTE (body): "The Anthropic mathematician has been the subject of headlines since he tweeted a Claude-generated solution to the famous Jacobian conjecture in July, kicking off math’s unprecedented summer."
+% QUOTE (body, Sutherland quoted): "But perhaps the single most important step in the proof was building a machine that can think."
+% VERIFIED: full-text HTML read ("Updated November 21, 2026 at 3:00 PM"; an editor's note says it is a breaking story).
+% COUNTER: none found, searched: the article for corrections -- none; its sentence "it did not take long for experts to verify that the hypothesis is properly coded" is stronger than the Lean statement itself ("The statement of the Riemann Hypothesis is correct ... carefully vetted by experts"), which is the primary source (LeanFRO2026Verification). It says "his proof confirms the Generalized Riemann Hypothesis", repeating Alpöge's claim, not what Lean checked (Sutherland2026Verification).
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Howlett2026SciAm,
+  author       = {Howlett, Joseph},
+  title        = {Anthropic mathematician proves {R}iemann hypothesis, most famous problem in all of math},
+  note         = {Page title as served on 2026-11-27; the URL slug reads ``claims-to-prove''; ``Updated November 21, 2026 at 3:00 PM''},
+  organization = {Scientific American},
+  date         = {2026-11-21},
+  url          = {https://www.scientificamerican.com/article/anthropic-mathematician-claims-to-prove-riemann-hypothesis-most-famous-problem-in-all-of-math/},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: Loeffler2023Zeta ===
+% CLAIM: The formal statement of the Riemann hypothesis used by the proof checker is Mathlib's definition RiemannHypothesis in Mathlib/NumberTheory/LSeries/RiemannZeta.lean (file authored by David Loeffler, 2023): every zero of riemannZeta that is not a trivial zero -2(n+1) and is not 1 has real part 1/2.
+% FOUND-VIA: link in LeanFRO2026Verification to mathlib4_docs RiemannZeta; source read with `gh api repos/leanprover-community/mathlib4/contents/Mathlib/NumberTheory/LSeries/RiemannZeta.lean` on 2026-11-27.
+% PICKED: the statement itself, in the library's own source; the header names the file's author.
+% QUOTE (file header): "Copyright (c) 2023 David Loeffler. All rights reserved."
+% QUOTE (docstring): "A formal statement of the **Riemann hypothesis**."
+% QUOTE (definition): "def RiemannHypothesis : Prop := ∀ (s : ℂ) (_ : riemannZeta s = 0) (_ : ¬∃ n : ℕ, s = -2 * (n + 1)) (_ : s ≠ 1), s.re = 1 / 2"
+% VERIFIED: full-text source file read (current master as served on 2026-11-27). The file header names David Loeffler as author; who wrote the definition RiemannHypothesis itself, and when, was not traced (the file's history shows many later edits by others).
+% COUNTER: none found, searched: the file for a comment or issue noting a mis-statement -- none; Buzzard2026Checked explains why such statements must be checked, and the Lean statement (LeanFRO2026Verification) says the statement "has been carefully vetted by experts in Lean and number theory" without naming them.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Loeffler2023Zeta,
+  author       = {Loeffler, David},
+  title        = {Definition of the {R}iemann zeta function ({M}athlib, {RiemannZeta}.lean)},
+  organization = {Mathlib, leanprover-community/mathlib4},
+  year         = {2023},
+  url          = {https://github.com/leanprover-community/mathlib4/blob/master/Mathlib/NumberTheory/LSeries/RiemannZeta.lean},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: Sutherland2026Short ===
+% CLAIM: Andrew Sutherland's verification page for the shorter Lean proof (Sernau et al., published 25 Nov 2026) records, as last updated 26 Nov 2026 20:46 UTC with all checks finished, that both editions compile, depend only on the three standard axioms, and pass lake comparator --paranoid.
+% FOUND-VIA: link ("separate page") on Sutherland2026Verification to https://math.mit.edu/~drew/shortgrh/ ; downloaded with curl 2026-11-27 (status 200), text by a python3 -I html.parser script.
+% PICKED: primary record of the checks of the shorter proof; same author and format as Sutherland2026Verification.
+% QUOTE (header): "Source: github.com/lsernau/grh-lean, commit 72fead10, published 25 November 2026."
+% QUOTE (header): "Page last updated 2026-11-26 20:46 UTC. All checks have finished."
+% QUOTE (summary): "Both editions compile without errors, and in both the five theorems depend only on the axioms propext, Classical.choice and Quot.sound."
+% QUOTE (summary): "lake comparator --paranoid (Lean v4.35.0) reports “Your solution is okay!” for both editions."
+% VERIFIED: full-text HTML read; the page reports that for the readable edition the second machine's run was stopped for lack of memory without a verdict, and that the first machine's run passed. Checks are Sutherland's, run with Claude Code (page's own words).
+% COUNTER: none found, searched: the page for a failed or rejected check -- the only "rejected" line is the page's own note that a stopped run is not a finding by lean4lean; the claim is limited to machine checks, and Sernau2026GRH says "No mathematician has read it through".
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Sutherland2026Short,
+  author       = {Sutherland, Andrew},
+  title        = {Shorter {L}ean proof of {RH} and {GRH} for {D}irichlet {L}-functions: verification files},
+  organization = {MIT Mathematics},
+  date         = {2026-11-26},
+  url          = {https://math.mit.edu/~drew/shortgrh/},
+  urldate      = {2026-11-27},
+  note         = {Page last updated 2026-11-26 20:46 UTC},
+}
+
+% === provenance: Mathlib3Def2023 ===
+% CLAIM: The formal statement of the Riemann hypothesis later used by the proof checker was first written by David Loeffler in the Lean 3 library mathlib, in a commit authored 31 May 2023, "just for fun", in the form of a definition riemann_hypothesis stated for the completed zeta function.
+% FOUND-VIA: Mathlib/NumberTheory/LSeries/RiemannZeta.lean history in the bare blobless clone of leanprover-community/mathlib4 (`git log -S'def RiemannHypothesis'`) leads to the port commit 584c909a5c (Xavier Roblot, 2023-06-29, "feat: port NumberTheory.ZetaFunction (#5556)"), whose header names mathlib3 commit 57f9349f2f; then `gh api repos/leanprover-community/mathlib/commits?path=src/number_theory/zeta_function.lean` and `gh api repos/leanprover-community/mathlib/contents/src/number_theory/zeta_function.lean?ref=<sha>` for the three earlier commits (a84108922d: no riemann_hypothesis; cca40788df and 81843c0865: present).
+% PICKED: the repository's own history is the primary record of authorship and date; no secondary source needed.
+% QUOTE (commit message of cca40788df, authored by David Loeffler, 2023-05-31T19:23:50Z): "Just for fun, we also add a formal statement of the Riemann hypothesis."
+% QUOTE (file at cca40788df): "/-- A formal statement of the Riemann hypothesis – constructing a term of this type is worth a million dollars. -/"
+% QUOTE (file at cca40788df): "def riemann_hypothesis : Prop := ∀ (s : ℂ) (hs : riemann_completed_zeta s = 0) (hs' : ¬∃ (n : ℕ), s = -2 * (n + 1)), s.re = 1 / 2"
+% VERIFIED: full-text of the commit message and of the file at that commit read through the GitHub API on 2026-11-27 (the first commit of the file, a84108922d, does not contain the definition). Author and date are the commit's metadata, not a statement by Loeffler about who wrote the line (a commit author is the committer of the PR, usually its writer). Whether anyone reviewed the statement in that PR was not read.
+% COUNTER: none found, searched: earlier commits of the mathlib3 file for an earlier definition -- none; the mathlib4 history shows the statement was later changed (Mathlib2024Junk) and its docstring rewritten (Mathlib2026DocFix), so "the statement" in 2026 is Loeffler's 2023 idea with Buzzard's 2024 repair, restated by Loeffler's 2024 refactor (commit d0f6191769, 2024-05-31, #13273, which changed riemannCompletedZeta to riemannZeta in the definition: read in the file at 2026-11-27, quoted in Loeffler2023Zeta).
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Mathlib3Def2023,
+  author       = {Loeffler, David},
+  title        = {feat (number\_theory/zeta\_function): relate to {D}irichlet series (\#19131)},
+  organization = {leanprover-community/mathlib (Lean 3), commit cca40788df},
+  date         = {2023-05-31},
+  url          = {https://github.com/leanprover-community/mathlib/commit/cca40788df1b8755d5baf17ab2f27dacc2e17acb},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: Mathlib2024Junk ===
+% CLAIM: On 11 March 2024 Kevin Buzzard changed Mathlib's statement of the Riemann hypothesis to exclude s = 1 (avoiding junk values), after Jordan Ellenberg pointed out that evaluating zeta at 1 gives a complex number.
+% FOUND-VIA: `git log -i --grep='riemann.\?hypothesis'` in the bare blobless clone of leanprover-community/mathlib4, 2026-11-27, returned 3936b6d6e5, 3c8e6314aa, 6ebcce3733; then `git show 3936b6d6e5`.
+% PICKED: primary record (commit message and diff).
+% QUOTE (commit message, 3936b6d6e5, Kevin Buzzard, 2024-03-11): "Mathematicians will be unnerved by us evaluating the zeta function at 1 and getting a complex number. Pointed out by Jordan Ellenberg on Twitter."
+% QUOTE (commit title): "feat: avoid junk values in statement of Riemann hypothesis (#11267)"
+% VERIFIED: full-text commit message and diff read with git show on 2026-11-27. The diff adds the hypothesis `(_ : s ≠ 1)` to the definition (then still stated for riemannCompletedZeta). The Twitter remark itself was not opened.
+% COUNTER: none found, searched: `git log --grep` of the same history for a later revert of this change -- none among the three commits returned.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Mathlib2024Junk,
+  author       = {Buzzard, Kevin},
+  title        = {feat: avoid junk values in statement of {R}iemann hypothesis (\#11267)},
+  organization = {leanprover-community/mathlib4, commit 3936b6d6e5},
+  date         = {2024-03-11},
+  url          = {https://github.com/leanprover-community/mathlib4/commit/3936b6d6e528940872bc52fd47ba4c5a7d83de5a},
+  urldate      = {2026-11-27},
+}
+
+% === provenance: Mathlib2026DocFix ===
+% CLAIM: On 22 November 2026, after the Lean community's statement of 21 November, Riccardo Brasca changed only the docstring of Mathlib's RiemannHypothesis (removing the words "constructing a term of this type is worth a million dollars" and linking the community repository); the definition itself was not changed.
+% FOUND-VIA: same `git log --grep` search as Mathlib2024Junk; `git show 6ebcce3733`.
+% PICKED: primary record; the date matters because the lecture may say the statement was fixed before the proof appeared.
+% QUOTE (diff, added lines, 6ebcce3733): "/-- A formal statement of the **Riemann hypothesis**. See [leanprover-community/riemann-hypothesis](https://github.com/leanprover-community/riemann-hypothesis) for a construction of a term of type `RiemannHypothesis`. -/"
+% QUOTE (commit title, Riccardo Brasca, 2026-11-22): "doc: fix doc of RiemannHypothesis (#46338)"
+% VERIFIED: full-text diff read with git show on 2026-11-27: three lines added, two removed, all inside the docstring; the line `def RiemannHypothesis : Prop :=` and its body are unchanged context.
+% COUNTER: none found, searched: git log of the file for other 2026 changes to the definition -- only chore commits (imports, headings, wikidata attributes) in the listing read.
+% DATE: 2026-11-27
+% SCREENED-BY: agent (awaiting human review)
+@online{Mathlib2026DocFix,
+  author       = {Brasca, Riccardo},
+  title        = {doc: fix doc of {R}iemann{H}ypothesis (\#46338)},
+  organization = {leanprover-community/mathlib4, commit 6ebcce3733},
+  date         = {2026-11-22},
+  url          = {https://github.com/leanprover-community/mathlib4/commit/6ebcce37335bcb6bca64596e5d57bb3035648030},
+  urldate      = {2026-11-27},
+}

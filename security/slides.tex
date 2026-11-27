@@ -1,0 +1,14 @@
+% The slides in the course's main language, here English.  This driver
+% only chooses the edition; the document is slides-body.tex.  The edition
+% is babel's main language, which also picks the side of every onlyin
+% pair and \ensv.  cleveref takes its names from the LAST language among
+% its options, so the edition's language goes last; capitalise is
+% English typography only.  notes.tex says the same for the notes, and
+% slides-sv.tex and notes-sv.tex choose the Swedish edition.
+%
+% PROJECT: a Swedish-only deck sets main=swedish and english,swedish
+% (no capitalise) in this file and in notes.tex, and deletes the -sv
+% drivers.  An English-only deck deletes the -sv drivers.
+\PassOptionsToPackage{main=british}{babel}
+\PassOptionsToPackage{swedish,english,capitalise}{cleveref}
+\input{slides-body.tex}
