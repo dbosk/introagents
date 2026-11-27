@@ -6,7 +6,9 @@
 % run as: scholar search "<query>" -n insecure-code -l 0 -p dblp -p wos
 % -p ieee -p openalex -p scopus -p s2 -p arxiv --in title-abstract
 % (dblp failed on every query; failed cells listed in the query matrix).
-% Searches 2026-11-27 (09:51-12:06 UTC), direct route (KTH tunnel down).
+% First searches 2026-11-27 09:51-12:06 UTC on the direct route (KTH tunnel
+% down); redo of failed cells and repair queries S9/C9 13:35-14:24 UTC
+% through the KTH tunnel.
 
 % ---------------------------------------------------------------------
 % (a) People with versus without an assistant
@@ -196,7 +198,7 @@
 %   redirect this behavior toward secure outcomes, demonstrating that AI
 %   tools alone are insufficient without targeted guidance."
 % VERIFIED: abstract only (closed access; no open copy found via OpenAlex
-%   locations or arXiv title search; KTH tunnel down); the effect sizes
+%   locations or arXiv title search; ACM refused automated access also through the KTH tunnel, 2026-11-27); the effect sizes
 %   per condition are not checked. To fetch.
 % COUNTER: see Perry2023Users
 % SCREENED-BY: agent (awaiting human review)
@@ -287,7 +289,7 @@
 % QUOTE (abstract): "their usage of AI assistants has a high chance of
 %   producing insecure programs in programming tasks that frequently appear
 %   in computing curricula"
-% VERIFIED: abstract only (closed access; KTH tunnel down); corroboration;
+% VERIFIED: abstract only (closed access; the publisher refused automated access also through the KTH tunnel, 2026-11-27); corroboration;
 %   sample size and design not checked. To fetch.
 % COUNTER: see Perry2023Users
 % SCREENED-BY: agent (awaiting human review)
@@ -377,7 +379,7 @@
 %   developers; supports the over-trust half, in a manipulated setting.
 % QUOTE (abstract): "We found a high level of trust in AI-generated code,
 %   even when insecure suggestions were presented."
-% VERIFIED: abstract only (closed access; KTH tunnel down); corroboration
+% VERIFIED: abstract only (closed access; the publisher refused automated access also through the KTH tunnel, 2026-11-27); corroboration
 %   of over-trust, with the caveat that the assistant was manipulated to
 %   be insecure. To fetch.
 % COUNTER: see Perry2023Users
@@ -592,7 +594,7 @@
 %   paper, 3 pages); qualifies the claim.
 % QUOTE (abstract): "SSFs are used more in AI-generated code, but are more
 %   dangerously used in human-written code."
-% VERIFIED: abstract only (closed access; KTH tunnel down); corroboration
+% VERIFIED: abstract only (closed access; the publisher refused automated access also through the KTH tunnel, 2026-11-27); corroboration
 %   of Hamer2024Copy and Asare2023Copilot; a short paper.
 % COUNTER: see Pearce2022Asleep
 % SCREENED-BY: agent (awaiting human review)
@@ -763,7 +765,7 @@
 %   improvements, open-weight models exhibit stagnation, and the most
 %   advanced models occasionally introduce new regressions due to
 %   increased code complexity"
-% VERIFIED: abstract only (closed access; KTH tunnel down); corroboration.
+% VERIFIED: abstract only (closed access; the publisher refused automated access also through the KTH tunnel, 2026-11-27); corroboration.
 %   To fetch.
 % COUNTER: see Pearce2022Asleep
 % SCREENED-BY: agent (awaiting human review)
@@ -777,6 +779,33 @@
   pages     = {356--367},
   doi       = {10.1109/ICSME67971.2026.00039},
   abstract  = {Large Language Models (LLMs) have become tools for software development and maintenance, demonstrating impressive capabilities in automating tasks such as code generation and refactoring. However, it remains empirically unclear whether the rapid scaling of these capabilities is accompanied by proportional improvements in security, or whether a discrepancy, defined as the Security-Functionality Gap, persists across model generations. To address this question, we conducted an evolutionary study analyzing the trajectory of 12 state-of-the-art models across the GPT, Llama, and Claude Sonnet lineages. By leveraging an outcome-driven benchmark based on dynamic execution, we quantified the divergence between the models' ability to generate functionally correct code versus secure code over four sequential versions per lineage. Results reveal that, while functional correctness has effectively plateaued (> 90%) across all families, functional-security correctness has evolved more slowly. Specifically, while proprietary models demonstrate marginal improvements, open-weight models exhibit stagnation, and the most advanced models occasionally introduce new regressions due to increased code complexity. These findings suggest that security alignment is not an intrinsic byproduct of model scaling, highlighting the urgent need for external guardrails in AI-assisted maintenance pipelines.},
+}
+
+% === provenance: Bhatt2023CyberSecEval ===
+% CLAIM: In a 2023 benchmark of seven Llama 2, Code Llama and GPT models,
+%   models more capable at coding were more prone to insecure code
+%   suggestions.
+% FOUND-VIA: scholar search S9, C9 (insecure-code-queries.md; repair queries
+%   after the check by meaning, where it was rank 3 of question 2 and in no
+%   session) -n insecure-code -l 0; returned by S9 (openalex), C9
+%   (openalex, s2).
+% PICKED: a widely used industry benchmark (Meta) whose finding runs
+%   against "newer models are safer"; qualifies SantosdeMoura2026Newer
+%   for the 2023 models.
+% QUOTE (Sect. 1, key findings): "Models that are more capable at coding
+%   tend to be more prone to insecure code suggestions."
+% VERIFIED: full-text (arXiv v1, 2312.04724, technical report, not
+%   peer-reviewed); applies to the 2023 model families tested.
+% COUNTER: see Pearce2022Asleep
+% SCREENED-BY: agent (awaiting human review)
+% DATE: 2026-11-27
+@misc{Bhatt2023CyberSecEval,
+  author       = {Bhatt, Manish and Chennabasappa, Sahana and Nikolaidis, Cyrus and Wan, Shengye and Evtimov, Ivan and Gabi, Dominik and Song, Daniel and Ahmad, Faizan and Aschermann, Cornelius and Fontana, Lorenzo and Frolov, Sasha and Giri, Ravi Prakash and Kapil, Dhaval and Kozyrakis, Yiannis and LeBlanc, David and Milazzo, James and Straumann, Aleksandar and Synnaeve, Gabriel and Vontimitta, Varun and Whitman, Spencer and Saxe, Joshua},
+  title        = {Purple Llama {CyberSecEval}: A Secure Coding Benchmark for Language Models},
+  year         = {2023},
+  howpublished = {arXiv preprint 2312.04724},
+  doi          = {10.48550/arXiv.2312.04724},
+  url          = {https://arxiv.org/pdf/2312.04724},
 }
 
 % === provenance: Zhao2026VibeCoding ===
