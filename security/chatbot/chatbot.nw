@@ -1428,7 +1428,11 @@ def new_session(self):
     with self.lock:
         if len(self.sessions) >= self.limits.max_sessions:
             unused = next(
-                (s for s in self.sessions.values() if not s.history and not s.reviews),
+                (
+                    s
+                    for s in self.sessions.values()
+                    if not s.history and not s.reviews
+                ),
                 None,
             )
             if unused is None:
@@ -1776,7 +1780,8 @@ def test_answered_message_is_counted_metered_and_released():
     assert bot.chat(session, "Any codes?") == ("ok", f"The staff code is {code}.")
     assert session.messages == 1
     assert bot.meter.calls == 1
-    assert bot.meter.cost("1a") == pytest.approx((FAKE_INPUT * 1 + FAKE_OUTPUT * 5) / 1e6)
+    expected = (FAKE_INPUT * 1 + FAKE_OUTPUT * 5) / 1e6
+    assert bot.meter.cost("1a") == pytest.approx(expected)
     assert bot.leaked_sessions == {session.id}
     assert all_slots_free(bot)
 
@@ -3961,7 +3966,10 @@ def write_compact_summary(results, model_id, repeats, out, tag):
         cells = []
         for hardened in (False, True):
             counts = results.get((level, hardened))
-            cells.append("-" if counts is None else f"{sum(counts.values())} of {total}")
+            if counts is None:
+                cells.append("-")
+            else:
+                cells.append(f"{sum(counts.values())} of {total}")
         lines.append(f"{LEVELS[level]:<20}{cells[0]:>12}{cells[1]:>12}")
     lines += [f"{LEVELS[level]}: {GOALS[level]}" for level in levels]
     (out / f"{tag}summary.txt").write_text("\n".join(lines) + "\n")
@@ -4191,7 +4199,14 @@ def main():
             hardened = mode == "hardened"
             results[(round_name, hardened)], tries[(round_name, hardened)] = (
                 record_round(
-                    model, key, round_name, hardened, repeats[round_name], out, tag, spent
+                    model,
+                    key,
+                    round_name,
+                    hardened,
+                    repeats[round_name],
+                    out,
+                    tag,
+                    spent,
                 )
             )
             print(round_name, mode, results[(round_name, hardened)])
@@ -4470,7 +4485,8 @@ def phone(host, port, barrier, retries, results):
             time.sleep(BUSY_PAUSE)
         results.append((status, attempt, time.monotonic() - start))
     except Exception as error:
-        results.append((f"exception {type(error).__name__}", 0, time.monotonic() - start))
+        elapsed = time.monotonic() - start
+        results.append((f"exception {type(error).__name__}", 0, elapsed))
 
 
 def main():
