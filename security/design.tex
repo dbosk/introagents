@@ -1,0 +1,226 @@
+% The teacher's appendix: the lecture's design.  Its subject is the
+% teaching design, so the analysis of what varies and what stays
+% invariant is body text here; the margin notes in the chapter carry the
+% same analysis activity by activity.  It is input only when the
+% instructor notes are printed (see notes-body.tex).
+
+\chapter{How the lecture is designed}
+\label{app:design}
+
+This appendix is for whoever gives the lecture.
+It takes the five learning objectives one at a time, divides each into
+the aspects a student has to notice to reach it, and says what the
+lecture offers for each aspect and what it does not.
+
+The analysis follows variation theory as Marton states it.
+In that theory a learner notices an aspect of something when the aspect
+varies while the rest stays the same, and the cases have to be
+experienced together: discernment comes from \enquote{the simultaneous
+experience of things that differ in color but are the same otherwise}%
+\autocite[46]{Marton2015}.
+The lecture takes three rules of design from it.
+A contrast comes before a generalisation, since on Marton's account what
+several cases have in common cannot be seen by someone who has not yet
+seen the aspect in any of them\autocite[46--47]{Marton2015}.
+The cases of a contrast stand side by side, in one table or one pair of
+rounds.
+And a question does not point at the aspect it is meant to bring out,
+because \enquote{the more clearly the teacher tells the students what is
+to be done, the less chance the students get to make the necessary
+distinctions}\autocite[13]{Marton2015}.
+
+For each aspect below, \emph{offered} says which activity varies it and
+how, and \emph{possible to learn} is a judgement of whether a student
+can notice the aspect from that activity alone, or is only told it.
+
+
+\section{Checking (\cref{SecLOCheck})}
+\label{sec:design-check}
+
+\SecLOCheck*
+
+\paragraph{Producing and checking are different jobs.}
+\emph{Offered:} a contrast in two steps.
+\Cref{tab:three-proofs} shows who produced each of three proofs
+and withholds how they were checked, and the students vote on it in
+\cref{ex:three-proofs}; \cref{tab:three-outcomes} then adds the
+check and the outcome to the same table.
+\emph{Possible to learn:} yes.
+The students vote on the producer alone, and the outcomes then cut
+across their votes.
+\paragraph{The check has to be independent of the producer.}
+\emph{Offered:} three kinds of check side by side in
+\cref{tab:three-outcomes}, and the same aspect again in the three
+rounds of \cref{sec:product}, summed up in \cref{tab:defence}: a
+rule in the bot's instructions makes the producer its own checker.
+\emph{Possible to learn:} yes, and best in the rounds, where the
+students themselves get past the rule and fail against the check in
+the program.
+\paragraph{Cases that came out right do not establish the claim.}
+\emph{Offered:} a generalisation: the same point for the 12~trillion
+zeros of \cref{sec:riemann} and for a program that \enquote{works}
+when it is tried (\cref{sec:works}).
+In \cref{sec:product} the students then meet it from the other side: a
+bot that serves every ordinary customer correctly, and that they
+break.
+\emph{Possible to learn:} in part.
+Two settings are few for a generalisation, and the first is told; the
+rounds are where the students experience it.
+
+\paragraph{A check answers only the question it was given.}
+\emph{Offered:} \cref{sec:statement}, one example, told.
+\emph{Possible to learn:} hardly.
+Nothing varies here: the students do not see a valid proof of the
+wrong statement beside a valid proof of the right one.
+The aspect is named so that it can be recognised in round 2, where
+the bot follows its instructions and still pays the wrong person.
+\paragraph{What someone gets out of an AI depends on what that person
+  can do.}
+\emph{Offered:} a contrast in \cref{ex:who}: the AI is the same, and
+the person varies between the mathematician behind proof B and the
+student, whose own answer to \cref{ex:riemann} is shown again.
+\Cref{ex:brought} then says what the mathematician brought.
+\emph{Possible to learn:} yes, for this one case.
+It is the lecture's perspective on who can do what with AI, and one
+case cannot carry it alone: \cref{sec:gains} asks the same of many
+people, and the result there decides how far the point may be taken.
+
+\paragraph{Saying exactly what is wanted takes knowledge of the subject.}
+\emph{Offered:} the students' own answers to \cref{ex:who}, sorted
+into the jobs of \cref{sec:three-jobs}, and the optional pair of
+\cref{ex:eli5}, a contrast in which the question is the same and
+the asker's knowledge varies.
+\emph{Possible to learn:} in part.
+The students never specify anything themselves.
+The spoken follow-up to \cref{ex:posttest} shows whether they name
+this aspect unprompted.
+
+
+\section{The evidence on who gains (\cref{SecLOEvidence})}
+\label{sec:design-evidence}
+
+\SecLOEvidence*
+
+\paragraph{The gain differs between groups of people.}
+\emph{Offered:} a prediction (\cref{ex:who-gains}) and then the
+findings (\cref{ex:gains-studies}).
+\emph{Possible to learn:} yes, as a contrast between the student's
+own prediction and what was found.
+\paragraph{The finding depends on the task and on who can judge the result.}
+\emph{Offered:} studies that ask the same question of different
+tasks and people (\cref{ex:gains-studies}), with the conclusion
+that closes \cref{sec:gains}.
+\emph{Possible to learn:} only as far as the studies that the
+literature search supports actually differ in these respects; the
+wording of that conclusion follows the search and not the
+lecturer's expectation.
+
+
+\section{Prompt injection (\cref{SecLOInjection})}
+\label{sec:design-injection}
+
+\SecLOInjection*
+
+\paragraph{The model reads one text.}
+\emph{Offered:} \cref{fig:bot}, shown, and round 1
+(\cref{act:secret}), where what the student types competes with
+what the shop wrote.
+\emph{Possible to learn:} yes, by doing.
+\paragraph{A rule written into that text is not a barrier.}
+\emph{Offered:} a contrast over where the defence is: no rule
+(\cref{act:secret}), a rule (\cref{act:secret-rule}), the secret
+removed (\cref{ex:secret-repair}).
+The bot, the secret and the goal stay the same.
+\emph{Possible to learn:} yes, if somebody in the room gets past
+the rule; the lecturer has an attack that is known to work for the
+case that nobody does.
+\paragraph{What steering the model achieves depends on what the program
+  lets it do.}
+\emph{Offered:} a contrast between round 1 and round 2
+(\cref{act:refund}): the same way of attacking, against a bot
+without tools and with tools.
+\emph{Possible to learn:} yes.
+\paragraph{The text that steers need not come from the person chatting.}
+\emph{Offered:} a contrast between round 1 and round 3
+(\cref{act:reviews}): the same kind of instruction, typed by the
+attacker or read from a review while somebody else is chatting.
+\emph{Possible to learn:} only if round 3 is run and the model can
+be steered that way.
+Without it the aspect is told, in \cref{def:injection}.
+
+
+\section{A model inside a product (\cref{SecLOProduct})}
+\label{sec:design-product}
+
+\SecLOProduct*
+
+\paragraph{What the model is given to read can be read out.}
+\emph{Offered:} round 1.
+\emph{Possible to learn:} yes, by doing.
+\paragraph{What its tools can do, an outsider can do, unless the program
+  checks.}
+\emph{Offered:} round 2, and the refund tool before and after
+(\cref{ex:refund-fix,ex:refund-repair}).
+\emph{Possible to learn:} yes.
+\paragraph{Every message is paid for, whoever sends it and whatever the
+  answer.}
+\emph{Offered:} \cref{ex:bill}, a contrast between messages the bot
+answered and messages it refused, with the cost invariant.
+\emph{Possible to learn:} yes, if the lecturer points at the meter
+after a refusal; the meter is the room's own.
+\paragraph{The defence belongs in the program around the model.}
+\emph{Offered:} the generalisation of \cref{tab:defence}, after
+three rounds that each contrasted its two columns, and the counts of
+\cref{ex:results}.
+The recording cannot show that a rule for the model fails as a repair:
+with so few attempts the repaired bot of \cref{ex:reviews-hardened}
+may hold every time.
+That point rests on the research reported in \cref{sec:stopped}, and
+on round 1, where the rule \enquote{never reveal} is seen to fail.
+\emph{Possible to learn:} yes; this is the lecture's main point and
+the one with the most variation behind it.
+\paragraph{The company answers for what the bot says and does.}
+\emph{Offered:} the remark that closes \cref{sec:defence}, one
+case, told.
+\emph{Possible to learn:} as a fact only.
+
+
+\section{An agent of one's own (\cref{SecLOAgents})}
+\label{sec:design-agents}
+
+\SecLOAgents*
+
+\paragraph{An agent has the same three parts as the shop's bot.}
+\emph{Offered:} the generalisation of \cref{tab:same-parts}: the
+parts stay, the system changes.
+\emph{Possible to learn:} yes, since the students have just
+attacked each part.
+\paragraph{The danger needs all three parts at once.}
+\emph{Offered:} the fusion of \cref{ex:trifecta}: four setups that
+differ in which parts are present, with the attack the same.
+\emph{Possible to learn:} yes.
+Each wrong answer is one mistaken belief about which parts are
+enough.
+\paragraph{Taking one part away is a choice that depends on the task.}
+\emph{Offered:} the summary at the end of \cref{sec:agent}, told.
+\emph{Possible to learn:} hardly.
+The students do not set up an agent or choose its permissions in
+the lecture; the second half of the objective, choosing measures,
+needs an exercise of its own afterwards.
+
+
+\section{The order, and what to drop}
+\label{sec:design-order}
+
+The product comes before the student's own agent.
+The bot gives every student the same concrete system to attack, and
+their own agents, which differ and which many of them do not have, are
+then met as another case of it: examples first, the general pattern
+after.
+
+\Cref{ex:replace,ex:posttest} measure the same thing before and after,
+with different wordings so that the answers are kept apart.
+
+When time runs short, drop in this order: \cref{ex:role},
+\cref{ex:eli5}, round 3 (\cref{act:reviews}), \cref{ex:five-years}.
+Rounds 1 and 2 and \cref{tab:defence} are the part to protect.
