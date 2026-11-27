@@ -1,6 +1,6 @@
 # insecure-code: report
 
-**Status: stage 2 (complete report), 2026-11-27.** Screened by an AI agent
+**Status: final (stage 2), 2026-11-27, 18:45 CET.** Screened by an AI agent
 (an LLM classifier plus the agent's own reading); no decision has been
 reviewed by the author. Sources cited here were all opened in this session.
 
@@ -170,7 +170,7 @@ Suggested slide wording (every line backed above):
     the bibliography metadata.
   - No WebSearch or WebFetch was used.
 - **Screening** (tiers per the skill's appendix guide):
-  - Retrieved: 21,435 distinct records (23,393 session records incl.
+  - Retrieved: 21,436 distinct records (23,393 session records incl.
     copies).
   - Tier 1 = place <= 100 in any relevance-ordered list: 2,644 records
     (2,454 before the repair queries, 190 added by S9/C9 and the redo),
@@ -194,10 +194,17 @@ Suggested slide wording (every line backed above):
     reasons): 1 bearing (1.7 %; 0.1-8.9 %), a comparison of LLM and human
     smart-contract code whose abstract gives no direction.
   - Unscreened: 20,595 records.
-  - Exclusion criteria on the 2,432 discards: off-topic 899, detection-only
-    474, attack-on-model 327, new-technique 314, no-evidence 250,
-    no-security-outcome 150, no-abstract 53 (a record can carry two).
-  - Who screened: classifier 2,682 decisions, agent 116, author 0. No
+  - Exclusion criteria on the 2,432 discards: off-topic 910, detection-only
+    477, attack-on-model 327, new-technique 314, no-evidence 263,
+    no-security-outcome 150, no-abstract 26 (a record can carry two).
+  - Scopus enrichment through the tunnel after the screen (`scholar enrich
+    insecure-code --fields abstract --enrich-providers scopus`, log
+    `insecure-code-screen/enrich-scopus.log`): records without abstract
+    1,441 -> 1,254 (187 gained one); 27 records discarded as no-abstract
+    gained one, were re-read by the agent and stayed discarded under
+    no-evidence (13 proceedings front matter), off-topic (11) or
+    detection-only (3); none bears on the claim.
+  - Who screened: classifier 2,655 decisions, agent 143 (incl. the 27 re-tagged after enrichment), author 0. No
     `scholar llm sample` has been reviewed by the author yet, so the
     machine's error rate is unknown.
 - **Export**: `insecure-code-export.csv` (raw, all records),
@@ -295,7 +302,7 @@ automated access)
   resets at 01:00 CET; the failed IEEE cells should be redone.
 - Scopus had no abstracts for the first searches; OpenAlex searches only
   the part of an abstract it holds.
-- Only tier 1 (2,644 of 21,435 distinct records) was screened in full; the
+- Only tier 1 (2,644 of 21,436 distinct records) was screened in full; the
   rest were only counted, apart from two seeded samples of 60 (2 bearing,
   3.3 %, 95 % interval 0.6-11.4 %; counter sample 1 bearing, 1.7 %,
   0.1-8.9 %). The share is not near zero, so the search is not exhaustive:

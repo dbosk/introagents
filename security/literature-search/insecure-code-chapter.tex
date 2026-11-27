@@ -179,7 +179,7 @@ A ranked list of this kind has no count and no stopping point, so it was
 used only to check the keyword queries.
 
 \paragraph{Screening.}
-The 18 queries returned 21,435 distinct records.
+The 18 queries returned 21,436 distinct records.
 The first tier, screened in full, was every record at place 100 or better
 in a list that a database ordered by relevance: 2,644 records.
 The 3,008 records placed only in answers that are not ordered by relevance
@@ -227,10 +227,14 @@ A record is excluded if it is one of the following.
     evidence of its own or a stated method.
   \item[Off topic] It belongs to another field and shares keywords only.
 \end{description}
-Among the 2,432 excluded records, the criteria were given 899 times as off
-topic, 474 as detection only, 327 as attack on model, 314 as new technique,
-250 as no evidence, 150 as no security outcome and 53 as no abstract (a
+Among the 2,432 excluded records, the criteria were given 910 times as off
+topic, 477 as detection only, 327 as attack on model, 314 as new technique,
+263 as no evidence, 150 as no security outcome and 26 as no abstract (a
 record can carry two).
+After the screen, missing abstracts were sought again in Scopus through the
+university route; 187 records gained one, 27 of them records already
+excluded for lack of an abstract, which were re-read and stayed excluded
+under another criterion.
 
 \paragraph{Verification and deduplication.}
 Every source cited below was opened.
@@ -422,7 +426,7 @@ SantosdeMoura2026Newer,Sun2026Propagate,Churilov2026Range,
 Okwor2026Registration,Bhatt2023CyberSecEval}, and one is a vendor's
 evaluation of its own tool \autocite{Blain2026Broken}.
 None of the databases searched is an education database.
-Only the first tier (2,644 of 21,435 distinct records) was screened in full;
+Only the first tier (2,644 of 21,436 distinct records) was screened in full;
 the other records were only counted, apart from two seeded random samples of
 60.
 Of the general sample, 2 bore on the claim (3.3\,\%; 95\,\% modified Wilson
@@ -492,7 +496,7 @@ none, the warning would rest on the tools alone.
 % Rows the agent kept with a cited-* tag show as candidates until the
 % author confirms them.
 \Cref{tab:insecure-code} lists the records that bear on the claim.
-Of the 21,435 distinct records, 2,644 (the first tier) were screened in
+Of the 21,436 distinct records, 2,644 (the first tier) were screened in
 full; the others were only counted, apart from two seeded random samples of
 60 each, of which 2 and 1 records bore on the claim
 (\cref{insecure-code:method}).
