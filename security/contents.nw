@@ -1368,16 +1368,16 @@ One evaluated eight defences for agents and bypassed
 \enquote{all of them using adaptive attacks, consistently achieving an
 attack success rate of over 50\%}\autocite{Zhan2025Adaptive}.
 Another bypassed twelve recent defences against prompt injection and
-related attacks \enquote{with attack success rate above 90\% for most;
-importantly, the majority of defenses
+related attacks \enquote{with attack success rate above 90\% (under
+adaptive attacks) for most; importantly, the majority of defenses
 originally reported near-zero attack success
-rates}\autocite{Nasr2025AttackerSecond}.
+rates}\autocite{Nasr2026AttackerSecond}.
 The authors of one of the strongest trained defences write of their own
 model that it \enquote{remains vulnerable to strong adaptive attacks}
 and conclude: \enquote{PI is not solved}%
 \autocite{Chen2025MetaSecAlign}.
-Two of these three are preprints that have not yet been through peer
-review.
+The first two of these studies have been through peer review; the
+third is a preprint, in which the authors report on their own defence.
 The finding is about the defences tested so far: a few newer ones claim
 to withstand attackers who adapt, and nobody but their authors has
 tested them yet.
