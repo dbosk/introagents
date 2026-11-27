@@ -1,0 +1,389 @@
+% Backing chapter for the claim "who can do what with AI" (slug who-gains).
+% Author's note (verification and reproduction): all searches are in the
+% scholar session `who-gains` (27,431 records after the repair queries);
+% the inherited session `who-gains-fulltext` (OpenAlex full-text
+% matching, capped or failed) was not used. Query strings, the screening
+% batches and their validated outputs, and the provenance of every cited
+% source are in litteratursokning/who-gains-report.md,
+% litteratursokning/who-gains-screen/ and litteratursokning/who-gains.bib.
+% Status: screened by AI agents; no human sample review yet.
+
+\chapter{Who gains more from generative-AI assistance at work: less-skilled or novice workers, or more-skilled and expert workers?}
+\label{who-gains:chapter}
+
+\emph{Status: screened by an AI agent; awaiting human review.}
+
+The lecture says that what a person gets out of a generative-AI
+assistant depends on what that person can do without it. Its working
+thesis was that AI is a \enquote{skill amplifier}: it complements
+competent people and amplifies incompetence too. If that is true, the
+more skilled should gain more from the assistance than the less skilled,
+and the least skilled might even be harmed. The opposite hypothesis is
+that AI levels the field: novices gain most, because the model supplies
+what they lack. This chapter tests the thesis in both directions. It
+asks which of the two the empirical studies of 2022--2026 support, for
+which tasks, and how strongly.
+
+\section{Method}
+\label{who-gains:method}
+
+\paragraph{Scope.}
+The review covered empirical studies (experiments, field and
+quasi-experiments, observational studies with outcome data, systematic
+reviews and meta-analyses) of assistance based on large language models
+in knowledge work, programming included. Studies had to be published
+2022--2026 and report how the effect differs by the worker's skill,
+experience, tenure or baseline ability. Studies of what moderates that
+difference were also included: the kind of task, whether the task lies
+inside what the model does well, the ability to judge or verify the
+output, and measured versus self-reported gains. Studies of students
+count when they measure performance on a work-like task split by prior
+skill.
+
+\paragraph{Databases and their health.}
+All searches ran on 27 November 2026. They went to Semantic Scholar
+(S2), OpenAlex (OA, not open access), Scopus, Web of Science (WoS),
+IEEE Xplore (IEEE) and DBLP.
+\begin{itemize}
+\item DBLP answered every query with a page that stops automated clients
+  instead of with data, so it could not be searched.
+\item IEEE spent its daily quota before the last three queries.
+\item The searches ran without the university network, so Scopus
+  returned no abstracts. Full texts were fetched afterwards through the
+  university network where the publisher allowed it; two publishers
+  answered with a bot check instead, and those sources stay at abstract
+  level.
+\item No search had an upper limit on the number of hits.
+\item OpenAlex matched title and abstract only. Semantic Scholar answered
+  Boolean queries through its bulk search.
+\end{itemize}
+
+\paragraph{Queries.}
+Seven queries share three facets: generative AI, skill level, and
+knowledge work or workers. All but one add a fourth facet for outcomes
+(productivity, performance, quality). Each then adds its own facet, as
+\cref{who-gains:queries} shows. The supporting queries (S) are phrased
+to surface amplification or harm to the less skilled. The counter-queries
+(C) are phrased to surface levelling, heterogeneity in general,
+moderators, self-reported gains and reviews. Every concept has several
+wordings (for example \enquote{equalise}, \enquote{level},
+\enquote{skill gap}, \enquote{narrow}, \enquote{compress}, \enquote{low
+performers}). Every query ran with the same keywords on every database:
+WoS received them as a topic search, Scopus as a title-abstract-keyword
+search, the others as Boolean text.
+
+\paragraph{Known studies and the check by meaning.}
+Six studies were named before the searches as ones that must come back.
+They were field or randomised studies of customer support
+\autocite{Brynjolfsson2025Generative}, professional writing
+\autocite{Noy2023Experimental}, consulting \autocite{DellAcqua2026Navigating},
+software development \autocite{Cui2026Effects}, entrepreneurs
+\autocite{Otis2026Uneven} and experienced open-source developers
+\autocite{Becker2025Measuring}. The keyword queries were then checked
+against a semantic search, with four questions of 50 works each. The
+questions were on levelling, amplification, expert slowdown and the task
+frontier. The check showed two gaps. Randomised studies that speak of
+\enquote{AI tools}, \enquote{AI advice} or \enquote{AI mentors} were
+missing, and so were experiments that describe skill as
+\enquote{ability} or \enquote{junior} and \enquote{senior}. Two repair
+queries by concept closed both gaps (C6 and C7 in
+\cref{who-gains:queries}). After them, all six named studies were in the
+session. Four relevant works that the semantic search returned remained
+outside every keyword answer, because no database held an abstract for
+them. They are listed under future work. One further experiment came
+back only through the semantic search, because its abstract names no
+skill term \autocite{Peng2023Impact}.
+
+\begin{table}[tbp]
+  \begin{sidecaption}{Queries and hits per database, 27 November 2026.
+    S = supporting query (phrased towards amplification), C =
+    counter-query (phrased towards levelling or a moderator).
+    Databases: Semantic Scholar (S2), OpenAlex (OA; not open access),
+    Scopus, Web of Science (WoS), IEEE Xplore (IEEE).  \enquote{N/M}
+    means N records returned of M reported.  \enquote{--} means that the
+    search failed: IEEE had spent its daily quota.  DBLP failed every
+    query (it returned a page that stops automated clients) and is not
+    listed.  \enquote{inc.}\ marks an answer that stopped early (S2 rate
+    limit, Scopus paging error); its count is a lower bound.  The
+    searches had no upper limit.}[who-gains:queries]
+    \centering\footnotesize
+    \begin{tabular}{@{}lp{0.34\linewidth}rrrrr@{}}
+      \toprule
+      & Own facet & S2 & OA & Scopus & WoS & IEEE \\
+      \midrule
+      S1 & amplify, complement, widen, skill-biased, high performers,
+           returns to skill & 614 & 1,473 & 352 & 391 & 125 \\
+      S2 & over-reliance, automation bias, slower, worse, harm,
+           deskilling, jagged frontier (no outcome facet)
+           & 1,060 & 2,194 & 580 & 613 & 173 \\
+      C1 & equalise, level, skill gap, narrow, compress, low performers,
+           less experienced & 2,000 & 4,118 & 203 & 1,327 & 672 \\
+      C2 & heterogeneous, differential, who benefits, largest gains
+           & 263 & 606 & 216 & 201 & 71 \\
+      C3 & verification, evaluate, judge, task complexity, task type,
+           moderator & 3,896 & 7,054 & 1,701 & 2,235 & 945 \\
+      C4 & perceived, self-reported, belief, expectations, forecast
+           & 1,445 & 3,183 & 1,003 & 1,232 & 403 \\
+      C5 & meta-analysis, systematic review, scoping review
+           & 378 & 840 & 273 & 220 & -- \\
+      C6 & repair: broader AI wording (AI tools, AI advice, AI mentor)
+           $\times$ skill $\times$ randomised, field or natural
+           experiment, difference-in-differences $\times$ outcome
+           & 94 & 196 & 98 & 108 & -- \\
+      C7 & repair: broader AI wording $\times$ ability, junior, senior,
+           performance gap, expertise $\times$ experiment or trial
+           $\times$ outcome
+           & 3,995 inc. & 9,477 & 4,925 inc. & 4,035 & -- \\
+      \bottomrule
+    \end{tabular}
+  \end{sidecaption}
+\end{table}
+
+\paragraph{Screening.}
+The queries returned 27,431 distinct records after deduplication. Copies
+of a work with the same identifier were merged into one record, and a
+preprint was merged with its published version where the match was
+unambiguous. Screening went in tiers:
+\begin{itemize}
+\item \emph{Tier 1} held the first 100 records of every answer ordered by
+  relevance. To these were added every work of the semantic check that
+  was in the session, and the named studies. That makes 1,694 records.
+\item AI agents screened tier 1 in batches of at most 100. For each
+  record they gave a verdict, one of four categories, a labelled
+  exclusion criterion for every discard, and a reason quoting the
+  abstract. Every batch passed an automatic check for defaulted rows and
+  for quotes not found in the record.
+\item From the 13,340 records outside tier 1 before the repair queries,
+  a seeded random sample of 60 was screened the same way.
+\item The remaining 25,577 records were counted but not screened or
+  classified. Only a single trial batch of 100 of them was
+  classified by a language model from the stated research question
+  (99 discarded, 1 kept); the hit list includes those 100 decisions.
+\end{itemize}
+The screening therefore covers tier 1 in full, the sample of 60 and the
+trial batch, not the whole set of records. No human has yet reviewed a
+sample of these decisions, so their error rate is unknown. Each source
+cited below was opened by the agent. Where the full text could not be
+obtained, this is said where the source is used. Every quotation is
+verbatim.
+
+\section{Results}
+\label{who-gains:results}
+
+\paragraph{The screen.}
+Of the 1,694 tier-1 records, 103 bore on the question and were kept.
+Of these, 23 point towards amplification and 80 towards levelling or a
+moderator. Some works appear as several records (a preprint, a working
+paper and a journal version), so the hit list, which counts works,
+shows fewer rows. Another 74 bore on the question but were excluded: for
+example opinion pieces without data, records without abstracts, and
+non-generative AI such as image detectors in endoscopy. Further, 1,334
+records were in the same field but did not compare skill levels, and 183
+were off topic. Among the kept records, levelling was the most common
+theme (56), then amplification (17), task-dependence (9), verification
+(7), syntheses (7), no difference (5) and perceived versus measured
+gains (2). The random sample of the 13,340 records outside tier 1 before the
+repair queries held no record that bore on the question: 0 of 60. The
+exact binomial 95\,\% upper bound on the share of those records that
+bear on the question is therefore 6.0\,\%, that is, at most about 800
+of them. The repair queries added about 12,900 records after the sample
+was drawn, so the bound does not cover them. In all, 25,577 records were
+counted but neither screened nor classified. The sample is the only
+statement this chapter makes about them.
+
+\paragraph{Levelling on well-defined tasks.}
+The strongest and most consistent evidence is that the less skilled gain
+most on tasks the model handles well.
+\begin{itemize}
+\item In customer support, \textcite{Brynjolfsson2025Generative} followed
+  5,172 agents through a staggered roll-out. \enquote{Less experienced
+  and lower-skilled workers improve both the speed and quality of their
+  output, while the most experienced and highest-skilled workers see
+  small gains in speed and small declines in quality}.
+\item Two later customer-service field experiments agree. At Alibaba,
+  \enquote{Lower-performing agents benefit the most}
+  \autocite{Ni2026Generative}. At a delivery firm, the benefits were most
+  pronounced for less-experienced agents \autocite{Zhang2026Engaging}.
+\item In professional writing, a preregistered experiment with
+  college-educated professionals found that ChatGPT \enquote{compresses
+  the productivity distribution by benefiting low-ability workers more}:
+  lower-ability workers gained quality and time, while higher-ability
+  workers kept their quality and became faster
+  (\cite{Noy2023Experimental}, working-paper version; the published
+  abstract confirms that \enquote{Inequality between workers
+  decreased}).
+\item In software development, three company field experiments with
+  4,867 developers found that \enquote{less experienced developers had
+  higher adoption rates and greater productivity gains}
+  \autocite{Cui2026Effects}. Only the abstract could be read: the
+  publisher's full text was behind a bot check. An earlier
+  controlled experiment found that developers with less programming
+  experience benefited most \autocite{Peng2023Impact}.
+\item Among 758 consultants on tasks inside the model's competence,
+  those below the average baseline improved by 43\,\% and those above by
+  17\,\% (\cite{DellAcqua2026Navigating}, working-paper version).
+\item The pattern recurs in tutoring, where students of lower-rated
+  tutors gained most \autocite{Wang2024Tutor}.
+\item It also holds in a controlled experiment in which \enquote{AI
+  improves performance more for people with low baseline ability}
+  \autocite{Caplin2026ABCs}.
+\item In design work, novices kept benefiting during execution while
+  experts lost efficiency \autocite{Hou2025DoubleEdged}.
+\item In advertising copy, feedback from a language model brought
+  non-experts close to experts \autocite{Chen2024Large}.
+\end{itemize}
+Two syntheses agree. A review of experiments and field data concludes
+that \enquote{Novice workers tend to benefit more from LLMs in simple
+tasks} \autocite{DelRioChanona2025AI}. A systematic review of 157
+studies reports gains \enquote{typically largest for less experienced
+workers} \autocite{Khandare2026Short}; it is a single-author preprint.
+
+\paragraph{The gap narrows but stays.}
+Levelling is relative, not absolute. In a randomised experiment with
+1,174 adults, AI increased performance for all participants,
+\enquote{with substantially larger gains for lower-education
+individuals}. Even so, \enquote{higher-education participants use the
+tool more effectively across several margins}, and once the assistant
+was removed \enquote{a sizable education gap re-emerges}
+\autocite{Cruces2026Does}. A small classroom study likewise found that
+stronger participants keep an absolute advantage while the gap is
+compressed \autocite{Bierbrauer2026Is}.
+
+A three-month experiment with 133 patent lawyers separates the two
+effects. Quality while using AI rose \enquote{with larger gains among
+junior lawyers}. The unassisted advantage three months later, however,
+\enquote{was concentrated entirely among senior lawyers}
+\autocite{Autor2026Does}. Assisted performance levels; durable skill
+does not.
+
+\paragraph{Amplification on open-ended and unverifiable tasks.}
+The evidence for amplification comes from tasks where the user must
+choose or check what the model offers.
+\begin{itemize}
+\item In a field experiment, Kenyan entrepreneurs were given a GPT-4
+  business adviser. \enquote{low performers did nearly 10\% worse because
+  of the AI assistant, whereas high performers may have benefited by over
+  15\%} \autocite{Otis2026Uneven}. The published version attributes this
+  to which advice the entrepreneurs chose to implement.
+\item In a laboratory experiment, ChatGPT lowered mathematics scores
+  \enquote{mainly because the low-ability subjects couldn't discern the
+  hallucinated answers with the correct ones} \autocite{Kim2024Helping}.
+\item On a consulting task chosen to lie outside the model's competence,
+  consultants using AI were 19 percentage points less likely to be
+  correct \autocite{DellAcqua2026Navigating}.
+\item In a legal examination, untrained lower-ability students adopted
+  the model \enquote{but unproductively} \autocite{Chen2026Training}.
+\end{itemize}
+Outside experiments, one large observational study of about 170,000
+programmers found that \enquote{experienced programmers capture nearly
+all of these productivity and exploration gains}
+\autocite{Daniotti2026Who}. Adoption there was self-selected, and output
+was measured as commits. The review cited above sums up the complex end:
+\enquote{Across complex tasks, evidence is mixed on whether low or
+high-skilled workers benefit more} \autocite{DelRioChanona2025AI}.
+
+\paragraph{Experts on familiar ground; measured versus felt gains.}
+Sixteen experienced open-source developers worked on their own mature
+projects. They expected AI to speed them up and afterwards estimated a
+20\,\% saving, but \enquote{allowing AI actually increases completion
+time by 19\%}. They \enquote{slowed down more on issues they are more
+familiar with} \autocite{Becker2025Measuring}. In a randomised experiment
+with 976 managers, \enquote{experienced managers achieve quality
+improvements without confidence inflation, whereas highly educated
+managers exhibit confidence gains without corresponding quality
+improvements} \autocite{Camuffo2026Beyond}. With models of 2025--2026, a
+study of 276 researchers found gains \enquote{across much of the
+expertise ladder}. Its point estimates were larger for graduate students
+and seniors, but imprecise \autocite{Aparicio2026Generative}.
+
+\section{Discussion and limitations}
+\label{who-gains:discussion}
+
+The two strands do not contradict each other once the task is taken into
+account. Levelling comes from tasks that are well specified, short and
+inside what the model does well: answering support chats, writing
+standard texts, completing code, structured consulting tasks. There the
+model supplies the missing know-how, and the expert has little left to
+gain. Amplification comes from tasks that are open-ended, lie outside
+the model's competence, or whose output must be judged: business
+decisions, mathematical answers that may be hallucinated, a task chosen
+to fool the model. There the gain depends on recognising good output.
+The review of the field states the same split \autocite{DelRioChanona2025AI}.
+The lawyer and education experiments add a third point. Even where
+assisted performance levels, unassisted skill stays with those who had
+it \autocite{Autor2026Does,Cruces2026Does}.
+
+The limits of the evidence:
+\begin{itemize}
+\item Most experiments use short, well-defined tasks, so the levelling
+  result is best established exactly where amplification is least
+  expected.
+\item \enquote{Skill} is measured as tenure, baseline performance,
+  education or self-rating, which are not the same thing.
+\item Seven cited sources could be read only in their abstracts, and
+  four only in an earlier working-paper version beside the published
+  abstract: the searches ran without the university network, and two
+  publishers answered the later full-text requests with a bot check.
+\item DBLP could not be searched. IEEE missed three queries, and two
+  answers stopped early.
+\item The tier-2 sample was drawn before the repair queries added about
+  12,900 records, so it says nothing about those.
+\item The screening decisions were made by AI agents and a language
+  model and have not yet been checked by a human.
+\item Several cited studies are working papers or preprints.
+\end{itemize}
+
+\section{Conclusion}
+\label{who-gains:conclusion}
+
+On well-defined tasks that the model does well, the less skilled and
+less experienced gain more than the experts; on open-ended tasks, tasks
+outside the model's competence and tasks whose output must be verified,
+those who cannot judge the output gain less or are harmed. The thesis
+that AI is in general a skill amplifier is therefore not supported as
+stated. The evidence does support a narrower version. What a person gets
+out of AI depends on what that person can do without it, but in
+opposite directions for the two kinds of task. Durable skill stays with
+those who had it in both cases. A single expert's success, such as a
+mathematician who can check every step of a proof, illustrates the
+second kind of task. It is not evidence about the average worker.
+
+\section{Future work}
+\label{who-gains:future}
+
+This search left some work undone. Seven cited studies were read only in
+abstract, and four only in an earlier version; they should be read in
+full. Among them, the levelling result of \textcite{Cui2026Effects},
+the published version of \textcite{Noy2023Experimental} and the
+mechanism reported by \textcite{Otis2026Uneven} matter most. The
+published version of \textcite{DellAcqua2026Navigating} should be
+checked for the 43/17 split. Four relevant works that the semantic search
+returned have no indexed abstract and were not obtained:
+\begin{itemize}
+\item a study of temporary upskilling of knowledge workers;
+\item a UK experiment titled as finding \enquote{no great equalizer};
+\item a commentary titled \enquote{AI amplifies experts, not expertise};
+\item an experiment on why experts miss AI errors.
+\end{itemize}
+DBLP, the IEEE queries that hit the quota, and the two incomplete
+answers should be rerun. Twenty excluded records without abstracts may
+bear on the question. A human should review a random sample of the
+machine's decisions, and the tier-2 sample should be redrawn over the
+records added by the repair queries.
+
+The field lacks experiments on long, open-ended expert work, where
+amplification is expected but rarely measured. It also lacks studies
+that follow the same workers over months, both with and without the
+assistant. If such studies found levelling there too, the lecture's
+message would become simply that AI helps beginners most. If they found
+amplification, the task distinction drawn here would be confirmed.
+
+\section{Hits that bear on the claim}
+\label{who-gains:hits}
+
+% Author's note: generated by
+%   scholar sessions export who-gains -f table --bearing-only --lang en \
+%     --label who-gains:hits-table --track "Who gains from generative AI" \
+%     --theme levelling=... -o litteratursokning/who-gains-full
+% raw export beside it (who-gains-full-raw.csv).
+\input{literature-search/who-gains-full}

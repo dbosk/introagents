@@ -87,9 +87,21 @@ observational study.
 
 **Date and route.** All searches ran on 2026-11-27, between 09:51 and
 12:52 UTC (`scholar sessions show who-gains`). The KTH tunnel (port 1081)
-was down the whole time, so everything ran over the direct route. As a
-result, Scopus answered in its standard view (no abstracts, first author
-only), and no closed-access full text could be fetched.
+was down during all searches and the screening, so everything up to the
+stage-2 report ran over the direct route. As a result, Scopus answered in
+its standard view (no abstracts, first author only), and no closed-access
+full text could be fetched then. **With the tunnel (from about 16:50
+local time):** full texts were requested through it (`fetch_pdf.py` with
+`SCHOLAR_PROXY`, then curl through the tunnel). Science
+(science.org), INFORMS (pubsonline.informs.org) and SSRN all answered
+with a Cloudflare bot check (HTTP 403, "Just a moment"). That is a
+stopping point, so those publishers' copies were not obtained. The
+Noy and Zhang working paper (economics.mit.edu) was fetched instead.
+The Scopus abstracts of the session were **not** enriched: scholar's
+`enrich` has no per-record selection, and enriching all 27,431 records
+would only touch records that stay unscreened. Instead, the 20 bearing
+no-abstract records of tier 1 were looked up one by one (OpenAlex and
+Crossref REST; see "Look-ups" below).
 
 **Providers** (`scholar providers check`, about 12:00 UTC):
 
@@ -184,7 +196,7 @@ title-and-abstract keyword search can reach them. They are listed under
   passed `validate_screen.py`. Repairs (12 paraphrased quotes stripped of
   their quote marks, 1 unsupported quote re-screened by the lead agent)
   are logged in `who-gains-screen/repair-log.tsv`.
-- Result of tier 1: **103 kept** (24 supports-claim, 79 qualifies-claim),
+- Result of tier 1: **103 kept** (23 supports-claim, 80 qualifies-claim, after one lead correction),
   plus **74 discards that bear on the claim**, each discarded by an
   exclusion (30 no-evidence, 20 no-abstract, 14 not-genai, 8
   not-work-task, 2 model-only; the 20 bearing no-abstract records are on
@@ -194,9 +206,14 @@ title-and-abstract keyword search can reach them. They are listed under
 - Sample of the rest: a seeded random sample of 60 of the 13,340 records
   outside tier 1 at the restart (seed 20261127, draw recorded in the
   session). It held **0 bearing records**, all 52 adjacent and 8
-  off-topic (95 % interval roughly 0 to 6 %; see Limitations).
-- Rest of the session: classified by `scholar llm classify --no-examples`
-  (see "LLM classification" below).
+  off-topic. The exact binomial 95 % upper bound on the share of those
+  13,340 records that bear on the claim is 6.0 % (at most about 800
+  records). It does not cover the ~12,900 records added by the repair
+  queries after the draw.
+- Rest of the session (about 25,600 records): counted, **not screened or
+  classified**, apart from one trial batch of 100 classified by the LLM
+  (see "LLM classification" below). The sample of 60 is the only
+  statement made about the unscreened records.
 
 **Complementary searches (not scholar)**, recorded verbatim:
 
@@ -207,6 +224,22 @@ title-and-abstract keyword search can reach them. They are listed under
 | WebSearch | `"Navigating the Jagged Technological Frontier" working paper pdf below average performers 43% outside the frontier` | found the MIT Sloan copy of SSRN 4573321, fetched and read |
 | OpenAlex REST `works/doi:` | 25 DOIs (metadata and abstracts) | abstracts read for abstract-level entries |
 | doi.org content negotiation (BibTeX) | the DOIs of all bib entries | metadata for the bib |
+
+## LLM classification (stopped; the user decided not to run it on the rest)
+
+- One trial batch of 100 pending records ran at 15:06: 3 min 57 s, 72,066
+  input and 10,051 output tokens, giving 99 discards and 1 keep. These
+  100 LLM decisions stay in the session and appear in the table.
+- A loop to classify the remaining ~25,600 records was started at 15:12
+  and **stopped at about 15:40 on the team lead's instruction**. Its
+  estimate was about 17 hours and about 18M input plus 2.6M output tokens,
+  roughly $60 at the Sonnet 5.5 list price. Spending that is the user's
+  decision. The loop's first batch was killed before it saved, so it
+  wrote nothing.
+- The user decided (2026-11-27) to stop at tier 1 plus the sample. The script, for the record: `who-gains-screen/classify_loop.sh`
+  re-exports the table when it ends.
+- The table caption (`who-gains-full.tex`) was edited by hand to state
+  exactly what was screened. A re-export overwrites that edit.
 
 ## Supports the claim (amplification) — verified
 
@@ -232,8 +265,15 @@ title-and-abstract keyword search can reach them. They are listed under
 - **Brynjolfsson2025Generative**: 5,172 support agents. Novices and the
   low-skilled gain most, and the most skilled see small quality declines.
   Read: WP full text plus QJE abstract.
-- **Noy2023Experimental**: RCT, 453 professionals. Inequality between
-  workers decreased. Read: abstract only.
+- **Noy2023Experimental**: RCT with professionals (444 in the working
+  paper, 453 published). ChatGPT "compresses the productivity
+  distribution by benefiting low-ability workers more": low-ability
+  workers gained quality and time, while high-ability workers kept their
+  quality and got faster. Read: full text of the March 2023 working
+  paper plus the Science abstract. The working paper also finds that
+  ChatGPT "mostly substitutes for worker effort rather than
+  complementing worker skills", which goes against the amplifier
+  thesis.
 - **DellAcqua2026Navigating** (inside the frontier): bottom half +43 %,
   top half +17 %. Read: WP full text. The published abstract omits the
   split.
@@ -287,12 +327,46 @@ studies, surveys or proceedings with self-reported outcomes, all on the
 levelling side. Among them are studies of junior engineers, physicians,
 designers, Stack Overflow and freelancers.
 
-Some are theme or category inconsistencies to fix on human review:
+Category corrections:
 
-- `doi:10.1287/isre.2024.0937` is kept as supports-claim with theme
-  levelling, but its content is levelling (qualifies-claim).
-- `doi:10.3386/w35720` is kept as qualifies/levelling, but it holds both
-  directions.
+- `doi:10.1287/isre.2024.0937` was kept by its screener as
+  supports-claim with theme levelling; the lead agent re-decided it as
+  qualifies-claim, levelling (batch `lead-correction-1`).
+- To check on human review: `doi:10.3386/w35720` is kept as
+  qualifies/levelling, but it holds both directions.
+
+## Look-ups of the 20 bearing tier-1 records without an abstract
+
+Abstracts were looked up on 2026-11-27 through the OpenAlex REST API
+(`works/doi:`) and the Crossref REST API (`works/<doi>`). The records stay
+discarded as no-abstract in the session. Their screen was not redone
+there; the outcome is recorded here.
+
+| Record | Abstract found | Bearing |
+|---|---|---|
+| SSRN 6317078, 6446399 (Moscato: GenAI and seniority bias, EU-LFS) | Crossref | conceptual argument; seniority-biased change; no task-level skill split |
+| SSRN 7004478 (Cross: over-reliance, young attorneys) | Crossref | essay; no data (no-evidence) |
+| SSRN 5012601 (Ni et al., Alibaba) | none | duplicate of the arXiv version, which is cited (Ni2026Generative) |
+| SSRN 6381580 (Chawla et al.: risk-aware jagged frontier, O*NET) | Crossref | task-distribution model, no human outcome data by skill |
+| SSRN 7672458 (Ge: hidden AI use, junior workers) | Crossref | theoretical labour-market model (no-evidence) |
+| SSRN 6366218 (Singh: systematic review, 2023-2026) | Crossref | review of productivity vs earnings; no skill split in the first 600 characters of the abstract read (full abstract to read) |
+| SSRN 7266539 (Yazdani: LLMs in customer service, SLR) | Crossref | review; no skill split in the first 600 characters of the abstract read (full abstract to read) |
+| hash:cd734ff562f7da30 (IFKAD 2025 proceedings volume) | none | a proceedings volume, not a study |
+| SSRN 7474958 (Ayinala: skill compression) | Crossref | re-reads Brynjolfsson et al.; no own data |
+| SSRN 6624038 (Idan and Anand) | Crossref | same study as arXiv 2605.18143, kept in tier 1 (verification theme) |
+| SSRN 7469778 (Bhatta: junior penalty, US public data) | Crossref | labour-market data; restates that tools help less-experienced workers most, but tests employment, not productivity |
+| SSRN 6768758 (Akın: conditional skill compression) | Crossref | formal model (no-evidence); a minimum expertise threshold for evaluating AI output |
+| SSRN 5521379 (Xu et al.: maintenance burden of experienced developers) | none (arXiv 2510.10165 exists) | may bear (amplification for experts' burden?); to read |
+| SSRN 6922858 (Hou, Chen and Tan: AI coaching, two field experiments) | Crossref | learning (writing skill acquisition), not a work task |
+| SSRN 5303111 (Bjerkan-Wade: cross-country experiments) | none | unknown; to fetch |
+| SSRN 4648700 (Edelman et al.: Copilot for Security RCTs) | Crossref | "Copilot brought improvements for both novices and security professionals" (no direction by skill) |
+| 10.1186/s12871-026-04173-4 (junior anaesthesiologists + LLM) | OpenAlex | juniors with AI vs seniors without (no seniors-with-AI arm), clinical simulation |
+| SSRN 5228176 (Marsal and Perkowski: central-banking field experiment) | none | unknown; to fetch |
+| SSRN 5462694 (Vendraminelli et al.: GenAI wall effect) | none | unknown; to fetch |
+
+None of the abstracts found changes the conclusions. Three records still
+have no abstract and remain to fetch (SSRN 5303111, 5228176, 5462694),
+and one has an arXiv copy to read (SSRN 5521379 = arXiv 2510.10165).
 
 ## DROPPED (could not be verified or not usable)
 
@@ -320,8 +394,8 @@ Some are theme or category inconsistencies to fix on human review:
 
 | Paper | DOI / URL | What to check |
 |---|---|---|
-| Noy and Zhang 2023, *Science* | 10.1126/science.adh2586 | the skill split (Fig. on initial grade x treatment); was inequality reduced by low-ability gains, or did high-ability workers substitute effort? |
-| Cui et al. 2026, *Management Science* | 10.1287/mnsc.2025.00535 | size and precision of the experience interaction; tenure vs seniority |
+| Noy and Zhang 2023, *Science* | 10.1126/science.adh2586 | published version only (the working paper is read): do the published figures keep the initial-grade split? Science answered with a Cloudflare check through the tunnel |
+| Cui et al. 2026, *Management Science* | 10.1287/mnsc.2025.00535 | size and precision of the experience interaction; tenure vs seniority. INFORMS and SSRN answered with a Cloudflare check through the tunnel; no open copy found (WebSearch, OpenAlex locations) |
 | Dell'Acqua et al. 2026, *Organization Science* | 10.1287/orsc.2025.21838 | whether the published version keeps the bottom-half 43 % / top-half 17 % split |
 | Otis et al. 2026, *Management Science* | 10.1287/mnsc.2024.06909 | the published mechanism (advice implemented vs task difficulty) |
 | Caplin et al. 2026, *Management Science* | 10.1287/mnsc.2024.08994 | task type (is it inside the model's competence?) |
@@ -337,10 +411,12 @@ Some are theme or category inconsistencies to fix on human review:
 
 ## Limitations
 
-- **The tunnel was down.** Scopus records carry no abstracts, and eight
-  cited sources are abstract-level only (Otis2026Uneven: published
-  abstract plus an earlier working paper) (marked in the bib). Their
-  numbers are taken from abstracts.
+- **The tunnel was down during the searches, and publishers block
+  bots.** Scopus records carry no abstracts. Seven cited sources are
+  abstract-level only (Cui, Caplin, Hou, Chen and Chan, Zhang and
+  Narayandas, Camuffo, Bierbrauer). Four were read in an earlier working
+  paper beside the published abstract (Brynjolfsson, Noy and Zhang,
+  Dell'Acqua, Otis). All of this is marked in the bib.
 - **Some providers could not be searched.** DBLP could not be searched
   at all. IEEE missed C5 to C7 because of its quota. The s2 and Scopus
   answers to C7 are incomplete. The four relevant works in no session
@@ -352,14 +428,15 @@ Some are theme or category inconsistencies to fix on human review:
 - **Skill is measured in different ways.** It is tenure in some studies,
   baseline performance, education or self-rating in others. "Novice" in
   one study is not "novice" in another.
-- **The screening was done by machines.** Tier 1 was screened by agent
-  screeners and the rest by an LLM classifier. No human has reviewed a
+- **The screening was done by machines, and only in part.** Tier 1 was
+  screened by agent screeners and one trial batch of 100 by an LLM
+  classifier; the other ~25,600 records were not screened. No human has reviewed a
   sample yet, so there is no error rate. Agent keeps are candidates, not
   cited rows.
 - **The tier-2 sample was drawn before the repairs.** It covers the
   13,340 records outside tier 1 at the restart, not the about 12,900
-  added by C6/C7. The interval for 0 of 60 is roughly 0 to 6 %. The
-  exact modified Wilson bound is in the chapter.
+  added by C6/C7. For 0 of 60, the exact binomial 95 % upper bound is 6.0 %
+  (scholar's modified Wilson interval gives the same 6.0 %).
 - **Some cited studies are preprints or working papers.** Ni, Becker,
   Peng, Wang, del Rio-Chanona, Chen and Bao, Cruces, Autor, Aparicio and
   Khandare are among them.
