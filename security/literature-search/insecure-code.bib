@@ -164,7 +164,8 @@
 %   certain types of vulnerabilities, yet it generally did not affect code
 %   security for both novice and experienced participants."
 % VERIFIED: full-text (publisher's PDF from Springer through the KTH
-%   network, 2026-11-27, after the tunnel came back); applies because it
+%   network with curl, 2026-11-27, imported into scholar's PDF cache with
+%   scholar pdf import); applies because it
 %   reports "an IRB-approved within-subject user study with 13 developers"
 %   (Sect. 1), each with one task with and one without Copilot.
 % COUNTER: see Perry2023Users
@@ -204,7 +205,7 @@
 % SCREENED-BY: agent (awaiting human review)
 % DATE: 2026-11-27
 @inproceedings{Yardim2026Password,
-  author    = {Yard{\i}m, Asl{\i} and Serafini, Raphael and Jost, Nadine and Ortloff, Anna-Marie and Gabriel Speckels, Joshua and Naiakshina, Alena},
+  author    = {Yardim, Asli and Serafini, Raphael and Jost, Nadine and Ortloff, Anna-Marie and Gabriel Speckels, Joshua and Naiakshina, Alena},
   title     = {\mkbibquote{The {AI} tool can't make it any worse.} Investigating Developers' Security Behavior with {AI} Assistants in a Password Storage Study},
   booktitle = {Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems (CHI '26)},
   publisher = {ACM},
@@ -386,14 +387,14 @@
 % SCREENED-BY: agent (awaiting human review)
 % DATE: 2026-11-27
 @inproceedings{Serafini2025Manipulated,
-  author    = {Serafini, Raphael and Yard{\i}m, Asl{\i} and Naiakshina, Alena},
+  author    = {Serafini, Raphael and Yardim, Asli and Naiakshina, Alena},
   title     = {Exploring the Impact of Intervention Methods on Developers' Security Behavior in a Manipulated {ChatGPT} Study},
   booktitle = {Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems (CHI '25)},
   publisher = {ACM},
   year      = {2025},
   pages     = {1--26},
   doi       = {10.1145/3706598.3713989},
-  abstract  = {Increased AI use in software development raises concerns about AI-generated code security. We investigated the impact of security prompts, insecure AI suggestion warnings, and the use of password storage guidelines (OWASP, NIST) on the security behavior of software developers when presented with insecure AI assistance. In an online lab setting, we conducted a study with 76 freelance developers who completed a password storage task divided into four conditions. Three conditions included a manipulated ChatGPT-like AI assistant, suggesting an insecure MD5 implementation. We found a high level of trust in AI-generated code, even when insecure suggestions were presented. While security prompts, AI warnings, and guidelines improved security awareness, 32% of those notified about insecure AI recommendations still accepted weak implementation suggestions, mistakenly considering it secure and often expressing confidence in their choice. Based on our results, we discuss security implications and provide recommendations for future research.},
+  abstract  = {Increased AI use in software development raises concerns about AI-generated code security. We investigated the impact of security prompts, insecure AI suggestion warnings, and the use of password storage guidelines (OWASP, NIST) on the security behavior of software developers when presented with insecure AI assistance. In an online lab setting, we conducted a study with 76 freelance developers who completed a password storage task divided into four conditions. Three conditions included a manipulated ChatGPT-like AI assistant, suggesting an insecure MD5 implementation. We found a high level of trust in AI-generated code, even when insecure suggestions were presented. While security prompts, AI warnings, and guidelines improved security awareness, 32\% of those notified about insecure AI recommendations still accepted weak implementation suggestions, mistakenly considering it secure and often expressing confidence in their choice. Based on our results, we discuss security implications and provide recommendations for future research.},
 }
 
 % ---------------------------------------------------------------------
@@ -722,7 +723,7 @@
   year      = {2026},
   pages     = {12--21},
   doi       = {10.1145/3842650.3843174},
-  abstract  = {Recent advances in large language models (LLMs) have led to widespread adoption of AI-coding tools and increasing deployment of AI-assisted code. While AI's potential for programming productivity is becoming evident, the security of AI-attributed code is still poorly understood. In this work, we collect the largest set of in-the-wild AI-attributed code to date, examining 253,390 files containing AI-assisted code from seven tools and 9,544 human-written files from public GitHub repositories. Our analyses reveal significant differences in security-relevant CWE prevalence across programming languages and AI tools, with tool-specific differences varying by language. Additionally, human-written Python exhibited significantly higher security-relevant CWE prevalence than AI-attributed Python (21.08% vs 11.15%) and higher file-level CVSS severity. Ultimately, our results extend prior work showing that vulnerable AI-assisted code is making it into public repositories, indicating a need for stronger review practices and greater developer security awareness when using these tools.},
+  abstract  = {Recent advances in large language models (LLMs) have led to widespread adoption of AI-coding tools and increasing deployment of AI-assisted code. While AI's potential for programming productivity is becoming evident, the security of AI-attributed code is still poorly understood. In this work, we collect the largest set of in-the-wild AI-attributed code to date, examining 253,390 files containing AI-assisted code from seven tools and 9,544 human-written files from public GitHub repositories. Our analyses reveal significant differences in security-relevant CWE prevalence across programming languages and AI tools, with tool-specific differences varying by language. Additionally, human-written Python exhibited significantly higher security-relevant CWE prevalence than AI-attributed Python (21.08\% vs 11.15\%) and higher file-level CVSS severity. Ultimately, our results extend prior work showing that vulnerable AI-assisted code is making it into public repositories, indicating a need for stronger review practices and greater developer security awareness when using these tools.},
 }
 
 % === provenance: SantosdeMoura2026Newer ===
@@ -778,7 +779,7 @@
   year      = {2026},
   pages     = {356--367},
   doi       = {10.1109/ICSME67971.2026.00039},
-  abstract  = {Large Language Models (LLMs) have become tools for software development and maintenance, demonstrating impressive capabilities in automating tasks such as code generation and refactoring. However, it remains empirically unclear whether the rapid scaling of these capabilities is accompanied by proportional improvements in security, or whether a discrepancy, defined as the Security-Functionality Gap, persists across model generations. To address this question, we conducted an evolutionary study analyzing the trajectory of 12 state-of-the-art models across the GPT, Llama, and Claude Sonnet lineages. By leveraging an outcome-driven benchmark based on dynamic execution, we quantified the divergence between the models' ability to generate functionally correct code versus secure code over four sequential versions per lineage. Results reveal that, while functional correctness has effectively plateaued (> 90%) across all families, functional-security correctness has evolved more slowly. Specifically, while proprietary models demonstrate marginal improvements, open-weight models exhibit stagnation, and the most advanced models occasionally introduce new regressions due to increased code complexity. These findings suggest that security alignment is not an intrinsic byproduct of model scaling, highlighting the urgent need for external guardrails in AI-assisted maintenance pipelines.},
+  abstract  = {Large Language Models (LLMs) have become tools for software development and maintenance, demonstrating impressive capabilities in automating tasks such as code generation and refactoring. However, it remains empirically unclear whether the rapid scaling of these capabilities is accompanied by proportional improvements in security, or whether a discrepancy, defined as the Security-Functionality Gap, persists across model generations. To address this question, we conducted an evolutionary study analyzing the trajectory of 12 state-of-the-art models across the GPT, Llama, and Claude Sonnet lineages. By leveraging an outcome-driven benchmark based on dynamic execution, we quantified the divergence between the models' ability to generate functionally correct code versus secure code over four sequential versions per lineage. Results reveal that, while functional correctness has effectively plateaued (> 90\%) across all families, functional-security correctness has evolved more slowly. Specifically, while proprietary models demonstrate marginal improvements, open-weight models exhibit stagnation, and the most advanced models occasionally introduce new regressions due to increased code complexity. These findings suggest that security alignment is not an intrinsic byproduct of model scaling, highlighting the urgent need for external guardrails in AI-assisted maintenance pipelines.},
 }
 
 % === provenance: Bhatt2023CyberSecEval ===
@@ -932,8 +933,9 @@
 %   (openalex, scopus, wos); rank 13 of the check by meaning, question 5.
 % PICKED: peer-reviewed (IST) field study of agents in real repositories;
 %   qualifies the agentic part (agents also contribute security work).
-% QUOTE (abstract): "Security-related Agentic-PRs constitute a meaningful
-%   share of agent activity (approximately 4%). Rather than focusing solely
+% QUOTE (abstract, across a page break): "Security-related Agentic-PRs
+%   constitute a meaningful share of ... agent activity (approximately 4%).
+%   Rather than focusing solely
 %   on vulnerability fixes, agents most frequently perform supportive
 %   security hardening activities"
 % VERIFIED: full-text (arXiv v2, 2601.00477, of the IST article);
@@ -1172,7 +1174,7 @@
 % SCREENED-BY: agent (awaiting human review)
 % DATE: 2026-11-27
 @article{Rethlefsen2021PRISMAS,
-  author  = {Rethlefsen, Melissa L. and Kirtley, Shona and Waffenschmidt, Siw and Ayala, Ana Patricia and Moher, David and Page, Matthew J. and Koffel, Jonathan B. and Blunt, Heather and Brigham, Tara and Chang, Steven and Clark, Justin and Conway, Aislinn and Couban, Rachel and de Kock, Shelley and Farrah, Kelly and Fehrmann, Paul and Foster, Margaret and Fowler, Susan A. and Glanville, Julie and Harris, Elizabeth and Hoffecker, Lilian and Isojarvi, Jaana and Kaunelis, David and Ket, Hans and Levay, Paul and Lyon, Jennifer and McGowan, Jessie and Murad, M. Hassan and Nicholson, Joey and Pannabecker, Virginia and Paynter, Robin and Pinotti, Rachel and Ross-White, Amanda and Sampson, Margaret and Shields, Tracy and Stevens, Adrienne and Sutton, Anthea and Weinfurter, Elizabeth and Wright, Kath and Young, Sarah},
+  author  = {Rethlefsen, Melissa L. and Kirtley, Shona and Waffenschmidt, Siw and Ayala, Ana Patricia and Moher, David and Page, Matthew J. and Koffel, Jonathan B. and Blunt, Heather and Brigham, Tara and Chang, Steven and Clark, Justin and Conway, Aislinn and Couban, Rachel and de Kock, Shelley and Farrah, Kelly and Fehrmann, Paul and Foster, Margaret and Fowler, Susan A. and Glanville, Julie and Harris, Elizabeth and Hoffecker, Lilian and Isojarvi, Jaana and Kaunelis, David and Ket, Hans and Levay, Paul and Lyon, Jennifer and McGowan, Jessie and Murad, M. Hassan and Nicholson, Joey and Pannabecker, Virginia and Paynter, Robin and Pinotti, Rachel and Ross-White, Amanda and Sampson, Margaret and Shields, Tracy and Stevens, Adrienne and Sutton, Anthea and Weinfurter, Elizabeth and Wright, Kath and Young, Sarah and {PRISMA-S Group}},
   title   = {{PRISMA-S}: An Extension to the {PRISMA} Statement for Reporting Literature Searches in Systematic Reviews},
   journal = {Systematic Reviews},
   volume  = {10},

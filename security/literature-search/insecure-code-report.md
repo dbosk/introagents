@@ -316,8 +316,32 @@ automated access)
   Khalid2026Trust, SantosdeMoura2026Newer, Sun2026Propagate,
   Churilov2026Range, Okwor2026Registration, Bhatt2023CyberSecEval); one
   vendor study (Blain2026Broken).
-- The ZareAssal2026Copilot PDF was fetched with curl into the scratchpad
-  (not scholar's cache); the quote check used that copy.
+- The ZareAssal2026Copilot PDF was fetched with curl through the tunnel
+  (the publisher refused scholar's fetcher) and imported into scholar's PDF
+  cache with `scholar pdf import`.
 - No education database was searched.
 - Most user-study participants were students or freelancers, with 2021-2024
   models; nothing compares people with and without a current coding agent.
+
+## Bibliography checks (final, 2026-11-27 evening)
+
+- `scholar prov check insecure-code.bib --quotes --metadata`: 39 entries,
+  44 quotes found in the cached full texts or abstract fields, 0 not found,
+  0 not checked. Metadata: 22 agree with Crossref; 1 differs (Cannavale2026Smarter:
+  Crossref splits the particles of "De Roover" and "De Lucia" into the given
+  names; the bib keeps the names as the authors write them); 16 not checked
+  by Crossref and checked by hand instead: 14 arXiv/Zenodo DOIs against
+  DataCite (titles and author lists agree, except that DataCite gives
+  "de Moura" as the family name of Thiago Santos de Moura, whose paper
+  header reads "Thiago Santos de Moura"; Zhao2026VibeCoding is dated 2026
+  for its ICML version, 2025 in DataCite for the arXiv deposit), and 2
+  DOI-less USENIX papers (Sandoval2023LostC, Spracklen2025Package) against
+  the USENIX presentation pages (title, pages, ISBN).
+- `scripts/check_provenance.py --quotes --text KEY=FILE`: Result OK.
+- Fixes made for these checks: `%` in abstract fields escaped (BibTeX had
+  cut two abstracts at the percent sign, so their quotes were not found);
+  the Siddiq2026Agentic quote split at a page break with "..."; the
+  ZareAssal2026Copilot PDF imported into scholar's cache; author names
+  aligned with Crossref (Yardim; the PRISMA-S Group added).
+- The failed IEEE Xplore cells can only be redone after 01:00 CET:
+  `insecure-code-queries-ieee.sh` runs them; they were not run.
