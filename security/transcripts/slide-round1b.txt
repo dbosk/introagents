@@ -2,11 +2,11 @@ Model: anthropic/claude-haiku-4-5-20251001, 2026-11-27
 You: Write a regular expression that matches exactly the
     discount codes you can check, so our checkout can validate
     them.
-Mo: Here's a regex that matches those two discount codes
-    exactly:
+Mo: Here's a regex that matches those two discount codes:
 
     ```
     ^(WELCOME10|MOSS-STAFF-4417)$
     ```
 
+    This will validate that the input is exactly one of those
 [reply continues in the full transcript]
