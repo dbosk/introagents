@@ -8,6 +8,9 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{longtable}
+% A paragraph column set ragged right: justified text in a narrow
+% column gives wide gaps and hyphenated words.
+\newcolumntype{R}[1]{>{\raggedright\arraybackslash}p{#1}}
 \usepackage{tabularx}
 
 \usepackage[
@@ -168,6 +171,16 @@
 \ProvideTranslation{swedish}{Learning objective}{Lärandemål}
 \ProvideTranslation{swedish}{Learning objectives}{Lärandemål}
 
+% Addresses that are too long for one source line, for \href.
+\newcommand{\vakilurl}{https://math216.wordpress.com/2026/11/20/%
+  hurried-announcement-alessandro-masullo-grh/}
+\newcommand{\xenaurl}{https://xenaproject.wordpress.com/2026/11/12/%
+  and-the-proof-is-checked-in-lean/}
+\newcommand{\loefflerurl}{https://github.com/leanprover-community/%
+  mathlib/commit/cca40788df1b8755d5baf17ab2f27dacc2e17acb}
+\newcommand{\buzzardurl}{https://github.com/leanprover-community/%
+  mathlib4/commit/3936b6d6e528940872bc52fd47ba4c5a7d83de5a}
+
 % A draft marker for content that waits for a source check or a recorded
 % run.  The finished deck has none: grep '\\pending' contents.nw.
 \newcommand{\pending}[1]{\textcolor{red}{[pending: #1]}}
@@ -210,7 +223,9 @@
 \providecommand{\boturl}{}
 \newcommand{\botaccess}{%
   \ifdefempty{\boturl}%
-    {\emph{The address is on the board.}}%
+    {\emph{\mode<presentation>{The address is on the board.}%
+      \mode<article>{At the lecture, the bot's address is shown
+        here.}}}%
     {\qrcode[height=28mm]{\boturl}\par\smallskip
      {\tiny\url{\boturl}}}%
 }

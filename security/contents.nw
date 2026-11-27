@@ -13,7 +13,6 @@ mentipy_common = {
     "locale": "en",
 }
 
-
 def ask(helper, *args, **kwargs):
     return helper(*args, **{**mentipy_common, **kwargs})
 \end{pycode}
@@ -93,13 +92,12 @@ model.
 A program of your own that calls a model is what a company builds when
 it puts AI into a product; \cref{sec:product} attacks one.
 
-
 \section[Work]{What will AI do to work?}
 \label{sec:work}
 
 The next three questions ask for predictions.
-There are no right answers yet; the lecture comes back to them at its
-end.
+There are no right answers yet; the lecture comes back to the last of
+them at its end.
 
 \ltnote{%
   Relevant learning objectives: \cref{SecLOCheck}.
@@ -160,15 +158,27 @@ print(ask(
   \end{exercise}
 \end{frame}
 
-
 \section[Who checks?]{A test case: the Riemann hypothesis}
 \label{sec:riemann}
 
 Writing a company's software is hard to judge from the outside.
 Mathematics offers a cleaner test of what AI can take over, because a
 proof is either correct or not.
-So take one of the most famous problems there is, posed by Bernhard
-Riemann in 1859 and open ever since.
+So take one of the most famous problems there is, which goes back to
+a paper that Bernhard Riemann published in
+1859\autocite[1]{Bombieri2000Riemann} and has been open ever since.
+
+\ltnote{%
+  Relevant learning objectives: \cref{SecLOCheck}.
+
+  The options of \cref{ex:riemann} give no reasons on purpose: a list of
+  reasons would name the aspects (stating the problem, judging the
+  proof) that the students are to discern from the three proofs in
+  \cref{ex:three-proofs}.
+  The reasons are asked for aloud instead, and the lecturer collects
+  them without comment; they are picked up again in
+  \cref{ex:who}.
+}
 
 \begin{frame}[fragile]
   \begin{exercise}[A problem from 1859]\label{ex:riemann}
@@ -188,18 +198,6 @@ print(ask(
   \end{exercise}
 \end{frame}
 
-\ltnote{%
-  Relevant learning objectives: \cref{SecLOCheck}.
-
-  The options of \cref{ex:riemann} give no reasons on purpose: a list of
-  reasons would name the aspects (stating the problem, judging the
-  proof) that the students are to discern from the three proofs in
-  \cref{ex:three-proofs}.
-  The reasons are asked for aloud instead, and the lecturer collects
-  them without comment; they are picked up again in
-  \cref{ex:who}.
-}
-
 \subsection{What the hypothesis is about}
 
 The hypothesis is about the prime numbers: the whole numbers from 2 and
@@ -211,14 +209,12 @@ They become rarer the further one counts, and a short program shows how.
 <<[[primes.py]]>>=
 import math
 
-
 def is_prime(number):
     """Return True if number is a prime number."""
     for divisor in range(2, math.isqrt(number) + 1):
         if number % divisor == 0:
             return False
     return number >= 2
-
 
 for limit in [10, 100, 1_000, 10_000, 100_000]:
     count = 0
@@ -247,8 +243,8 @@ for limit in [10, 100, 1_000, 10_000, 100_000]:
   \end{example}
 \end{frame}
 
-The function \texttt{is\_prime} tries every divisor up to the square
-root of the number, which \texttt{math.isqrt} gives as a whole number;
+The function [[is_prime]] tries every divisor up to the square
+root of the number, which [[math.isqrt]] gives as a whole number;
 a larger divisor would have a smaller partner that has already been
 tried.
 The last column is the natural logarithm of the limit.
@@ -258,7 +254,7 @@ The last column is the natural logarithm of the limit.
     Running the program gives:
     \runpython[showcommand, chdir]{examples/primes.py}
     Below 10, one number in 2.5 is a prime; below 100\,000, one in 10.4.
-    The spacing grows by about 2 for every factor of ten, and stays
+    The spacing grows by about 2 for every factor of ten, in step with
     close to the logarithm in the last column.
   \end{example}
 \end{frame}
@@ -324,9 +320,12 @@ In the autumn of 2026, three proofs were announced within seven weeks.
   \cref{tab:three-proofs} with its question, \cref{ex:three-proofs},
   and then \cref{tab:three-outcomes}.
 
-  \textbf{First step, what varies}: who produced the proof (a company's
-  models, a mathematician with an AI, a mathematician by hand) and its
-  form.
+  \textbf{First step, what varies}: who produced the proof (an AI
+  company's models, a mathematician at such a company with its AI, a
+  mathematician by hand) and its form.
+  What each proof claims is left out of the table on purpose, since a
+  student could trust proof A for claiming less, and the vote could not
+  tell that from trusting its producer; the prose gives it.
   \textbf{What is withheld}: how each was checked.
   A student who trusts or distrusts a proof for who made it shows the
   misconception the lecture is about: that the producer decides whether
@@ -338,7 +337,7 @@ In the autumn of 2026, three proofs were announced within seven weeks.
   program that accepts it, people and models who found problems).
   \textbf{What stays invariant}: the three proofs, in the same table,
   so that the new rows are read against the students' own votes.
-  Proofs A and B share a producer of the same kind and differ in the
+  Proofs A and B were both produced with an AI and differ in the
   check, which is what separates \enquote{accepted and understood} from
   \enquote{accepted}.
   Proof C breaks the link between a human producer and correctness.
@@ -347,18 +346,14 @@ In the autumn of 2026, three proofs were announced within seven weeks.
 \begin{frame}
   \begin{table}
     \centering\footnotesize
-      \begin{tabular}{@{}lp{0.24\linewidth}p{0.24\linewidth}%
-                      p{0.24\linewidth}@{}}
+      \begin{tabular}{@{}lR{0.24\linewidth}R{0.24\linewidth}%
+                      R{0.24\linewidth}@{}}
         \toprule
         & Proof A & Proof B & Proof C \\
         \midrule
-        Proves
-          & a weaker statement
-          & the hypothesis
-          & a stronger statement \\
         Made by
-          & a company's AI models
-          & a mathematician working with an AI
+          & an AI company's models; a person edited the paper
+          & a mathematician at an AI company, with the company's AI
           & a mathematician, by hand \\
         Form
           & a paper of 49 pages
@@ -387,12 +382,12 @@ print(ask(
         "I cannot tell from this",
     ],
     context=(
-        "Proof A: proves a weaker statement; made by a company's AI "
-        "models; a paper of 49 pages.\n\n"
-        "Proof B: proves the hypothesis; made by a mathematician "
-        "working with an AI; 17 million lines of formal code.\n\n"
-        "Proof C: proves a stronger statement; made by a mathematician, "
-        "by hand; a manuscript of 940 pages."
+        "Proof A: made by an AI company's models, and a person edited "
+        "the paper; a paper of 49 pages.\n\n"
+        "Proof B: made by a mathematician at an AI company, with the "
+        "company's AI; 17 million lines of formal code.\n\n"
+        "Proof C: made by a mathematician, by hand; a manuscript of "
+        "940 pages."
     ),
 ))
 \end{pycode}
@@ -402,23 +397,30 @@ print(ask(
 
 Proof A is from the company OpenAI.
 It was one of several hundred papers, written by the company's AI
-models, that OpenAI released on 6 October.
-It proves a weaker statement, called the quasi-Riemann hypothesis,
+models, that OpenAI released on 6 October, and it is \enquote{the only
+one of the 722 OpenAI papers released on October 6 to have been edited
+by a person}\autocite{Kakaes2026Quasi}.
+It does not claim the hypothesis itself.
+It claims a weaker statement, called the quasi-Riemann hypothesis,
 which only asks that the zeros lie in a narrower region than the one
-they were already known to lie in\autocite{Kakaes2026Quasi}.
+they were already known to lie in.
 
-Proof B was released on 20 November by the mathematician Levent Alpöge,
-who writes that he found it \enquote{working with Claude}, the AI model
-of the company Anthropic\autocite{Alpoge2026Remark}.
-It is \enquote{a Lean library comprising 17 million lines of code}%
-\autocite{LeanFRO2026Verification}.
-Lean is a language for writing mathematics so exactly that a separate
-program, a proof checker, can verify a proof step by step.
+Proof B was released on 20 November by
+\href{https://alpo.ge/remark.pdf}{Levent Alpöge, who writes that he
+found it \enquote{working with Claude}}\autocite{Alpoge2026Remark}.
+Alpöge is a mathematician who works at Anthropic, the company that
+makes Claude\autocite{Alpoge2026Home,Kakaes2026Transformation}.
+The proof is \enquote{a Lean library comprising 17 million lines of
+code}\autocite{LeanFRO2026Verification}.
+Lean is a language in which a proof is written out so that programs
+called proof checkers can check it.
 
 Proof C was posted the same day by the mathematician Ravi Vakil for
 its author, Alessandro Maria Masullo.
-It is a manuscript of 940 pages\autocite{Masullo2026Music} and, Vakil
-wrote, \enquote{It is all human, with no AI}\autocite{Vakil2026Hurried}.
+It is a manuscript of 940 pages\autocite{Masullo2026Music} and, in
+\href{\vakilurl}{Vakil's
+words, \enquote{It is all human, with no AI}}%
+\autocite{Vakil2026Hurried}.
 It claims a stronger statement, the generalised Riemann hypothesis.
 Alpöge claims that one too; what the proof checkers have confirmed of
 proof B is the hypothesis itself and one part of the generalised
@@ -429,14 +431,14 @@ What \cref{tab:three-proofs} leaves out is how each proof was checked.
 \begin{frame}
   \begin{table}
     \centering\footnotesize
-      \begin{tabular}{@{}lp{0.24\linewidth}p{0.24\linewidth}%
-                      p{0.24\linewidth}@{}}
+      \begin{tabular}{@{}lR{0.24\linewidth}R{0.24\linewidth}%
+                      R{0.24\linewidth}@{}}
         \toprule
         & Proof A & Proof B & Proof C \\
         \midrule
         Made by
-          & a company's AI models
-          & a mathematician working with an AI
+          & an AI company's models; a person edited the paper
+          & a mathematician at an AI company, with the company's AI
           & a mathematician, by hand \\
         Checked by
           & mathematicians, who read it
@@ -462,11 +464,13 @@ the one in Lean's library of mathematics, ran the proof through several
 independent proof checkers, and declared \enquote{full confidence that
 Alpöge's proof of the Riemann Hypothesis is correct}%
 \autocite{LeanFRO2026Verification}.
-The mathematician Daniel Litt summed up where that leaves things: the
-proof \enquote{is exceedingly likely to be correct}, and \enquote{No
-human understands it yet. There doesn't seem to be a meaningful
-obstruction to humans understanding it, though, and there's already a
-lot of activity in this direction}\autocite{Litt2026Noise}.
+\href{https://x.com/littmath/status/2124573924528681263}{The
+mathematician Daniel Litt summed up where that leaves things}: the
+proof \enquote{is exceedingly likely to be correct}.
+He went on: \enquote{No human understands it yet. There doesn't seem to
+be a meaningful obstruction to humans understanding it, though, and
+there's already a lot of activity in this direction}%
+\autocite{Litt2026Noise}.
 
 Of proof C, Vakil added within two days that \enquote{Several people
 have contacted me to report problems in the proposed proof, identified
@@ -478,10 +482,9 @@ that is fit for submission or dissemination}%
 Trust did not follow the producer.
 The proof made by hand is the one in which problems were found, and
 they were found with the help of AI models.
-The proof that nobody has read through is the one that was certified,
-because a proof checker does not need to understand a proof to verify
-it: it checks that every step follows from the earlier ones by the
-rules.
+The proof that nobody has read through is the one that was certified:
+several independent proof checkers accepted it, and none of that
+needed a person to have read it.
 Even its author does not claim to have mastered it.
 He writes that Claude \enquote{far outpaced me near the finish line},
 and that he is \enquote{presenting the world with a complete argument
@@ -489,9 +492,9 @@ before having mastered a massive neighbourhood around its mathematics}%
 \autocite{Alpoge2026Remark}.
 
 This is how things stood on 27 November 2026.
-A much shorter proof of the same theorems had appeared two days
-earlier, of which its authors say that it \enquote{has passed machine
-checks only} and that \enquote{No mathematician has read it
+A shorter proof of the same theorems had appeared two days earlier.
+Its own description says that it \enquote{has passed machine checks
+only} and that \enquote{No mathematician has read it
 through}\autocite{Sernau2026GRH}.
 
 \subsection{What the checker checked}
@@ -499,6 +502,20 @@ through}\autocite{Sernau2026GRH}.
 
 So is the hypothesis proved?
 The checker answers a narrower question than that.
+
+\ltnote{%
+  Relevant learning objectives: \cref{SecLOCheck}.
+
+  \Cref{sec:statement} opens a second dimension after the contrast of
+  \cref{tab:three-outcomes}: what a check covers.
+  \textbf{What varies}: whether the statement given to the checker is
+  the intended one.
+  \textbf{What stays invariant}: the checker's verdict, which is
+  \enquote{valid} in both cases.
+  The point is told with one example and is not experienced; it returns
+  in \cref{sec:product}, where the students see a bot follow its
+  instructions exactly and still do the wrong thing.
+}
 
 \begin{frame}
   \begin{remark}[What the checker checked]
@@ -509,7 +526,8 @@ The checker answers a narrower question than that.
   \end{remark}
 \end{frame}
 
-A post on the Xena project's blog, which is about doing mathematics in
+\href{\xenaurl}{A post on the Xena project's blog}, which is about
+doing mathematics in
 Lean, shows how this can go wrong.
 Its example is a few lines of Lean that look \enquote{at first glance
 like it might be Fermat's Last Theorem, but which actually is a
@@ -525,20 +543,6 @@ Two independent tools confirmed \enquote{that the theorem proved in
 Alpöge's library is exactly Mathlib's statement of the Riemann
 Hypothesis}\autocite{LeanFRO2026Verification}, Mathlib being Lean's
 library of mathematics.
-
-\ltnote{%
-  Relevant learning objectives: \cref{SecLOCheck}.
-
-  \Cref{sec:statement} opens a second dimension after the contrast of
-  \cref{tab:three-outcomes}: what a check covers.
-  \textbf{What varies}: whether the statement given to the checker is
-  the intended one.
-  \textbf{What stays invariant}: the checker's verdict, which is
-  \enquote{valid} in both cases.
-  The point is told with one example and is not experienced; it returns
-  in \cref{sec:product}, where the students see a bot follow its
-  instructions exactly and still do the wrong thing.
-}
 
 \subsection{Who could have done it?}
 \label{sec:who}
@@ -568,8 +572,8 @@ have done the same.
 \begin{frame}
   \begin{exercise}[The same AI, in your hands]\label{ex:who}
     Suppose you were given the very AI that found proof B.
-    What would you have to know, or be able to do, to get that proof
-    out of it?
+    Could you have got that proof out of it?
+    What would it take?
   \end{exercise}
 \end{frame}
 
@@ -590,8 +594,9 @@ have done the same.
 \end{frame}
 
 Alpöge wrote his doctoral thesis at Princeton, on points on curves, and
-lists among his papers a solution, with three co-authors, of another
-problem from Hilbert's list of 1900\autocite{Alpoge2026Home}.
+lists among his papers a solution, with three co-authors, of Hilbert's
+tenth problem, from his list of 1900, \enquote{over all number
+fields}\autocite{Alpoge2026Home}.
 Of the Riemann hypothesis he writes: \enquote{It was my secret in my
 student days that my plans were for this problem in decades, which
 meant then that I tried to become familiar with all tools that I could
@@ -606,23 +611,27 @@ part of the argument lies in a field of which he says that he has
 \enquote{little mastery}.
 
 The statement that the proof checker was given was not his either.
-It was written into Lean's library of mathematics in 2023 by the
-mathematician David Loeffler, with the remark \enquote{Just for fun, we
-also add a formal statement of the Riemann
-hypothesis}\autocite{Mathlib3Def2023}.
-The next year the mathematician Kevin Buzzard amended it, after a
-colleague had pointed out that it used the value of the function at a
+It was written into Lean's library of mathematics in 2023 by
+\href{\loefflerurl}{the mathematician David Loeffler, with the remark
+\enquote{Just for fun, we also add a formal statement of the Riemann
+hypothesis}}\autocite{Mathlib3Def2023}.
+The next year
+\href{\buzzardurl}{the mathematician Kevin Buzzard amended it}, after
+a colleague had pointed out that it used the value of the function at a
 point where, to a mathematician, the function has
 none\autocite{Mathlib2024Junk}.
 So even the question took two specialists and an amendment to state.
 
-Proof A is a different story, and belongs here too.
-Quanta sets Alpöge's way of working against OpenAI's results of 6
-October, \enquote{almost all of which were the result of a simple
-prompt to an AI model}\autocite{Kakaes2026Transformation}.
+The papers that OpenAI released on 6 October are a different story,
+and belong here too.
+Quanta sets Alpöge's way of working against them: \enquote{almost all
+of which were the result of a simple prompt to an AI
+model}\autocite{Kakaes2026Transformation}.
 A simple prompt is something that anybody can type.
-What came out was several hundred papers, and it took mathematicians
-who read them to establish which of them held.
+What came out was several hundred papers, and typing the prompt did not
+tell anyone which of them held.
+Proof A, the one that mathematicians then read and largely accept, is
+the one that a person had edited.
 
 No source says whether somebody without Alpöge's training could have
 done what he did.
@@ -644,25 +653,25 @@ lists, sorts into three jobs.
       \item[Check] verify the proof, independently of whoever produced
         it.
     \end{description}
-    The AI did the second.
-    The first took mathematicians, and the third a small program that
-    mathematicians had built and trust.
+    The mathematician and the AI did the second together.
+    The first had been done by mathematicians, years before.
+    The third was done by independent proof checkers, and by people who
+    compared the statement with what the hypothesis says.
   \end{remark}
 \end{frame}
 
-The AI was the same for anyone who used it.
-What came of it depended on the people around it: those who had said
-exactly what was to be proved, in a language the checker accepts; the
-one who could tell a promising direction from a dead end; and those who
-could confirm that the statement meant what it was supposed to mean.
+The people around the AI did a good deal of this work: those who had
+said exactly what was to be proved, in a language the checkers accept;
+the one who chose the direction; and those who confirmed that the
+statement meant what it was supposed to mean.
 
 \begin{frame}
   \begin{remark}[The same AI, different reach]
-    In this case the AI extended what a specialist could do.
-    It did not put the result within reach of someone who could not
-    have said what was to be proved, or judged what came back.
+    In this case the AI worked in the hands of a specialist, who chose
+    the direction and knew what was to be proved.
+    The sources do not say what it would have done in other hands.
 
-    Is that how it goes in general, and for a company's software?
+    How does it go in general, and for a company's software?
   \end{remark}
 \end{frame}
 
@@ -709,7 +718,6 @@ times does not support it.
 
 Whether the pattern holds beyond one mathematician is a question for
 studies of many people.
-
 
 \section[Who gains?]{Who gains from AI?}
 \label{sec:gains}
@@ -772,9 +780,17 @@ print(ask(
         15\%.
       \item People who could not tell a made-up answer from a correct
         one did worse with the AI than without.
-      \item Sixteen experienced developers, on their own projects, were
-        19\% slower with AI, and believed they had been 20\% faster.
     \end{itemize}
+  \end{example}
+\end{frame}
+
+\begin{frame}
+  \begin{example}[What was felt, and what was measured]
+    \label{ex:gains-felt}
+    Sixteen experienced developers worked on their own projects, with
+    and without AI.
+    With AI they were 19\% slower.
+    They believed that it had made them 20\% faster.
   \end{example}
 \end{frame}
 
@@ -793,26 +809,30 @@ In one experiment the people with more education used the tool
 \enquote{more effectively}, and when the AI was taken away again,
 \enquote{a sizable education gap re-emerges}\autocite{Cruces2026Does}.
 
-The second group is thinner: one field experiment, one laboratory
-experiment and one small trial.
+The second group is thinner: one field experiment and one laboratory
+experiment.
 The entrepreneurs were in Kenya, and the difference lay in which of the
 AI's advice they chose to follow\autocite{Otis2026Uneven}.
 In the laboratory experiment, ChatGPT lowered the scores on a
 mathematics task because \enquote{the low-ability subjects couldn't
 discern the hallucinated answers with the correct
 ones}\autocite{Kim2024Helping}.
-The developers were sixteen experienced contributors to open-source
-projects: \enquote{developers estimate that allowing AI reduced
-completion time by 20\%. Surprisingly, we find that allowing AI
-actually increases completion time by
-19\%}\autocite{Becker2025Measuring}.
 The consultants' study has both sides in it: on a task chosen to lie
 outside what the AI could do, those who used it were 19 percentage
 points less likely to get the answer
 right\autocite{DellAcqua2026Navigating}.
 
+The third finding is of another kind, and from one small trial.
+Sixteen experienced contributors to open-source projects did tasks in
+their own projects with and without AI: \enquote{developers estimate
+that allowing AI reduced completion time by 20\%. Surprisingly, we find
+that allowing AI actually increases completion time by
+19\%}\autocite{Becker2025Measuring}.
+These were people well able to judge what the AI produced.
+What they misjudged was how much it had helped them.
+
 Experiments are not the whole picture.
-A study of the work of 160\,000 programmers on GitHub, which observed
+A study of the work of 170\,000 programmers on GitHub, which observed
 and did not experiment, found that \enquote{experienced programmers
 capture nearly all of these productivity and exploration
 gains}\autocite{Daniotti2026Who}.
@@ -822,8 +842,9 @@ gains}\autocite{Daniotti2026Who}.
     Where the AI's output can be used as it comes, AI lifts the least
     experienced most.
 
-    Where the output has to be judged, those who can judge it gain, and
-    those who cannot may end up worse off.
+    Where the output has to be judged, those who cannot judge it may
+    end up worse off.
+    And how much one has gained is hard to tell from the inside.
 
     A proof of the Riemann hypothesis is a task of the second kind.
   \end{remark}
@@ -832,9 +853,10 @@ gains}\autocite{Daniotti2026Who}.
 So the answer to \cref{ex:who-gains} is none of its four options.
 The studies do not show that AI in general favours the strong: on
 everyday, well-defined tasks the best experiments show the opposite.
-What they do show is that the gain turns on whether the person can
-judge what comes back, and the mathematician of \cref{sec:who} is one
-case of that.
+What they do show is that, where the output has to be judged, being
+unable to judge it can turn the help into harm.
+The mathematician of \cref{sec:who} is a case from the other side:
+someone who could say what was wanted and judge what came back.
 
 \subsection{Competence makes the conversation shorter}
 
@@ -864,9 +886,10 @@ Competence also decides what a conversation with an AI costs.
 
 The two questions ask for the same thing.
 The answer to the second is several times as long as the answer to
-the first, as the counts of output tokens show, and a token of output
-costs several times as much as a token of
-input\autocite{Anthropic2026Pricing}.
+the first, as the counts of output tokens show, and output is the
+dearer part: the provider's price list puts one of its models at 8
+dollars per million tokens of input and 40 per million tokens of
+output\autocite{Anthropic2026Pricing}.
 How many times longer differs from one run to the next, since a model
 need not give the same answer twice.
 The long answer is not waste: it is what somebody new to programming
@@ -875,21 +898,12 @@ The price of not yet knowing the subject is that every exchange is that
 much longer, and that there is that much more to read and to check.
 This is one question, measured once, and no more than an illustration.
 
-
 \section[In a product]{An AI inside a product}
 \label{sec:product}
 
-In mathematics, a small program could do the checking.
+In mathematics, programs could do the checking.
 The second half of the lecture is about systems where the checking was
 left to the language model itself.
-
-\begin{frame}
-  \begin{exercise}[Who checks now?]\label{ex:bridge}
-    A web shop puts a language model in its customer support.
-    It can answer questions, look up orders and pay out refunds.
-    Who checks what it says and does?
-  \end{exercise}
-\end{frame}
 
 \ltnote{%
   Relevant learning objectives:
@@ -905,6 +919,14 @@ left to the language model itself.
   (\enquote{the company}, \enquote{the AI}, \enquote{nobody}) are the
   hypotheses that the three rounds test.
 }
+
+\begin{frame}
+  \begin{exercise}[Who checks now?]\label{ex:bridge}
+    A web shop puts a language model in its customer support.
+    It can answer questions, look up orders and pay out refunds.
+    Who checks what it says and does?
+  \end{exercise}
+\end{frame}
 
 \subsection{How a support bot is built}
 
@@ -1091,9 +1113,8 @@ probability}\autocite{Zhang2024Extraction}.
   attack against the rule in the instructions (\cref{ex:refund-fix})
   and against the check in code (\cref{ex:refund-repair}).
   The two versions follow each other, on two slides, since their lines
-  are too long to stand side by side; the function's name, its last
-  two lines and its messages are the same in both, so that what was
-  added stands out.
+  are too long to stand side by side; the function's name and its last
+  three lines are the same in both, so that what was added stands out.
 }
 
 \begin{frame}
@@ -1233,9 +1254,10 @@ model's paid-for work is what is taken.
   make it do.
   The person who asks for the summary did nothing wrong, which is the
   aspect that separates indirect from direct injection.
-  This round is optional and depends on the model: the build records
-  whether it can be steered this way, and the recorded transcript is
-  shown as it came out, including failed attempts.
+  This round is optional and depends on the model: the recording made
+  before the lecture shows whether it can be steered this way, and the
+  recorded transcript is shown as it came out, including failed
+  attempts.
 }
 
 \begin{frame}
@@ -1291,10 +1313,24 @@ injection}\autocite{OWASP2025LLM}.
 \subsection{Where the defence lives}
 \label{sec:defence}
 
+\ltnote{%
+  Relevant learning objectives:
+  \cref{SecLOCheck,SecLOProduct}.
+
+  \textbf{Variation pattern}: generalisation, in \cref{tab:defence}.
+  \textbf{What stays invariant}: where the working defence was, in the
+  program and not in the instructions.
+  \textbf{What varies}: what was attacked (a secret, money, a text).
+  It comes after the three rounds, each of which contrasted the two
+  columns for one row, and it is where the three jobs of
+  \cref{sec:three-jobs} return: a rule in the instructions makes the
+  producer its own checker.
+}
+
 \begin{frame}
   \begin{table}
     \centering\footnotesize
-    \begin{tabular}{@{}lp{0.36\linewidth}p{0.36\linewidth}@{}}
+    \begin{tabular}{@{}lR{0.36\linewidth}R{0.36\linewidth}@{}}
       \toprule
       & A rule in the instructions & A check in the program \\
       \midrule
@@ -1316,20 +1352,6 @@ injection}\autocite{OWASP2025LLM}.
     \label{tab:defence}
   \end{table}
 \end{frame}
-
-\ltnote{%
-  Relevant learning objectives:
-  \cref{SecLOCheck,SecLOProduct}.
-
-  \textbf{Variation pattern}: generalisation, in \cref{tab:defence}.
-  \textbf{What stays invariant}: where the working defence was, in the
-  program and not in the instructions.
-  \textbf{What varies}: what was attacked (a secret, money, a text).
-  It comes after the three rounds, each of which contrasted the two
-  columns for one row, and it is where the three jobs of
-  \cref{sec:three-jobs} return: a rule in the instructions makes the
-  producer its own checker.
-}
 
 \begin{frame}[fragile]
   \begin{example}[What the repairs stopped]\label{ex:results}
@@ -1419,25 +1441,31 @@ A defence that asks the model to behave lowers the odds.
 A defence in the program around the model can be made to hold, for the
 actions the program controls, and the bot is then allowed to do less.
 
+\subsection<article>{Who answers for the bot?}
+\label{sec:liability}
+
 \begin{frame}
   \begin{remark}[Who answers for the bot]
     In 2024 a tribunal in Canada held the airline Air Canada
     responsible for what the chatbot on its website had told a
     customer about refunds.
-    The airline had argued, as the tribunal put it, that
-    \enquote{the chatbot is a separate legal entity that is responsible
-    for its own actions.}
-    The tribunal: \enquote{It makes no difference whether the
-    information comes from a static page or a chatbot.}
+    The airline had argued that the chatbot answered for its own words.
+    The tribunal did not accept that: the chatbot was part of the
+    airline's website, and the airline answers for what its website
+    says.
   \end{remark}
 \end{frame}
 
 The case is Moffatt v.\ Air Canada, decided by the Civil Resolution
 Tribunal of British Columbia.
-The two passages are quoted here from a lawyer's account that
-reproduces them\autocite{Sookman2024Moffatt}; the decision itself could
-not be opened when these notes were written, and the quotations are
-awaiting a check against it.
+The decision itself could not be opened when these notes were written,
+so this account rests on a lawyer's summary that reproduces passages of
+it\autocite{Sookman2024Moffatt}, and it is awaiting a check against the
+decision.
+As reproduced there, the tribunal described the airline as suggesting
+that \enquote{the chatbot is a separate legal entity that is responsible
+for its own actions}, and answered that \enquote{It makes no difference
+whether the information comes from a static page or a chatbot.}
 That chatbot was not built on a language model: according to the
 airline it was \enquote{developed before generative AI capabilities
 \dots{} became available}\autocite{Beazley2024Proving}.
@@ -1452,27 +1480,6 @@ bot tells a customer, the company has told the customer.
 The shop's mistakes are easy to see from the outside.
 An AI agent on your own computer is built from the same parts, and now
 you are the shop.
-
-\begin{frame}
-  \begin{table}
-    \centering\footnotesize
-    \begin{tabular}{@{}p{0.45\linewidth}p{0.45\linewidth}@{}}
-      \toprule
-      The shop's bot & Your agent \\
-      \midrule
-      The discount code in its instructions
-        & Your files, passwords and keys, where it can read them \\
-      Messages and reviews from strangers
-        & Web pages, e-mail, documents and code that others wrote \\
-      The refund tool
-        & Running commands, sending requests, publishing code \\
-      \bottomrule
-    \end{tabular}
-    \caption{The parts of the shop's bot and what corresponds to them
-      when an AI agent works on your computer.}
-    \label{tab:same-parts}
-  \end{table}
-\end{frame}
 
 \ltnote{%
   Relevant learning objectives: \cref{SecLOAgents}.
@@ -1490,6 +1497,27 @@ you are the shop.
   Ticking several is allowed so that these show; only C has all three.
   The name of the pattern, and Willison's term for it, come after.
 }
+
+\begin{frame}
+  \begin{table}
+    \centering\footnotesize
+    \begin{tabular}{@{}R{0.45\linewidth}R{0.45\linewidth}@{}}
+      \toprule
+      The shop's bot & Your agent \\
+      \midrule
+      The discount code in its instructions
+        & Your files, passwords and keys, where it can read them \\
+      Messages and reviews from strangers
+        & Web pages, e-mail, documents and code that others wrote \\
+      The refund tool
+        & Running commands, sending requests, publishing code \\
+      \bottomrule
+    \end{tabular}
+    \caption{The parts of the shop's bot and what corresponds to them
+      when an AI agent works on your computer.}
+    \label{tab:same-parts}
+  \end{table}
+\end{frame}
 
 \begin{frame}
   \begin{table}
@@ -1568,8 +1596,9 @@ three features, an attacker can easily trick it into accessing your
 private data and sending it to that attacker.}
 And he does not promise a cure: \enquote{we still don't know how to
 100\% reliably prevent this from happening.}
-Taking away any one of the three is enough, and which one to take away
-depends on the task.
+In the four setups of \cref{tab:setups}, taking away any one of the
+three stopped this attack; which one to take away depends on the
+task.
 
 \begin{frame}
   \begin{example}[It has happened: EchoLeak]\label{ex:echoleak}
@@ -1606,9 +1635,9 @@ The founder of a company wrote that the AI coding agent he was using,
 during a period when nothing was supposed to be changed, did this:
 \enquote{it deleted our production database}%
 \autocite{Lemkin2025Production}.
-The head of the company behind the agent answered that it was
-\enquote{Unacceptable and should never be possible}%
-\autocite{Masad2025Unacceptable}.
+The head of the company behind the agent answered:
+\enquote{Unacceptable and should never be possible.}%
+\autocite{Masad2025Unacceptable}
 The data could be restored from a backup.
 No attacker was involved: the agent had been given the power to delete
 the database, and one day it used it.
@@ -1617,6 +1646,19 @@ the database, and one day it used it.
 
 An agent that writes your program is a producer, and \cref{sec:riemann}
 asks who checks.
+
+\ltnote{%
+  Relevant learning objectives:
+  \cref{SecLOCheck,SecLOAgents}.
+
+  \Cref{ex:code,ex:packages} are told, not experienced: the studies
+  are reported with who took part and which models they used, and the
+  one finding that is contested is presented as contested.
+  \Cref{ex:packages} is optional.
+  It is placed here, after the students have been the attacker, so that
+  \enquote{less secure} has a meaning for them: they know what somebody
+  can do with a check that is missing.
+}
 
 \begin{frame}
   \begin{example}[Code written by AI]\label{ex:code}
@@ -1662,10 +1704,11 @@ Agents that work by themselves fare no better: in one study of 186
 real tasks, 57\% of one agent's solutions worked, and 11.8\% both
 worked and were secure\autocite{Zhao2026VibeCoding}.
 
-On the second point, a comparison of 32 models found that each family's
-newest models wrote more secure code than its older ones, and that none
-closed the gap between code that works and code that is also
-secure\autocite{SantosdeMoura2026Newer}.
+On the second point, a comparison of 32 models, which has not yet been
+through peer review, found that \enquote{Newer models do become safer
+in absolute terms, although no family closes the
+gap}\autocite{SantosdeMoura2026Newer}, the gap being that between code
+that works and code that is also secure.
 Better is not the same as safer, either: an earlier comparison found
 that \enquote{Models that are more capable at coding tend to be more
 prone to insecure code suggestions}\autocite{Bhatt2023CyberSecEval}.
@@ -1718,19 +1761,6 @@ observed: in one study, which has not yet been through peer review,
 about one invented name in a hundred had been registered within six
 months\autocite{Churilov2026Range}.
 
-\ltnote{%
-  Relevant learning objectives:
-  \cref{SecLOCheck,SecLOAgents}.
-
-  \Cref{ex:code,ex:packages} are told, not experienced: the studies
-  are reported with who took part and which models they used, and the
-  one finding that is contested is presented as contested.
-  \Cref{ex:packages} is optional.
-  It is placed here, after the students have been the attacker, so that
-  \enquote{less secure} has a meaning for them: they know what somebody
-  can do with a check that is missing.
-}
-
 \subsection{What you can do}
 
 \begin{frame}
@@ -1759,9 +1789,19 @@ None of them is new.
 They are what one would do with a new and very quick colleague whom
 one does not yet know.
 
-
 \section[Take home]{What to take home}
 \label{sec:home}
+
+\ltnote{%
+  Relevant learning objectives: \cref{SecLOCheck}.
+
+  \Cref{ex:posttest} repeats \cref{ex:replace} with a changed wording,
+  which makes it a question of its own with its own answers; the two
+  results are compared by eye, from the two result pages.
+  The spoken follow-up is the real post-test: after
+  \cref{sec:riemann,sec:product} the answers should name specifying and
+  checking, which nobody was told to say.
+}
 
 \begin{frame}[fragile]
   \begin{exercise}[You and the developers, again]\label{ex:posttest}
@@ -1781,17 +1821,6 @@ print(ask(
     What would you have to be able to do?
   \end{exercise}
 \end{frame}
-
-\ltnote{%
-  Relevant learning objectives: \cref{SecLOCheck}.
-
-  \Cref{ex:posttest} repeats \cref{ex:replace} with a changed wording,
-  which makes it a question of its own with its own answers; the two
-  results are compared by eye, from the two result pages.
-  The spoken follow-up is the real post-test: after
-  \cref{sec:riemann,sec:product} the answers should name specifying and
-  checking, which nobody was told to say.
-}
 
 \begin{frame}
   \begin{summary}
