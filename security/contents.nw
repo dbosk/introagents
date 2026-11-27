@@ -863,9 +863,12 @@ Competence also decides what a conversation with an AI costs.
 \end{frame}
 
 The two questions ask for the same thing.
-The answer to the second is about nine times as long as the answer to
-the first, and a token of output costs several times as much as a token
-of input\autocite{Anthropic2026Pricing}.
+The answer to the second is several times as long as the answer to
+the first, as the counts of output tokens show, and a token of output
+costs several times as much as a token of
+input\autocite{Anthropic2026Pricing}.
+How many times longer differs from one run to the next, since a model
+need not give the same answer twice.
 The long answer is not waste: it is what somebody new to programming
 needs.
 The price of not yet knowing the subject is that every exchange is that
@@ -1330,10 +1333,11 @@ In rounds 1 and 2 the repaired bot stops every attempt, and it does so
 by construction: the code is not there to be leaked, and the program
 refuses the refund whatever the model asks for.
 Round 3 is different.
-Part of its repair is again a sentence for the model to follow, and a
-sentence that holds in a few recorded attempts can fail on another day,
-against another attack or with another model; \cref{sec:stopped} says
-what research has found about that.
+Part of its repair is again a sentence for the model to follow.
+It held in every recorded attempt, and that is still no guarantee: a
+sentence can fail on another day, against another attack or with
+another model, and \cref{sec:stopped} says what research has found
+about that.
 What the program guarantees in round 3 is only this: a summary that has
 been talked round still cannot pay out a refund, because the
 summarising has no tools.

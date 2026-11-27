@@ -190,11 +190,21 @@
 
 % A recorded session with the support bot, as the recording script wrote
 % it.  The files are data: the build never calls a language model.
+% The model's replies are shown as recorded, so a transcript can hold a
+% character that the fonts lack (an emoji, say).  Inside a transcript
+% such a character prints as a marker and is no error; elsewhere it
+% stays the error that it is.
+\makeatletter
+\newcommand{\transcript@symbol}[1]{\textit{[symbol]}}
 \newcommand{\transcript}[2][]{%
   \IfFileExists{transcripts/#2}%
-    {\inputminted[fontsize=\codesize, #1]{text}{transcripts/#2}}%
+    {\begingroup
+     \let\UTFviii@undefined@err\transcript@symbol
+     \inputminted[fontsize=\codesize, #1]{text}{transcripts/#2}%
+     \endgroup}%
     {\pending{transcript #2}}%
 }
+\makeatother
 
 \InputIfFileExists{bot-url.tex}{}{}
 \providecommand{\boturl}{}
