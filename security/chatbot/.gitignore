@@ -21,3 +21,4 @@ _minted*/
 __pycache__/
 .pytest_cache/
 .venv/
+requirements.txt
