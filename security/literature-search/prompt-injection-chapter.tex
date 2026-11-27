@@ -1,0 +1,586 @@
+% prompt-injection-chapter.tex -- backing appendix chapter for the claim
+% that prompt injection cannot (yet) be reliably prevented by filters,
+% detectors, prompt techniques or trained models, and that the design must
+% limit the blast radius.
+%
+% Author's note (verification and reproduction; NOT for the compiled text):
+%   scholar session  : prompt-injection (11,360 records, searched 2026-11-27)
+%   queries          : litteratursokning/prompt-injection-queries.sh (--print)
+%   bib + provenance : litteratursokning/prompt-injection.bib
+%                      (check_provenance.py --quotes: OK)
+%   report, protocol : litteratursokning/prompt-injection-report.md
+%   progress log     : litteratursokning/prompt-injection-progress.md
+%   tier-1 sheets    : litteratursokning/prompt-injection-screen/
+%   hit-list export  : litteratursokning/prompt-injection-full.tex (+ .csv)
+%   Screened by an AI agent; no decision has been reviewed by the author.
+%   Attributions OWASP2025LLM, OWASP2026LLM, Willison2025Trifecta are in
+%   known-items.bib (verified by the known-items agent).
+
+\chapter{Can prompt injection against LLM-integrated applications and
+  agents be reliably prevented?}
+\label{prompt-injection:chapter}
+
+\emph{Status: screened by an AI agent; awaiting human review.}
+
+The lecture says three things about prompt injection. First, a language
+model receives its instructions and the data it works on in one stream of
+text, so an application must assume that anything the model reads can
+steer it. Second, published defences lower the success of attacks but
+have been bypassed by attackers who adapt to them. Third, an application
+should therefore be designed so that a successful injection can do
+little harm: least privilege for its tools, authorisation enforced in
+ordinary code, and human approval for actions that cannot be undone.
+The OWASP Top 10 for LLM Applications states that \enquote{it is unclear
+if there are fool-proof methods of prevention for prompt
+injection}\autocite{OWASP2025LLM} and, in its 2026 edition, that
+\enquote{no reliable prevention mechanism exists
+today}\autocite{OWASP2026LLM}; Simon Willison writes that \enquote{we
+still don't know how to 100\% reliably prevent this from
+happening}\autocite{Willison2025Trifecta}. This chapter asks whether the
+research literature agrees.
+
+The research question has four parts:
+(a)~what indirect prompt injection is, and whether it works against real
+LLM-integrated applications and agents;
+(b)~how defences --- input and output filtering, detection classifiers,
+prompt hardening such as delimiters or spotlighting, and fine-tuned or
+instruction-hierarchy models --- fare against adaptive attacks;
+(c)~whether any approach gives guarantees, in particular system-level
+designs that keep untrusted data out of the control flow, and at what
+cost in usefulness; and
+(d)~how easily system prompts and other hidden context are extracted.
+The strength under test is \enquote{cannot be reliably prevented by any
+known defence that leaves the agent unconstrained}, not \enquote{cannot
+be prevented at all}; the counter-searches therefore look explicitly for
+defences reported as robust, provable, solved or secure by design.
+
+\section{Method}
+\label{prompt-injection:method}
+
+\paragraph{Databases and their health.}
+All searches ran on 27~November~2026 against Web of Science (WoS),
+IEEE Xplore (IEEE), OpenAlex (OA; not open access), Scopus and Semantic
+Scholar (S2), each with the same Boolean query, years 2022--2026,
+restricted to title and abstract where the database supports it (WoS,
+OA, Scopus, S2), and without an upper limit on the number of results.
+Semantic Scholar answered through its bulk search, which matches title
+and abstract. DBLP answered every query with a page that stops automated
+clients instead of with data, so DBLP could not be searched. IEEE Xplore
+had spent its daily request quota before the four repair queries and the
+two prompt-security queries (R1--R3, CR1--CR3) were run; those six cells
+are failed, not empty. Scopus served full records (with abstracts) for
+all queries; for the repair queries this needed a second run once the
+university network route was available again.
+
+\paragraph{Concepts and wordings.}
+Each concept of the claim was searched in several wordings, fixed before
+the queries were run (\cref{prompt-injection:concepts}). The queries
+combine these blocks (\cref{prompt-injection:queries}): S1--S9 search for
+the claim, C1--C7 against it, R1--R3 repair gaps that the check by
+meaning revealed (below), and CR1--CR3 are their counter-queries. Every
+counter-query reuses all concept blocks of its support query and adds a
+block of words that a contradicting or qualifying paper would use
+(overstated, ineffective, rarely, robust, near-zero, provable, solved,
+by design, without loss of utility, and so on).
+
+\begin{table}[tbp]
+  \begin{sidecaption}{Concept blocks of the queries and their wordings.
+    Words in quotation marks are phrases; a block matches if any of its
+    wordings does.}[prompt-injection:concepts]
+    \centering\footnotesize
+    \begin{tabular}{@{}lp{0.72\linewidth}@{}}
+      \toprule
+      Block & Wordings \\
+      \midrule
+      Attack & \enquote{prompt injection(s)}, \enquote{indirect injection},
+        \enquote{injected instruction(s)}, \enquote{injected prompt(s)},
+        \enquote{instruction injection}, \enquote{goal hijacking},
+        \enquote{prompt hijacking}, \enquote{task hijacking} \\
+      System & LLM(s), \enquote{language model(s)}, agent(s), agentic,
+        chatbot(s), \enquote{retrieval-augmented}, RAG \\
+      Application & indirect, \enquote{LLM-integrated}, integrated,
+        application(s), \enquote{real-world}, deployed, deployment,
+        plugin(s), web, email, retrieval, \enquote{third-party}, tool(s) \\
+      Defence & defense(s), defence(s), defend(ing), mitigation, mitigate,
+        detection, detect(or), filter(ing), guardrail(s), delimiter(s),
+        spotlighting, \enquote{instruction hierarchy}, \enquote{fine-tuning},
+        \enquote{fine-tuned}, prevent(ion), protect(ion) \\
+      Adaptive & adaptive, bypass(ed), evade, evasion, circumvent, break(s),
+        optimi[sz]ation, optimized, \enquote{red teaming} \\
+      Guarantee & provable, provably, guarantee(d), \enquote{by design},
+        certified, formal, \enquote{information flow}, \enquote{control
+        flow}, \enquote{data flow}, isolation, \enquote{privilege
+        separation}, \enquote{least privilege}, capability,
+        \enquote{policy enforcement}, sandbox(ing), \enquote{design
+        pattern(s)}, \enquote{dual LLM}, deterministic, architecture \\
+      Utility & utility, \enquote{task performance}, overhead, cost,
+        \enquote{trade-off}, tradeoff, usability, benign \\
+      Benchmark & benchmark(s), evaluation, evaluate, measure,
+        \enquote{attack success}, \enquote{success rate} \\
+      Extraction & \enquote{system prompt(s)}, \enquote{prompt extraction},
+        \enquote{prompt leaking/leakage/leak}, \enquote{prompt stealing},
+        \enquote{prompt theft}, \enquote{hidden prompt(s)}; with extract,
+        leak, steal, reveal, recover, exfiltrate and their forms \\
+      Separation & \enquote{instructions and data}, \enquote{instruction
+        and data}, \enquote{data and instructions},
+        \enquote{instruction-data}, \enquote{separate/separating
+        instructions}, \enquote{separation of instructions},
+        \enquote{structured query/queries}, \enquote{single channel},
+        \enquote{same channel} \\
+      Untrusted (R1) & \enquote{untrusted data/input(s)/content/sources/tool} \\
+      Adversarial (R2) & \enquote{adversarial prompt(s)}, \enquote{malicious
+        instruction(s)}, \enquote{malicious prompt(s)}, \enquote{hidden
+        instruction(s)}; with exfiltration, \enquote{tool misuse}, hijack,
+        manipulate \\
+      Prompt security (R3) & \enquote{prompt attack(s)}, \enquote{prompt
+        security}, \enquote{prompt-based attack(s)}, \enquote{adversarial
+        prompting} \\
+      \bottomrule
+    \end{tabular}
+  \end{sidecaption}
+\end{table}
+
+\begin{table}[tbp]
+  \begin{sidecaption}{Queries and hits per database, searched 27 November
+    2026. S = supporting query, C = counter-query, R = repair query added
+    after the check by meaning, CR = its counter-query; the blocks are
+    defined in \cref{prompt-injection:concepts}. Databases: OpenAlex (OA;
+    not open access), IEEE Xplore (IEEE), Web of Science (WoS), Scopus,
+    Semantic Scholar (S2, bulk search). Years 2022--2026; title and
+    abstract where the database supports it; no upper limit, so the
+    numbers are all hits. \enquote{--} means that the search failed: IEEE
+    Xplore had spent its daily quota. $^{a}$ the database reported a few
+    more hits than it delivered (at most 16 fewer). DBLP failed for every
+    query and is not listed.}[prompt-injection:queries]
+    \centering\footnotesize
+    \begin{tabular}{@{}lp{0.42\linewidth}rrrrr@{}}
+      \toprule
+      & Keywords & OA & IEEE & WoS & Scopus & S2 \\
+      \midrule
+      S1 & Attack AND System & 3{,}703 & 476 & 449 & 878 & 2{,}065$^{a}$ \\
+      S2 & Attack AND Application & 3{,}292 & 435 & 433 & 787 & 1{,}811$^{a}$ \\
+      S3 & Attack AND Defence & 3{,}044$^{a}$ & 436 & 377 & 748 & 1{,}687$^{a}$ \\
+      S4 & Attack AND Defence AND Adaptive & 1{,}095 & 175 & 123 & 233 & 617 \\
+      S5 & Attack AND Guarantee & 1{,}966 & 314 & 238 & 485 & 1{,}206 \\
+      S6 & Attack AND Guarantee AND Utility & 1{,}250 & 99 & 82 & 150 & 828 \\
+      S7 & Attack AND Benchmark AND agent(s)/agentic & 1{,}445 & 151 & 112 & 201 & 811 \\
+      S8 & Extraction AND System & 575 & 46 & 91 & 130 & 338$^{a}$ \\
+      S9 & System AND Separation & 1{,}376 & 844 & 508 & 3{,}013 & 1{,}488$^{a}$ \\
+      C1 & S2 AND (overstated, ineffective, unrealistic, \enquote{limited impact}, \enquote{low success}, rarely, \enquote{no evidence}, \enquote{in the wild}, hype) & 120 & 13 & 16 & 24 & 981 \\
+      C2 & S4 AND (robust, resilient, resistant, immune, \enquote{near-zero}, effective, secure, \enquote{state-of-the-art}) & 656 & 131 & 88 & 165 & 395 \\
+      C3 & S5 AND (solve(d), eliminate, prevents, completely, fully, provable, guarantee, \enquote{by design}) & 677 & 109 & 53 & 104 & 744 \\
+      C4 & S6 AND (\enquote{no loss}, \enquote{without loss}, negligible, preserve, maintain, \enquote{without sacrificing}) & 334 & 35 & 31 & 44 & 250 \\
+      C5 & S8 AND (defence, protect, safeguard, prevent, mitigate, obfuscation, secure, robust) & 281 & 24 & 49 & 61 & 170 \\
+      C6 & S9 AND (separate, distinguish, robust, \enquote{by design}, enforce) & 319 & 123 & 67 & 366 & 613 \\
+      C7 & S7 AND the robustness words of C2 & 674 & 106 & 71 & 123 & 430 \\
+      R1 & System AND Untrusted AND (isolation, \enquote{least privilege}, \enquote{information flow}, integrity, guardrail, defence, prevent) & 180 & -- & 15 & 28 & 127 \\
+      R2 & tool-using agents AND Adversarial & 131 & -- & 16 & 25 & 101$^{a}$ \\
+      R3 & Prompt security AND System AND Defence & 848 & -- & 72 & 114 & 584 \\
+      CR1 & R1 AND the words of C3 & 74 & -- & 6 & 7 & 72 \\
+      CR2 & R2 AND the robustness words of C2 & 81 & -- & 11 & 18 & 65$^{a}$ \\
+      CR3 & R3 AND the robustness words of C2 & 167 & -- & 50 & 73 & 395 \\
+      \bottomrule
+    \end{tabular}
+  \end{sidecaption}
+\end{table}
+
+\paragraph{Studies the queries had to return.}
+Before screening, the following studies were named as ones a working
+search must return: the paper that introduced indirect prompt
+injection\autocite{Greshake2023Signed}, the two adaptive-attack
+evaluations\autocite{Zhan2025Adaptive,Nasr2026AttackerSecond}, the
+design-pattern and information-flow
+designs\autocite{BeurerKellner2025Patterns,Wu2024IFC}, the capability
+design CaMeL\autocite{Debenedetti2026CaMeL} and the measurement of
+prompt extraction\autocite{Zhang2024Extraction}. All of them were
+returned by the concept queries.
+
+\paragraph{Check by meaning.}
+The keyword search was checked against a semantic search (the 50 nearest
+works in OpenAlex for each of six questions: indirect injection, defences
+bypassed by adaptive attacks, system-level designs with provable
+security, extraction of system prompts, robust defences with near-zero
+attack success, and the separation of instructions and data). Of the 300
+places, the works not held by the keyword search were a design that
+enforces least privilege on agent tools\autocite{Kim2025PFI}, an attack
+that makes agents leak data through tool use\autocite{Fu2024Imprompter},
+a systematisation of prompt security, two papers on poisoning or
+backdoors in system prompts, a book chapter and a jailbreak defence.
+The repair queries R1 (untrusted data with isolation, least privilege or
+information flow), R2 (adversarial or hidden instructions with
+exfiltration or tool misuse) and R3 (prompt attacks and prompt security)
+were written by concept, not by title, and returned the first three; the
+remaining four are poisoning, backdoor, book or jailbreak work outside
+the question.
+
+\paragraph{Deduplication.}
+The search client merges copies of a work within one search (same DOI,
+or same title and authors when there is no DOI) and folds a preprint into
+its published version when the match is unambiguous. Copies that reach
+the session from different searches remain as separate records (579 records are flagged as possible copies of another record);
+the hit list therefore counts some works twice, typically an arXiv
+preprint beside its conference version.
+
+\paragraph{Screening.}
+The searches returned 11,360 records (10,370 distinct works once copies
+are folded). Screening followed a tiered design, and three numbers
+describe it.
+
+\emph{Screened in full: 2,276 records.} These are the first tier, every
+record at place 100 or better in at least one relevance-ordered answer of
+one query in one database (2,192 records), together with the 79 records
+returned by the check by meaning and the 5 cited works that lay outside
+that tier. Each first-tier record was classified from its title and
+abstract by a large language model (no examples; a written research
+context), into four categories (supports the claim; qualifies or
+contradicts it; adjacent subtopic; off-topic) and, for discards, six
+labelled exclusion criteria: \emph{other-field} (not about the security of
+language models), \emph{jailbreak-only} (jailbreaks or harmful content
+rather than injected instructions), \emph{other-question} (security of
+language models, but another question such as backdoors, poisoning,
+denial of service or privacy), \emph{llm-as-tool} (a language model used
+for some task, security only in passing), \emph{no-evidence} (opinion,
+position or overview without evidence of its own) and \emph{no-abstract}.
+An AI agent then read every record classified as qualifying (436) and
+every low-confidence record, corrected 102 decisions that contradicted the
+criteria (kept records carrying an exclusion criterion, discards without
+one), screened the 79 check-by-meaning hits itself from title and
+abstract, and tagged the 48 works cited here. The fully screened set holds
+637 records that support the claim and 436 that qualify it; 1,203 were
+discarded (668 adjacent, 470 off-topic, and 65 that bear on the topic but
+were excluded by a criterion, mostly for lack of evidence of their own).
+
+\emph{Sampled: 360 records.} From the records outside the first tier, two
+seeded random samples were drawn and screened in the same way: 60 records
+(seed 20261127) and, after further decisions had been made, another 300 of
+the 9,024 records then still pending (seed 20261128). Of the 360, 80 bear
+on the claim: 22.2\,\%, with a 95\,\% Wilson interval of 18.2 to 26.8\,\%.
+The agent read all 80; none reports an independent break of a
+system-level design, and none adds a defence shown by others to hold
+against adaptive attacks. Two that qualify the statements in detail were
+read in full and are cited below. The sample estimates what was not
+screened; it is not a screen of the rest.
+
+\emph{Only counted: 8,724 records.} These were not screened. If the
+sample is representative, an estimated 1,600 to 2,300 of them bear on the
+claim. The search is therefore not exhaustive: the conclusion rests on the
+fully screened first tier, the named studies, the check by meaning and the
+sample, and no statement here says that a kind of study does not exist.
+
+All decisions were made by the language model or the AI agent; none has
+yet been reviewed by the author. For that review, seeded random samples of
+50 of the 1,471 machine discards (seed 20261129) and 30 of the 1,165
+machine inclusions (seed 20261130) have been drawn; their disagreement
+rates are not yet known. Records outside the first tier that the
+classifier had decided before the sampling design was fixed (592, by a
+smaller model and not at random) were reset to undecided and are counted
+among the 8,724.
+
+\paragraph{Verification.}
+Every source cited in this chapter was read in full text (the arXiv,
+ACL Anthology or open conference version), and each statement below
+rests on a passage quoted verbatim, with its page, in the bibliography's
+provenance record. Venues were checked against the publishers' DOI
+records; works without a published version are cited as preprints.
+
+\section{Results}
+\label{prompt-injection:results}
+
+\subsection{Indirect prompt injection works against real systems}
+
+\textcite{Greshake2023Signed} introduced indirect prompt injection: the
+attacker does not talk to the model but places instructions in data the
+application will retrieve, such as a web page. They argue that
+\enquote{LLM-Integrated Applications blur the line between data and
+instructions} and demonstrated the attack against real systems,
+including Bing's GPT-4 powered chat. The mechanism is restated by the
+authors of the standard agent benchmark, who write that LLMs
+\enquote{operate directly on text, lacking a formal way to distinguish
+instructions from data}\autocite{Debenedetti2024AgentDojo}, and by the
+authors of a structured-query defence: \enquote{there is no separation
+between prompts and data}\autocite{Chen2025StruQ}. The only formal
+measurement of this separation found \enquote{all models fail to achieve
+high separation}, and prompt engineering or fine-tuning either did not
+substantially improve separation or reduced the model's
+utility\autocite{Zverev2025Separate}. Goal hijacking and prompt leaking
+were named as attack types already in 2022\autocite{Perez2022Ignore}.
+
+The attacks work outside the laboratory. A black-box attack found 31 of
+36 commercial LLM-integrated applications susceptible
+\autocite{Liu2023HouYi}; optimised injections made agents leak personal data with nearly 80\,\%
+success in an end-to-end evaluation and worked on agent products such as
+Mistral's LeChat\autocite{Fu2024Imprompter};
+a benchmark of 30 tool-using agents found them vulnerable, a
+prompted GPT-4 agent in 24\,\% of the cases\autocite{Zhan2024InjecAgent};
+another benchmark reports an average attack success of up to 84.30\,\%
+with limited effect of current defences\autocite{Zhang2025ASB}; and a global
+competition and an online game, with more than 600,000 and 126,000 human-written
+attacks, showed that models can be manipulated by prompt
+hacking\autocite{Schulhoff2023HackAPrompt,Toyer2024TensorTrust}.
+In a 2026 public competition with 272,000 attack attempts against 13
+frontier models, \enquote{all models proved vulnerable}, with
+attack success rates from 0.5\,\% to 8.5\,\%
+\autocite{Dziemian2026Competition}. Injections also exist on the open
+web: a crawl of 1.2 billion URLs found 15,300 validated instances
+\autocite{Khodayari2026Wild}.
+
+The counter-search found no study showing that indirect injection fails
+against deployed systems, but it found several that narrow how strongly
+the attack works. For the most robust current models the success rate per
+attempt is low\autocite{Dziemian2026Competition}, and attacks in the
+standard benchmark \enquote{break some security properties but not
+all}\autocite{Debenedetti2024AgentDojo}. End to end, attacks on
+retrieval-augmented applications \enquote{settle around a 40\,\% success
+rate}\autocite{DeStefano2026RagnRoll}; in a realistic retrieval pipeline,
+\enquote{prior protocols substantially overstate attack effectiveness},
+although \enquote{LLM-driven prompt injections remain effective
+end-to-end}\autocite{Yin2026Generator}. Benchmark numbers themselves can
+mislead: one audit found a harness that inflated attack success
+eighteen-fold\autocite{Shaw2026SilentFailures}, and a simple pair of
+filters reached perfect security on four public agent benchmarks, which
+its authors read as evidence of \enquote{weak attacks} in those
+benchmarks\autocite{Bhagwatkar2025Firewalls}. The defensible wording is
+that injection \emph{works against real systems}, not that it always
+succeeds.
+
+\subsection{Defences reduce attack success but are bypassed by adaptive attacks}
+
+Many defences report large reductions in attack success when evaluated
+against fixed attacks. Marking the provenance of input text
+(spotlighting) \enquote{reduces the attack success rate from greater
+than 50\,\% to below 2\,\%} in its authors'
+experiments\autocite{Hines2024Spotlighting}; training a model to respect
+an instruction hierarchy \enquote{drastically increases
+robustness}\autocite{Wallace2024Hierarchy}; preference-optimisation
+fine-tuning reduces attack success to below 10\,\% \enquote{even against
+attacks much more sophisticated than ones seen during
+training}\autocite{Chen2025SecAlign}; segment embeddings, attention-based
+detection, a game-theoretic detector, a task-alignment check, an
+LLM-based filter and a re-execution check all report gains of the same
+kind\autocite{Wu2025ISE,Hung2025AttentionTracker,Liu2025DataSentinel,%
+Jia2025TaskShield,Shi2025PromptArmor,Zhu2025MELON}.
+
+Evaluations by attackers who adapt to the defence tell a different
+story. \textcite{Zhan2025Adaptive} \enquote{evaluate eight different
+defenses and bypass all of them using adaptive attacks, consistently
+achieving an attack success rate of over 50\,\%}. \textcite{Nasr2026AttackerSecond}
+(USENIX Security 2026; authors from Anthropic, Google DeepMind, OpenAI, ETH
+Zürich) \enquote{bypass 12 recent defenses [\dots] with attack success
+rate above 90\,\% for most}, noting that \enquote{the majority of
+defenses originally reported near-zero attack success rates}. The twelve
+cover defences against jailbreaks as well as prompt injections; the
+prompt-injection defences among them include spotlighting, prompt
+sandwiching, the structured-query and a fine-tuned defence, several
+detectors, and the re-execution defence whose title calls it provable,
+against which their attack reached 76\,\%. Detectors that check whether the model
+still answers a known question were evaded with detection rates
+\enquote{as low as 0\,\%} while the attack succeeded in
+91\,\%\autocite{Choudhary2025NotDetect}. Earlier systematic evaluations
+reached the same verdict without adaptive attacks: \enquote{no existing
+defenses are sufficient}\autocite{Liu2024Formalizing}, and off-the-shelf
+detectors \enquote{struggle to effectively detect indirect prompt
+injection attacks}\autocite{Chen2025DetectRemove}.
+
+The authors of the defences agree. The structured-query defence
+\enquote{is not yet fully secure}\autocite{Chen2025StruQ}; the authors of
+a leading fine-tuned model write that it, \enquote{similar to existing
+defenses, remains vulnerable to strong adaptive attacks}, and conclude:
+\enquote{That is, PI is not solved.}\autocite{Chen2025MetaSecAlign}.
+The newest fine-tuning recipe from the group behind the structured-query
+defence starts from the observation that trained models \enquote{still
+suffer from near 100\,\% attack success rates (ASRs) against adaptive
+prompt injections}; it reduces this to 9.0\,\% for one adaptive attack,
+against 94.0\,\% for its predecessor\autocite{Peng2026SecOPD} --- a large
+improvement, but not prevention.
+Model-level defences are, in the words of an information-flow paper,
+\enquote{likely vulnerable to attacks specifically tailored to defeat
+that defense}\autocite{Wu2024IFC}. Three independent groups and the
+defence authors themselves converge on this. Not every recent defence
+has been attacked adaptively by others in the sources read. An LLM-based
+filter reports false-positive and false-negative rates below 1\,\% and
+effectiveness against adaptive attacks\autocite{Shi2025PromptArmor}; an
+attention-based detector, peer-reviewed, is reported to be \enquote{robust
+against adaptive adversaries}\autocite{Zhong2026Rennervate}; and learnable
+delimiters reach near-zero attack success and are said to remain effective
+when the attacker knows the defence\autocite{Zhao2026LTBD}. These stand as
+qualifying claims until others test them; the history above (defences
+reporting near-zero attack success that later fell to adaptive attacks) is
+the reason not to treat them as settled.
+
+\subsection{Guarantees come from the design of the system, at a cost}
+
+The counter-search for \enquote{provable}, \enquote{by design} and
+\enquote{solved} found a group of system-level designs that do give
+guarantees, and they qualify the claim. CaMeL extracts the control and
+data flow from the trusted user request, so that \enquote{the untrusted
+data retrieved by the LLM can never impact the program flow}, and checks
+every tool call against a capability policy; on the standard benchmark
+it solved \enquote{77\,\% of tasks with provable security (compared to
+84\,\% with an undefended system)}\autocite{Debenedetti2026CaMeL}. Its
+guarantee covers a defined class of attacks: the authors state that
+\enquote{it cannot defend against text-to-text attacks}, which change
+only what the user is told. An information-flow planner
+\enquote{deterministically enforces security policies} and completes
+\enquote{a broad range of tasks with security
+guarantees}\autocite{Costa2026FIDES}; separating planner and executor
+gives the same kind of control\autocite{Wu2024IFC}. Least-privilege
+policies on tool calls reduced attack success on the benchmark from
+39.9\,\% to 1.0\,\% while keeping utility, and hand-written policies
+\enquote{can provably reduce the ASR to 0\,\%}\autocite{Shi2025Progent};
+a certifier for structured actions such as paying an invoice
+\enquote{admits no unsafe action} under a bounded corruption budget,
+although in the same study a realistic injection fooled every model but
+one\autocite{Pandey2026Certified};
+a related design argues that \enquote{the principle of least privilege
+should be enforced to restrict the impact of untrusted data on the
+privileged tools}\autocite{Kim2025PFI}, and a tool-dependency-graph
+defence criticises prompting and detection for relying on \enquote{the
+model's inherent security}\autocite{An2025IPIGuard}.
+
+These guarantees have so far been tested mostly against fixed benchmark
+attacks. An independent review of such out-of-band defences warns that
+\enquote{every one of them is validated only on static benchmarks}; in its
+own small adaptive reproduction, the least-privilege defence held, cutting
+attack success from 25.8\,\% to 4.2\,\% and staying low under a
+hand-crafted adaptive attack\autocite{Narisetty2026OutOfBand}. That is
+one data point, not a settled result.
+
+Enforcement in code must itself be sound: a deterministic system-call
+gate for agent sandboxes was defeated by a race in 18.9 to 23.1\,\% of
+attempts, while kernel-level confinement resisted the tested attacks; its
+authors present this as evidence \enquote{within the stated threat model
+and tested matrix, not a proof against untested
+interfaces}\autocite{Erisen2026Seccomp}.
+
+The price is generality. The authors of a set of design patterns write
+that their patterns \enquote{constrain the actions of agents to
+explicitly prevent them from solving arbitrary tasks}, that \enquote{once
+an LLM agent has ingested untrusted input, it must be constrained so that
+it is impossible for that input to trigger any consequential actions},
+and that \enquote{it is unlikely that general-purpose agents can provide
+meaningful and reliable safety guarantees}\autocite{BeurerKellner2025Patterns}.
+Asking the user to confirm actions is part of the same toolbox --- CaMeL
+asks for confirmation when a policy would be
+violated\autocite{Debenedetti2026CaMeL} --- but the design-pattern
+authors note that confirming every command would be cumbersome for the
+user\autocite{BeurerKellner2025Patterns}. Most of these designs are
+preprints; among the sources read, CaMeL (published) and the
+information-flow planner (accepted for NeurIPS 2026) are the peer-reviewed
+system-level designs that claim provable or deterministic security (the
+re-execution defence that also calls itself provable is a detector, and it
+was bypassed).
+
+\subsection{System prompts are readily extracted}
+
+Simple text-based attacks \enquote{can in fact reveal prompts with high
+probability} across 11 models, and prompts were extracted from deployed
+systems \enquote{despite existing defenses in
+place}\autocite{Zhang2024Extraction}. Aligned models such as GPT-4 were
+found \enquote{highly vulnerable to prompt extraction attacks, even under
+the most straightforward user attacks}\autocite{Liang2024Leaked}, and
+prompt theft was one outcome of the commercial-application attack
+\autocite{Liu2023HouYi}. The counter-search qualifies this: in an
+extraction benchmark \enquote{all seven evaluated models are vulnerable in
+an undefended state}, but a defended GPT-4 configuration showed
+resilience\autocite{Wang2024Raccoon}, and a proxy-prompt defence
+protected 94.70\,\% of prompts from extraction in its
+evaluation\autocite{Zhuang2026ProxyPrompt}. In a pipeline of production agents, \enquote{the entry agent does not
+leak its system prompt (0/40)}, yet the pipeline was still compromised by
+an injected instruction\autocite{Sidot2026Verify}. Hidden prompts are thus
+easy to extract from undefended models, and no defence read here claims to
+make extraction impossible.
+
+\section{Discussion and limitations}
+\label{prompt-injection:discussion}
+
+The answer rests on convergence across independent strands: attack
+papers, benchmarks, adaptive evaluations of defences, the defence authors'
+own limitations sections, and system-level designs whose guarantees are
+explicitly scoped. The strongest single pieces of evidence for (b) are two
+peer-reviewed adaptive evaluations\autocite{Zhan2025Adaptive,Nasr2026AttackerSecond};
+the strongest for (c) are one peer-reviewed design\autocite{Debenedetti2026CaMeL}
+and one accepted for publication\autocite{Costa2026FIDES}.
+
+The searches have the following known gaps. DBLP could not be searched
+at all, and IEEE Xplore failed for the six repair queries; a paper
+indexed only there could have been missed.
+Semantic Scholar matched one counter-query (C1) much more loosely than
+the other databases (981 hits against 13 to 120); its extra records were
+treated like all others (screened if in the first tier or the sample). Only 2,276 records were screened in full and 360 more as a random
+sample; 8,724 were only counted. The sample puts the share of relevant
+records among them at 22.2\,\% (95\,\% interval 18.2 to 26.8\,\%), so an
+estimated 1,600 to 2,300 relevant records were never read. The search is
+not exhaustive, and the answer rests on the first tier, the named
+studies, the check by meaning and the sample. That the sample's 80
+relevant records contained nothing that changes the answer makes it
+unlikely, but not impossible, that the unread records hold a refutation. The screening is by a
+language model and an AI agent and has not yet been reviewed by the
+author. Full texts were read in their arXiv or other open versions, which
+can differ from the published papers in detail. Several cited works are
+preprints; they are marked as such in the bibliography, and no conclusion
+rests on preprints alone.
+
+The field moves fast: several cited works are preprints from 2025 and
+2026, and a defence published after these searches could change part
+(b). Benchmarks measure attack success on fixed task suites; none of the
+sources measures prevention in a deployed business system over time.
+
+\section{Conclusion}
+\label{prompt-injection:conclusion}
+
+No: the literature screened here contains no filter, detector, prompt
+technique or trained model that reliably prevents prompt injection
+against an attacker who adapts to it, while system-level designs that
+keep untrusted data out of the control flow and enforce policies in code
+do give provable guarantees, but only for a defined class of attacks and
+at a cost in what the agent can do. This agrees with the OWASP
+statements\autocite{OWASP2025LLM,OWASP2026LLM} and with
+Willison\autocite{Willison2025Trifecta}, with one refinement: the
+\enquote{architectural} defence that OWASP recommends can be provably
+secure for its class of attacks, not merely better. The answer rests on
+the 2,276 records screened in full, the named studies, the check by
+meaning and a random sample of 360 of the remaining records; an estimated
+1,600 to 2,300 relevant records among the 8,724 that were only counted
+have not been read.
+
+For the lecture this means: it may say that instructions and data share
+one channel; that indirect injection works against real products; that
+published defences reduce attack success but have been bypassed by
+adaptive attackers; and that the remedy is to limit what a successful
+injection can do (least privilege, authorisation in code, confirmation
+of consequential actions). It must not say that prompt injection
+\enquote{cannot be prevented} or that \enquote{no defence works}, since
+designs such as CaMeL give guarantees for a class of attacks; nor that a
+vendor's classifier or a fine-tuned model makes an application safe.
+
+\section{Future work}
+\label{prompt-injection:future}
+
+This search left undone: the screening of the 8,724 records that were
+only counted; the six IEEE Xplore cells of the repair queries (quota) and
+every DBLP query (blocked); a review by the author of the machine
+screening, including the seeded samples drawn for it; the published
+versions of several preprints; and one measurement study of in-page
+prompt injections against web agents that is not openly
+available.\footnote{\enquote{A Large-scale Measurement of In-Page Prompt
+Injections Against LLM Web Agents}, ACM, 2026, doi:10.1145/3830454.3846661.}
+
+The field lacks independent adaptive evaluations of the newest defences
+(the LLM-based filter\autocite{Shi2025PromptArmor} and the system-level
+designs), measurements of how much utility system-level designs cost in
+realistic business workflows rather than benchmark suites, and studies of
+injections in deployed agents over time. If an independent adaptive
+evaluation found a model-level defence that held, part (b) of the lecture
+would have to say \enquote{most published defences}; if one broke a
+system-level design inside its stated threat model, part (c) would lose
+its only guarantee.
+
+\section{Hits that bear on the claim}
+\label{prompt-injection:hits}
+
+% Author's note: table generated by
+%   scholar sessions export prompt-injection -f table --bearing-only \
+%     --lang en --label prompt-injection:hits-table ... \
+%     -o litteratursokning/prompt-injection-full
+% raw CSV export beside it: litteratursokning/prompt-injection-full.csv
+\input{literature-search/prompt-injection-full}

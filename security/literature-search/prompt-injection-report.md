@@ -98,6 +98,10 @@ Files:
    Strength: moderate. This is a design recommendation drawn from the
    system-level literature. No study measures it in deployed business
    systems.
+   Qualification: the enforcing code must itself be correct. A
+   deterministic system-call gate was beaten by a race in about one attempt
+   in five, while kernel-level confinement held [Erisen2026Seccomp
+   (preprint)].
 
 6. **Hidden system prompts are not secret.** Simple text attacks reveal them
    "with high probability" across 11 models. The same study extracted
@@ -161,8 +165,19 @@ Without the proxy:
 
 The Scopus cells of R1-R3 and CR1-CR3 were then rerun through the proxy
 (13:42-13:45). These were fresh fetches, not cache hits. The counts were the
-same, and 4 records were added. Every full text cited is an open copy (arXiv,
-ACL Anthology); nothing closed-access is cited.
+same, and 4 records were added. Every full text cited is an open copy (arXiv, ACL
+Anthology, USENIX, Zenodo); nothing closed-access is cited.
+
+Other steps without the proxy:
+
+- The abstract enrichment of pending records (14:28-15:16). Through the
+  proxy it hit SOCKS timeouts, so it was rerun directly and stopped at
+  6,400 of 8,813 records.
+- The classification of the 300-record sample (17:04-17:10), whose
+  per-batch abstract look-ups went directly.
+
+In both, Scopus abstracts were unavailable. That affects only records
+whose abstract no other database held.
 
 ### Query x provider x hits
 
@@ -203,9 +218,9 @@ wordings are in the chapter (table `prompt-injection:concepts`) and in the
 script.
 
 Oddity: s2 returns 981 hits for C1, although C1 is S2 AND more terms; the
-other providers return 13-120 for C1. S2's bulk search evidently matches one
-of C1's phrases ("in the wild", "limited impact", ...) loosely. The extra
-records are mostly off-topic and were classified like the rest.
+other providers return 13-120 for C1. Why S2's bulk search matches so loosely here
+was not investigated. Its extra records were treated like all others:
+screened if they fell in tier 1 or a sample, otherwise counted.
 
 ### Studies the queries had to return
 
@@ -219,10 +234,9 @@ The concept queries returned all seven named studies:
 - Debenedetti et al. 2026 (CaMeL).
 - Zhang et al. 2024 (prompt extraction).
 
-This was checked by title in the session JSON. The earlier agent's
-`sessions check` output marks five of them "not in any session", but that is
-false: the check matched on arXiv ids, while the session holds these records
-under other id forms.
+This was checked by title in the session JSON. The earlier agent's `sessions check` output marks five of them "not in any
+session", but the session does hold them (checked by title). Why the check
+missed them was not investigated.
 
 ### Check by meaning
 
@@ -239,56 +253,91 @@ did not then hold:
 
 ### Screening
 
-**Design.** The screen is tiered (skill appendix guide, "Screening in
-tiers"):
+The session holds 11,360 records (10,370 distinct works after folding
+copies). Three numbers describe the screen:
 
-- Tier 1 is every record at place 100 or better in at least one
-  relevance-ordered answer: «T1» of the «TOTAL» records.
-- The check-by-meaning hits that lie outside tier 1 («CHK» records) were
-  screened by the agent.
-- The named studies were verified in full text.
-- The remaining «REST» records were counted, not screened. A seeded sample
-  of them was screened: 60 records, seed 20261127, sample id
-  `2026-11-27T12:14:28+00:00/rest/seed=20261127/8951c76c1ee1`.
+- **Screened in full: 2,276 records.**
+  - Tier 1, every record at place 100 or better in at least one
+    relevance-ordered answer: 2,192 records.
+  - The 79 check-by-meaning hits outside tier 1, screened by the agent
+    from title and abstract.
+  - The 5 cited works outside tier 1.
+  - Result: 637 supporting, 436 qualifying, 1,203 discarded (668
+    adjacent, 470 off-topic, 65 bearing on the topic but excluded by a
+    criterion).
+  - Exclusion tags on the discards: no-evidence 326, other-field 299,
+    llm-as-tool 286, jailbreak-only 231, other-question 43, no-abstract
+    28.
+- **Sampled: 360 records**, drawn at random from outside tier 1 and
+  screened the same way:
+  - Sample 1: 60 records (seed 20261127, id
+    `2026-11-27T12:14:28+00:00/rest/seed=20261127/8951c76c1ee1`, drawn from
+    9,167 pending). 13 bear on the claim.
+  - Sample 2: 300 records (seed 20261128, id
+    `2026-11-27T16:04:18+00:00/rest/seed=20261128/69f64e8c6fdd`, drawn from
+    9,024 pending after the corrections). 67 bear on the claim (22.3 %;
+    modified Wilson interval 18.0-27.4 %).
+  - Combined: **80 of 360 = 22.2 % (95 % Wilson interval 18.2-26.8 %)**.
+  - The two draws are not one simple random sample. The second excluded
+    the first and the 84 agent-decided records. The combined rate is
+    therefore an approximation; the two separate rates agree.
+- **Only counted: 8,724 records** (7,910 distinct works). If the sample is
+  representative, an estimated **1,600 to 2,300** of them (1,400 to 2,100
+  distinct works) bear on the claim and were not screened.
+
+The search is therefore **not exhaustive**. The conclusions rest on tier 1,
+the named studies, the check by meaning and the 360-record sample. No
+"nothing exists" statement is made.
+
+**What the sample showed.** I read all 80 bearing sample records. None
+reports an independent break of a system-level or "provable" design. None
+adds a defence that others have shown to hold against adaptive attacks;
+several authors claim adaptive robustness for their own defence, among
+them LocalAlign (ACM CCS 2026 per its artefact record). Two records that
+qualify statements 5 and 6 were read in full and added to the bib:
+Erisen2026Seccomp and Sidot2026Verify (both industry preprints). No
+statement changes.
 
 **Who screened.**
 
 - The classifier was `scholar llm classify --no-examples` against
   `prompt-injection-context.txt`, with four categories and the exclusion
   labels other-field, jailbreak-only, llm-as-tool, no-evidence and
-  no-abstract. The label other-question was added by the agent for
-  corrections.
-- Model anthropic/claude-sonnet-5-5, prompt versions d083432dc30e599c
-  (the first 20 records) and f1869bb1af5461a5 (the rest).
-- The agent (`--source agent`, by lit-prompt-injection) then:
-  - read all «T1Q» qualifying rows and the 93 low-confidence
-    non-qualifying rows in tier 1;
-  - corrected «FIX» inconsistent decisions (kept rows that carried an
-    exclusion tag, kept rows labelled adjacent, discards without a
-    criterion);
-  - screened the «CHK» check-by-meaning hits outside tier 1 from title and
-    abstract;
-  - tagged the 48 cited works with theme tags.
-- No decision has been reviewed by the author. A seeded sample of
-  discards for the author's review is drawn («SAMPLE»), not yet reviewed.
+  no-abstract. The agent added the label other-question.
+- Model anthropic/claude-sonnet-5-5 for tier 1 and both samples. Prompt
+  versions: d083432dc30e599c for the first 20 records, f1869bb1af5461a5
+  for the rest of tier 1 and sample 1, and 31bb9a9387e4118d for sample 2.
+  The vocabulary then also held the theme tags.
+- The agent, lit-prompt-injection (`--source agent`):
+  - read all qualifying and low-confidence rows of tier 1;
+  - corrected 102 decisions (50 kept rows tagged no-evidence and 3 tagged
+    no-abstract were discarded; 13 kept-but-adjacent rows were discarded;
+    36 discards without a criterion received one);
+  - screened the 79 check-by-meaning hits;
+  - tagged the 48 cited works with themes.
+- Side effect: because session tags form the classifier's vocabulary,
+  sample 2 also received theme tags such as pi-by-design. These are
+  machine notes, not citations; the table counts "0 cited", because only
+  an author-confirmed decision counts as cited.
+- Before the sampling design was fixed, 592 tier-2 records had been
+  classified by claude-haiku-5-5, not at random. They were reset to pending
+  with the history kept and are counted among the 8,724.
+- Nothing has been reviewed by the author. Two review samples are drawn
+  for the author: 50 of 1,471 machine discards (seed 20261129, sample
+  `2026-11-27T16:19:06+00:00/seed=20261129/71f24f4b47b0`) and 30 of 1,165
+  machine inclusions (seed 20261130). Review them with `scholar sessions
+  decide prompt-injection --source human ...` or in the TUI (filter s);
+  `scholar llm sample prompt-injection --report` then gives the
+  disagreement rate.
 
-**Counts (after the corrections).**
+**Cost.**
 
-- Tier 1: «T1S» supporting, «T1Q» qualifying, «T1D» discarded («T1A»
-  adjacent, «T1O» off-topic, «T1X» excluded by a criterion although on
-  topic).
-- Rest sample: 13 of 60 bear on the claim (21.7 %; 95 % modified Wilson
-  interval 13.1-33.6 %, as computed by `scholar sessions tier-sample
-  --report`). By the classifier, unreviewed.
-- So an estimated one in five of the «REST» unscreened records bears on
-  the claim. No negative statement ("nothing found") is made about them.
-
-«HAIKU»
-
-**Cost.** Classification used about 2.1 M input and 0.38 M output tokens
-on Sonnet 5.5, and about 0.4 M and 0.08 M on Haiku 5.5. At the cached list
-prices of 2026-11-03 that is about $8. The team lead stopped further
-classification of tier 2 for cost reasons.
+- Sonnet 5.5: about 2.35 M input and 0.42 M output tokens.
+- Haiku 5.5, for the 592 records later reset: about 0.4 M input and
+  0.08 M output tokens.
+- At the cached list prices of 2026-11-03 ($2/$10 and $0.10/$0.50 per M
+  tokens) that is about $9 in all.
+- The team lead stopped whole-session classification for cost reasons.
 
 ### Non-scholar sources (all recorded)
 
@@ -386,7 +435,12 @@ Earlier look-ups:
   independent reproduction (Narisetty2026OutOfBand). The same paper warns
   that all such defences have so far been validated only on static
   benchmarks.
-- Protection against extraction: Wang2024Raccoon, Zhuang2026ProxyPrompt.
+- Protection against extraction: Wang2024Raccoon, Zhuang2026ProxyPrompt;
+  in one CI/CD study the entry agent did not leak its system prompt
+  (Sidot2026Verify, preprint).
+- Enforcement in code can itself be flawed: a deterministic seccomp gate
+  was raced in 18.9-23.1 % of attempts, while kernel-level confinement held
+  (Erisen2026Seccomp, preprint).
 
 **Refutes:** none found. No source read shows that prompt injection can be
 reliably prevented for an unconstrained agent, or that the threat to
@@ -431,9 +485,11 @@ lie beside the question:
   `PROVS='-p ieee' ./prompt-injection-queries.sh prompt-injection-runs R1 R2
   R3 CR1 CR2 CR3`.
 - **The screening was done by machines.** An LLM classifier and an AI agent
-  screened the session; the author has not reviewed it. Seeded samples for
-  that review have been drawn but not reviewed. Tier 2 was classified by a
-  smaller model (see Screening).
+  screened the session, and the author has not reviewed it. Seeded samples
+  for that review have been drawn but not reviewed.
+- **Not exhaustive.** 2,276 records were screened in full and 360 sampled;
+  8,724 were only counted. The sample suggests that 1,600 to 2,300
+  relevant records were never read.
 - **Full texts** were read in their arXiv or other open versions, which may
   differ from the published versions.
 - **Several load-bearing sources are preprints:** Chen2025MetaSecAlign,

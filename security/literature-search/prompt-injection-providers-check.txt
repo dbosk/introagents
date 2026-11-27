@@ -1,0 +1,40 @@
+2026-11-27T10:46:34+01:00
+Route: proxy socks5h://127.0.0.1:1081 (SCHOLAR_PROXY)
+                                Provider Health                                 
+ ────────────────────────────────────────────────────────────────────────────── 
+  Provider            Configured   Status       Detail                          
+ ────────────────────────────────────────────────────────────────────────────── 
+  s2                  Yes          ok                                           
+  openalex            Yes          ok           API key configured; $0.613 of   
+                                                $1.00 daily + $4.97 prepaid     
+                                                (expires 2027-02-16) + 49659    
+                                                one-time credits (expires       
+                                                2027-02-16) left; resets 01:00  
+                                                (in 14h13m)                     
+  dblp                Yes          http error   non-JSON response (HTTP 202,    
+                                                text/html)                      
+  wos                 Yes          ok                                           
+  ieee                Yes          ok                                           
+  arxiv               Yes          ok                                           
+  ssrn                Yes          ok           shares the openalex key and     
+                                                budget                          
+  biorxiv             Yes          ok           shares the openalex key and     
+                                                budget                          
+  medrxiv             Yes          ok           shares the openalex key and     
+                                                budget                          
+  chemrxiv            Yes          ok           shares the openalex key and     
+                                                budget                          
+  researchsquare      Yes          ok           shares the openalex key and     
+                                                budget                          
+  preprintsorg        Yes          ok           shares the openalex key and     
+                                                budget                          
+  iacr                Yes          ok           shares the openalex key and     
+                                                budget                          
+  openalex-semantic   Yes          ok           shares the openalex key and     
+                                                budget; 1 request/s             
+  hal                 Yes          ok                                           
+  scopus              Yes          ok           COMPLETE view (abstracts, all   
+                                                authors)                        
+ ────────────────────────────────────────────────────────────────────────────── 
+
+dblp: http error non-JSON response (HTTP 202, text/html)
