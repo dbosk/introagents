@@ -239,7 +239,56 @@ did not then hold:
 
 ### Screening
 
-CLASSIFICATION-SECTION
+**Design.** The screen is tiered (skill appendix guide, "Screening in
+tiers"):
+
+- Tier 1 is every record at place 100 or better in at least one
+  relevance-ordered answer: «T1» of the «TOTAL» records.
+- The check-by-meaning hits that lie outside tier 1 («CHK» records) were
+  screened by the agent.
+- The named studies were verified in full text.
+- The remaining «REST» records were counted, not screened. A seeded sample
+  of them was screened: 60 records, seed 20261127, sample id
+  `2026-11-27T12:14:28+00:00/rest/seed=20261127/8951c76c1ee1`.
+
+**Who screened.**
+
+- The classifier was `scholar llm classify --no-examples` against
+  `prompt-injection-context.txt`, with four categories and the exclusion
+  labels other-field, jailbreak-only, llm-as-tool, no-evidence and
+  no-abstract. The label other-question was added by the agent for
+  corrections.
+- Model anthropic/claude-sonnet-5-5, prompt versions d083432dc30e599c
+  (the first 20 records) and f1869bb1af5461a5 (the rest).
+- The agent (`--source agent`, by lit-prompt-injection) then:
+  - read all «T1Q» qualifying rows and the 93 low-confidence
+    non-qualifying rows in tier 1;
+  - corrected «FIX» inconsistent decisions (kept rows that carried an
+    exclusion tag, kept rows labelled adjacent, discards without a
+    criterion);
+  - screened the «CHK» check-by-meaning hits outside tier 1 from title and
+    abstract;
+  - tagged the 48 cited works with theme tags.
+- No decision has been reviewed by the author. A seeded sample of
+  discards for the author's review is drawn («SAMPLE»), not yet reviewed.
+
+**Counts (after the corrections).**
+
+- Tier 1: «T1S» supporting, «T1Q» qualifying, «T1D» discarded («T1A»
+  adjacent, «T1O» off-topic, «T1X» excluded by a criterion although on
+  topic).
+- Rest sample: 13 of 60 bear on the claim (21.7 %; 95 % modified Wilson
+  interval 13.1-33.6 %, as computed by `scholar sessions tier-sample
+  --report`). By the classifier, unreviewed.
+- So an estimated one in five of the «REST» unscreened records bears on
+  the claim. No negative statement ("nothing found") is made about them.
+
+«HAIKU»
+
+**Cost.** Classification used about 2.1 M input and 0.38 M output tokens
+on Sonnet 5.5, and about 0.4 M and 0.08 M on Haiku 5.5. At the cached list
+prices of 2026-11-03 that is about $8. The team lead stopped further
+classification of tier 2 for cost reasons.
 
 ### Non-scholar sources (all recorded)
 
