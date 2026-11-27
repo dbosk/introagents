@@ -11,7 +11,7 @@ typeset. This file is the checklist for the day.
 cd security/chatbot
 make bot                            # the venv and code, a few seconds
 .venv/bin/llm keys set anthropic    # once; paste the key when asked
-make test                           # 78 tests, no model calls
+make test                           # 82 tests, no model calls
 ```
 
 The key goes into `llm`'s key store under the name `anthropic`. The
@@ -157,7 +157,9 @@ refunds, the meter) lived in memory and is gone.
 | "Something went wrong" | The terminal shows `model call failed:` with the reason. |
 | "The shop has used up its AI budget for this round" | The round's budget is spent; open the next round. The total budget is `--budget`. |
 | "This page needs cookies" | The phone's browser refuses cookies (some in-app browsers of QR apps do). Open the address in the phone's normal browser. |
-| A phone's chat and customer number are suddenly new | More phones than the bot keeps (3 per student) have been active; the least recently used was forgotten. Harmless; restart with a larger `--students` if it happens often. |
+| A phone's chat and customer number are suddenly new | More phones than the bot keeps (3 per student) have been active, and the least recently used was forgotten; it loses its chat, and an answer it was waiting for. If it happens often, restart with a larger `--students`. A student with a script can cause it on purpose, for every phone; the bot does not defend against that. |
+| The dashboard's "responses over their worst case" is above 0 | The budgets are no longer a sure ceiling: a response cost more than the bot set aside for it. Stop the round ("Close chat" on the dashboard); the terminal prints each such response. Continue only if what the meter shows plus a margin is money you can afford. |
+| A phone sees "Something went wrong" right after loading | An unexpected error; the terminal shows `request failed:` with its kind, without the phone's address. Reload. |
 | The sandbox fails to start | Last resort: `./run.sh --no-sandbox chatbot.py --students N`. The bot then runs without the sandbox and could read your files; the only protection left is that the program has no route or tool that opens one. |
 | The bot crashed | Start it again; the meter and reviews start from zero. |
 

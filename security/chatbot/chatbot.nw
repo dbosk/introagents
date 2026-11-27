@@ -228,9 +228,8 @@ conversation so far with every message.
 
 The command above sets two limits.  [[--budget 1]] stops the bot from
 spending more than one dollar in all (\cref{bot:reserve} explains how
-and on what that rests).  [[--students 5]] gives each round a budget of
-15 cents, 3 cents per student
-(\cref{bot:limits}); when a round's budget is used up, the phone page
+and on what that rests).  Each round gets a budget of 25 cents, the
+least a round gets (\cref{bot:limits}); when a round's budget is used up, the phone page
 says so, and you can open another round or restart the bot.  A larger
 number of students raises the round budgets, but never the total.
 
@@ -358,7 +357,9 @@ seeded with the customer number, so customer 201 has the same orders
 in every run, which keeps the recordings reproducible.
 [[remove_customer]] removes a phone customer's orders again when the
 bot forgets the phone (\cref{bot:sessions-in-bot}), so that the shop
-does not grow without bound.
+does not grow without bound.  Since orders come and go while the
+server runs, every reader outside the tools, which already run under
+the lock, takes a copy under the lock: [[own_orders]].
 
 <<shop functions>>=
 def new_customer():
@@ -385,6 +386,12 @@ def remove_customer(customer):
     with lock:
         for order_id in orders_of(customer):
             del orders[order_id]
+
+
+def own_orders(customer):
+    """Return copies of `customer`'s orders, read under the lock."""
+    with lock:
+        return [(i, dict(orders[i])) for i in orders_of(customer)]
 @
 
 The phone page lists a customer's own orders, and the hardened lookup
@@ -1050,6 +1057,11 @@ sized from the number of students given with [[--students]].
   default, 3 cents, pays for about 25 messages at the 0.12 cents a
   message that the recordings cost with Claude Haiku~4.5
   (\cref{bot:results}), as many as a phone may send at 40 students.
+  A round gets at least [[MIN_ROUND_BUDGET]], 25 cents: the bot
+  reserves a response's worst case before asking for it
+  (\cref{bot:reserve}), which late in a long conversation can be a few
+  cents, so a round budget of a few cents would refuse a phone alone
+  long before the money was spent.
 \item[Total budget]  A hard ceiling over the whole lecture, given with
   [[--budget]], which no number of students raises.
 \item[Calls in flight]  The number of model calls running at the same
@@ -1098,6 +1110,7 @@ ROUND_MESSAGES = 1000
 MIN_MESSAGES_PER_PHONE = 5
 MAX_MESSAGES_PER_PHONE = 30
 ROUND_BUDGET_PER_STUDENT = 0.03
+MIN_ROUND_BUDGET = 0.25
 TOTAL_BUDGET = 10.00
 MIN_IN_FLIGHT = 2
 MAX_IN_FLIGHT = 25
@@ -1140,7 +1153,7 @@ def limits_for(students, total_budget=TOTAL_BUDGET):
             MAX_MESSAGES_PER_PHONE,
         ),
         reviews_per_phone=REVIEWS_PER_PHONE,
-        round_budget=students * ROUND_BUDGET_PER_STUDENT,
+        round_budget=max(students * ROUND_BUDGET_PER_STUDENT, MIN_ROUND_BUDGET),
         total_budget=total_budget,
         in_flight=clamp(
             students // STUDENTS_PER_CALL, MIN_IN_FLIGHT, MAX_IN_FLIGHT
@@ -1184,6 +1197,7 @@ def test_limits_scale_with_students():
     assert (small.in_flight, usual.in_flight, large.in_flight) == (2, 25, 25)
     assert limits_for(40).in_flight == 10
     assert usual.max_sessions == 300
+    assert limits_for(1).round_budget == MIN_ROUND_BUDGET
     assert large.total_budget == small.total_budget == TOTAL_BUDGET
     with pytest.raises(ValueError):
         limits_for(0)
@@ -1422,10 +1436,13 @@ memory a long lecture can use.  When the table is full, a new session
 takes the place of the one that was used least recently, in whatever
 round, and that phone customer's orders are removed.  Nobody is ever
 refused: a phone that was forgotten gets a new session, and a new
-customer, with its next request, and only loses its chat so far.  A
-student with a script that keeps cookies can push other phones out
-this way, but cannot lock anybody out, and every message on the new
-sessions still draws on the round's budget.
+customer, with its next request, and loses its chat so far.  This is
+not proof against a student who sets out to disrupt the lecture: a
+script that keeps its cookies can make sessions fast enough to push
+every phone out, over and over, without a single model call, and a
+phone pushed out while a message was on its way loses the answer.  The
+bot is a classroom demonstration, and defending against that is left
+undone.
 
 <<bot methods>>=
 def new_session(self, session_id=None):
@@ -2060,7 +2077,8 @@ the real model is tested).
 
 The fake can also behave as badly as the budgets must survive.  With
 [[worst]] it bills one token per byte of the request and the full
-[[max_tokens]] of output; with [[loop]] it asks for another tool call
+[[max_tokens]] of output, and with [[share]] a share of the request's
+bytes; with [[loop]] it asks for another tool call
 every time, so that every message runs into the chain limit; with
 [[delay]] it takes its time, so that many calls overlap; and with
 [[usage]] it reports token counts of our choosing.
@@ -2078,9 +2096,10 @@ class FakeModel(llm.KeyModel):
 
     def __init__(
         self, reply="Hello!", error=None, worst=False, loop=False,
-        delay=0, usage=None,
+        delay=0, usage=None, share=None,
     ):
         self.reply, self.error, self.worst = reply, error, worst
+        self.share = 1.0 if worst else share
         self.loop, self.delay = loop, delay
         self.usage = usage or (FAKE_INPUT, FAKE_OUTPUT)
 
@@ -2088,11 +2107,12 @@ class FakeModel(llm.KeyModel):
         time.sleep(self.delay)
         if self.error:
             raise self.error
-        if self.worst:
+        if self.share:
             sent = repr(prompt.messages) + repr(
                 [(t.name, t.description, t.input_schema) for t in prompt.tools]
             )
-            usage = (len(sent.encode()), prompt.options.max_tokens)
+            output = prompt.options.max_tokens if self.worst else FAKE_OUTPUT
+            usage = (int(len(sent.encode()) * self.share), output)
         else:
             usage = self.usage
         response.set_usage(input=usage[0], output=usage[1])
@@ -2241,6 +2261,26 @@ def test_longest_input_stays_within_its_worst_case():
         assert bot.chat(session, longest)[0] == "ok"
     assert bot.bound_misses == 0
     assert bot.meter.committed() == pytest.approx(bot.meter.cost())
+
+
+@
+
+A phone alone in its room must be able to use its whole allowance, with
+a fake that bills a quarter of the request's bytes, a rough size of
+English text in tokens: the second review saw a phone at one student
+refused at its tenth message, with 1.9 cents spent of the 3 that the
+round then had.
+
+<<test functions>>=
+def test_a_phone_alone_can_use_its_whole_allowance():
+    bot = fake_bot(students=1, budget=1.0, share=0.25, reply="A reply. " * 40)
+    bot.open_round("2")
+    session = bot.new_session()
+    statuses = [
+        bot.chat(session, "Where is my order? " * 20)[0]
+        for _ in range(bot.limits.messages_per_phone)
+    ]
+    assert statuses == ["ok"] * bot.limits.messages_per_phone
 
 
 def test_a_response_over_its_worst_case_is_counted():
@@ -2588,16 +2628,20 @@ def render_page(bot, session):
 
 The orders tell the student who they are, which round 2 needs: the
 honest way to use the bot is to ask about these orders, and the attack
-is to get at someone else's.
+is to get at someone else's.  They are read with [[shop.own_orders]],
+a copy taken under the shop's lock, because other phones add and
+remove orders while this page is drawn: without the lock, the second
+review saw twelve of 138\,000 pages fail with \enquote{dictionary
+changed size during iteration}.
 
 <<show the customer's orders in rounds 2 and 3>>=
 if bot.round in TOOL_ROUNDS:
     rows = "".join(
-        f"<li>{e(order_id)}: {e(shop.orders[order_id]['product'])}, "
-        f"{e(shop.orders[order_id]['total'])} kr, delivered "
-        f"{e(shop.orders[order_id]['days_since_delivery'])} days ago, "
-        f"{e(shop.orders[order_id]['status'])}</li>"
-        for order_id in shop.orders_of(session.customer)
+        f"<li>{e(order_id)}: {e(order['product'])}, "
+        f"{e(order['total'])} kr, delivered "
+        f"{e(order['days_since_delivery'])} days ago, "
+        f"{e(order['status'])}</li>"
+        for order_id, order in shop.own_orders(session.customer)
     )
     parts.append(
         f"<p>You are logged in as customer {e(session.customer)}. "
@@ -2697,6 +2741,41 @@ def test_phone_page_escapes_everything_dynamic():
     assert html_text.count("<script>") == 1
 @
 
+The page may read the shop only under the shop's lock.  The test
+replaces the orders by a dictionary that refuses to be read without
+the lock held.
+
+<<test functions>>=
+class LockedOrders(dict):
+    """The shop's orders, readable only while `shop.lock` is held."""
+
+    def check(self):
+        assert shop.lock.locked(), "the orders were read without shop.lock"
+
+    def __getitem__(self, key):
+        self.check()
+        return super().__getitem__(key)
+
+    def items(self):
+        self.check()
+        return super().items()
+
+    def get(self, key, default=None):
+        self.check()
+        return super().get(key, default)
+
+
+def test_the_page_reads_the_shop_under_its_lock(monkeypatch):
+    shop.reset()
+    bot = make_bot()
+    bot.open_round("2")
+    session = bot.new_session()
+    monkeypatch.setattr(shop, "orders", LockedOrders(shop.orders))
+    page_text = render_page(bot, session)
+    assert f"customer {session.customer}" in page_text
+    assert page_text.count("<li>") == len(shop.PHONE_ORDER_DAYS)
+@
+
 \subsection{The phone server}\label{bot:phone-server}
 
 A phone's browser asks the server for a page by sending a method,
@@ -2751,15 +2830,20 @@ class Handler(http.server.BaseHTTPRequestHandler):
         self.route("POST")
 
     def route(self, method):
-        if self.hosts is not None and self.headers.get("Host") not in self.hosts:
+        host = (self.headers.get("Host") or "").lower()
+        if self.hosts is not None and host not in self.hosts:
             self.send_error(403)
             return
         path = urllib.parse.urlsplit(self.path).path
         action = self.routes.get((method, path))
         if action is None:
             self.send_error(404)
-        else:
+            return
+        try:
             action(self)
+        except Exception as error:
+            report(error)
+            self.send_html(page(shop.SHOP_NAME, e(REPLIES["error"])), 500)
 
     def log_message(self, format, *args):
         pass
@@ -2851,6 +2935,22 @@ class Server(http.server.ThreadingHTTPServer):
             super().process_request_thread(request, client_address)
         finally:
             self.slots.release()
+
+    def handle_error(self, request, client_address):
+        report(sys.exception())
+@
+
+An error that the program did not expect would by default print a
+traceback with the client's address to the terminal, which the
+lecturer projects, and leave the phone without a page.  The handler
+instead answers with a plain page and status 500, and the handler and
+the server print one line, the kind of error and its message, without
+any address.
+
+<<functions>>=
+def report(error):
+    """Print one line about an unexpected error, without the client."""
+    print(f"request failed: {type(error).__name__}: {error}", file=sys.stderr)
 @
 
 <<handler methods>>=
@@ -3281,7 +3381,7 @@ def test_dashboard_is_loopback_only_and_needs_the_token(servers):
 def test_dashboard_refuses_other_hosts(servers):
     bot, phone, dashboard = servers
     port = dashboard.server_address[1]
-    for host in (f"127.0.0.1:{port}", f"localhost:{port}"):
+    for host in (f"127.0.0.1:{port}", f"localhost:{port}", f"LocalHost:{port}"):
         assert request(dashboard, "GET", "/", headers={"Host": host}).status == 200
     for host in (f"attacker.example:{port}", "127.0.0.1:1", "localhost"):
         assert request(dashboard, "GET", "/", headers={"Host": host}).status == 403
@@ -3347,6 +3447,35 @@ def test_connections_beyond_the_cap_are_closed(monkeypatch):
         held.close()
         time.sleep(1.2)
         assert request(phone, "GET", "/").status == 303
+
+
+def test_an_unexpected_error_gives_500_and_one_line(servers, capfd, monkeypatch):
+    bot, phone, _ = servers
+
+    def broken(request):
+        raise RuntimeError("dictionary changed size during iteration")
+
+    monkeypatch.setitem(PHONE_ROUTES, ("GET", "/broken"), broken)
+    assert request(phone, "GET", "/broken").status == 500
+    out, err = capfd.readouterr()
+    assert out == "" and "127.0.0.1" not in err
+    assert err.splitlines() == [
+        "request failed: RuntimeError: dictionary changed size during iteration"
+    ]
+
+
+def test_an_error_outside_the_handler_prints_one_line(servers, capfd, monkeypatch):
+    bot, phone, _ = servers
+
+    def broken_setup(handler):
+        raise OSError("the connection broke")
+
+    monkeypatch.setattr(phone.RequestHandlerClass, "setup", broken_setup)
+    with pytest.raises((http.client.RemoteDisconnected, ConnectionError)):
+        request(phone, "GET", "/")
+    time.sleep(0.2)
+    out, err = capfd.readouterr()
+    assert err.splitlines() == ["request failed: OSError: the connection broke"]
 
 
 def test_requests_print_nothing(servers, capfd):
